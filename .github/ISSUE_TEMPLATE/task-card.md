@@ -7,8 +7,6 @@ assignees: ''
 
 ---
 
-### TO DO
-- [ ] TO DO
-- [ ] TO DO
-- [ ] TO DO
-- [ ] TO DO
+- [ ] 상세 내용 1
+- [ ] 상세 내용 2
+- [ ] 상세 내용 3
