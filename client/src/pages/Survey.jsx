@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Question1 from '../components/Questions/Question1';
 import Question2 from '../components/Questions/Question2';
 import Question3 from '../components/Questions/Question3';
@@ -9,7 +9,7 @@ const Survey = () => {
   //FIXME: 게이밍, 노이즈, 사운드 등등 useState로 만듬
   //클릭핸들러 함수
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const [isStarted, setIsStarted] = useState(false);
   const [gaming, setGaming] = useState(null);
@@ -36,6 +36,18 @@ const Survey = () => {
   const onClickSound = (res) => {
     setSound(res);
   };
+
+  const mounted = useRef(false);
+  useEffect(() => {
+    if (!mounted.current) {
+      mounted.current = true;
+    } else {
+      // const response = await axios....;
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 2000);
+    }
+  }, [sound]);
 
   if (!isStarted) {
     return (
@@ -69,18 +81,16 @@ const Survey = () => {
         </>
       );
     } else {
-      <div>잠시만 기다려주세요..</div>;
+      return (
+        <>
+          {isLoading ? (
+            <div>잠시만 기다려주세요..</div>
+          ) : (
+            <div>당신의 결과는~~~</div>
+          )}
+        </>
+      );
     }
-  }
-
-  {
-    /* section 태그로 된 큰 테스트 카드 만들기 */
-  }
-  {
-    /* 시작하기 버튼 transparent로 만들기 */
-  }
-  {
-    /* 누를 때마다 그에 맞는 답을 우리가 useState에 저장한다. */
   }
 };
 
