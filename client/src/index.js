@@ -9,7 +9,7 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 // import './styles/constants.scss';
 // import './styles/mixins.scss';
-// import './styles/reset.scss';
+import './styles/reset.scss';
 
 // const persistor = persistStore(store);
 
