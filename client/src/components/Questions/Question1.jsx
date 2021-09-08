@@ -1,12 +1,11 @@
 import React from 'react';
 
-const Question1 = () => {
+const Question1 = ({ onClickGaming }) => {
   return (
     <>
-      {/* 프롭스로 받은 첫번 째 질문의 응답이 
-      응답 1 onClickAnswer1 = {onClickAnswer1}
-      응답 2
- */}
+      <button onClick={() => onClickGaming(true)}>게임</button>
+      <button onClick={() => onClickGaming(false)}>개발</button>
+      <button onClick={() => onClickGaming(false)}>사무</button>
     </>
   );
 };
