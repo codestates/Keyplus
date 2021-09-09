@@ -25,40 +25,32 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      price: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      switch: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      weight: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      sound: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      noise: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
       brand: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      gaming: {
+      switch: {
+        type: DataTypes.JSON,
+        allowNull: false,
+      },
+      color: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
       },
-      likeCount: {
-        type: DataTypes.INTEGER,
+      backlight: {
+        type: DataTypes.BOOLEAN,
         allowNull: false,
       },
-      url: {
-        type: DataTypes.TEXT,
+      keys: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+      },
+      bluetooth: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+      },
+      price: {
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
       image1: {
@@ -81,9 +73,9 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      video: {
-        type: DataTypes.STRING,
-        allowNull: true,
+      likeCount: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
       },
     },
     {
