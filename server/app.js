@@ -41,4 +41,4 @@ models.sequelize.sync({ force: true }).then(() => {
   console.log('success');
 });
 
-app.listen(3005);
+app.listen(80);
