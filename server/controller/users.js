@@ -49,9 +49,9 @@ module.exports = {
     // 3. 저장되어있지않으면 OK 메시지
   },
   checkToken: async (req, res) => {
-    const userInfo = await User.findOne({ where: { id: 1 } });
-    console.log(userInfo);
-    const token = generateAccessToken({ id: userInfo.dataValues.id });
+    // const userInfo = await User.findOne({ where: { id: 1 } });
+    // console.log(userInfo);
+    const token = generateAccessToken({ id: 1 });
     return sendAccessToken(res, token);
   },
 };
