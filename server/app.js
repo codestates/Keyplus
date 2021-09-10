@@ -37,7 +37,7 @@ app.get('/', (req, res) => {
   res.status(201).send('success');
 });
 
-models.sequelize.sync({ force: true }).then(() => {
+models.sequelize.sync({ force: false }).then(() => {
   console.log('success');
 });
 
