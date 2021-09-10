@@ -17,7 +17,7 @@ const Keyboard = () => {
   return (
     <>
       <div>
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nam quam dolor
+        {/* Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nam quam dolor
         odit asperiores aperiam soluta nostrum, rerum ullam eos facilis, libero
         ipsum eius blanditiis non nesciunt provident! Consectetur, optio!
         Necessitatibus dolore libero quasi culpa. Qui perferendis neque, ab,
@@ -191,7 +191,7 @@ const Keyboard = () => {
         reiciendis dolorem officiis, ex laborum repellendus vel alias nam iste
         possimus reprehenderit recusandae quod quas, temporibus qui! Unde, nemo
         aspernatur vero quo qui, iure aperiam, aut ad laboriosam est hic quis
-        eius. Dolor nulla necessitatibus tenetur? Sunt, esse! Necessitatibus
+        eius. Dolor nulla necessitatibus tenetur? Sunt, esse! Necessitatibus */}
       </div>
     </>
   );
