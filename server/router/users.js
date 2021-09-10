@@ -15,6 +15,6 @@ router.get('/naver', usersController.naverLogin); // 네이버 오어스
 router.get('/kakao', usersController.kakaoLogin); // 카카오 오어스
 router.post('/email', usersController.validateEmail); // email 중복검사 및 인증번호전송
 router.post('/nickname', usersController.validateNickname); // nickname 중복검사
-router.get('/checkToken', usersController.checkToken);
+router.get('/checkToken', usersController.checkToken); // 토큰체크
 
 module.exports = router;
