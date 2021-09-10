@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { ReactComponent as KEYPLUS_WHITE } from '../assets/images/KEYPLUS_white_24.svg';
-import { ReactComponent as KEYPLUS_BLACK } from '../assets/images/KEYPLUS_black_24.svg';
+import { ReactComponent as KEYPLUS_WHITE_36 } from '../assets/images/KEYPLUS_white_36.svg';
+import { ReactComponent as KEYPLUS_BLACK_36 } from '../assets/images/KEYPLUS_black_36.svg';
+import { ReactComponent as KEYPLUS_WHITE_24 } from '../assets/images/KEYPLUS_white_24.svg';
+import { ReactComponent as KEYPLUS_BLACK_24 } from '../assets/images/KEYPLUS_black_24.svg';
 
 import { AiOutlineUser, AiOutlineClose } from 'react-icons/ai';
 import { IoMdExit } from 'react-icons/io';
@@ -11,6 +13,7 @@ import './Header.scss';
 export const Header = () => {
   const [isOpenSidebar, setIsOpenSidebar] = useState(false);
   const [offset, setOffset] = useState(0);
+  const [width, setWidth] = useState(window.innerWidth);
 
   const onClickToggleBtn = () => {
     setIsOpenSidebar((prev) => !prev);
@@ -22,6 +25,13 @@ export const Header = () => {
       else if (window.pageYOffset === 0) setOffset(0);
     };
   }, [offset]);
+
+  useEffect(() => {
+    window.onresize = () => {
+      if (width <= 768 && window.innerWidth > 768) setWidth(769);
+      else if (width > 768 && window.innerWidth <= 768) setWidth(768);
+    };
+  }, [width]);
 
   return (
     <>
@@ -43,6 +53,7 @@ export const Header = () => {
               <GiHamburgerMenu size={24} fill={offset > 0 ? '#fff' : '#000'} />
             )}
           </div>
+
           <ul
             className={
               isOpenSidebar
@@ -52,26 +63,41 @@ export const Header = () => {
                 : 'nav-menu'
             }
           >
-            {/* <ul className="nav-menu"> */}
-            <li className="nav-item">
-              <a href="#" className="nav-links">
-                설문조사
-              </a>
-            </li>
-            <li className="nav-item">
-              <a href="#" className="nav-links">
-                키보드
-              </a>
-            </li>
-            <li className="nav-item">
-              <a href="#" className="nav-links">
-                타건샵
-              </a>
-            </li>
+            <div
+              className={
+                isOpenSidebar ? 'nav-item-wrapper active' : 'nav-item-wrapper'
+              }
+            >
+              <li className="nav-item">
+                <a href="#" className="nav-links">
+                  설문조사
+                </a>
+              </li>
+              <li className="nav-item">
+                <a href="#" className="nav-links">
+                  키보드
+                </a>
+              </li>
+              <li className="nav-item">
+                <a href="#" className="nav-links">
+                  타건샵
+                </a>
+              </li>
+            </div>
           </ul>
         </nav>
         <a className="header-logo">
-          {offset > 0 ? <KEYPLUS_WHITE /> : <KEYPLUS_BLACK />}
+          {width > 768 ? (
+            offset > 0 ? (
+              <KEYPLUS_WHITE_36 />
+            ) : (
+              <KEYPLUS_BLACK_36 />
+            )
+          ) : offset > 0 ? (
+            <KEYPLUS_WHITE_24 />
+          ) : (
+            <KEYPLUS_BLACK_24 />
+          )}
         </a>
         <nav className="buttons">
           <ul className="button-menu">
