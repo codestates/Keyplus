@@ -9,9 +9,11 @@ import { BrowserRouter } from 'react-router-dom';
 import axiosInterceptor from './api/axiosInterceptor';
 import App from './App';
 import LoadingIndicator from './components/LoadingIndicator';
+
+import './assets/fonts/font.css';
 // import './styles/constants.scss';
 // import './styles/mixins.scss';
-import './styles/reset.scss';
+import './styles/_reset.scss';
 
 // const persistor = persistStore(store);
 axiosInterceptor();
