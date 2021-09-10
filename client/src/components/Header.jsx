@@ -1,9 +1,19 @@
-import React from 'react';
-import { ReactComponent as KEYPLUS } from '../assets/KEYPLUS_white_24.svg';
+import React, { useState } from 'react';
+import { ReactComponent as KEYPLUS } from '../assets/images/KEYPLUS_white_24.svg';
 
-import './Header.css';
+import { AiOutlineUser, AiOutlineClose } from 'react-icons/ai';
+import { IoMdExit } from 'react-icons/io';
+import { GiHamburgerMenu } from 'react-icons/gi';
+
+import './Header.scss';
 
 export const Header = () => {
+  const [isOpenSidebar, setIsOpenSidebar] = useState(false);
+
+  const onClickToggleBtn = () => {
+    setIsOpenSidebar((prev) => !prev);
+  };
+
   return (
     <>
       {/* 헤더는 sticky로 스크롤해도 고정한다. */}
@@ -15,31 +25,59 @@ export const Header = () => {
       {/* isLogin이 true면 사람 아이콘 + 나가기 아이콘 */}
       {/* isLogin이 true면 사람아이콘 클릭 시, 마이페이지 & false일 경우엔 로그인 페이지로 이동 */}
 
-      <nav className="navbar">
-        <div className="navbar-container">
-          <ul className="nav-menu">
+      <header className="header">
+        {/* <div className="header-container"> */}
+
+        <nav className="navigation">
+          <div className="menu-icon" onClick={onClickToggleBtn}>
+            {isOpenSidebar ? (
+              <AiOutlineClose size={25} fill="#fff" />
+            ) : (
+              <GiHamburgerMenu size={25} fill="#fff" />
+            )}
+          </div>
+          <ul className={isOpenSidebar ? 'nav-menu active' : 'nav-menu'}>
+            {/* <ul className="nav-menu"> */}
             <li className="nav-item">
-              <a href="http://localhost:3000/keyboard" className="nav-links">
-                Home
+              <a href="#" className="nav-links">
+                설문조사
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-links">Services</a>
+              <a href="#" className="nav-links">
+                키보드
+              </a>
             </li>
             <li className="nav-item">
-              <a className="nav-links">Products</a>
-            </li>
-
-            <li>
-              <a className="nav-links-mobile">Sign Up</a>
+              <a href="#" className="nav-links">
+                타건샵
+              </a>
             </li>
           </ul>
-          <a className="navbar-logo">
-            <KEYPLUS />
-          </a>
-          {<button>SIGN UP</button>}
-        </div>
-      </nav>
+        </nav>
+        <a className="header-logo">
+          <KEYPLUS />
+        </a>
+        {/* {<button>SIGN UP</button>} */}
+        <nav className="buttons">
+          <ul className="button-menu">
+            <li className="button-item">
+              <a href="#" className="button-links">
+                <AiOutlineUser size={25} fill="#fff" />
+              </a>
+            </li>
+            <li className="button-item">
+              <a href="#" className="button-links">
+                <IoMdExit size={25} fill="#fff" />
+              </a>
+            </li>
+          </ul>
+        </nav>
+        {/* mobile hamburger 클릭 시 sidebar 영역 */}
+        {/* <GiHamburgerMenu size={25} fill="#fff" /> */}
+        {/* <AiOutlineClose size={25} fill="#fff" /> */}
+        {/* </div> */}
+      </header>
     </>
   );
 };
