@@ -12,7 +12,7 @@ module.exports = {
     return res
       .status(200)
       .cookie('jwt', accessToken, {
-        sameSite: 'none',
+        sameSite: 'None',
         secure: true,
         httpOnly: true,
       })
