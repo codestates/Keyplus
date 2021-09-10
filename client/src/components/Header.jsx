@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { ReactComponent as KEYPLUS } from '../assets/images/KEYPLUS_white_24.svg';
+import React, { useEffect, useState } from 'react';
+import { ReactComponent as KEYPLUS_WHITE } from '../assets/images/KEYPLUS_white_24.svg';
+import { ReactComponent as KEYPLUS_BLACK } from '../assets/images/KEYPLUS_black_24.svg';
 
 import { AiOutlineUser, AiOutlineClose } from 'react-icons/ai';
 import { IoMdExit } from 'react-icons/io';
@@ -9,10 +10,18 @@ import './Header.scss';
 
 export const Header = () => {
   const [isOpenSidebar, setIsOpenSidebar] = useState(false);
+  const [offset, setOffset] = useState(0);
 
   const onClickToggleBtn = () => {
     setIsOpenSidebar((prev) => !prev);
   };
+
+  useEffect(() => {
+    window.onscroll = () => {
+      if (offset === 0 && window.pageYOffset > 0) setOffset(1);
+      else if (window.pageYOffset === 0) setOffset(0);
+    };
+  }, [offset]);
 
   return (
     <>
@@ -25,18 +34,24 @@ export const Header = () => {
       {/* isLogin이 true면 사람 아이콘 + 나가기 아이콘 */}
       {/* isLogin이 true면 사람아이콘 클릭 시, 마이페이지 & false일 경우엔 로그인 페이지로 이동 */}
 
-      <header className="header">
-        {/* <div className="header-container"> */}
-
+      <header className={offset > 0 ? 'header' : 'header bgc-white'}>
         <nav className="navigation">
           <div className="menu-icon" onClick={onClickToggleBtn}>
             {isOpenSidebar ? (
-              <AiOutlineClose size={25} fill="#fff" />
+              <AiOutlineClose size={24} fill={offset > 0 ? '#fff' : '#000'} />
             ) : (
-              <GiHamburgerMenu size={25} fill="#fff" />
+              <GiHamburgerMenu size={24} fill={offset > 0 ? '#fff' : '#000'} />
             )}
           </div>
-          <ul className={isOpenSidebar ? 'nav-menu active' : 'nav-menu'}>
+          <ul
+            className={
+              isOpenSidebar
+                ? offset > 0
+                  ? 'nav-menu active'
+                  : 'nav-menu active bgc-white'
+                : 'nav-menu'
+            }
+          >
             {/* <ul className="nav-menu"> */}
             <li className="nav-item">
               <a href="#" className="nav-links">
@@ -56,27 +71,22 @@ export const Header = () => {
           </ul>
         </nav>
         <a className="header-logo">
-          <KEYPLUS />
+          {offset > 0 ? <KEYPLUS_WHITE /> : <KEYPLUS_BLACK />}
         </a>
-        {/* {<button>SIGN UP</button>} */}
         <nav className="buttons">
           <ul className="button-menu">
             <li className="button-item">
               <a href="#" className="button-links">
-                <AiOutlineUser size={25} fill="#fff" />
+                <AiOutlineUser size={24} fill={offset > 0 ? '#fff' : '#000'} />
               </a>
             </li>
             <li className="button-item">
               <a href="#" className="button-links">
-                <IoMdExit size={25} fill="#fff" />
+                <IoMdExit size={24} fill={offset > 0 ? '#fff' : '#000'} />
               </a>
             </li>
           </ul>
         </nav>
-        {/* mobile hamburger 클릭 시 sidebar 영역 */}
-        {/* <GiHamburgerMenu size={25} fill="#fff" /> */}
-        {/* <AiOutlineClose size={25} fill="#fff" /> */}
-        {/* </div> */}
       </header>
     </>
   );
