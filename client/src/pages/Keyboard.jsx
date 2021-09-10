@@ -2,8 +2,6 @@ import React, { useEffect } from 'react';
 import axios from 'axios';
 axios.defaults.withCredentials = true;
 
-import AppLayout from '../components/AppLayout';
-
 const Keyboard = () => {
   useEffect(async () => {
     try {
@@ -18,9 +16,7 @@ const Keyboard = () => {
 
   return (
     <>
-      <AppLayout>
-        <div>키보드 페이지</div>
-      </AppLayout>
+      <div>키보드 페이지</div>
     </>
   );
 };
