@@ -1,5 +1,5 @@
 import React from 'react';
-import { ReactComponent as KEYPLUS } from '../assets/images/KEYPLUS_footer_48.svg';
+import { ReactComponent as KEYPLUS } from '../assets/images/KEYPLUS_footer_36.svg';
 import './Footer.scss';
 
 export const Footer = () => {

@@ -2,17 +2,15 @@ import React from 'react';
 
 import { Header } from './Header';
 import { Footer } from './Footer';
-
-const Main = () => {
-  return <></>;
-};
+import './Main.scss';
 
 const AppLayout = ({ children }) => {
   return (
     <>
       <Header />
       {/* <Main>{children}</Main> */}
-      {children}
+      {/* 100뷰포트에서 70px을 뺀 하이트 이게 컨텐츠의 최소값이다. */}
+      <main>{children}</main>
       <Footer />
     </>
   );
