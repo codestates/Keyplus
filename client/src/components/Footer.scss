@@ -66,12 +66,8 @@
 /* 반응형 */
 @media screen and (max-width: $md-breakpoint) {
   .footer-col {
-    width: 50%;
+    width: 100%;
     margin-bottom: 30px;
+    margin-left: 30px;
   }
 }
-// @media (max-width: 574px) {
-//   .footer-col {
-//     width: 100%;
-//   }
-// }
