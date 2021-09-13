@@ -7,7 +7,13 @@ const router = express.Router();
 router.post('/uploadOne', uploads.single('img'), uploadsController.uploadOne);
 router.post(
   '/uploadArray',
-  uploads.array('img'),
+  uploads.fields([
+    {
+      name: 'video',
+      maxCount: 1,
+    },
+    { name: 'img', maxCount: 5 },
+  ]),
   uploadsController.uploadArray
 );
 
