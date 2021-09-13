@@ -1,7 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { logIn, signUp } from './api/userAPI';
+import {
+  deleteUser,
+  logIn,
+  logOut,
+  signUp,
+  updateUserInfo,
+} from './api/userAPI';
 
-// 회원가입, 로그인, 로그아웃, 유저정보조회, 회원정보변경, 회원탈퇴, 소셜로그인(구글,카카오,네이버), 이메일 중복(유효성) 검사, 닉네임 중복 검사
+// 회원가입, 로그인, 로그아웃, 유저정보조회(로그인하면 받아오기 때문에 필요 없다), 회원정보변경, 회원탈퇴, 소셜로그인(구글,카카오,네이버)
+// 컴포넌트 단에서 하기 -> 이메일 중복(유효성) 검사, 닉네임 중복 검사
 
 const initialState = {
   data: null,
@@ -33,12 +40,15 @@ const userSlice = createSlice({
         state.loading = false;
         state.data = action.payload;
       })
-      .addMatcher(isPendingAction, (state, action) => {
-        state.loading = true;
-      })
-      .addMatcher(isRejectedAction, (state, action) => {
+      .addCase(logOut.fulfilled, (state) => {
         state.loading = false;
-        state.error = action.error;
+      })
+      .addCase(updateUserInfo.fulfilled, (state, action) => {
+        state.loading = false;
+        state.data = action.payload;
+      })
+      .addCase(deleteUser.fulfilled, (state) => {
+        state.loading = false;
       });
   },
 });
