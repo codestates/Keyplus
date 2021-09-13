@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { getMyLikes } from './likeAPI';
-import { getMyReviews } from './reviewAPI';
+import { getMyLikes, logOutMyLikes } from './likeAPI';
+import { getMyReviews, logOutMyReviews } from './reviewAPI';
 import axios from 'axios';
 
 // 회원가입, 로그인, 로그아웃, 유저정보조회, 회원정보변경, 회원탈퇴, 소셜로그인(구글,카카오,네이버), 이메일 중복(유효성) 검사, 닉네임 중복 검사
@@ -30,6 +30,8 @@ export const logIn = createAsyncThunk(
 export const logOut = createAsyncThunk('user/logOut', async () => {
   try {
     await axios.post('/auth/logout');
+    dispatch(logOutMyLikes());
+    dispatch(logOutMyReviews());
   } catch (err) {
     console.log(err);
   }
@@ -61,6 +63,8 @@ export const updateUserInfo = createAsyncThunk(
 export const deleteUser = createAsyncThunk('user/deleteUser', async () => {
   try {
     await axios.delete('/users');
+    dispatch(logOutMyLikes());
+    dispatch(logOutMyReviews());
   } catch (err) {
     console.log(err);
   }
