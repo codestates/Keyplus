@@ -45,7 +45,8 @@ const userSlice = createSlice({
       .addMatcher(isRejectedAction, (state, action) => {
         state.loading = false;
         state.error = action.error;
-      });
+      })
+      .addDefaultCase((state, action) => {});
   },
   // 로그인
   // 로그아웃
