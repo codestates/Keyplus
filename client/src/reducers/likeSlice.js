@@ -29,7 +29,8 @@ const likeSlice = createSlice({
       .addMatcher(isRejectedAction, (state, action) => {
         state.loading = false;
         state.error = action.error;
-      });
+      })
+      .addDefaultCase(() => {});
   },
 });
 
