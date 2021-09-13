@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { logIn, signUp } from '../reducers/api/userAPI';
+import { logIn, logOut, signUp } from '../reducers/api/userAPI';
 
 const Keyboard = () => {
   const dispatch = useDispatch();
@@ -15,7 +15,7 @@ const Keyboard = () => {
   //   }
   // }, []);
 
-  const onclickBtn = () => {
+  const onclickSignUpBtn = () => {
     dispatch(
       signUp({
         email: 'kimcoding222@github.com',
@@ -24,7 +24,7 @@ const Keyboard = () => {
       })
     );
   };
-  const onclickBtn2 = () => {
+  const onclickLogInBtn = () => {
     dispatch(
       logIn({
         email: 'kimcoding222@github.com',
@@ -32,11 +32,15 @@ const Keyboard = () => {
       })
     );
   };
+  const onclickLogOutBtn = () => {
+    dispatch(logOut());
+  };
 
   return (
     <>
-      <button onClick={onclickBtn}>회원가입 버튼</button>
-      <button onClick={onclickBtn2}>로그인 버튼</button>
+      <button onClick={onclickSignUpBtn}>회원가입 버튼</button>
+      <button onClick={onclickLogInBtn}>로그인 버튼</button>
+      <button onClick={onclickLogOutBtn}>로그아웃 버튼</button>
     </>
   );
 };
