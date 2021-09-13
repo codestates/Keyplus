@@ -1,18 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { logIn, signUp } from './api/userAPI';
-
-// 회원가입, 로그인, 로그아웃, 유저정보조회, 회원정보변경, 회원탈퇴, 소셜로그인(구글,카카오,네이버), 이메일 중복(유효성) 검사, 닉네임 중복 검사
+import { getMyLikes } from './api/likeAPI';
 
 const initialState = {
-  data: null,
-  // {
-  //   id: 0,
-  //   email: '',
-  //   nickname: '',
-  //   socialType: '',
-  //   isAdmin: false,
-  //   image: '',
-  // },
+  data: [],
   loading: false,
   error: null,
 };
@@ -20,16 +10,13 @@ const initialState = {
 const isPendingAction = (action) => action.type.endsWith('/pending');
 const isRejectedAction = (action) => action.type.endsWith('/rejected');
 
-const userSlice = createSlice({
-  name: 'user',
+const likeSlice = createSlice({
+  name: 'like',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(signUp.fulfilled, (state) => {
-        state.loading = false;
-      })
-      .addCase(logIn.fulfilled, (state, action) => {
+      .addCase(getMyLikes.fulfilled, (state, action) => {
         state.loading = false;
         state.data = action.payload;
       })
@@ -43,4 +30,4 @@ const userSlice = createSlice({
   },
 });
 
-export default userSlice.reducer;
+export default likeSlice.reducer;
