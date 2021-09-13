@@ -24,13 +24,6 @@ const isAuth = (req, res, next) => {
     console.log(error);
     return res.status(500).json({ message: 'Server Error' });
   }
-  if (error.name === 'TokenExpiredError') {
-    console.error(error);
-    return res.status(401).send({ message: error.name });
-  } else {
-    console.error(error);
-    return res.status(401).send({ message: error.name });
-  }
 };
 
 module.exports = isAuth;
