@@ -33,7 +33,7 @@ module.exports = {
       return res.status(500).json({ message: "Server Error" });
     }
   },
-  updateLikeKeyboardLists: async (req, res) => {
+  addLikeKeyboardLists: async (req, res) => {
     try {
       // 1. params 로 키보드 아이디를 받아온다.
       const keyboard = req.params.id;
@@ -59,10 +59,27 @@ module.exports = {
             id: keyboard,
           },
         });
-        return res.status(200).json({ message: "OK" });
-      } else {
-        /* 4. Likes DB에 params로 받아온 아이디와 Cookie를 이용해 조회한 유저아이디가 존재한다면,
-              Keyboard 테이블에 likeCount 컬럼을 1 감소시킨 후, Like 테이블에 키보드아이디와 유저아이디를 삭제해준다. */
+        return res.status(200);
+      }
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({ message: "Server Error" });
+    }
+  },
+  deleteLikeKeyboardLists: async (req, res) => {
+    // 1. params 로 키보드 아이디를 받아온다.
+    try {
+      const keyboard = req.params.id;
+      const user = req.userId;
+      const keyboardLike = await db.sequelize.models.Likes.findOne({  // Likes테이블에 userId가 존재하는지.
+        where: {
+          UserId: user,
+          KeyboardId: keyboard,
+        },
+      })
+      /* 2. Likes DB에 params로 받아온 아이디와 Cookie를 이용해 조회한 유저아이디가 존재한다면,
+            Keyboard 테이블에 likeCount 컬럼을 1 감소시킨 후, Like 테이블에 키보드아이디와 유저아이디를 삭제해준다. */
+      if (keyboardLike) {
         await db.sequelize.models.Likes.destroy({
           where: {
             UserId: user,
@@ -76,7 +93,7 @@ module.exports = {
             id: keyboard,
           },
         });
-        return res.status(200).json({ message: "OK" });
+        return res.status(200);
       }
     } catch (error) {
       console.log(error);
