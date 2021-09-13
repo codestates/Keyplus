@@ -15,9 +15,7 @@ const delay = (data) => {
 
 export const signUp = createAsyncThunk('user/signUp', async (data) => {
   try {
-    await axios.post(`${process.env.REACT_APP_API_URL}/auth/signup`, data, {
-      withCredentials: true,
-    });
+    await axios.post('/auth/signup', data);
   } catch (err) {
     console.log(err);
   }

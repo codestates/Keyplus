@@ -18,16 +18,16 @@ const Keyboard = () => {
   const onclickBtn = () => {
     dispatch(
       signUp({
-        email: 'kimcoding@github.com',
+        email: 'kimcoding222@github.com',
         password: 'test',
-        nickname: '김코딩',
+        nickname: '김코딩222',
       })
     );
   };
   const onclickBtn2 = () => {
     dispatch(
       logIn({
-        email: 'kimcoding@github.com',
+        email: 'kimcoding222@github.com',
         password: 'test',
       })
     );
