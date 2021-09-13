@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getMyReviews } from './api/reviewAPI';
+import { getMyLikes } from './api/likeAPI';
 
 const initialState = {
   data: [],
@@ -10,13 +10,13 @@ const initialState = {
 const isPendingAction = (action) => action.type.endsWith('/pending');
 const isRejectedAction = (action) => action.type.endsWith('/rejected');
 
-const reviewSlice = createSlice({
-  name: 'review',
+const likeSlice = createSlice({
+  name: 'like',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getMyReviews.fulfilled, (state, action) => {
+      .addCase(getMyLikes.fulfilled, (state, action) => {
         state.loading = false;
         state.data = action.payload;
       })
@@ -30,4 +30,4 @@ const reviewSlice = createSlice({
   },
 });
 
-export default reviewSlice.reducer;
+export default likeSlice.reducer;

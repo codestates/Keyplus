@@ -4,6 +4,8 @@ import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // local storage에 저장
 
 import userReducer from './userSlice';
+import likeReducer from './likeSlice';
+import reviewReducer from './reviewSlice';
 // import { keyboardSlice } from './keyboard';
 
 const persistConfig = {
@@ -19,6 +21,8 @@ export const reducer = persistReducer(
   persistConfig,
   combineReducers({
     user: userReducer,
+    like: likeReducer,
+    review: reviewReducer,
     // keyboardSlice: keyboardSlice.reducer,
   })
 );

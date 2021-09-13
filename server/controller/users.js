@@ -7,6 +7,9 @@ const {
   generateAccessToken,
   sendAccessToken,
 } = require('./tokenfunction/index');
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 function generateRandomCode(n) {
   let str = '';
@@ -36,14 +39,14 @@ module.exports = {
   },
   updateUser: async (req, res) => {
     // 1. nickname, password, image를 클라이언트로부터 받아온다.
-    const { nickname, password, image } = req.body;
+    const { nickname, password } = req.body;
     // 2. 클라이언트로 받아온 유저 정보를 Cookie를 이용해서 조회 후, User.update 로 수정한다.
     const hashed = await bcrypt.hash(password, 10);
     await User.update(
       {
         nickname,
         password: hashed,
-        image,
+        image: req.file.location,
       },
       { where: { id: req.userId } }
     );
@@ -88,13 +91,13 @@ module.exports = {
         host: 'smtp.naver.com',
         port: 587,
         auth: {
-          user: 'goodbsm@naver.com',
-          pass: 'Tmdans8816',
+          user: process.env.MAILID,
+          pass: process.env.MAILPW,
         },
       });
       const verificationCode = generateRandomCode(6);
       const mailOptions = {
-        from: 'goodbsm@naver.com',
+        from: process.env.MAILID,
         to: req.body.email,
         subject: '[Keyplus] 인증번호가 도착했습니다.',
         text: `Keyplus 인증번호 : ${verificationCode}`,

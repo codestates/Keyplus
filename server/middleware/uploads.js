@@ -20,9 +20,13 @@ const storage = multerS3({
     cb(null, { fieldName: file.fieldname });
   },
   key: function (req, file, cb) {
-    if (req.files) {
+    if (file.originalname.match(/\.(mp4|MPEG-4|mkv)$/)) {
+      cb(null, `reviewVideo/${Date.now()}_${file.originalname}`);
+    } else if (req.files) {
       cb(null, `review/${Date.now()}_${file.originalname}`);
-    } else cb(null, `profile/${Date.now()}_${file.originalname}`);
+    } else {
+      cb(null, `profile/${Date.now()}_${file.originalname}`);
+    }
   },
 });
 
