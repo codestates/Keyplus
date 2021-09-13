@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getMyReviews } from './api/reviewAPI';
+import { getMyReviews, logOutMyReviews } from './api/reviewAPI';
 
 const initialState = {
   data: [],
@@ -16,6 +16,9 @@ const reviewSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      .addCase(logOutMyReviews, (state) => {
+        state.data = [];
+      })
       .addCase(getMyReviews.fulfilled, (state, action) => {
         state.loading = false;
         state.data = action.payload;

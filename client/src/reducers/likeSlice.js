@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getMyLikes } from './api/likeAPI';
+import { getMyLikes, logOutMyLikes } from './api/likeAPI';
 
 const initialState = {
   data: [],
@@ -16,6 +16,9 @@ const likeSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      .addCase(logOutMyLikes, (state) => {
+        state.data = [];
+      })
       .addCase(getMyLikes.fulfilled, (state, action) => {
         state.loading = false;
         state.data = action.payload;
