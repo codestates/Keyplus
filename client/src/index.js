@@ -6,18 +6,24 @@ import { BrowserRouter } from 'react-router-dom';
 // import { PersistGate } from 'redux-persist/integration/react';
 
 // import store from './store';
+import axiosInterceptor from './api/axiosInterceptor';
 import App from './App';
+import LoadingIndicator from './components/LoadingIndicator';
+
+import './assets/fonts/font.css';
 // import './styles/constants.scss';
 // import './styles/mixins.scss';
-import './styles/reset.scss';
+import './styles/_reset.scss';
 
 // const persistor = persistStore(store);
+axiosInterceptor();
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       {/* <Provider store={store}> */}
       {/* <PersistGate loading={null} persistor={persistor}> */}
+      {/* <LoadingIndicator isLoading={true} /> */}
       <App />
       {/* </PersistGate> */}
       {/* </Provider> */}
