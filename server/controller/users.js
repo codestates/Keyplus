@@ -7,6 +7,9 @@ const {
   generateAccessToken,
   sendAccessToken,
 } = require('./tokenfunction/index');
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 function generateRandomCode(n) {
   let str = '';
@@ -88,13 +91,13 @@ module.exports = {
         host: 'smtp.naver.com',
         port: 587,
         auth: {
-          user: 'goodbsm@naver.com',
-          pass: 'Tmdans8816',
+          user: process.env.MAILID,
+          pass: process.env.MAILPW,
         },
       });
       const verificationCode = generateRandomCode(6);
       const mailOptions = {
-        from: 'goodbsm@naver.com',
+        from: process.env.MAILID,
         to: req.body.email,
         subject: '[Keyplus] 인증번호가 도착했습니다.',
         text: `Keyplus 인증번호 : ${verificationCode}`,
