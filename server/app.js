@@ -8,8 +8,9 @@ const keyboardsRouter = require('./router/keyboards');
 const reviewsRouter = require('./router/reviews');
 const likesRouter = require('./router/likes');
 const inquiriesRouter = require('./router/inquiries');
-const shopsRouter = require('./router/shops');
 const uploadsRouter = require('./router/uploads');
+const shopsRouter = require('./router/shops');
+const authRouter = require('./router/auth');
 const models = require('./models');
 
 const app = express();
@@ -34,6 +35,8 @@ app.use('/likes', likesRouter);
 app.use('/inquiries', inquiriesRouter);
 app.use('/shops', shopsRouter);
 app.use('/uploads', uploadsRouter);
+app.use('/auth', authRouter);
+
 app.get('/', (req, res) => {
   res.status(201).send('success');
 });

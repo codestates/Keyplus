@@ -20,7 +20,9 @@ const storage = multerS3({
     cb(null, { fieldName: file.fieldname });
   },
   key: function (req, file, cb) {
-    cb(null, `uploads/${Date.now()}_${file.originalname}`);
+    if (req.files) {
+      cb(null, `review/${Date.now()}_${file.originalname}`);
+    } else cb(null, `profile/${Date.now()}_${file.originalname}`);
   },
 });
 
