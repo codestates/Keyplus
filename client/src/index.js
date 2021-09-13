@@ -15,10 +15,10 @@ import './assets/fonts/font.css';
 // import './styles/constants.scss';
 // import './styles/mixins.scss';
 import './styles/_reset.scss';
-import axiosInterceptor from './utils/axiosConfigure';
+import axiosConfigure from './utils/axiosConfigure';
 
 // const persistor = persistStore(store);
-axiosInterceptor();
+axiosConfigure();
 
 ReactDOM.render(
   <React.StrictMode>
