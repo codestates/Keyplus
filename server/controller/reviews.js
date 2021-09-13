@@ -8,7 +8,7 @@ module.exports = {
   },
   addReview: async (req, res) => {
     // 1. params 로 키보드 아이디를 받아온다.
-    // 2. content, rating, image, video 를 클라이언트로부터 받아온다.
+    // 2. content, rating, image, video를 클라이언트로부터 받아온다.
     // 3. 로그인이되어있는지 확인 후, 클라이언트로부터 받아온 정보를 Review table에 저장한다.
   },
   updateReview: async (req, res) => {

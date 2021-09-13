@@ -37,8 +37,8 @@ app.get('/', (req, res) => {
   res.status(201).send('success');
 });
 
-models.sequelize.sync({ force: true }).then(() => {
+models.sequelize.sync({ force: false }).then(() => {
   console.log('success');
 });
 
-app.listen(80);
+app.listen(3000); // 다시 80으로하고 커밋하기
