@@ -11,9 +11,6 @@
   top: -1px;
   z-index: 999;
   padding: 50px 50px 0;
-  // -webkit-transition: all 0.5s;
-  // -o-transition: all 0.5s;
-  // transition: all 0.5s;
 
   &.bgc-white {
     background-color: #fff;
@@ -32,9 +29,6 @@
   text-decoration: none;
   cursor: pointer;
   margin-top: 50px;
-  // -webkit-transition: all 0.5s;
-  // -o-transition: all 0.5s;
-  // transition: all 0.5s;
 
   & > * {
     vertical-align: middle;
@@ -135,6 +129,12 @@
 
   .nav-links {
     width: 100%;
+    transition: all 0.3s ease;
+
+    &:hover {
+      color: #bbbbbb;
+      padding-left: 8px;
+    }
   }
 
   .navbar-logo {
