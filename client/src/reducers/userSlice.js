@@ -24,8 +24,10 @@ const initialState = {
   error: null,
 };
 
-const isPendingAction = (action) => action.type.endsWith('/pending');
-const isRejectedAction = (action) => action.type.endsWith('/rejected');
+const isPendingAction = (prefix) => (action) =>
+  action.type.startsWith(prefix) && action.type.endsWith('/pending');
+const isRejectedAction = (prefix) => (action) =>
+  action.type.startsWith(prefix) && action.type.endsWith('/rejected');
 
 const userSlice = createSlice({
   name: 'user',
@@ -52,10 +54,10 @@ const userSlice = createSlice({
         state.loading = false;
         state.data = null;
       })
-      .addMatcher(isPendingAction, (state, action) => {
+      .addMatcher(isPendingAction('user/'), (state) => {
         state.loading = true;
       })
-      .addMatcher(isRejectedAction, (state, action) => {
+      .addMatcher(isRejectedAction('user/'), (state, action) => {
         state.loading = false;
         state.error = action.error;
       })

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getMyLikes, logOutMyLikes } from './api/likeAPI';
+import { getMyLikes } from './api/likeAPI';
 
 const initialState = {
   data: [],
@@ -7,26 +7,29 @@ const initialState = {
   error: null,
 };
 
-const isPendingAction = (action) => action.type.endsWith('/pending');
-const isRejectedAction = (action) => action.type.endsWith('/rejected');
+const isPendingAction = (prefix) => (action) =>
+  action.type.startsWith(prefix) && action.type.endsWith('/pending');
+const isRejectedAction = (prefix) => (action) =>
+  action.type.startsWith(prefix) && action.type.endsWith('/rejected');
 
 const likeSlice = createSlice({
   name: 'like',
   initialState,
-  reducers: {},
+  reducers: {
+    logOutMyLikes(state) {
+      state.data = [];
+    },
+  },
   extraReducers: (builder) => {
     builder
-      .addCase(logOutMyLikes, (state) => {
-        state.data = [];
-      })
       .addCase(getMyLikes.fulfilled, (state, action) => {
         state.loading = false;
         state.data = action.payload;
       })
-      .addMatcher(isPendingAction, (state, action) => {
+      .addMatcher(isPendingAction('like/'), (state) => {
         state.loading = true;
       })
-      .addMatcher(isRejectedAction, (state, action) => {
+      .addMatcher(isRejectedAction('like/'), (state, action) => {
         state.loading = false;
         state.error = action.error;
       })
@@ -34,4 +37,5 @@ const likeSlice = createSlice({
   },
 });
 
+export const { logOutMyLikes } = likeSlice.actions;
 export default likeSlice.reducer;
