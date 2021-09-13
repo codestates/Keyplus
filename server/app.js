@@ -45,4 +45,4 @@ models.sequelize.sync({ force: false }).then(() => {
   console.log('success');
 });
 
-app.listen(3000); // 다시 80으로하고 커밋하기
+app.listen(80);
