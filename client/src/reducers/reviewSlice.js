@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getMyReviews, logOutMyReviews } from './api/reviewAPI';
+import { getMyReviews } from './api/reviewAPI';
 
 const initialState = {
   data: [],
@@ -7,26 +7,29 @@ const initialState = {
   error: null,
 };
 
-const isPendingAction = (action) => action.type.endsWith('/pending');
-const isRejectedAction = (action) => action.type.endsWith('/rejected');
+const isPendingAction = (prefix) => (action) =>
+  action.type.startsWith(prefix) && action.type.endsWith('/pending');
+const isRejectedAction = (prefix) => (action) =>
+  action.type.startsWith(prefix) && action.type.endsWith('/rejected');
 
 const reviewSlice = createSlice({
   name: 'review',
   initialState,
-  reducers: {},
+  reducers: {
+    logOutMyReviews(state) {
+      state.data = [];
+    },
+  },
   extraReducers: (builder) => {
     builder
-      .addCase(logOutMyReviews, (state) => {
-        state.data = [];
-      })
       .addCase(getMyReviews.fulfilled, (state, action) => {
         state.loading = false;
         state.data = action.payload;
       })
-      .addMatcher(isPendingAction, (state, action) => {
+      .addMatcher(isPendingAction('review/'), (state) => {
         state.loading = true;
       })
-      .addMatcher(isRejectedAction, (state, action) => {
+      .addMatcher(isRejectedAction('review/'), (state, action) => {
         state.loading = false;
         state.error = action.error;
       })
@@ -34,4 +37,5 @@ const reviewSlice = createSlice({
   },
 });
 
+export const { logOutMyReviews } = reviewSlice.actions;
 export default reviewSlice.reducer;
