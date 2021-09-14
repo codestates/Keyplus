@@ -30,7 +30,7 @@ module.exports = {
         keyboardId: req.params.id
       },
       attributes: {  
-        exclude: ['createdAt', 'updatedAt', 'userId', 'keyboardId']  // 시간을 뺌
+        exclude: ['createdAt', 'updatedAt', 'userId', 'keyboardId', 'nickname' ]  // 시간을 뺌
       },
       include: [{ model: User, attributes: [ 'nickname' ] }],
       order: [[ "createdAt", "ASC" ]],  // 오름차순
@@ -53,7 +53,7 @@ module.exports = {
         // 3. 로그인이되어있는지 확인 후, 클라이언트로부터 받아온 정보를 Review table에 저장한다.
         if (Object.keys(req.files).length !== 0) {
           const img = req.files.img ? req.files.img.map(el => el.location) : '';
-          await Review.create({
+          let review = await Review.create({
             content,
             rating,
             image1: img[0] || null,
@@ -63,15 +63,15 @@ module.exports = {
             userId: user,
             keyboardId: keyboard,
           })
-          return res.status(200)
+          return res.status(200).json({ data: review })
         } else {
-          await Review.create({
+        let review = await Review.create({
             content,
             rating,
             userId: user,
             keyboardId: keyboard,
           })
-          return res.status(200)
+          return res.status(200).json({ data: review })
         }
     } catch (error) {
       console.log(error)
