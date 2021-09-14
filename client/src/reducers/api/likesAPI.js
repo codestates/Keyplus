@@ -24,7 +24,8 @@ export const deleteLikes = createAsyncThunk(
   'likes/deleteLikes',
   async (data) => {
     try {
-      await axios.delete(`/likes/${data}`);
+      const res = await axios.delete(`/likes/${data}`);
+      console.log('여기ㅣㅣㅣㅣㅣㅣㅣㅣㅣ ', res.data.message);
       return data;
     } catch (err) {
       console.log(err);
