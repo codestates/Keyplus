@@ -5,7 +5,7 @@ import { getMyReviews } from './reviewsAPI';
 import { logOutMyLikes } from '../likesSlice';
 import { logOutMyReviews } from '../reviewsSlice';
 
-// 회원가입, 로그인, 로그아웃, 유저정보조회, 회원정보변경, 회원탈퇴, 소셜로그인(구글,카카오,네이버), 이메일 중복(유효성) 검사, 닉네임 중복 검사
+// 회원가입, 로그인, 로그아웃, 유저정보조회, 회원정보변경, 회원탈퇴, 소셜로그인(구글,카카오,네이버)
 
 export const signUp = createAsyncThunk('user/signUp', async (data) => {
   try {
@@ -19,8 +19,8 @@ export const logIn = createAsyncThunk(
   'user/logIn',
   async (data, { dispatch }) => {
     try {
-      dispatch(getMyLikes());
       const user = await axios.post('/auth/login', data);
+      dispatch(getMyLikes());
       // dispatch(getMyReviews());
       return user.data.data;
     } catch (err) {
@@ -33,25 +33,14 @@ export const logOut = createAsyncThunk(
   'user/logOut',
   async (_, { dispatch }) => {
     try {
+      await axios.post('/auth/logout');
       dispatch(logOutMyLikes());
       dispatch(logOutMyReviews());
-      await axios.post('/auth/logout');
     } catch (err) {
       console.log(err);
     }
   }
 );
-
-// export const getUserInfo = createAsyncThunk(
-//   'user/getUserInfo',
-//   async (data, thunkAPI) => {
-//       try {
-//         const user = await axios.get('/users');
-//       } catch (err) {
-//         console.log(err);
-//       }
-//   }
-// );
 
 export const updateUserInfo = createAsyncThunk(
   'user/updateUserInfo',
@@ -69,9 +58,9 @@ export const deleteUser = createAsyncThunk(
   'user/deleteUser',
   async (_, { dispatch }) => {
     try {
+      await axios.delete('/users');
       dispatch(logOutMyLikes());
       dispatch(logOutMyReviews());
-      await axios.delete('/users');
     } catch (err) {
       console.log(err);
     }
@@ -91,27 +80,4 @@ export const kakaoLogIn = createAsyncThunk(
 export const naverLogIn = createAsyncThunk(
   'user/naverLogIn',
   async (data, thunkAPI) => {}
-);
-
-export const validateEmail = createAsyncThunk(
-  'user/validateEmail',
-  async (data) => {
-    try {
-      const code = await axios.post('/users/email', data);
-      return code.data;
-    } catch (err) {
-      console.log(err);
-    }
-  }
-);
-
-export const validateNickname = createAsyncThunk(
-  'user/validateNickname',
-  async (data) => {
-    try {
-      await axios.post('/users/nickname', data);
-    } catch (err) {
-      console.log(err);
-    }
-  }
 );
