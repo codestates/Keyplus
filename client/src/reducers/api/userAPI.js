@@ -19,8 +19,8 @@ export const logIn = createAsyncThunk(
   'user/logIn',
   async (data, { dispatch }) => {
     try {
-      dispatch(getMyLikes());
       const user = await axios.post('/auth/login', data);
+      dispatch(getMyLikes());
       // dispatch(getMyReviews());
       return user.data.data;
     } catch (err) {
@@ -33,9 +33,9 @@ export const logOut = createAsyncThunk(
   'user/logOut',
   async (_, { dispatch }) => {
     try {
+      await axios.post('/auth/logout');
       dispatch(logOutMyLikes());
       dispatch(logOutMyReviews());
-      await axios.post('/auth/logout');
     } catch (err) {
       console.log(err);
     }
@@ -69,9 +69,9 @@ export const deleteUser = createAsyncThunk(
   'user/deleteUser',
   async (_, { dispatch }) => {
     try {
+      await axios.delete('/users');
       dispatch(logOutMyLikes());
       dispatch(logOutMyReviews());
-      await axios.delete('/users');
     } catch (err) {
       console.log(err);
     }
