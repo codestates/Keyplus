@@ -3,8 +3,11 @@ import { combineReducers } from '@reduxjs/toolkit';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // local storage에 저장
 
-import { userSlice } from './user';
-import { keyboardSlice } from './keyboard';
+import userReducer from './userSlice';
+import likesReducer from './likesSlice';
+import reviewsReducer from './reviewsSlice';
+import loadingReducer from './loadingReducer';
+// import keyboardsReducer  from './keyboard';
 
 const persistConfig = {
   key: 'root',
@@ -18,7 +21,10 @@ const persistConfig = {
 export const reducer = persistReducer(
   persistConfig,
   combineReducers({
-    userSlice: userSlice.reducer,
-    keyboardSlice: keyboardSlice.reducer,
+    loading: loadingReducer,
+    user: userReducer,
+    likes: likesReducer,
+    reviews: reviewsReducer,
+    // keyboards: keyboardReducer,
   })
 );

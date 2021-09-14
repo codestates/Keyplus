@@ -9,7 +9,7 @@ const Survey = () => {
   //FIXME: 게이밍, 노이즈, 사운드 등등 useState로 만듬
   //클릭핸들러 함수
 
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [isStarted, setIsStarted] = useState(false);
   const [gaming, setGaming] = useState(null);
@@ -38,14 +38,30 @@ const Survey = () => {
   };
 
   const mounted = useRef(false);
-  useEffect(() => {
+
+  const delay = () => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve('2초가 지났습니다!');
+      }, 2000);
+    });
+  };
+
+  useEffect(async () => {
     if (!mounted.current) {
       mounted.current = true;
     } else {
-      // const response = await axios....;
-      setTimeout(() => {
+      console.log('2초 기다기리기를 시작합니다!');
+      setIsLoading(true);
+      try {
+        // const response = await axios....;
+        const comment = await delay();
+        console.log(comment);
+      } catch (err) {
+        console.log(err);
+      } finally {
         setIsLoading(false);
-      }, 2000);
+      }
     }
   }, [sound]);
 
