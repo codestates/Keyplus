@@ -11,19 +11,6 @@ import {
 // 컴포넌트단에서 하기 -> 이메일 중복(유효성) 검사, 닉네임 중복 검사
 
 const initialState = null;
-// {
-//   id: 0,
-//   email: '',
-//   nickname: '',
-//   socialType: '',
-//   isAdmin: false,
-//   image: '',
-// },
-
-// const isPendingAction = (prefix) => (action) =>
-//   action.type.startsWith(prefix) && action.type.endsWith('/pending');
-// const isRejectedAction = (prefix) => (action) =>
-//   action.type.startsWith(prefix) && action.type.endsWith('/rejected');
 
 const userSlice = createSlice({
   name: 'user',
@@ -31,36 +18,23 @@ const userSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(signUp.fulfilled, (state) => {
-        // state.loading = false;
-      })
+      .addCase(signUp.fulfilled, () => {})
       .addCase(logIn.fulfilled, (state, action) => {
-        // state.loading = false;
         state = action.payload;
         return state;
       })
       .addCase(logOut.fulfilled, (state) => {
-        // state.loading = false;
         state = null;
         return state;
       })
       .addCase(updateUserInfo.fulfilled, (state, action) => {
-        // state.loading = false;
         state = action.payload;
         return state;
       })
       .addCase(deleteUser.fulfilled, (state) => {
-        // state.loading = false;
         state = null;
         return state;
       })
-      // .addMatcher(isPendingAction('user/'), (state) => {
-      //   state.loading = true;
-      // })
-      // .addMatcher(isRejectedAction('user/'), (state, action) => {
-      //   state.loading = false;
-      //   state.error = action.error;
-      // })
       .addDefaultCase((state) => {
         return state;
       });

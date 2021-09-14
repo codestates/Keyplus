@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { deleteUser, logIn, logOut, signUp } from '../reducers/api/userAPI';
 import { addLikes, deleteLikes } from '../reducers/api/likesAPI';
+import { isError } from '../reducers/errorReducer';
 
 const Keyboard = () => {
   const dispatch = useDispatch();
@@ -16,37 +17,63 @@ const Keyboard = () => {
   //   }
   // }, []);
 
-  const onclickSignUpBtn = () => {
-    dispatch(
-      signUp({
-        email: 'kimcoding333@github.com',
-        password: 'test',
-        nickname: '김코딩3333',
-      })
-    );
-  };
-  const onclickLogInBtn = () => {
-    dispatch(
-      logIn({
-        email: 'kimcoding333@github.com',
-        password: 'test',
-      })
-    );
-  };
-  const onclickLogOutBtn = () => {
-    dispatch(logOut());
+  const onclickSignUpBtn = async () => {
+    try {
+      await dispatch(
+        signUp({
+          email: 'kimcoding333@github.com',
+          password: 'test',
+          nickname: '김코딩3333',
+        })
+      ).unwrap();
+    } catch (err) {
+      dispatch(isError(err.response));
+    }
   };
 
-  const onclickDeleteUserBtn = () => {
-    dispatch(deleteUser());
+  const onclickLogInBtn = async () => {
+    try {
+      await dispatch(
+        logIn({
+          email: 'kimcoding333@github.com',
+          password: 'test',
+        })
+      ).unwrap();
+    } catch (err) {
+      dispatch(isError(err.response));
+    }
   };
 
-  const onclickAddLike = () => {
-    dispatch(addLikes(10));
+  const onclickLogOutBtn = async () => {
+    try {
+      await dispatch(logOut()).unwrap();
+    } catch (err) {
+      dispatch(isError(err.response));
+    }
   };
 
-  const onclickDeleteLike = () => {
-    dispatch(deleteLikes(10));
+  const onclickDeleteUserBtn = async () => {
+    try {
+      await dispatch(deleteUser()).unwrap();
+    } catch (err) {
+      dispatch(isError(err.response));
+    }
+  };
+
+  const onclickAddLike = async () => {
+    try {
+      await dispatch(addLikes(10)).unwrap();
+    } catch (err) {
+      dispatch(isError(err.response));
+    }
+  };
+
+  const onclickDeleteLike = async () => {
+    try {
+      await dispatch(deleteLikes(10)).unwrap();
+    } catch (err) {
+      dispatch(isError(err.response));
+    }
   };
 
   return (
