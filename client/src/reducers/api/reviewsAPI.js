@@ -1,11 +1,11 @@
+import exceptionAxios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
 
 export const getMyReviews = createAsyncThunk(
-  'review/getMyReviews',
+  'reviews/getMyReviews',
   async () => {
     try {
-      await axios.get('/reviews');
+      await exceptionAxios.get('/reviews');
     } catch (err) {
       console.log(err);
     }
