@@ -23,6 +23,10 @@ module.exports = (sequelize, DataTypes) => {
   }
   Review.init(
     {
+      nickname: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       content: {
         type: DataTypes.TEXT,
         allowNull: false,
@@ -31,7 +35,15 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      image: {
+      image1: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      image2: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      image3: {
         type: DataTypes.STRING,
         allowNull: true,
       },
