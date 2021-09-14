@@ -1,47 +1,6 @@
-// import axios from 'axios';
-// import store from '../store';
-// import { isLoading, isNotLoading } from '../reducers/loadingReducer';
-
-// export default function axiosConfigure() {
-//   axios.defaults.baseURL = process.env.REACT_APP_API_URL;
-//   axios.defaults.withCredentials = true;
-//   axios.defaults.headers.common['Content-Type'] = 'application/json';
-
-//   axios.interceptors.request.use(
-//     (configure) => {
-//       // ! 로딩 호출
-//       store.dispatch(isLoading());
-//       return configure;
-//     },
-//     (error) => {
-//       // ! 실패 시 로딩창 종료
-//       store.dispatch(isNotLoading());
-//       return Promise.reject(error);
-//     }
-//   );
-//   axios.interceptors.response.use(
-//     (configure) => {
-//       // ! 완료 시 로딩창 종료
-//       store.dispatch(isNotLoading());
-//       return configure;
-//     },
-//     (error) => {
-//       // ! 실패 시 로딩창 종료
-//       store.dispatch(isNotLoading());
-//       return Promise.reject(error);
-//     }
-//   );
-// }
-
 import axios from 'axios';
 import store from '../store';
 import { isLoading, isNotLoading } from '../reducers/loadingReducer';
-
-export const axiosConfigure = () => {
-  axios.defaults.baseURL = process.env.REACT_APP_API_URL;
-  axios.defaults.withCredentials = true;
-  axios.defaults.headers.common['Content-Type'] = 'application/json';
-};
 
 const instance = axios.create();
 
