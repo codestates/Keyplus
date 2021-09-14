@@ -7,62 +7,85 @@ import { logOutMyReviews } from '../reviewsSlice';
 
 // 회원가입, 로그인, 로그아웃, 유저정보조회, 회원정보변경, 회원탈퇴, 소셜로그인(구글,카카오,네이버)
 
-export const signUp = createAsyncThunk('user/signUp', async (data) => {
-  try {
-    await axios.post('/auth/signup', data);
-  } catch (err) {
-    console.log(err);
+export const signUp = createAsyncThunk(
+  'user/signUp',
+  async (data, { rejectWithValue }) => {
+    try {
+      await axios.post('/auth/signup', data);
+    } catch (err) {
+      let error = err;
+      if (!error.response) {
+        throw err;
+      }
+      return rejectWithValue(error.response.data);
+    }
   }
-});
+);
 
 export const logIn = createAsyncThunk(
   'user/logIn',
-  async (data, { dispatch }) => {
+  async (data, { dispatch, rejectWithValue }) => {
     try {
       const user = await axios.post('/auth/login', data);
-      dispatch(getMyLikes());
-      dispatch(getReviews());
+      await dispatch(getMyLikes()).unwrap();
+      await dispatch(getReviews()).unwrap();
       return user.data.data;
     } catch (err) {
-      console.log(err);
+      let error = err;
+      if (!error.response) {
+        throw err;
+      }
+      return rejectWithValue(error.response.data);
     }
   }
 );
 
 export const logOut = createAsyncThunk(
   'user/logOut',
-  async (_, { dispatch }) => {
+  async (_, { dispatch, rejectWithValue }) => {
     try {
       await axios.post('/auth/logout');
-      dispatch(logOutMyLikes());
-      dispatch(logOutMyReviews());
+      await dispatch(logOutMyLikes()).unwrap();
+      await dispatch(logOutMyReviews()).unwrap();
     } catch (err) {
-      console.log(err);
+      let error = err;
+      if (!error.response) {
+        throw err;
+      }
+      return rejectWithValue(error.response.data);
     }
   }
 );
 
 export const updateUserInfo = createAsyncThunk(
   'user/updateUserInfo',
-  async (data) => {
+  async (data, { rejectWithValue }) => {
     try {
       const user = await axios.patch('/users', data);
       return user.data.data;
     } catch (err) {
-      console.log(err);
+      let error = err;
+      if (!error.response) {
+        throw err;
+      }
+      return rejectWithValue(error.response.data);
     }
   }
 );
 
 export const deleteUser = createAsyncThunk(
   'user/deleteUser',
-  async (_, { dispatch }) => {
+  async (_, { dispatch, rejectWithValue }) => {
     try {
       await axios.delete('/users');
       dispatch(logOutMyLikes());
       dispatch(logOutMyReviews());
     } catch (err) {
-      console.log(err);
+      let error = err;
+      if (!error.response) {
+        throw err;
+      }
+      return rejectWithValue(error.response.data);
     }
   }
 );

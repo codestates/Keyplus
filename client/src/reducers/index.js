@@ -7,6 +7,7 @@ import userReducer from './userSlice';
 import likesReducer from './likesSlice';
 import reviewsReducer from './reviewsSlice';
 import loadingReducer from './loadingReducer';
+import errorReducer from './errorReducer';
 // import keyboardsReducer  from './keyboard';
 
 const persistConfig = {
@@ -22,6 +23,7 @@ export const reducer = persistReducer(
   persistConfig,
   combineReducers({
     loading: loadingReducer,
+    error: errorReducer,
     user: userReducer,
     likes: likesReducer,
     reviews: reviewsReducer,
