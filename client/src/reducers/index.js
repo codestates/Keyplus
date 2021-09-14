@@ -7,7 +7,7 @@ import userReducer from './userSlice';
 import likesReducer from './likesSlice';
 import reviewsReducer from './reviewsSlice';
 import loadingReducer from './loadingReducer';
-// import { keyboardSlice } from './keyboard';
+// import keyboardsReducer  from './keyboard';
 
 const persistConfig = {
   key: 'root',
@@ -25,6 +25,6 @@ export const reducer = persistReducer(
     user: userReducer,
     likes: likesReducer,
     reviews: reviewsReducer,
-    // keyboardSlice: keyboardSlice.reducer,
+    // keyboards: keyboardReducer,
   })
 );

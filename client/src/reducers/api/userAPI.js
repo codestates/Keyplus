@@ -5,7 +5,7 @@ import { getMyReviews } from './reviewsAPI';
 import { logOutMyLikes } from '../likesSlice';
 import { logOutMyReviews } from '../reviewsSlice';
 
-// 회원가입, 로그인, 로그아웃, 유저정보조회, 회원정보변경, 회원탈퇴, 소셜로그인(구글,카카오,네이버), 이메일 중복(유효성) 검사, 닉네임 중복 검사
+// 회원가입, 로그인, 로그아웃, 유저정보조회, 회원정보변경, 회원탈퇴, 소셜로그인(구글,카카오,네이버)
 
 export const signUp = createAsyncThunk('user/signUp', async (data) => {
   try {
@@ -91,27 +91,4 @@ export const kakaoLogIn = createAsyncThunk(
 export const naverLogIn = createAsyncThunk(
   'user/naverLogIn',
   async (data, thunkAPI) => {}
-);
-
-export const validateEmail = createAsyncThunk(
-  'user/validateEmail',
-  async (data) => {
-    try {
-      const code = await axios.post('/users/email', data);
-      return code.data;
-    } catch (err) {
-      console.log(err);
-    }
-  }
-);
-
-export const validateNickname = createAsyncThunk(
-  'user/validateNickname',
-  async (data) => {
-    try {
-      await axios.post('/users/nickname', data);
-    } catch (err) {
-      console.log(err);
-    }
-  }
 );
