@@ -1,7 +1,9 @@
+import axios from '../../utils/customAxios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { getMyLikes, logOutMyLikes } from './likeAPI';
-import { getMyReviews, logOutMyReviews } from './reviewAPI';
-import axios from 'axios';
+import { getMyLikes } from './likesAPI';
+import { getMyReviews } from './reviewsAPI';
+import { logOutMyLikes } from '../likesSlice';
+import { logOutMyReviews } from '../reviewsSlice';
 
 // 회원가입, 로그인, 로그아웃, 유저정보조회, 회원정보변경, 회원탈퇴, 소셜로그인(구글,카카오,네이버), 이메일 중복(유효성) 검사, 닉네임 중복 검사
 
@@ -17,8 +19,8 @@ export const logIn = createAsyncThunk(
   'user/logIn',
   async (data, { dispatch }) => {
     try {
-      const user = await axios.post('/auth/login', data);
       dispatch(getMyLikes());
+      const user = await axios.post('/auth/login', data);
       // dispatch(getMyReviews());
       return user.data.data;
     } catch (err) {
@@ -27,15 +29,18 @@ export const logIn = createAsyncThunk(
   }
 );
 
-export const logOut = createAsyncThunk('user/logOut', async () => {
-  try {
-    await axios.post('/auth/logout');
-    dispatch(logOutMyLikes());
-    dispatch(logOutMyReviews());
-  } catch (err) {
-    console.log(err);
+export const logOut = createAsyncThunk(
+  'user/logOut',
+  async (_, { dispatch }) => {
+    try {
+      dispatch(logOutMyLikes());
+      dispatch(logOutMyReviews());
+      await axios.post('/auth/logout');
+    } catch (err) {
+      console.log(err);
+    }
   }
-});
+);
 
 // export const getUserInfo = createAsyncThunk(
 //   'user/getUserInfo',
@@ -60,15 +65,18 @@ export const updateUserInfo = createAsyncThunk(
   }
 );
 
-export const deleteUser = createAsyncThunk('user/deleteUser', async () => {
-  try {
-    await axios.delete('/users');
-    dispatch(logOutMyLikes());
-    dispatch(logOutMyReviews());
-  } catch (err) {
-    console.log(err);
+export const deleteUser = createAsyncThunk(
+  'user/deleteUser',
+  async (_, { dispatch }) => {
+    try {
+      dispatch(logOutMyLikes());
+      dispatch(logOutMyReviews());
+      await axios.delete('/users');
+    } catch (err) {
+      console.log(err);
+    }
   }
-});
+);
 
 export const googleLogIn = createAsyncThunk(
   'user/googleLogIn',
