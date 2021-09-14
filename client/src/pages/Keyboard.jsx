@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { logIn, logOut, signUp } from '../reducers/api/userAPI';
+import { addLikes, deleteLikes } from '../reducers/api/likesAPI';
 
 const Keyboard = () => {
   const dispatch = useDispatch();
@@ -36,11 +37,22 @@ const Keyboard = () => {
     dispatch(logOut());
   };
 
+  const onclickAddLike = () => {
+    dispatch(addLikes(3));
+  };
+
+  const onclickDeleteLike = () => {
+    dispatch(deleteLikes(3));
+  };
+
   return (
     <>
       <button onClick={onclickSignUpBtn}>회원가입 버튼</button>
       <button onClick={onclickLogInBtn}>로그인 버튼</button>
       <button onClick={onclickLogOutBtn}>로그아웃 버튼</button>
+
+      <button onClick={onclickAddLike}>좋아요 추가</button>
+      <button onClick={onclickDeleteLike}>좋아요 삭제</button>
     </>
   );
 };

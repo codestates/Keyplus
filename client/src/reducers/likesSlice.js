@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getMyLikes } from './api/likesAPI';
+import { getMyLikes, addLikes, deleteLikes } from './api/likesAPI';
 
 const initialState = [];
 
@@ -22,6 +22,21 @@ const likesSlice = createSlice({
       .addCase(getMyLikes.fulfilled, (state, action) => {
         // state.loading = false;
         state = action.payload;
+        return state;
+      })
+      .addCase(addLikes.fulfilled, (state, action) => {
+        // state.loading = false;
+        if (action.payload) {
+          state.push(action.payload);
+        }
+      })
+      .addCase(deleteLikes.fulfilled, (state, action) => {
+        // state.loading = false;
+        // state = action.payload;
+        // return state;
+        state = state.filter((cur) => {
+          cur.id !== action.payload;
+        });
         return state;
       })
       // .addMatcher(isPendingAction('like/'), (state) => {
