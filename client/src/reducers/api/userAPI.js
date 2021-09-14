@@ -1,6 +1,6 @@
 import axios from '../../utils/customAxios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { getMyLikes } from './likesAPI';
+import { getLikes } from './likesAPI';
 import { getReviews } from './reviewsAPI';
 import { logOutMyLikes } from '../likesSlice';
 import { logOutMyReviews } from '../reviewsSlice';
@@ -27,7 +27,7 @@ export const logIn = createAsyncThunk(
   async (data, { dispatch, rejectWithValue }) => {
     try {
       const user = await axios.post('/auth/login', data);
-      await dispatch(getMyLikes()).unwrap();
+      await dispatch(getLikes()).unwrap();
       await dispatch(getReviews()).unwrap();
       return user.data.data;
     } catch (err) {

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getMyLikes, addLikes, deleteLikes } from './api/likesAPI';
+import { getLikes, addLikes, deleteLikes } from './api/likesAPI';
 
 const initialState = [];
 
@@ -19,7 +19,7 @@ const likesSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getMyLikes.fulfilled, (state, action) => {
+      .addCase(getLikes.fulfilled, (state, action) => {
         state = action.payload;
         return state;
       })
