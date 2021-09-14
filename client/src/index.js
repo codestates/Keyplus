@@ -15,11 +15,11 @@ import './assets/fonts/font.css';
 // import './styles/constants.scss';
 // import './styles/mixins.scss';
 import './styles/_reset.scss';
-import axiosConfigure from './utils/axiosConfigure';
 
-// const persistor = persistStore(store);
+import { axiosConfigure } from './utils/customAxios';
 axiosConfigure();
 
+// const persistor = persistStore(store);
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
