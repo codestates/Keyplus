@@ -4,7 +4,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 export const getReviews = createAsyncThunk(
   'reviews/getReviews',
-  async ({ rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
       await exceptionAxios.get('/reviews');
     } catch (err) {

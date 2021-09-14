@@ -4,7 +4,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 export const getLikes = createAsyncThunk(
   'likes/getLikes',
-  async ({ rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
       const likes = await exceptionAxios.get('/likes');
       return likes.data.data;
