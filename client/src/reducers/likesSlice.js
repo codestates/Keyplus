@@ -34,7 +34,12 @@ const likesSlice = createSlice({
         // state.loading = false;
         // state = action.payload;
         // return state;
-        state = state.filter((cur) => cur.id !== action.payload);
+        console.log('payload ', action.payload);
+        state = state.filter((cur) => {
+          console.log(cur.id);
+          console.log('같니? ', cur.id !== action.payload);
+          return cur.id !== action.payload;
+        });
         return state;
       })
       // .addMatcher(isPendingAction('like/'), (state) => {
