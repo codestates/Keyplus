@@ -1,7 +1,7 @@
 import axios from '../../utils/customAxios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { getMyLikes } from './likesAPI';
-import { getMyReviews } from './reviewsAPI';
+import { getReviews } from './reviewsAPI';
 import { logOutMyLikes } from '../likesSlice';
 import { logOutMyReviews } from '../reviewsSlice';
 
@@ -21,7 +21,7 @@ export const logIn = createAsyncThunk(
     try {
       const user = await axios.post('/auth/login', data);
       dispatch(getMyLikes());
-      // dispatch(getMyReviews());
+      dispatch(getReviews());
       return user.data.data;
     } catch (err) {
       console.log(err);
@@ -41,17 +41,6 @@ export const logOut = createAsyncThunk(
     }
   }
 );
-
-// export const getUserInfo = createAsyncThunk(
-//   'user/getUserInfo',
-//   async (data, thunkAPI) => {
-//       try {
-//         const user = await axios.get('/users');
-//       } catch (err) {
-//         console.log(err);
-//       }
-//   }
-// );
 
 export const updateUserInfo = createAsyncThunk(
   'user/updateUserInfo',

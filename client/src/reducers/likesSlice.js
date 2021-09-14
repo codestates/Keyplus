@@ -20,30 +20,19 @@ const likesSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getMyLikes.fulfilled, (state, action) => {
-        // state.loading = false;
         state = action.payload;
         return state;
       })
       .addCase(addLikes.fulfilled, (state, action) => {
-        // state.loading = false;
         if (action.payload) {
           state.push(action.payload);
         }
       })
       .addCase(deleteLikes.fulfilled, (state, action) => {
-        // state.loading = false;
-        // state = action.payload;
-        // return state;
         state = state.filter((cur) => cur.id !== action.payload);
         return state;
       })
-      // .addMatcher(isPendingAction('like/'), (state) => {
-      //   state.loading = true;
-      // })
-      // .addMatcher(isRejectedAction('like/'), (state, action) => {
-      //   state.loading = false;
-      //   state.error = action.error;
-      // })
+
       .addDefaultCase((state) => {
         return state;
       });
