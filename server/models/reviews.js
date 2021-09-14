@@ -23,6 +23,10 @@ module.exports = (sequelize, DataTypes) => {
   }
   Review.init(
     {
+      nickname: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       content: {
         type: DataTypes.TEXT,
         allowNull: false,
