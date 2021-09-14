@@ -38,7 +38,7 @@ const Keyboard = () => {
   };
 
   const onclickAddLike = () => {
-    dispatch(addLikes(3));
+    dispatch(addLikes(10));
   };
 
   const onclickDeleteLike = () => {
