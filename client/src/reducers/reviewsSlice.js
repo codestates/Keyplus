@@ -1,5 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getMyReviews } from './api/reviewsAPI';
+import {
+  getReviews,
+  addReviews,
+  updateReviews,
+  deleteReviews,
+} from './api/reviewsAPI';
 
 const initialState = [];
 

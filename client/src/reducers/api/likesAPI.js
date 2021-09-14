@@ -1,9 +1,9 @@
 import exceptionAxios from 'axios';
 import axios from '../../utils/customAxios';
-import { createAsyncThunk, isRejectedWithValue } from '@reduxjs/toolkit';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 
-export const getMyLikes = createAsyncThunk(
-  'likes/getMyLikes',
+export const getLikes = createAsyncThunk(
+  'likes/getLikes',
   async ({ rejectWithValue }) => {
     try {
       const likes = await exceptionAxios.get('/likes');
