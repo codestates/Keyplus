@@ -27,8 +27,13 @@ export const logIn = createAsyncThunk(
   async (data, { dispatch, rejectWithValue }) => {
     try {
       const user = await axios.post('/auth/login', data);
-      await dispatch(getLikes()).unwrap();
-      await dispatch(getReviews()).unwrap();
+      await Promise.all([
+        dispatch(getLikes()).unwrap(),
+        dispatch(getReviews()).unwrap(),
+      ]);
+      // const user = await axios.post('/auth/login', data);
+      // await dispatch(getLikes()).unwrap();
+      // await dispatch(getReviews()).unwrap();
       return user.data.data;
     } catch (err) {
       let error = err;
