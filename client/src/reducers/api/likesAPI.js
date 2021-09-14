@@ -9,6 +9,7 @@ export const getLikes = createAsyncThunk(
       const likes = await exceptionAxios.get('/likes');
       return likes.data.data;
     } catch (err) {
+      console.log(err.response.data);
       let error = err;
       if (!error.response) {
         throw err;

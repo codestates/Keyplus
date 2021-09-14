@@ -8,6 +8,7 @@ export const getReviews = createAsyncThunk(
     try {
       await exceptionAxios.get('/reviews');
     } catch (err) {
+      console.log(err.response.data);
       let error = err;
       if (!error.response) {
         throw err;

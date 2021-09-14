@@ -27,8 +27,8 @@ export const logIn = createAsyncThunk(
   async (data, { dispatch, rejectWithValue }) => {
     try {
       const user = await axios.post('/auth/login', data);
-      await dispatch(getLikes()).unwrap();
-      await dispatch(getReviews()).unwrap();
+      dispatch(getLikes());
+      dispatch(getReviews());
       return user.data.data;
     } catch (err) {
       let error = err;
@@ -45,8 +45,8 @@ export const logOut = createAsyncThunk(
   async (_, { dispatch, rejectWithValue }) => {
     try {
       await axios.post('/auth/logout');
-      await dispatch(logOutMyLikes()).unwrap();
-      await dispatch(logOutMyReviews()).unwrap();
+      dispatch(logOutMyLikes());
+      dispatch(logOutMyReviews());
     } catch (err) {
       let error = err;
       if (!error.response) {
