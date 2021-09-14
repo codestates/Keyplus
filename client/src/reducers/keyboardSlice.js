@@ -2,13 +2,8 @@
 //사실상 서버에 요청 보내서 뭔가를 하는건 딜리트와 업데이트 아닌가요
 //크리에이트
 import { createSlice } from '@reduxjs/toolkit';
-import { logIn } from './api/userAPI';
 
-const initialState = {
-  data: {},
-  loading: false,
-  error: null,
-};
+const initialState = [];
 
 const keyboardSlice = createSlice({
   name: 'keyboard',
