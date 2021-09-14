@@ -59,7 +59,17 @@ module.exports = {
             id: keyboard,
           },
         });
-        return res.status(200);
+
+        const getKeyboard = await Keyboard.findOne({
+          attributes: {  
+            exclude: ['createdAt', 'updatedAt'],
+          },
+          where: {
+            id: keyboard,
+          }
+        })
+
+        return res.status(200).json({ data: getKeyboard });
       }
     } catch (error) {
       console.log(error);
