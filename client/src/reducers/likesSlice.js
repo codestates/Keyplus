@@ -34,9 +34,7 @@ const likesSlice = createSlice({
         // state.loading = false;
         // state = action.payload;
         // return state;
-        state = state.filter((cur) => {
-          cur.id !== action.payload;
-        });
+        state = state.filter((cur) => cur.id !== action.payload);
         return state;
       })
       // .addMatcher(isPendingAction('like/'), (state) => {
