@@ -1,7 +1,7 @@
 ---
 name: Dev-Log
 about: Dev-Log
-title: "[Dev-Log] n주차 n요일 - 김코딩"
+title: "[Dev-Log] 2021.00.00. - 김코딩"
 labels: ''
 assignees: ''
 
