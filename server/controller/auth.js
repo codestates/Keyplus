@@ -160,7 +160,7 @@ module.exports = {
         httpOnly: true,
         secure: true,
       });
-      res.redirect(`https://keyplus.kr/keyboard`);
+      res.redirect(`${process.env.CLIENT_URI}/keyboard`);
     } catch (error) {
       res.sendStatus(500);
     }
@@ -221,7 +221,7 @@ module.exports = {
         secure: true,
       });
 
-      res.redirect(`https://keyplus.kr/keyboard`);
+      res.redirect(`${process.env.CLIENT_URI}/keyboard`);
     } catch (error) {
       console.error(error);
       res.sendStatus(500);
@@ -233,12 +233,14 @@ module.exports = {
     );
   },
   kakaoCallback: async (req, res) => {
+    console.log(process.env.KAKAO_CLIENT_ID);
+    console.log(process.env.KAKAO_REDIRECT_URI);
     const code = req.query.code;
     console.log('===================CODE', code);
     try {
       const result = await axios.post(
         // authorization code를 이용해서 access token 요청
-        `https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id=${process.env.KAKAO_CLIENT_URI}&redirect_uri=${process.env.KAKAO_REDIRECT_URI}&code=${code}`
+        `https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id=${process.env.KAKAO_CLIENT_ID}&redirect_uri=${process.env.KAKAO_REDIRECT_URI}&code=${code}`
       );
       console.log('========result', result);
       const userInfo = await axios.get(
@@ -280,7 +282,7 @@ module.exports = {
         httpOnly: true,
         secure: true,
       });
-      res.redirect(`https://keyplus.kr/keyboard`);
+      res.redirect(`${process.env.CLIENT_URI}/keyboard`);
     } catch (error) {
       console.error(error);
       res.sendStatus(500);
