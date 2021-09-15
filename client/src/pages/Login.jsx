@@ -69,7 +69,7 @@ const Login = (props) => {
     //   dispatch(isError(err.response));
     // }
     // window.location.href = `${process.env.REACT_APP_API_URL}/auth/google`;
-    window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?scope=https://www.googleapis.com/auth/userinfo.email+https://www.googleapis.com/auth/userinfo.profile&response_type=code&redirect_uri=https://api.keyplus.kr/auth/googleCallback&client_id=1001972392375-bnmmb3v2co8p0uobbcmn5gorkbq65648.apps.googleusercontent.com`;
+    window.location.href = `${process.env.REACT_APP_API_URL}/auth/google`;
   };
 
   const onClickKakao = async () => {
@@ -82,7 +82,7 @@ const Login = (props) => {
     // } catch (err) {
     //   dispatch(isError(err.response));
     // }
-    window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=19bd94d3d70b2dad4f69a9118c77b3a3&redirect_uri=https://api.keyplus.kr/auth/kakaoCallback&&response_type=code`;
+    window.location.href = `${process.env.REACT_APP_API_URL}/auth/kakao`;
   };
 
   const onClickNaver = async () => {
