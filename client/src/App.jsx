@@ -18,8 +18,8 @@ function App() {
             {loading && <h1>로딩 중입니다</h1>}
             {/* <Redirect exact path="/" to="keyboard" /> */}
             <Route path="/landing" component={Landing} />
-            <Route exact path="/keyboard" component={Keyboard} />
-            <Route path="/keyboard/:id" component={KeyboardDetail} />
+            <Route exact path="/keyboards" component={Keyboard} />
+            <Route path="/keyboards/:id" component={KeyboardDetail} />
             <Route path="/survey" component={Survey} />
             <Route path="/login" component={Login} />
           </>
