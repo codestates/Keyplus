@@ -27,8 +27,10 @@ export const logIn = createAsyncThunk(
   async (data, { dispatch, rejectWithValue }) => {
     try {
       const user = await axios.post('/auth/login', data);
-      await dispatch(getLikes()).unwrap();
-      await dispatch(getReviews()).unwrap();
+      await Promise.all([
+        dispatch(getLikes()).unwrap(),
+        dispatch(getReviews()).unwrap(),
+      ]);
       return user.data.data;
     } catch (err) {
       let error = err;
@@ -45,8 +47,8 @@ export const logOut = createAsyncThunk(
   async (_, { dispatch, rejectWithValue }) => {
     try {
       await axios.post('/auth/logout');
-      await dispatch(logOutMyLikes()).unwrap();
-      await dispatch(logOutMyReviews()).unwrap();
+      dispatch(logOutMyLikes());
+      dispatch(logOutMyReviews());
     } catch (err) {
       let error = err;
       if (!error.response) {
@@ -92,15 +94,45 @@ export const deleteUser = createAsyncThunk(
 
 export const googleLogIn = createAsyncThunk(
   'user/googleLogIn',
-  async (data, thunkAPI) => {}
+  async (_, { rejectWithValue }) => {
+    try {
+      await axios.get('/auth/google');
+    } catch (err) {
+      let error = err;
+      if (!error.response) {
+        throw err;
+      }
+      return rejectWithValue(error.response.data);
+    }
+  }
 );
 
 export const kakaoLogIn = createAsyncThunk(
   'user/kakaoLogin',
-  async (data, thunkAPI) => {}
+  async (_, { rejectWithValue }) => {
+    try {
+      await axios.get('/auth/kakao');
+    } catch (err) {
+      let error = err;
+      if (!error.response) {
+        throw err;
+      }
+      return rejectWithValue(error.response.data);
+    }
+  }
 );
 
 export const naverLogIn = createAsyncThunk(
   'user/naverLogIn',
-  async (data, thunkAPI) => {}
+  async (_, { rejectWithValue }) => {
+    try {
+      await axios.get('/auth/naver');
+    } catch (err) {
+      let error = err;
+      if (!error.response) {
+        throw err;
+      }
+      return rejectWithValue(error.response.data);
+    }
+  }
 );

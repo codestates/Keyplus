@@ -1,37 +1,26 @@
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { deleteUser, logIn, logOut, signUp } from '../reducers/api/userAPI';
-import { addLikes, deleteLikes } from '../reducers/api/likesAPI';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import axios from '../utils/customAxios';
+import KeyboardCard from './KeyboardCard';
+
+import './Keyboard.scss';
 import { isError } from '../reducers/errorReducer';
+import { logIn } from '../reducers/api/userAPI';
 
 const Keyboard = () => {
   const dispatch = useDispatch();
-  // useEffect(async () => {
-  //   try {
-  //     const token = await axios.get(
-  //       `${process.env.REACT_APP_API_URL}/users/checkToken`
-  //     );
-  //     console.log(token.data.data);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // }, []);
+  /*
+  1. 모든 키보드 정보를 받아온다.
+  2. 카드(별도 컴포넌트)에 map 돌려서 정보 넣는다.
+  3. 각각의 카드에 props로 정보를 넘겨준다.
+  4. 하트를 카드에서 누르면 좋아요 수가 바뀌어야 한다. *****
+  5. 각각의 키보드 상세페이지에서도 하트를 누를 수 있다.
+  */
 
-  const onclickSignUpBtn = async () => {
-    try {
-      await dispatch(
-        signUp({
-          email: 'kimcoding333@github.com',
-          password: 'test',
-          nickname: '김코딩3333',
-        })
-      ).unwrap();
-    } catch (err) {
-      dispatch(isError(err.response));
-    }
-  };
+  const [keyboards, setKeyboards] = useState([]);
 
-  const onclickLogInBtn = async () => {
+  useEffect(async () => {
     try {
       await dispatch(
         logIn({
@@ -39,52 +28,41 @@ const Keyboard = () => {
           password: 'test',
         })
       ).unwrap();
+      const response = await axios.get('/keyboards');
+      setKeyboards(response.data.data);
     } catch (err) {
+      console.log(err);
       dispatch(isError(err.response));
     }
-  };
+  }, []);
 
-  const onclickLogOutBtn = async () => {
-    try {
-      await dispatch(logOut()).unwrap();
-    } catch (err) {
-      dispatch(isError(err.response));
-    }
-  };
-
-  const onclickDeleteUserBtn = async () => {
-    try {
-      await dispatch(deleteUser()).unwrap();
-    } catch (err) {
-      dispatch(isError(err.response));
-    }
-  };
-
-  const onclickAddLike = async () => {
-    try {
-      await dispatch(addLikes(10)).unwrap();
-    } catch (err) {
-      dispatch(isError(err.response));
-    }
-  };
-
-  const onclickDeleteLike = async () => {
-    try {
-      await dispatch(deleteLikes(10)).unwrap();
-    } catch (err) {
-      dispatch(isError(err.response));
-    }
-  };
+  // useEffect(async () => {
+  //   try {
+  //     const response = await axios.get('/keyboards');
+  //     setKeyboards(response.data.data);
+  //   } catch (err) {
+  //     dispatch(isError(err.response));
+  //   }
+  // }, []);
 
   return (
     <>
-      <button onClick={onclickSignUpBtn}>회원가입 버튼</button>
-      <button onClick={onclickLogInBtn}>로그인 버튼</button>
-      <button onClick={onclickLogOutBtn}>로그아웃 버튼</button>
-      <button onClick={onclickDeleteUserBtn}>회원탈퇴 버튼</button>
-
-      <button onClick={onclickAddLike}>좋아요 추가</button>
-      <button onClick={onclickDeleteLike}>좋아요 삭제</button>
+      <section className="card-section">
+        {keyboards.map((keyboard) => (
+          <Link
+            key={`${keyboard.id}_${keyboard.name}`}
+            to={{
+              pathname: `/keyboard/${keyboard.id}`,
+              state: { keyboard },
+            }}
+          >
+            <KeyboardCard
+              keyboard={keyboard}
+              // onClick={ }
+            />
+          </Link>
+        ))}
+      </section>
     </>
   );
 };
