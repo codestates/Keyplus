@@ -94,15 +94,45 @@ export const deleteUser = createAsyncThunk(
 
 export const googleLogIn = createAsyncThunk(
   'user/googleLogIn',
-  async (data, thunkAPI) => {}
+  async (_, { rejectWithValue }) => {
+    try {
+      await axios.get('/auth/google');
+    } catch (err) {
+      let error = err;
+      if (!error.response) {
+        throw err;
+      }
+      return rejectWithValue(error.response.data);
+    }
+  }
 );
 
 export const kakaoLogIn = createAsyncThunk(
   'user/kakaoLogin',
-  async (data, thunkAPI) => {}
+  async (_, { rejectWithValue }) => {
+    try {
+      await axios.get('/auth/kakao');
+    } catch (err) {
+      let error = err;
+      if (!error.response) {
+        throw err;
+      }
+      return rejectWithValue(error.response.data);
+    }
+  }
 );
 
 export const naverLogIn = createAsyncThunk(
   'user/naverLogIn',
-  async (data, thunkAPI) => {}
+  async (_, { rejectWithValue }) => {
+    try {
+      await axios.get('/auth/naver');
+    } catch (err) {
+      let error = err;
+      if (!error.response) {
+        throw err;
+      }
+      return rejectWithValue(error.response.data);
+    }
+  }
 );
