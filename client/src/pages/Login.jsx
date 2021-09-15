@@ -68,7 +68,8 @@ const Login = (props) => {
     // } catch (err) {
     //   dispatch(isError(err.response));
     // }
-    window.location.href = `${process.env.REACT_APP_API_URL}/auth/google`;
+    // window.location.href = `${process.env.REACT_APP_API_URL}/auth/google`;
+    window.location.href = `https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile&access_type=offline&response_type=code&state=state_parameter_passthrough_value&redirect_uri=https%3A%2F%2Fapi.keyplus.kr%2Fauth%2FgoogleCallback&client_id=1001972392375-bnmmb3v2co8p0uobbcmn5gorkbq65648.apps.googleusercontent.com&flowName=GeneralOAuthFlow`;
   };
 
   const onClickKakao = async () => {
@@ -81,7 +82,7 @@ const Login = (props) => {
     // } catch (err) {
     //   dispatch(isError(err.response));
     // }
-    window.location.href = `${process.env.REACT_APP_API_URL}/auth/kakao`;
+    window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=19bd94d3d70b2dad4f69a9118c77b3a3&redirect_uri=https://api.keyplus.kr/auth/kakaoCallback&&response_type=code`;
   };
 
   const onClickNaver = async () => {
