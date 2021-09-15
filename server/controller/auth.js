@@ -2,6 +2,10 @@ const db = require('../models');
 const { User } = require('../models');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const dotenv = require('dotenv');
+const axios = require('axios');
+dotenv.config();
+
 const {
   generateAccessToken,
   sendAccessToken,
@@ -94,7 +98,196 @@ module.exports = {
       return res.sendStatus(500);
     }
   },
-  googleLogin: async (req, res) => {},
-  naverLogin: async (req, res) => {},
-  kakaoLogin: async (req, res) => {},
+  googleLogin: async (req, res) => {
+    return res.redirect(
+      // 구글 로그인 화면 리다이렉트
+      `https://accounts.google.com/o/oauth2/v2/auth?scope=https://www.googleapis.com/auth/userinfo.email+https://www.googleapis.com/auth/userinfo.profile&access_type=offline&response_type=code&state=state_parameter_passthrough_value&redirect_uri=${process.env.GOOGLE_REDIRECT_URI}&client_id=${process.env.GOOGLE_CLIENT_ID}`
+    );
+  },
+  googleCallback: async (req, res) => {
+    // redirectUri 를 googleCallback 으로 설정해서 authorizationcode 받기
+    const code = req.query.code; // authorization code
+    try {
+      const result = await axios.post(
+        // authorization code를 이용해서 access code 요청
+        `https://oauth2.googleapis.com/token?code=${code}&client_id=${process.env.GOOGLE_CLIENT_ID}&client_secret=${process.env.GOOGLE_CLIENT_SECRET}&redirect_uri=${process.env.GOOGLE_REDIRECT_URI}&grant_type=authorization_code`
+      );
+
+      const userInfo = await axios.get(
+        // access code로 유저정보 요청
+        `https://www.googleapis.com/oauth2/v2/userinfo?access_token=${result.data.access_token}`,
+        {
+          headers: {
+            Authorization: `Bearer ${result.data.access_token}`,
+          },
+        }
+      );
+      //받아온 유저정보로 findOrCreate
+      const user = await User.findOrCreate({
+        attributes: [
+          'id',
+          'email',
+          'nickname',
+          'socialType',
+          'isAdmin',
+          'image',
+        ],
+        where: {
+          email: userInfo.data.email,
+          socialType: 'google',
+        },
+        defaults: {
+          email: userInfo.data.email, // 구글에서 받아온 유저정보의 이메일
+          nickname: userInfo.data.name, // 구글에서 받아온 유저정보의 이름
+          password: '',
+          socialType: 'google',
+          isAdmin: false,
+          image: userInfo.data.picture,
+        },
+        raw: true,
+      });
+      console.log(user);
+      const token = generateAccessToken({
+        id: user.id,
+        email: user.email,
+        nickname: user.nickname,
+        socialType: user.socialType,
+        isAdmin: user.isAdmin,
+        image: user.image,
+      });
+
+      res.cookie('jwt', token, {
+        sameSite: 'None',
+        httpOnly: true,
+        secure: true,
+      });
+
+      res.redirect(`https://keyplus.kr/keyboard?access_token=${token}`);
+    } catch (error) {
+      console.error(error);
+      res.sendStatus(500);
+    }
+  },
+  naverLogin: async (req, res) => {
+    return res.redirect(
+      `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${process.env.NAVER_CLIENT_ID}&state=STATE_STRING&redirect_uri=${process.env.NAVER_REDIRECT_URI}`
+    );
+  },
+  naverCallback: async (req, res) => {
+    const code = req.query.code;
+    const state = req.query.state;
+    console.log('===================CODE', code);
+    console.log('===================STATE', state);
+    try {
+      const result = await axios.post(
+        // authorization code를 이용해서 access code 요청
+        `https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&client_id=${process.env.NAVER_CLIENT_ID}&client_secret=${process.env.NAVER_CLIENT_SECRET}&code=${code}&state=${state}`
+      );
+
+      const userInfo = await axios.get(
+        // access code로 유저정보 요청
+        'https://openapi.naver.com/v1/nid/me',
+        {
+          headers: {
+            Authorization: `Bearer ${result.data.access_token}`,
+          },
+        }
+      );
+      console.log('============USERINFO', userInfo);
+      //받아온 유저정보로 findOrCreate
+      const user = await User.findOrCreate({
+        where: {
+          email: userInfo.data.response.email,
+          socialType: 'naver',
+        },
+        defaults: {
+          email: userInfo.data.response.email, // 구글에서 받아온 유저정보의 이메일
+          nickname: userInfo.data.response.name, // 구글에서 받아온 유저정보의 이름
+          password: '',
+          socialType: 'naver',
+          isAdmin: false,
+          image: '',
+        },
+      });
+      const token = generateAccessToken({
+        id: user.id,
+        email: user.email,
+        nickname: user.nickname,
+        socialType: user.socialType,
+        isAdmin: user.isAdmin,
+        image: user.image,
+      });
+
+      res.cookie('jwt', token, {
+        sameSite: 'None',
+        httpOnly: true,
+        secure: true,
+      });
+
+      res.redirect(`https://keyplus.kr/keyboard?access_token=${token}`);
+    } catch (error) {
+      console.error(error);
+      res.sendStatus(500);
+    }
+  },
+  kakaoLogin: async (req, res) => {
+    return res.redirect(
+      `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.KAKAO_CLIENT_ID}&redirect_uri=${process.env.KAKAO_REDIRECT_URI}&&response_type=code`
+    );
+  },
+  kakaoCallback: async (req, res) => {
+    const code = req.query.code;
+    console.log('===================CODE', code);
+    try {
+      const result = await axios.post(
+        // authorization code를 이용해서 access code 요청
+        `https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id=${process.env.KAKAO_CLIENT_URI}&redirect_uri=${process.env.KAKAO_REDIRECT_URI}&code=${code}`
+      );
+      console.log('========result', result);
+      const userInfo = await axios.get(
+        // access code로 유저정보 요청
+        'https://kapi.kakao.com/v2/user/me',
+        {
+          headers: {
+            Authorization: `Bearer ${result.data.access_token}`,
+          },
+        }
+      );
+      console.log('============USERINFO', userInfo);
+      //받아온 유저정보로 findOrCreate
+      const user = await User.findOrCreate({
+        where: {
+          email: userInfo.data.kakao_account.email,
+          socialType: 'kakao',
+        },
+        defaults: {
+          email: userInfo.data.kakao_account.email,
+          nickname: userInfo.data.properties.nickname,
+          password: '',
+          socialType: 'kakao',
+          isAdmin: false,
+          image: userInfo.data.kakao_account.profile.profile_image_url,
+        },
+      });
+      const token = generateAccessToken({
+        id: user.id,
+        email: user.email,
+        nickname: user.nickname,
+        socialType: user.socialType,
+        isAdmin: user.isAdmin,
+        image: user.image,
+      });
+
+      res.cookie('jwt', token, {
+        sameSite: 'None',
+        httpOnly: true,
+        secure: true,
+      });
+
+      res.redirect(`https://keyplus.kr/keyboard?access_token=${token}`);
+    } catch (error) {
+      console.error(error);
+      res.sendStatus(500);
+    }
+  },
 };
