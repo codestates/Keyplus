@@ -68,7 +68,7 @@ const Login = (props) => {
     // } catch (err) {
     //   dispatch(isError(err.response));
     // }
-    window.location.assign(`${process.env.REACT_APP_API_URL}/auth/google`);
+    window.location.href = `${process.env.REACT_APP_API_URL}/auth/google`;
   };
 
   const onClickKakao = async () => {
@@ -81,7 +81,7 @@ const Login = (props) => {
     // } catch (err) {
     //   dispatch(isError(err.response));
     // }
-    window.location.assign(`${process.env.REACT_APP_API_URL}/auth/kakao`);
+    window.location.href = `${process.env.REACT_APP_API_URL}/auth/kakao`;
   };
 
   const onClickNaver = async () => {
@@ -94,7 +94,7 @@ const Login = (props) => {
     // } catch (err) {
     //   dispatch(isError(err.response));
     // }
-    window.location.assign(`${process.env.REACT_APP_API_URL}/auth/naver`);
+    window.location.href = `${process.env.REACT_APP_API_URL}/auth/naver`;
   };
 
   /*
