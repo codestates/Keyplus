@@ -6,7 +6,10 @@ export const getReviews = createAsyncThunk(
   'reviews/getReviews',
   async (_, { rejectWithValue }) => {
     try {
-      await exceptionAxios.get('/reviews');
+      console.log('들어는 왔니?');
+      const reviews = await exceptionAxios.get('/reviews');
+      console.log('왜 계속 하니?');
+      return reviews.data.data;
     } catch (err) {
       let error = err;
       if (!error.response) {
