@@ -59,39 +59,43 @@ const Login = (props) => {
 
   //오어스 로그인
   const onClickGoogle = async () => {
-    try {
-      await dispatch(
-        googleLogIn({
-          //TODO: auth 코드
-        })
-      );
-    } catch (err) {
-      dispatch(isError(err.response));
-    }
+    // try {
+    //   await dispatch(
+    //     googleLogIn({
+    //       //TODO: auth 코드
+    //     })
+    //   );
+    // } catch (err) {
+    //   dispatch(isError(err.response));
+    // }
+    // window.location.href = `${process.env.REACT_APP_API_URL}/auth/google`;
+    window.location.href = `${process.env.REACT_APP_API_URL}/auth/google`;
   };
 
   const onClickKakao = async () => {
-    try {
-      await dispatch(
-        kakaoLogIn({
-          //TODO: auth 코드
-        })
-      );
-    } catch (err) {
-      dispatch(isError(err.response));
-    }
+    // try {
+    //   await dispatch(
+    //     kakaoLogIn({
+    //       //TODO: auth 코드
+    //     })
+    //   );
+    // } catch (err) {
+    //   dispatch(isError(err.response));
+    // }
+    window.location.href = `${process.env.REACT_APP_API_URL}/auth/kakao`;
   };
 
   const onClickNaver = async () => {
-    try {
-      await dispatch(
-        naverLogIn({
-          //TODO: auth 코드
-        })
-      );
-    } catch (err) {
-      dispatch(isError(err.response));
-    }
+    // try {
+    //   await dispatch(
+    //     naverLogIn({
+    //       //TODO: auth 코드
+    //     })
+    //   );
+    // } catch (err) {
+    //   dispatch(isError(err.response));
+    // }
+    window.location.href = `${process.env.REACT_APP_API_URL}/auth/naver`;
   };
 
   /*

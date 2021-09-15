@@ -105,16 +105,15 @@ module.exports = {
     );
   },
   googleCallback: async (req, res) => {
-    // redirectUri 를 googleCallback 으로 설정해서 authorizationcode 받기
     const code = req.query.code; // authorization code
     try {
       const result = await axios.post(
-        // authorization code를 이용해서 access code 요청
+        // authorization code를 이용해서 access token 요청
         `https://oauth2.googleapis.com/token?code=${code}&client_id=${process.env.GOOGLE_CLIENT_ID}&client_secret=${process.env.GOOGLE_CLIENT_SECRET}&redirect_uri=${process.env.GOOGLE_REDIRECT_URI}&grant_type=authorization_code`
       );
 
       const userInfo = await axios.get(
-        // access code로 유저정보 요청
+        // access token으로 유저정보 요청
         `https://www.googleapis.com/oauth2/v2/userinfo?access_token=${result.data.access_token}`,
         {
           headers: {
@@ -161,10 +160,8 @@ module.exports = {
         httpOnly: true,
         secure: true,
       });
-
-      res.redirect(`https://keyplus.kr/keyboard?access_token=${token}`);
+      res.redirect(`${process.env.CLIENT_URI}/keyboard`);
     } catch (error) {
-      console.error(error);
       res.sendStatus(500);
     }
   },
@@ -180,12 +177,12 @@ module.exports = {
     console.log('===================STATE', state);
     try {
       const result = await axios.post(
-        // authorization code를 이용해서 access code 요청
+        // authorization code를 이용해서 access token 요청
         `https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&client_id=${process.env.NAVER_CLIENT_ID}&client_secret=${process.env.NAVER_CLIENT_SECRET}&code=${code}&state=${state}`
       );
 
       const userInfo = await axios.get(
-        // access code로 유저정보 요청
+        // access token로 유저정보 요청
         'https://openapi.naver.com/v1/nid/me',
         {
           headers: {
@@ -224,7 +221,7 @@ module.exports = {
         secure: true,
       });
 
-      res.redirect(`https://keyplus.kr/keyboard?access_token=${token}`);
+      res.redirect(`${process.env.CLIENT_URI}/keyboard`);
     } catch (error) {
       console.error(error);
       res.sendStatus(500);
@@ -236,16 +233,18 @@ module.exports = {
     );
   },
   kakaoCallback: async (req, res) => {
+    console.log(process.env.KAKAO_CLIENT_ID);
+    console.log(process.env.KAKAO_REDIRECT_URI);
     const code = req.query.code;
     console.log('===================CODE', code);
     try {
       const result = await axios.post(
-        // authorization code를 이용해서 access code 요청
-        `https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id=${process.env.KAKAO_CLIENT_URI}&redirect_uri=${process.env.KAKAO_REDIRECT_URI}&code=${code}`
+        // authorization code를 이용해서 access token 요청
+        `https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id=${process.env.KAKAO_CLIENT_ID}&redirect_uri=${process.env.KAKAO_REDIRECT_URI}&code=${code}`
       );
       console.log('========result', result);
       const userInfo = await axios.get(
-        // access code로 유저정보 요청
+        // access token로 유저정보 요청
         'https://kapi.kakao.com/v2/user/me',
         {
           headers: {
@@ -283,8 +282,7 @@ module.exports = {
         httpOnly: true,
         secure: true,
       });
-
-      res.redirect(`https://keyplus.kr/keyboard?access_token=${token}`);
+      res.redirect(`${process.env.CLIENT_URI}/keyboard`);
     } catch (error) {
       console.error(error);
       res.sendStatus(500);
