@@ -105,7 +105,9 @@ module.exports = {
     );
   },
   googleCallback: async (req, res) => {
+    console.log('들어오긴 했냐????????');
     // redirectUri 를 googleCallback 으로 설정해서 authorizationcode 받기
+    console.log('req.query가 있냐?????????', req.query);
     const code = req.query.code; // authorization code
     console.log('여기기기기기기기기기', code);
     try {
