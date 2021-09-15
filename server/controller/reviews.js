@@ -3,42 +3,6 @@ const db = require('../models');
 const { Review, User, Keyboard, sequelize } = require('../models');
 
 module.exports = {
-  getReviewsByKeyboardId: async (req, res) => {
-    try {
-      const getKeyboard = await Keyboard.findOne({  // 키보드
-        where: {
-          id: req.params.id,
-        },
-        raw: true,
-      })
-      const keyboardReview = await Review.findAll({  // 리뷰
-        where: {
-          keyboardId: req.params.id,
-        },
-        raw: true,
-      })
-      const reviewUserId = keyboardReview.map((el) => el.userId) // userId를 배열로 만든다.
-
-      let reviews = [];  // review에 user.nickname을 넣어 reviews에 저장한다.
-      for (let i = 0; i < reviewUserId.length; i++) { 
-        let getNickname = await User.findOne({
-          attributes: [ 'nickname' ],
-          where: {
-            id: reviewUserId[i]
-          },
-          raw: true,
-        })
-        Object.assign(keyboardReview[i], getNickname);
-      }
-      reviews = { reviews: keyboardReview }
-    
-      let getKeyboardReview = Object.assign(getKeyboard, reviews);  // 키보드에 리뷰를 합친다.
-      return res.status(200).json({ data: getKeyboardReview })
-    } catch (error) {
-      console.log(error);
-      return res.sendStatus(500)
-    }
-  },
   addReview: async (req, res) => {
     // 1. params 로 키보드 아이디를 받아온다.
     const keyboard = req.params.id;
