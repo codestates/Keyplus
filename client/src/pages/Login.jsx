@@ -44,7 +44,7 @@ const Login = (props) => {
       }
       //이메일 형식 검사 -> false 나오면 에러메세지 던짐
       else if (!isEmail(email)) {
-        setEmailError('이메일 형식이 잘못됬습니다');
+        setEmailError('이메일 형식이 잘못됐습니다');
       }
       //위 두 케이스가 모두 통과되면 dispatch
       else {
