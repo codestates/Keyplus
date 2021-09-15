@@ -16,7 +16,7 @@ function App() {
         <Switch>
           <>
             {loading && <h1>로딩 중입니다</h1>}
-            <Redirect exact path="/" to="keyboard" />
+            {/* <Redirect exact path="/" to="keyboard" /> */}
             <Route path="/landing" component={Landing} />
             <Route path="/keyboard" component={Keyboard} />
             <Route path="/survey" component={Survey} />
