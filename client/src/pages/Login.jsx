@@ -69,7 +69,7 @@ const Login = (props) => {
     //   dispatch(isError(err.response));
     // }
     // window.location.href = `${process.env.REACT_APP_API_URL}/auth/google`;
-    window.location.href = `https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile&access_type=offline&response_type=code&state=state_parameter_passthrough_value&redirect_uri=https%3A%2F%2Fapi.keyplus.kr%2Fauth%2FgoogleCallback&client_id=1001972392375-bnmmb3v2co8p0uobbcmn5gorkbq65648.apps.googleusercontent.com&flowName=GeneralOAuthFlow`;
+    window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?scope=https://www.googleapis.com/auth/userinfo.email+https://www.googleapis.com/auth/userinfo.profile&access_type=offline&response_type=code&state=state_parameter_passthrough_value&redirect_uri=https://api.keyplus.kr/auth/googleCallback&client_id=1001972392375-bnmmb3v2co8p0uobbcmn5gorkbq65648.apps.googleusercontent.com`;
   };
 
   const onClickKakao = async () => {
