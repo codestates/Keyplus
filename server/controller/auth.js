@@ -107,6 +107,7 @@ module.exports = {
   googleCallback: async (req, res) => {
     // redirectUri 를 googleCallback 으로 설정해서 authorizationcode 받기
     const code = req.query.code; // authorization code
+    console.log('여기기기기기기기기기', code);
     try {
       const result = await axios.post(
         // authorization code를 이용해서 access code 요청
