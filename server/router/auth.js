@@ -6,7 +6,7 @@ const { uploads } = require('../middleware/uploads');
 const router = express.Router();
 
 router.post('/login', authController.login); // login API
-router.post('/logout', authController.logout); // logout API
+router.post('/logout', isAuth, authController.logout); // logout API
 router.post('/signup', uploads.single('img'), authController.signup); // singup API
 router.post('/google', authController.googleLogin); // 구글 오어스
 router.post('/naver', authController.naverLogin); // 네이버 오어스
