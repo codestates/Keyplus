@@ -41,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.BOOLEAN,
         allowNull: false,
       },
-      keys: {
+      tenkey: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
       },
