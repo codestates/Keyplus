@@ -1,35 +1,42 @@
+const { default: contentSecurityPolicy } = require('helmet/dist/middlewares/content-security-policy');
 const db = require('../models');
 const { Review, User, Keyboard, sequelize } = require('../models');
 
 module.exports = {
   getReviewsByKeyboardId: async (req, res) => {
-    // 1. params 로 키보드 아이디를 받아온다.
-    // 2. keyboard를 찾고,
-    try {    
-      const keyboard = await Keyboard.findOne({
-        attributes: {
-          exclude: ['createdAt', 'updatedAt'],
-        },
+    try {
+      const getKeyboard = await Keyboard.findOne({  // 키보드
         where: {
           id: req.params.id,
-          },
-          raw: true,
-        });
-      // 2. 받아온 키보드아이디로 등록되어있는 리뷰를 조회한 후 keyboard와 붙여 클라이언트로 보내준다.
-      const keyboardReview = await Review.findAll({
+        },
+        raw: true,
+      })
+      const keyboardReview = await Review.findAll({  // 리뷰
         where: {
           keyboardId: req.params.id,
         },
-        attributes: [ 'id', 'nickname', 'content', 'rating', 'image1' ,'image2', 'image3' ],  // nickname도 붙여야 됌
         raw: true,
       })
-      const review = { reviews : keyboardReview };
-      const result = Object.assign(keyboard, review);
-      
-      return res.status(200).json({ data: result });
+      const reviewUserId = keyboardReview.map((el) => el.userId) // userId를 배열로 만든다.
+
+      let reviews = [];  // review에 user.nickname을 넣어 reviews에 저장한다.
+      for (let i = 0; i < reviewUserId.length; i++) { 
+        let getNickname = await User.findOne({
+          attributes: [ 'nickname' ],
+          where: {
+            id: reviewUserId[i]
+          },
+          raw: true,
+        })
+        Object.assign(keyboardReview[i], getNickname);
+      }
+      reviews = { reviews: keyboardReview }
+    
+      let getKeyboardReview = Object.assign(getKeyboard, reviews);  // 키보드에 리뷰를 합친다.
+      return res.status(200).json({ data: getKeyboardReview })
     } catch (error) {
       console.log(error);
-      return res.status(500);
+      return res.sendStatus(500)
     }
   },
   addReview: async (req, res) => {
@@ -40,40 +47,41 @@ module.exports = {
     const { content, rating } = req.body;
       try {
         // 3. 로그인이되어있는지 확인 후, 클라이언트로부터 받아온 정보를 Review table에 저장한다.
-        const nickname = await User.findOne({
-          attributes: [ 'nickname' ],
+        const hasReview = await Review.findOne({
           where: {
-            id: req.userId,
-          },
-          raw: true,
-        });
-        if (Object.keys(req.files).length !== 0) {
-          const img = req.files.img ? req.files.img.map(el => el.location) : '';
+            userId: user,
+            keyboardId: keyboard,
+          }
+        })
+        if (!hasReview) {
+          if (Object.keys(req.files).length !== 0) {
+            const img = req.files.img ? req.files.img.map(el => el.location) : '';
+            let review = await Review.create({
+              content,
+              rating,
+              image1: img[0] || null,
+              image2: img[1] || null,
+              image3: img[2] || null,
+              video: req.files.video ? req.files.video[0].location : null,
+              userId: user,
+              keyboardId: keyboard,
+            });
+            return res.status(200).json({ data: review });
+          } else {
           let review = await Review.create({
-            nickname: nickname.nickname,
-            content,
-            rating,
-            image1: img[0] || null,
-            image2: img[1] || null,
-            image3: img[2] || null,
-            video: req.files.video ? req.files.video[0].location : null,
-            userId: user,
-            keyboardId: keyboard,
-          });
-          return res.status(200).json({ data: review });
+              content,
+              rating,
+              userId: user,
+              keyboardId: keyboard,
+            });
+            return res.status(200).json({ data: review });
+          }
         } else {
-        let review = await Review.create({
-            nickname: nickname.nickname,  
-            content,
-            rating,
-            userId: user,
-            keyboardId: keyboard,
-          });
-          return res.status(200).json({ data: review });
+          return res.sendStatus(200)
         }
     } catch (error) {
       console.log(error);
-      return res.status(500);
+      return res.sendStatus(500);
     }
   },
   updateReview: async (req, res) => {
@@ -85,17 +93,9 @@ module.exports = {
     const { content, rating } = req.body;
     
     try {
-      const nickname = await User.findOne({
-        attributes: [ 'nickname' ],
-        where: {
-          id: req.userId,
-        },
-        raw: true,
-      });
       if (Object.keys(req.files).length !== 0) {
         const img = req.files.img ? req.files.img.map(el => el.location) : '';
         await Review.update({
-          nickname: nickname.nickname,
           content,
           rating,
           image1: img[0] || null,
@@ -119,8 +119,7 @@ module.exports = {
         });
         return res.status(200).json({ data: review });
       } else {
-        await Review.update({
-          nickname: nickname.nickname,  
+        await Review.update({ 
           content,
           rating,
           image1: null,
@@ -146,7 +145,7 @@ module.exports = {
       }
     } catch (error) {
       console.log(error);
-      return res.status(500);
+      return res.sendStatus(500);
     }
   },
   deleteReview: async (req, res) => {
@@ -160,10 +159,10 @@ module.exports = {
           keyboardId: req.params.id,
         }
       });
-      return res.status(200);
+      return res.sendStatus(200);
     } catch (error) {
       console.log(error);
-      return res.status(500);
+      return res.sendStatus(500);
     }
   },
   getReviewLists: async (req, res) => {
@@ -171,9 +170,6 @@ module.exports = {
     // 2. 조회한 리뷰 목록을 클라이언트로 보내준다.
     try {
       const reviews = await Review.findAll({
-        attributes: {
-          exclude: ['createdAt', 'updatedAt'],
-        },
         where: {
           userId: req.userId,
         },
@@ -182,7 +178,7 @@ module.exports = {
       return res.status(200).json({ data: reviews });
     } catch (error) {
       console.log(error);
-      return res.status(500);
+      return res.sendStatus(500);
     }
   },
 };
