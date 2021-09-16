@@ -101,7 +101,7 @@ module.exports = {
   googleLogin: async (req, res) => {
     return res.redirect(
       // 구글 로그인 화면 리다이렉트
-      `https://accounts.google.com/o/oauth2/v2/auth?scope=https://www.googleapis.com/auth/userinfo.email+https://www.googleapis.com/auth/userinfo.profile&access_type=offline&response_type=code&state=state_parameter_passthrough_value&redirect_uri=https://api.keyplus.kr/auth/googleCallback&client_id=1001972392375-bnmmb3v2co8p0uobbcmn5gorkbq65648.apps.googleusercontent.com`
+      `https://accounts.google.com/o/oauth2/v2/auth?scope=https://www.googleapis.com/auth/userinfo.email+https://www.googleapis.com/auth/userinfo.profile&access_type=offline&response_type=code&state=state_parameter_passthrough_value&redirect_uri=${process.env.GOOGLE_REDIRECT_URI}&client_id=${process.env.GOOGLE_CLIENT_ID}`
     );
   },
   googleCallback: async (req, res) => {
@@ -110,7 +110,7 @@ module.exports = {
     try {
       const result = await axios.post(
         // authorization code를 이용해서 access token 요청
-        `https://oauth2.googleapis.com/token?code=${code}&client_id=1001972392375-bnmmb3v2co8p0uobbcmn5gorkbq65648.apps.googleusercontent.com&client_secret=Bz_7AoEpTFlvkaXGgKUSelTN&redirect_uri=https://api.keyplus.kr/auth/googleCallback&grant_type=authorization_code`
+        `https://oauth2.googleapis.com/token?code=${code}&client_id=${process.env.GOOGLE_CLIENT_ID}&client_secret=${process.env.GOOGLE_CLIENT_SECRET}&redirect_uri=${process.env.GOOGLE_REDIRECT_URI}&grant_type=authorization_code`
       );
       const userInfo = await axios.get(
         // access token 유저정보 요청
