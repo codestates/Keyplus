@@ -49,18 +49,19 @@ const Keyboard = () => {
     <>
       <section className="card-section">
         {keyboards.map((keyboard) => (
-          <Link
+          // <Link
+          //   key={`${keyboard.id}_${keyboard.name}`}
+          //   to={{
+          //     pathname: `/keyboards/${keyboard.id}`,
+          //     state: { keyboard },
+          //   }}
+          // >
+          <KeyboardCard
             key={`${keyboard.id}_${keyboard.name}`}
-            to={{
-              pathname: `/keyboard/${keyboard.id}`,
-              state: { keyboard },
-            }}
-          >
-            <KeyboardCard
-              keyboard={keyboard}
-              // onClick={ }
-            />
-          </Link>
+            keyboard={keyboard}
+            // onClick={ }
+          />
+          // </Link>
         ))}
       </section>
     </>
