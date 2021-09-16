@@ -111,9 +111,11 @@ module.exports = {
         // authorization code를 이용해서 access token 요청
         `https://oauth2.googleapis.com/token?code=${code}&client_id=${process.env.GOOGLE_CLIENT_ID}&client_secret=${process.env.GOOGLE_CLIENT_SECRET}&redirect_uri=${process.env.GOOGLE_REDIRECT_URI}&grant_type=authorization_code`
       );
-
       const userInfo = await axios.get(
+ 
+
         // access token으로 유저정보 요청
+
         `https://www.googleapis.com/oauth2/v2/userinfo?access_token=${result.data.access_token}`,
         {
           headers: {
@@ -121,16 +123,9 @@ module.exports = {
           },
         }
       );
+      console.log(userInfo);
       //받아온 유저정보로 findOrCreate
       const user = await User.findOrCreate({
-        attributes: [
-          'id',
-          'email',
-          'nickname',
-          'socialType',
-          'isAdmin',
-          'image',
-        ],
         where: {
           email: userInfo.data.email,
           socialType: 'google',
@@ -143,9 +138,7 @@ module.exports = {
           isAdmin: false,
           image: userInfo.data.picture,
         },
-        raw: true,
       });
-      console.log(user);
       const token = generateAccessToken({
         id: user.id,
         email: user.email,
@@ -154,6 +147,7 @@ module.exports = {
         isAdmin: user.isAdmin,
         image: user.image,
       });
+      console.log('====================token', token);
 
       res.cookie('jwt', token, {
         sameSite: 'None',
@@ -161,6 +155,7 @@ module.exports = {
         secure: true,
       });
       res.redirect(`${process.env.CLIENT_URI}/keyboard`);
+
     } catch (error) {
       res.sendStatus(500);
     }
@@ -190,7 +185,6 @@ module.exports = {
           },
         }
       );
-      console.log('============USERINFO', userInfo);
       //받아온 유저정보로 findOrCreate
       const user = await User.findOrCreate({
         where: {
@@ -221,7 +215,9 @@ module.exports = {
         secure: true,
       });
 
+
       res.redirect(`${process.env.CLIENT_URI}/keyboard`);
+
     } catch (error) {
       console.error(error);
       res.sendStatus(500);
@@ -282,10 +278,14 @@ module.exports = {
         httpOnly: true,
         secure: true,
       });
+
       res.redirect(`${process.env.CLIENT_URI}/keyboard`);
+
     } catch (error) {
       console.error(error);
+      console.log('hihihihihi');
       res.sendStatus(500);
+      console.log('hihihihihi');
     }
   },
 };
