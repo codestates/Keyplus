@@ -22,10 +22,12 @@ module.exports = {
       });
       let message = {
         from: process.env.MAILID,
-        to: req.body.email,
+        to: process.env.MAILID,
         subject: title,
         text: content,
-
+        html: `<p><b>Title</b>: ${title}</p>
+        <p><b>To</b>: ${email}</p>
+        <p><b>content</b>: ${content}</p>`
       }
       transporter.sendMail(message, function (err, info) {
         if (err) {
