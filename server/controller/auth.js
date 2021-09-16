@@ -121,7 +121,7 @@ module.exports = {
           },
         }
       );
-      console.log(userInfo);
+      // console.log(userInfo);
       //받아온 유저정보로 findOrCreate
       const user = await User.findOrCreate({
         where: {
@@ -137,13 +137,14 @@ module.exports = {
           image: userInfo.data.picture,
         },
       });
+
       const token = generateAccessToken({
-        id: user.id,
-        email: user.email,
-        nickname: user.nickname,
-        socialType: user.socialType,
-        isAdmin: user.isAdmin,
-        image: user.image,
+        id: user[0].dataValues.id,
+        email: user[0].dataValues.email,
+        nickname: user[0].dataValues.nickname,
+        socialType: user[0].dataValues.socialType,
+        isAdmin: user[0].dataValues.isAdmin,
+        image: user[0].dataValues.image,
       });
       console.log('====================token', token);
 
@@ -152,7 +153,7 @@ module.exports = {
         httpOnly: true,
         secure: true,
       });
-      res.redirect(`${process.env.CLIENT_URI}/temp?accessToken=${token}`);
+      res.redirect(`${process.env.CLIENT_URI}/temp`);
     } catch (error) {
       res.sendStatus(500);
     }
@@ -198,12 +199,12 @@ module.exports = {
         },
       });
       const token = generateAccessToken({
-        id: user.id,
-        email: user.email,
-        nickname: user.nickname,
-        socialType: user.socialType,
-        isAdmin: user.isAdmin,
-        image: user.image,
+        id: user[0].dataValues.id,
+        email: user[0].dataValues.email,
+        nickname: user[0].dataValues.nickname,
+        socialType: user[0].dataValues.socialType,
+        isAdmin: user[0].dataValues.isAdmin,
+        image: user[0].dataValues.image,
       });
 
       res.cookie('jwt', token, {
@@ -212,7 +213,7 @@ module.exports = {
         secure: true,
       });
 
-      res.redirect(`${process.env.CLIENT_URI}/temp?accessToken=${token}`);
+      res.redirect(`${process.env.CLIENT_URI}/temp`);
     } catch (error) {
       console.error(error);
       res.sendStatus(500);
@@ -260,12 +261,12 @@ module.exports = {
         },
       });
       const token = generateAccessToken({
-        id: user.id,
-        email: user.email,
-        nickname: user.nickname,
-        socialType: user.socialType,
-        isAdmin: user.isAdmin,
-        image: user.image,
+        id: user[0].dataValues.id,
+        email: user[0].dataValues.email,
+        nickname: user[0].dataValues.nickname,
+        socialType: user[0].dataValues.socialType,
+        isAdmin: user[0].dataValues.isAdmin,
+        image: user[0].dataValues.image,
       });
 
       res.cookie('jwt', token, {
@@ -274,7 +275,7 @@ module.exports = {
         secure: true,
       });
 
-      res.redirect(`${process.env.CLIENT_URI}/temp?accessToken=${token}`);
+      res.redirect(`${process.env.CLIENT_URI}/temp`);
     } catch (error) {
       console.error(error);
       console.log('hihihihihi');

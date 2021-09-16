@@ -4,6 +4,7 @@ import {
   logIn,
   logOut,
   signUp,
+  socialLogIn,
   updateUserInfo,
 } from './api/userAPI';
 
@@ -20,6 +21,10 @@ const userSlice = createSlice({
     builder
       .addCase(signUp.fulfilled, () => {})
       .addCase(logIn.fulfilled, (state, action) => {
+        state = action.payload;
+        return state;
+      })
+      .addCase(socialLogIn.fulfilled, (state, action) => {
         state = action.payload;
         return state;
       })

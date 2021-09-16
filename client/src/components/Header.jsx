@@ -9,14 +9,41 @@ import { IoMdExit } from 'react-icons/io';
 import { GiHamburgerMenu } from 'react-icons/gi';
 
 import './Header.scss';
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { logOut } from '../reducers/api/userAPI';
+import { isError } from '../reducers/errorReducer';
+import { useHistory } from 'react-router';
 
 export const Header = () => {
   const [isOpenSidebar, setIsOpenSidebar] = useState(false);
   const [offset, setOffset] = useState(0);
   const [width, setWidth] = useState(window.innerWidth);
 
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const userState = useSelector((state) => state.user);
+
   const onClickToggleBtn = () => {
     setIsOpenSidebar((prev) => !prev);
+  };
+
+  //FIXME: 로그아웃 함수
+  const onClickLogout = async () => {
+    console.log('로그아웃 버튼 클릭됬어?');
+    console.log(`여기가 유저스테이트`, userState);
+    try {
+      if (userState === null) {
+        //로그인 되지 않은 상태라면 로그인 페이지로 이동시킴
+        history.push('/login');
+      } else {
+        //유저정보가 있으면 (=로그인 되있으면) 로그아웃 시키고 랜딩페이지로 이동
+        await dispatch(logOut());
+        history.push('/landing');
+      }
+    } catch (err) {
+      dispatch(isError(err.response));
+    }
   };
 
   useEffect(() => {
@@ -74,9 +101,9 @@ export const Header = () => {
                 </a>
               </li>
               <li className="nav-item">
-                <a href="#" className="nav-links">
+                <Link to="/keyboards" className="nav-links">
                   키보드
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
                 <a href="#" className="nav-links">
@@ -102,14 +129,14 @@ export const Header = () => {
         <nav className="buttons">
           <ul className="button-menu">
             <li className="button-item">
-              <a href="#" className="button-links">
+              <button className="button-links">
                 <AiOutlineUser size={24} fill={offset > 0 ? '#fff' : '#000'} />
-              </a>
+              </button>
             </li>
             <li className="button-item">
-              <a href="#" className="button-links">
+              <button onClick={onClickLogout} className="button-links">
                 <IoMdExit size={24} fill={offset > 0 ? '#fff' : '#000'} />
-              </a>
+              </button>
             </li>
           </ul>
         </nav>
