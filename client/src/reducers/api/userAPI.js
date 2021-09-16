@@ -92,41 +92,16 @@ export const deleteUser = createAsyncThunk(
   }
 );
 
-export const googleLogIn = createAsyncThunk(
-  'user/googleLogIn',
-  async (_, { rejectWithValue }) => {
+export const socialLogIn = createAsyncThunk(
+  'user/socialLogIn',
+  async (_, { dispatch, rejectWithValue }) => {
     try {
-      await axios.get('/auth/google');
-    } catch (err) {
-      let error = err;
-      if (!error.response) {
-        throw err;
-      }
-      return rejectWithValue(error.response.data);
-    }
-  }
-);
-
-export const kakaoLogIn = createAsyncThunk(
-  'user/kakaoLogin',
-  async (_, { rejectWithValue }) => {
-    try {
-      await axios.get('/auth/kakao');
-    } catch (err) {
-      let error = err;
-      if (!error.response) {
-        throw err;
-      }
-      return rejectWithValue(error.response.data);
-    }
-  }
-);
-
-export const naverLogIn = createAsyncThunk(
-  'user/naverLogIn',
-  async (_, { rejectWithValue }) => {
-    try {
-      await axios.get('/auth/naver');
+      const user = await axios.get('/users');
+      await Promise.all([
+        dispatch(getLikes()).unwrap(),
+        dispatch(getReviews()).unwrap(),
+      ]);
+      return user.data.data;
     } catch (err) {
       let error = err;
       if (!error.response) {
