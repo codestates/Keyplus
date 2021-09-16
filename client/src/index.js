@@ -8,17 +8,18 @@ import { Provider } from 'react-redux';
 
 import store from './store';
 
-import App from './App';
-import LoadingIndicator from './components/LoadingIndicator';
-
 import './assets/fonts/font.css';
 // import './styles/constants.scss';
 // import './styles/mixins.scss';
 import './styles/_reset.scss';
-import axiosInterceptor from './utils/axiosInterceptor';
+
+import App from './App';
+import LoadingIndicator from './components/LoadingIndicator';
+
+import axiosConfig from './utils/axiosConfig';
+axiosConfig();
 
 // const persistor = persistStore(store);
-axiosInterceptor();
 
 ReactDOM.render(
   <React.StrictMode>

@@ -1,0 +1,19 @@
+.container {
+  border: 2px solid #000;
+  height: 200px;
+}
+
+.oauth {
+  border: 2px solid blue;
+  display: flex;
+  justify-content: space-around;
+
+  button {
+    border: 2px solid #000;
+    height: 30px;
+  }
+}
+
+.input {
+  display: inline-block;
+}

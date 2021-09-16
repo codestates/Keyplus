@@ -2,6 +2,10 @@ const db = require('../models');
 const { User } = require('../models');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const dotenv = require('dotenv');
+const axios = require('axios');
+dotenv.config();
+
 const {
   generateAccessToken,
   sendAccessToken,
@@ -62,10 +66,23 @@ module.exports = {
   },
   signup: async (req, res) => {
     // 1. email, nickname, password, image 를 클라이언트에서 받아온다.
-    const { email, nickname, password, image } = req.body;
+    const { email, nickname, password } = req.body;
+
     // 2. 패스워드를 hashing 해준 후 DB에 저장한다.
     // 3. User.create 를 사용해서 유저정보를 DB에 저장한다.
     try {
+      if (req.file) {
+        const hashed = await bcrypt.hash(password, 10);
+        await User.create({
+          email,
+          nickname,
+          password: hashed,
+          socialType: 'local',
+          isAdmin: false,
+          image: req.file.location,
+        });
+        return res.status(200).json({ image: req.file.location });
+      }
       const hashed = await bcrypt.hash(password, 10);
       await User.create({
         email,
@@ -73,15 +90,196 @@ module.exports = {
         password: hashed,
         socialType: 'local',
         isAdmin: false,
-        image,
+        image: '',
       });
       return res.sendStatus(200);
     } catch (err) {
       console.log(err);
-      return res.status(500).json({ message: 'Server Error' });
+      return res.sendStatus(500);
     }
   },
-  googleLogin: async (req, res) => {},
-  naverLogin: async (req, res) => {},
-  kakaoLogin: async (req, res) => {},
+  googleLogin: async (req, res) => {
+    return res.redirect(
+      // 구글 로그인 화면 리다이렉트
+      `https://accounts.google.com/o/oauth2/v2/auth?scope=https://www.googleapis.com/auth/userinfo.email+https://www.googleapis.com/auth/userinfo.profile&access_type=offline&response_type=code&state=state_parameter_passthrough_value&redirect_uri=${process.env.GOOGLE_REDIRECT_URI}&client_id=${process.env.GOOGLE_CLIENT_ID}`
+    );
+  },
+  googleCallback: async (req, res) => {
+    const code = req.query.code; // authorization code
+    try {
+      const result = await axios.post(
+        // authorization code를 이용해서 access token 요청
+        `https://oauth2.googleapis.com/token?code=${code}&client_id=${process.env.GOOGLE_CLIENT_ID}&client_secret=${process.env.GOOGLE_CLIENT_SECRET}&redirect_uri=${process.env.GOOGLE_REDIRECT_URI}&grant_type=authorization_code`
+      );
+      const userInfo = await axios.get(
+        // access token으로 유저정보 요청
+
+        `https://www.googleapis.com/oauth2/v2/userinfo?access_token=${result.data.access_token}`,
+        {
+          headers: {
+            Authorization: `Bearer ${result.data.access_token}`,
+          },
+        }
+      );
+      console.log(userInfo);
+      //받아온 유저정보로 findOrCreate
+      const user = await User.findOrCreate({
+        where: {
+          email: userInfo.data.email,
+          socialType: 'google',
+        },
+        defaults: {
+          email: userInfo.data.email, // 구글에서 받아온 유저정보의 이메일
+          nickname: userInfo.data.name, // 구글에서 받아온 유저정보의 이름
+          password: '',
+          socialType: 'google',
+          isAdmin: false,
+          image: userInfo.data.picture,
+        },
+      });
+      const token = generateAccessToken({
+        id: user.id,
+        email: user.email,
+        nickname: user.nickname,
+        socialType: user.socialType,
+        isAdmin: user.isAdmin,
+        image: user.image,
+      });
+      console.log('====================token', token);
+
+      res.cookie('jwt', token, {
+        sameSite: 'None',
+        httpOnly: true,
+        secure: true,
+      });
+      res.redirect(`${process.env.CLIENT_URI}/temp?accessToken=${token}`);
+    } catch (error) {
+      res.sendStatus(500);
+    }
+  },
+  naverLogin: async (req, res) => {
+    return res.redirect(
+      `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${process.env.NAVER_CLIENT_ID}&state=STATE_STRING&redirect_uri=${process.env.NAVER_REDIRECT_URI}`
+    );
+  },
+  naverCallback: async (req, res) => {
+    const code = req.query.code;
+    const state = req.query.state;
+    console.log('===================CODE', code);
+    console.log('===================STATE', state);
+    try {
+      const result = await axios.post(
+        // authorization code를 이용해서 access token 요청
+        `https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&client_id=${process.env.NAVER_CLIENT_ID}&client_secret=${process.env.NAVER_CLIENT_SECRET}&code=${code}&state=${state}`
+      );
+
+      const userInfo = await axios.get(
+        // access token로 유저정보 요청
+        'https://openapi.naver.com/v1/nid/me',
+        {
+          headers: {
+            Authorization: `Bearer ${result.data.access_token}`,
+          },
+        }
+      );
+      //받아온 유저정보로 findOrCreate
+      const user = await User.findOrCreate({
+        where: {
+          email: userInfo.data.response.email,
+          socialType: 'naver',
+        },
+        defaults: {
+          email: userInfo.data.response.email, // 구글에서 받아온 유저정보의 이메일
+          nickname: userInfo.data.response.name, // 구글에서 받아온 유저정보의 이름
+          password: '',
+          socialType: 'naver',
+          isAdmin: false,
+          image: '',
+        },
+      });
+      const token = generateAccessToken({
+        id: user.id,
+        email: user.email,
+        nickname: user.nickname,
+        socialType: user.socialType,
+        isAdmin: user.isAdmin,
+        image: user.image,
+      });
+
+      res.cookie('jwt', token, {
+        sameSite: 'None',
+        httpOnly: true,
+        secure: true,
+      });
+
+      res.redirect(`${process.env.CLIENT_URI}/temp?accessToken=${token}`);
+    } catch (error) {
+      console.error(error);
+      res.sendStatus(500);
+    }
+  },
+  kakaoLogin: async (req, res) => {
+    return res.redirect(
+      `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.KAKAO_CLIENT_ID}&redirect_uri=${process.env.KAKAO_REDIRECT_URI}&&response_type=code`
+    );
+  },
+  kakaoCallback: async (req, res) => {
+    console.log(process.env.KAKAO_CLIENT_ID);
+    console.log(process.env.KAKAO_REDIRECT_URI);
+    const code = req.query.code;
+    console.log('===================CODE', code);
+    try {
+      const result = await axios.post(
+        // authorization code를 이용해서 access token 요청
+        `https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id=${process.env.KAKAO_CLIENT_ID}&redirect_uri=${process.env.KAKAO_REDIRECT_URI}&code=${code}`
+      );
+      console.log('========result', result);
+      const userInfo = await axios.get(
+        // access token로 유저정보 요청
+        'https://kapi.kakao.com/v2/user/me',
+        {
+          headers: {
+            Authorization: `Bearer ${result.data.access_token}`,
+          },
+        }
+      );
+      console.log('============USERINFO', userInfo);
+      //받아온 유저정보로 findOrCreate
+      const user = await User.findOrCreate({
+        where: {
+          email: userInfo.data.kakao_account.email,
+          socialType: 'kakao',
+        },
+        defaults: {
+          email: userInfo.data.kakao_account.email,
+          nickname: userInfo.data.properties.nickname,
+          password: '',
+          socialType: 'kakao',
+          isAdmin: false,
+          image: userInfo.data.kakao_account.profile.profile_image_url,
+        },
+      });
+      const token = generateAccessToken({
+        id: user.id,
+        email: user.email,
+        nickname: user.nickname,
+        socialType: user.socialType,
+        isAdmin: user.isAdmin,
+        image: user.image,
+      });
+
+      res.cookie('jwt', token, {
+        sameSite: 'None',
+        httpOnly: true,
+        secure: true,
+      });
+
+      res.redirect(`${process.env.CLIENT_URI}/temp?accessToken=${token}`);
+    } catch (error) {
+      console.error(error);
+      console.log('hihihihihi');
+      res.sendStatus(500);
+      console.log('hihihihihi');
+    }
+  },
 };

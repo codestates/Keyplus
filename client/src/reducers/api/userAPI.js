@@ -1,29 +1,138 @@
+import axios from '../../utils/customAxios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { getLikes } from './likesAPI';
+import { getReviews } from './reviewsAPI';
+import { logOutMyLikes } from '../likesSlice';
+import { logOutMyReviews } from '../reviewsSlice';
 
-const delay = (data) => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve(data);
-    }, 2000);
-  });
-};
+// 회원가입, 로그인, 로그아웃, 유저정보조회, 회원정보변경, 회원탈퇴, 소셜로그인(구글,카카오,네이버)
 
-export const logIn = createAsyncThunk('user/logIn', async (data, thunkAPI) => {
-  // data = {email, password}
-  // const response = await logInAPI.post(URL, data);
-  // return response.data.data;
-  console.log('2초 기다리기를 시작합니다.');
-  const resolvedData = await delay(data);
-  // throw new Error('error다!');
-  console.log('2초 기다리기를 끝냅니다.');
-  console.log('data : ', resolvedData);
+export const signUp = createAsyncThunk(
+  'user/signUp',
+  async (data, { rejectWithValue }) => {
+    try {
+      await axios.post('/auth/signup', data);
+    } catch (err) {
+      let error = err;
+      if (!error.response) {
+        throw err;
+      }
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 
-  return {
-    id: 1,
-    email: 'kimcoding@github.com',
-    nickname: '김코딩',
-    socialType: 'local',
-    isAdmin: false,
-    image: '/profile/kimcoding.jpg',
-  };
-});
+export const logIn = createAsyncThunk(
+  'user/logIn',
+  async (data, { dispatch, rejectWithValue }) => {
+    try {
+      const user = await axios.post('/auth/login', data);
+      await Promise.all([
+        dispatch(getLikes()).unwrap(),
+        dispatch(getReviews()).unwrap(),
+      ]);
+      return user.data.data;
+    } catch (err) {
+      let error = err;
+      if (!error.response) {
+        throw err;
+      }
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const logOut = createAsyncThunk(
+  'user/logOut',
+  async (_, { dispatch, rejectWithValue }) => {
+    try {
+      await axios.post('/auth/logout');
+      dispatch(logOutMyLikes());
+      dispatch(logOutMyReviews());
+    } catch (err) {
+      let error = err;
+      if (!error.response) {
+        throw err;
+      }
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const updateUserInfo = createAsyncThunk(
+  'user/updateUserInfo',
+  async (data, { rejectWithValue }) => {
+    try {
+      const user = await axios.patch('/users', data);
+      return user.data.data;
+    } catch (err) {
+      let error = err;
+      if (!error.response) {
+        throw err;
+      }
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const deleteUser = createAsyncThunk(
+  'user/deleteUser',
+  async (_, { dispatch, rejectWithValue }) => {
+    try {
+      await axios.delete('/users');
+      dispatch(logOutMyLikes());
+      dispatch(logOutMyReviews());
+    } catch (err) {
+      let error = err;
+      if (!error.response) {
+        throw err;
+      }
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const googleLogIn = createAsyncThunk(
+  'user/googleLogIn',
+  async (_, { rejectWithValue }) => {
+    try {
+      await axios.get('/auth/google');
+    } catch (err) {
+      let error = err;
+      if (!error.response) {
+        throw err;
+      }
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const kakaoLogIn = createAsyncThunk(
+  'user/kakaoLogin',
+  async (_, { rejectWithValue }) => {
+    try {
+      await axios.get('/auth/kakao');
+    } catch (err) {
+      let error = err;
+      if (!error.response) {
+        throw err;
+      }
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const naverLogIn = createAsyncThunk(
+  'user/naverLogIn',
+  async (_, { rejectWithValue }) => {
+    try {
+      await axios.get('/auth/naver');
+    } catch (err) {
+      let error = err;
+      if (!error.response) {
+        throw err;
+      }
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
