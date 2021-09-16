@@ -112,8 +112,6 @@ module.exports = {
         `https://oauth2.googleapis.com/token?code=${code}&client_id=${process.env.GOOGLE_CLIENT_ID}&client_secret=${process.env.GOOGLE_CLIENT_SECRET}&redirect_uri=${process.env.GOOGLE_REDIRECT_URI}&grant_type=authorization_code`
       );
       const userInfo = await axios.get(
- 
-
         // access token으로 유저정보 요청
 
         `https://www.googleapis.com/oauth2/v2/userinfo?access_token=${result.data.access_token}`,
@@ -154,8 +152,7 @@ module.exports = {
         httpOnly: true,
         secure: true,
       });
-      res.redirect(`${process.env.CLIENT_URI}/keyboard`);
-
+      res.redirect(`${process.env.CLIENT_URI}/temp?accessToken=${token}`);
     } catch (error) {
       res.sendStatus(500);
     }
@@ -215,9 +212,7 @@ module.exports = {
         secure: true,
       });
 
-
-      res.redirect(`${process.env.CLIENT_URI}/keyboard`);
-
+      res.redirect(`${process.env.CLIENT_URI}/temp?accessToken=${token}`);
     } catch (error) {
       console.error(error);
       res.sendStatus(500);
@@ -279,8 +274,7 @@ module.exports = {
         secure: true,
       });
 
-      res.redirect(`${process.env.CLIENT_URI}/keyboard`);
-
+      res.redirect(`${process.env.CLIENT_URI}/temp?accessToken=${token}`);
     } catch (error) {
       console.error(error);
       console.log('hihihihihi');
