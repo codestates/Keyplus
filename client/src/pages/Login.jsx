@@ -121,7 +121,7 @@ const Login = (props) => {
         <label htmlFor="email">이메일</label>
         <input
           type="text"
-          placeholder="examle@example.com"
+          placeholder="example@example.com"
           onChange={onChangeLoginState}
           name="email"
           required
