@@ -22,12 +22,12 @@ const Keyboard = () => {
 
   useEffect(async () => {
     try {
-      await dispatch(
-        logIn({
-          email: 'kimcoding333@github.com',
-          password: 'test',
-        })
-      ).unwrap();
+      // await dispatch(
+      //   logIn({
+      //     email: 'kimcoding333@github.com',
+      //     password: 'test',
+      //   })
+      // ).unwrap();
       const response = await axios.get('/keyboards');
       setKeyboards(response.data.data);
     } catch (err) {

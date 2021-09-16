@@ -9,6 +9,7 @@ import { IoMdExit } from 'react-icons/io';
 import { GiHamburgerMenu } from 'react-icons/gi';
 
 import './Header.scss';
+import { Link } from 'react-router-dom';
 
 export const Header = () => {
   const [isOpenSidebar, setIsOpenSidebar] = useState(false);
@@ -74,9 +75,9 @@ export const Header = () => {
                 </a>
               </li>
               <li className="nav-item">
-                <a href="#" className="nav-links">
+                <Link to="/keyboards" className="nav-links">
                   키보드
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
                 <a href="#" className="nav-links">
@@ -102,14 +103,14 @@ export const Header = () => {
         <nav className="buttons">
           <ul className="button-menu">
             <li className="button-item">
-              <a href="#" className="button-links">
+              <Link to="/login" className="button-links">
                 <AiOutlineUser size={24} fill={offset > 0 ? '#fff' : '#000'} />
-              </a>
+              </Link>
             </li>
             <li className="button-item">
-              <a href="#" className="button-links">
+              <Link to="/landing" className="button-links">
                 <IoMdExit size={24} fill={offset > 0 ? '#fff' : '#000'} />
-              </a>
+              </Link>
             </li>
           </ul>
         </nav>
