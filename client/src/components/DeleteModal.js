@@ -31,7 +31,9 @@ const DeleteModal = () => {
         setConfirmLoading(false);
       }, 2000);
       await dispatch(deleteUser());
-      return history.replace('/landing');
+      // window.location.replace('/');
+      return history.push('/landing');
+      // props.history.push('/');
     } catch (err) {
       dispatch(isError(err.response));
     }
