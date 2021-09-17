@@ -4,9 +4,12 @@ import { ReactComponent as KEYPLUS_BLACK_36 } from '../assets/images/KEYPLUS_bla
 import { ReactComponent as KEYPLUS_WHITE_24 } from '../assets/images/KEYPLUS_white_24.svg';
 import { ReactComponent as KEYPLUS_BLACK_24 } from '../assets/images/KEYPLUS_black_24.svg';
 
-import { AiOutlineUser, AiOutlineClose } from 'react-icons/ai';
-import { IoMdExit } from 'react-icons/io';
-import { GiHamburgerMenu } from 'react-icons/gi';
+import {
+  UserOutlined,
+  CloseOutlined,
+  MenuOutlined,
+  ExportOutlined,
+} from '@ant-design/icons';
 
 import './Header.scss';
 import { Link } from 'react-router-dom';
@@ -33,13 +36,24 @@ export const Header = () => {
     console.log('로그아웃 버튼 클릭됬어?');
     console.log(`여기가 유저스테이트`, userState);
     try {
+      //유저정보가 있으면 (=로그인 되있으면) 로그아웃 시키고 랜딩페이지로 이동
+      await dispatch(logOut());
+      history.push('/landing');
+    } catch (err) {
+      dispatch(isError(err.response));
+    }
+  };
+
+  //FIXME: Mypage 함수
+  const onClickMypage = async () => {
+    console.log('마이페이지 버튼 클릭됬어?');
+    try {
       if (userState === null) {
         //로그인 되지 않은 상태라면 로그인 페이지로 이동시킴
         history.push('/login');
       } else {
-        //유저정보가 있으면 (=로그인 되있으면) 로그아웃 시키고 랜딩페이지로 이동
-        await dispatch(logOut());
-        history.push('/landing');
+        //유저정보가 있으면 (=로그인 되있으면) 마이페이지로 이동
+        history.push('/mypage');
       }
     } catch (err) {
       dispatch(isError(err.response));
@@ -62,22 +76,23 @@ export const Header = () => {
 
   return (
     <>
-      {/* 헤더는 sticky로 스크롤해도 고정한다. */}
-      {/* 키보드, 타건샵 메뉴 왼쪽 위치 */}
-      {/* 스크롤 애니메이션 (PAFFEM)처럼 스크롤하다가 헤더에서 메인으로 내려오는 순간 헤더 색 변경 */}
-      {/* 반응형으로 왼쪽에 햄버거 애니메이션 (PAFFEM) */}
-      {/* Logo 중간 */}
-      {/* isLogin이 false면 오른쪽에 사람 아이콘 하나 */}
-      {/* isLogin이 true면 사람 아이콘 + 나가기 아이콘 */}
-      {/* isLogin이 true면 사람아이콘 클릭 시, 마이페이지 & false일 경우엔 로그인 페이지로 이동 */}
-
       <header className={offset > 0 ? 'header' : 'header bgc-white'}>
         <nav className="navigation">
           <div className="menu-icon" onClick={onClickToggleBtn}>
             {isOpenSidebar ? (
-              <AiOutlineClose size={24} fill={offset > 0 ? '#fff' : '#000'} />
+              <CloseOutlined
+                style={{
+                  fontSize: '24px',
+                  color: offset > 0 ? '#fff' : '#000',
+                }}
+              />
             ) : (
-              <GiHamburgerMenu size={24} fill={offset > 0 ? '#fff' : '#000'} />
+              <MenuOutlined
+                style={{
+                  fontSize: '24px',
+                  color: offset > 0 ? '#fff' : '#000',
+                }}
+              />
             )}
           </div>
 
@@ -129,15 +144,27 @@ export const Header = () => {
         <nav className="buttons">
           <ul className="button-menu">
             <li className="button-item">
-              <button className="button-links">
-                <AiOutlineUser size={24} fill={offset > 0 ? '#fff' : '#000'} />
+              <button onClick={onClickMypage} className="button-links">
+                <UserOutlined
+                  style={{
+                    fontSize: '24px',
+                    color: offset > 0 ? '#fff' : '#000',
+                  }}
+                />
               </button>
             </li>
-            <li className="button-item">
-              <button onClick={onClickLogout} className="button-links">
-                <IoMdExit size={24} fill={offset > 0 ? '#fff' : '#000'} />
-              </button>
-            </li>
+            {userState !== null && (
+              <li className="button-item">
+                <button onClick={onClickLogout} className="button-links">
+                  <ExportOutlined
+                    style={{
+                      fontSize: '24px',
+                      color: offset > 0 ? '#fff' : '#000',
+                    }}
+                  />
+                </button>
+              </li>
+            )}
           </ul>
         </nav>
       </header>

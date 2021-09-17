@@ -1,0 +1,72 @@
+// // // * {
+// // //   // color: #000;
+// // //   border-color: #000;
+
+// // //   // &:hover {
+// // //   //   color: #000 !important;
+// // //   // }
+
+// // //   // &:active {
+// // //   //   border: none !important;
+// // //   // }
+
+// // //   // &:focus {
+// // //   //   border: none !important;
+// // //   // }
+// // //   &::after {
+// // //     all: unset;
+// // //   }
+
+// // //   &::before {
+// // //     all: unset;
+// // //   }
+// // // }
+
+// * {
+//   border-color: rgb(163, 163, 163);
+//   color: #000;
+//   &:hover {
+//     border-color: rgb(163, 163, 163);
+//   }
+//   // &::selection {
+//   //   // color: #fff;
+//   //   // background: #1890ff;
+//   //   all: unset;
+//   // }
+
+//   // --scroll-bar: 0;
+// }
+
+// // // .ant-select,
+// // // .ant-select-single,
+// // // .ant-select-show-arrow,
+// // // .ant-select-focused,
+// // // .ant-select-open {
+// // //   box-shadow: #000 !important;
+// // // }
+
+// // // .ant-select,
+// // .ant-select-focused .ant-select-selector,
+// // .ant-select-selector:focus,
+// // .ant-select-selector:active,
+// // .ant-select-open .ant-select-selector {
+// //   border-color: rgb(192, 190, 190) !important;
+// //   box-shadow: none !important;
+// // }
+
+// // * {
+// //   all: none;
+// //   box-shadow: none !important;
+
+// //   &:hover {
+// //     border-color: #000;
+// //     box-shadow: none !important;
+// //   }
+
+// //   &:focus {
+// //     border-color: #000;
+// //     box-shadow: none !important;
+// //   }
+
+// //   // box-shadow: none !important;
+// // }

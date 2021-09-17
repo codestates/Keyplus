@@ -8,13 +8,15 @@ import { Provider } from 'react-redux';
 
 import store from './store';
 
-import './assets/fonts/font.css';
-// import './styles/constants.scss';
-// import './styles/mixins.scss';
-import './styles/_reset.scss';
+// import 'antd/dist/antd.css';
 
+// import './index.scss';
 import App from './App';
-import LoadingIndicator from './components/LoadingIndicator';
+
+import './assets/fonts/font.css';
+// // import './styles/constants.scss';
+// // import './styles/mixins.scss';
+import './styles/_reset.scss';
 
 import axiosConfig from './utils/axiosConfig';
 axiosConfig();
@@ -26,7 +28,6 @@ ReactDOM.render(
     <BrowserRouter>
       <Provider store={store}>
         {/* <PersistGate loading={null} persistor={persistor}> */}
-        {/* <LoadingIndicator isLoading={true} /> */}
         <App />
         {/* </PersistGate> */}
       </Provider>
