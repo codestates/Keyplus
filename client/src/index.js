@@ -18,8 +18,6 @@ import './assets/fonts/font.css';
 // // import './styles/mixins.scss';
 import './styles/_reset.scss';
 
-import LoadingIndicator from './components/LoadingIndicator';
-
 import axiosConfig from './utils/axiosConfig';
 axiosConfig();
 
@@ -30,7 +28,6 @@ ReactDOM.render(
     <BrowserRouter>
       <Provider store={store}>
         {/* <PersistGate loading={null} persistor={persistor}> */}
-        {/* <LoadingIndicator isLoading={true} /> */}
         <App />
         {/* </PersistGate> */}
       </Provider>
