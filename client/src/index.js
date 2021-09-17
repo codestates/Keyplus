@@ -12,7 +12,6 @@ import store from './store';
 
 // import './index.scss';
 import App from './App';
-
 import './assets/fonts/font.css';
 // // import './styles/constants.scss';
 // // import './styles/mixins.scss';

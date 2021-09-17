@@ -6,9 +6,7 @@ export const getReviews = createAsyncThunk(
   'reviews/getReviews',
   async (_, { rejectWithValue }) => {
     try {
-      console.log('들어는 왔니?');
       const reviews = await exceptionAxios.get('/reviews');
-      console.log('왜 계속 하니?');
       return reviews.data.data;
     } catch (err) {
       let error = err;
@@ -24,8 +22,9 @@ export const getReviews = createAsyncThunk(
 export const addReviews = createAsyncThunk(
   'reviews/addReviews',
   async (data, { rejectWithValue }) => {
+    console.log(data);
     try {
-      await axios.post(`/reviews/${data}`);
+      await axios.post(`/reviews/${data.keyboardId}`, data);
     } catch (err) {
       let error = err;
       if (!error.response) {
@@ -41,7 +40,7 @@ export const updateReviews = createAsyncThunk(
   'reviews/updateReviews',
   async (data, { rejectWithValue }) => {
     try {
-      await axios.patch(`/reviews/${data}`);
+      await axios.patch(`/reviews/${data.keyboardId}`);
     } catch (err) {
       let error = err;
       if (!error.response) {
