@@ -11,9 +11,11 @@ import { useSelector } from 'react-redux';
 import Temp from './pages/Temp';
 
 import Spinner from './components/Spinner';
+import './App.less';
 
 function App() {
   const loading = useSelector((state) => state.loading);
+
   return (
     <>
       <AppLayout>
