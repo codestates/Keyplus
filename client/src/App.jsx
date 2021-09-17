@@ -1,5 +1,6 @@
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router';
+
 import AppLayout from './components/AppLayout';
 import Keyboard from './pages/Keyboard';
 import KeyboardDetail from './pages/KeyboardDetail';
@@ -9,8 +10,8 @@ import Login from './pages/Login';
 import Mypage from './pages/Mypage';
 import { useSelector } from 'react-redux';
 import Temp from './pages/Temp';
-
 import Spinner from './components/Spinner';
+
 import './App.less';
 
 function App() {
