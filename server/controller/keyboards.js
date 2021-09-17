@@ -68,12 +68,18 @@ module.exports = {
       let reviews = [];  // review에 user.nickname을 넣어 reviews에 저장한다.
       for (let i = 0; i < reviewUserId.length; i++) { 
         let getNickname = await User.findOne({
-          attributes: [ 'nickname' ],
+          attributes: [ 'nickname', 'image' ],
           where: {
             id: reviewUserId[i],
           },
           raw: true,
         });
+        for (let keyValue in getNickname) {
+          if (keyValue === "image") {
+            getNickname["userImage"] = getNickname[keyValue]
+            delete getNickname['image']
+          }
+        }
         Object.assign(keyboardReview[i], getNickname);
       };
       reviews = { reviews: keyboardReview };
