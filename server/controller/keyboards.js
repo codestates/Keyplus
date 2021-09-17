@@ -17,7 +17,7 @@ module.exports = {
   getFilteredKeyboards: async (req, res) => {
     try {
       const { color, backlight, tenkey, bluetooth, price } = req.body;
-      const keys = { "저소음적축": 1, "적축": 1, "갈축": 2, "흑축": 3, "청축": 4 };
+      const keys = { '저소음적축': 1, '적축': 1, '갈축': 2, '흑축': 3, '청축': 4 };
       let getSwitch = {}; 
       for (let key in keys) {  // 반복문을 돌려 req.body.switch를 getKeys에 넣는다.
         if (keys[key] === req.body.switch) {
@@ -66,7 +66,9 @@ module.exports = {
       const reviewUserId = keyboardReview.map((el) => el.userId); // userId를 배열로 만든다.
 
       let reviews = [];  // review에 user.nickname을 넣어 reviews에 저장한다.
+      let reviewCount = 0;
       for (let i = 0; i < reviewUserId.length; i++) { 
+        reviewCount++
         let getNickname = await User.findOne({
           attributes: [ 'nickname', 'image' ],
           where: {
@@ -74,16 +76,12 @@ module.exports = {
           },
           raw: true,
         });
-        for (let keyValue in getNickname) {
-          if (keyValue === "image") {
-            getNickname["userImage"] = getNickname[keyValue]
-            delete getNickname['image']
-          }
-        }
+        getNickname[ 'userImage' ] = getNickname[ 'image' ];
+        delete getNickname[ 'image' ];
         Object.assign(keyboardReview[i], getNickname);
       };
       reviews = { reviews: keyboardReview };
-      let getKeyboardReview = Object.assign(getKeyboard, reviews);  // 키보드에 리뷰를 붙인다.
+      let getKeyboardReview = Object.assign(getKeyboard, { reviewCount }, reviews);  // 키보드에 리뷰를 붙인다.
       return res.status(200).json({ data: getKeyboardReview });
     } catch (error) {
       console.log(error);
