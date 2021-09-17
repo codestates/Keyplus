@@ -7,6 +7,9 @@ import KeyboardCard from './KeyboardCard';
 import './Keyboard.scss';
 import { isError } from '../reducers/errorReducer';
 import { logIn } from '../reducers/api/userAPI';
+import 'antd/dist/antd.css';
+import { Select } from 'antd';
+const { Option } = Select;
 
 const Keyboard = () => {
   const dispatch = useDispatch();
@@ -29,24 +32,65 @@ const Keyboard = () => {
       //   })
       // ).unwrap();
       const response = await axios.get('/keyboards');
-      setKeyboards(response.data.data);
+      setKeyboards(
+        response.data.data.sort((a, b) => b.likeCount - a.likeCount)
+      );
     } catch (err) {
       console.log(err);
       dispatch(isError(err.response));
     }
   }, []);
 
-  // useEffect(async () => {
-  //   try {
-  //     const response = await axios.get('/keyboards');
-  //     setKeyboards(response.data.data);
-  //   } catch (err) {
-  //     dispatch(isError(err.response));
-  //   }
-  // }, []);
+  async function handleChange(value) {
+    switch (value) {
+      case '1':
+        try {
+          const response = await axios.get('/keyboards');
+          setKeyboards(
+            response.data.data.sort((a, b) => b.likeCount - a.likeCount)
+          );
+        } catch (err) {
+          console.log(err);
+          dispatch(isError(err.response));
+        }
+        break;
+      case '2':
+        try {
+          const response = await axios.get('/keyboards');
+          setKeyboards(
+            response.data.data.sort((a, b) => a.likeCount - b.likeCount)
+          );
+        } catch (err) {
+          console.log(err);
+          dispatch(isError(err.response));
+        }
+        break;
+      case '3':
+        setKeyboards((keyboards) =>
+          [...keyboards].sort((a, b) => b.price - a.price)
+        );
+        break;
+      case '4':
+        setKeyboards((keyboards) =>
+          [...keyboards].sort((a, b) => a.price - b.price)
+        );
+      default:
+        break;
+    }
+  }
 
   return (
     <>
+      <Select
+        defaultValue="1"
+        onChange={handleChange}
+        style={{ marginBottom: '30px', minWidth: '150px' }}
+      >
+        <Option value="1">좋아요 내림차순</Option>
+        <Option value="2">좋아요 오름차순</Option>
+        <Option value="3">가격 내림차순</Option>
+        <Option value="4">가격 오름차순</Option>
+      </Select>
       <section className="card-section">
         {keyboards.map((keyboard) => (
           // <Link

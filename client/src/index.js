@@ -8,12 +8,16 @@ import { Provider } from 'react-redux';
 
 import store from './store';
 
+// import 'antd/dist/antd.css';
+
+// import './index.scss';
+import App from './App';
+
 import './assets/fonts/font.css';
-// import './styles/constants.scss';
-// import './styles/mixins.scss';
+// // import './styles/constants.scss';
+// // import './styles/mixins.scss';
 import './styles/_reset.scss';
 
-import App from './App';
 import LoadingIndicator from './components/LoadingIndicator';
 
 import axiosConfig from './utils/axiosConfig';
