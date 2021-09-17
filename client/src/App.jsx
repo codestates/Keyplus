@@ -6,9 +6,11 @@ import KeyboardDetail from './pages/KeyboardDetail';
 import Landing from './pages/Landing';
 import Survey from './pages/Survey';
 import Login from './pages/Login';
+import Mypage from './pages/Mypage';
 import { useSelector } from 'react-redux';
 import Temp from './pages/Temp';
 
+import Spinner from './components/Spinner';
 import './App.less';
 
 function App() {
@@ -19,7 +21,7 @@ function App() {
       <AppLayout>
         <Switch>
           <>
-            {loading && <h1>로딩 중입니다</h1>}
+            {loading && <Spinner />}
             {/* <Redirect exact path="/" to="keyboard" /> */}
             <Route path="/landing" component={Landing} />
             <Route path="/temp" component={Temp} />
@@ -27,6 +29,7 @@ function App() {
             <Route path="/keyboards/:id" component={KeyboardDetail} />
             <Route path="/survey" component={Survey} />
             <Route path="/login" component={Login} />
+            <Route path="/mypage" component={Mypage} />
           </>
         </Switch>
       </AppLayout>
