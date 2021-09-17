@@ -4,9 +4,12 @@ import { ReactComponent as KEYPLUS_BLACK_36 } from '../assets/images/KEYPLUS_bla
 import { ReactComponent as KEYPLUS_WHITE_24 } from '../assets/images/KEYPLUS_white_24.svg';
 import { ReactComponent as KEYPLUS_BLACK_24 } from '../assets/images/KEYPLUS_black_24.svg';
 
-import { AiOutlineUser, AiOutlineClose } from 'react-icons/ai';
-import { IoMdExit } from 'react-icons/io';
-import { GiHamburgerMenu } from 'react-icons/gi';
+import {
+  UserOutlined,
+  CloseOutlined,
+  MenuOutlined,
+  ExportOutlined,
+} from '@ant-design/icons';
 
 import './Header.scss';
 import { Link } from 'react-router-dom';
@@ -75,9 +78,19 @@ export const Header = () => {
         <nav className="navigation">
           <div className="menu-icon" onClick={onClickToggleBtn}>
             {isOpenSidebar ? (
-              <AiOutlineClose size={24} fill={offset > 0 ? '#fff' : '#000'} />
+              <CloseOutlined
+                style={{
+                  fontSize: '24px',
+                  color: offset > 0 ? '#fff' : '#000',
+                }}
+              />
             ) : (
-              <GiHamburgerMenu size={24} fill={offset > 0 ? '#fff' : '#000'} />
+              <MenuOutlined
+                style={{
+                  fontSize: '24px',
+                  color: offset > 0 ? '#fff' : '#000',
+                }}
+              />
             )}
           </div>
 
@@ -129,14 +142,24 @@ export const Header = () => {
         <nav className="buttons">
           <ul className="button-menu">
             <li className="button-item">
-              <button className="button-links">
-                <AiOutlineUser size={24} fill={offset > 0 ? '#fff' : '#000'} />
-              </button>
+              <Link to="/login" className="button-links">
+                <UserOutlined
+                  style={{
+                    fontSize: '24px',
+                    color: offset > 0 ? '#fff' : '#000',
+                  }}
+                />
+              </Link>
             </li>
             <li className="button-item">
-              <button onClick={onClickLogout} className="button-links">
-                <IoMdExit size={24} fill={offset > 0 ? '#fff' : '#000'} />
-              </button>
+              <Link to="/landing" className="button-links">
+                <ExportOutlined
+                  style={{
+                    fontSize: '24px',
+                    color: offset > 0 ? '#fff' : '#000',
+                  }}
+                />
+              </Link>
             </li>
           </ul>
         </nav>

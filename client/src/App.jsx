@@ -9,8 +9,11 @@ import Login from './pages/Login';
 import { useSelector } from 'react-redux';
 import Temp from './pages/Temp';
 
+import './App.less';
+
 function App() {
   const loading = useSelector((state) => state.loading);
+
   return (
     <>
       <AppLayout>
