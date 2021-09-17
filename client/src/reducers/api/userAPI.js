@@ -62,8 +62,10 @@ export const logOut = createAsyncThunk(
 export const updateUserInfo = createAsyncThunk(
   'user/updateUserInfo',
   async (data, { rejectWithValue }) => {
+    console.log('나 무슨데이터야?', data);
     try {
       const user = await axios.patch('/users', data);
+      console.log('여기는 응답 받아온거~', user);
       return user.data.data;
     } catch (err) {
       let error = err;
@@ -82,6 +84,7 @@ export const deleteUser = createAsyncThunk(
       await axios.delete('/users');
       dispatch(logOutMyLikes());
       dispatch(logOutMyReviews());
+      return window.location.replace('landing');
     } catch (err) {
       let error = err;
       if (!error.response) {
@@ -92,41 +95,16 @@ export const deleteUser = createAsyncThunk(
   }
 );
 
-export const googleLogIn = createAsyncThunk(
-  'user/googleLogIn',
-  async (_, { rejectWithValue }) => {
+export const socialLogIn = createAsyncThunk(
+  'user/socialLogIn',
+  async (_, { dispatch, rejectWithValue }) => {
     try {
-      await axios.get('/auth/google');
-    } catch (err) {
-      let error = err;
-      if (!error.response) {
-        throw err;
-      }
-      return rejectWithValue(error.response.data);
-    }
-  }
-);
-
-export const kakaoLogIn = createAsyncThunk(
-  'user/kakaoLogin',
-  async (_, { rejectWithValue }) => {
-    try {
-      await axios.get('/auth/kakao');
-    } catch (err) {
-      let error = err;
-      if (!error.response) {
-        throw err;
-      }
-      return rejectWithValue(error.response.data);
-    }
-  }
-);
-
-export const naverLogIn = createAsyncThunk(
-  'user/naverLogIn',
-  async (_, { rejectWithValue }) => {
-    try {
-      await axios.get('/auth/naver');
+      const user = await axios.get('/users');
+      await Promise.all([
+        dispatch(getLikes()).unwrap(),
+        dispatch(getReviews()).unwrap(),
+      ]);
+      return user.data.data;
     } catch (err) {
       let error = err;
       if (!error.response) {

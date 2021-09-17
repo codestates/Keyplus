@@ -41,12 +41,27 @@ module.exports = {
     // 1. nickname, password, image를 클라이언트로부터 받아온다.
     const { nickname, password } = req.body;
     // 2. 클라이언트로 받아온 유저 정보를 Cookie를 이용해서 조회 후, User.update 로 수정한다.
+    const userInfo = await User.findOne({
+      attributes: ['socialType'],
+      where: { id: req.userId },
+      raw: true,
+    });
+    if (userInfo.socialType !== 'local') {
+      await User.update(
+        {
+          nickname,
+          image: req.file ? req.file.location : ''
+        },
+        { where: { id: req.userId } }
+      );
+    }
+    console.log(userInfo);
     const hashed = await bcrypt.hash(password, 10);
     await User.update(
       {
         nickname,
         password: hashed,
-        image: req.file.location,
+        image: req.file ? req.file.location : ''
       },
       { where: { id: req.userId } }
     );

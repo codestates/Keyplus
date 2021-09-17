@@ -53,6 +53,7 @@ const Login = (props) => {
         props.history.push('/keyboards');
       }
     } catch (err) {
+      setErrMessage('잘못된 이메일이나 비밀번호 입니다');
       dispatch(isError(err.response));
     }
   };
@@ -121,7 +122,7 @@ const Login = (props) => {
         <label htmlFor="email">이메일</label>
         <input
           type="text"
-          placeholder="examle@example.com"
+          placeholder="example@example.com"
           onChange={onChangeLoginState}
           name="email"
           required
