@@ -13,6 +13,7 @@ import Temp from './pages/Temp';
 import Spinner from './components/Spinner';
 
 import './App.less';
+import Test from './pages/Test';
 
 function App() {
   const loading = useSelector((state) => state.loading);
@@ -31,6 +32,7 @@ function App() {
             <Route path="/survey" component={Survey} />
             <Route path="/login" component={Login} />
             <Route path="/mypage" component={Mypage} />
+            <Route path="/test" component={Test} />
           </>
         </Switch>
       </AppLayout>

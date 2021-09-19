@@ -4,7 +4,7 @@ import { addLikes, deleteLikes } from '../reducers/api/likesAPI';
 import { isError } from '../reducers/errorReducer';
 import axios from '../utils/customAxios';
 
-import { Carousel, Card, Empty, Rate, Avatar } from 'antd';
+import { Carousel, Card, Empty, Rate, Avatar, Button, Upload } from 'antd';
 
 const { Meta } = Card;
 import {
@@ -22,6 +22,17 @@ import Rating from 'react-rating';
 
 import './KeyboardDetail.scss';
 import { addReviews } from '../reducers/api/reviewsAPI';
+
+const LeftArrow = ({ currentSlide, slideCount, children, ...props }) => {
+  // return <Button icon={<LeftOutlined />} {...props} />;
+
+  return <div {...props}>{children}</div>;
+};
+
+const RightArrow = ({ currentSlide, slideCount, children, ...props }) => {
+  // return <Button icon={<RightOutlined />} {...props} />;
+  return <div {...props}>{children}</div>;
+};
 
 const KeyboardDetail = ({ location }) => {
   const dispatch = useDispatch();
@@ -84,7 +95,7 @@ const KeyboardDetail = ({ location }) => {
     }
   };
 
-  const onClickReviewCreateBtn = async () => {
+  const onClickCreateReviewBtn = async () => {
     try {
       await dispatch(
         addReviews({ keyboardId, content: '리뷰 테스트', rating: 3 })
@@ -97,17 +108,45 @@ const KeyboardDetail = ({ location }) => {
   // ! 리뷰 이미지가 0개면 no data
   // ! 리뷰 이미지가 1개 이상이면 그때부터 캐러셀을 여는데 항목 개수가 2개 이상일 때만
 
+  const [fileList, setFileList] = useState([
+    {
+      uid: '-1',
+      name: 'image.png',
+      status: 'done',
+      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+    },
+  ]);
+
+  const onChange = ({ fileList: newFileList }) => {
+    setFileList(newFileList);
+  };
+
+  const onPreview = async (file) => {
+    let src = file.url;
+    if (!src) {
+      src = await new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file.originFileObj);
+        reader.onload = () => resolve(reader.result);
+      });
+    }
+    const image = new Image();
+    image.src = src;
+    const imgWindow = window.open(src);
+    imgWindow.document.write(image.outerHTML);
+  };
+
   return (
     <>
       {keyboard && (
         <>
-          <button onClick={onClickReviewCreateBtn}>리뷰 작성</button>
           <Carousel
             autoplay
             dots={false}
             arrows
-            prevArrow={<LeftOutlined />}
-            nextArrow={<RightOutlined />}
+            draggable
+            prevArrow={<LeftArrow />}
+            nextArrow={<RightArrow />}
             style={{ maxWidth: '500px' }}
           >
             {keyboard.image1 && (
@@ -174,6 +213,32 @@ const KeyboardDetail = ({ location }) => {
           {/* image3이 있으면 3, image2가 있으면 2, image1이 있으면 1 */}
 
           <h1 style={{ marginTop: '30px' }}>아래는 리뷰칸이지롱</h1>
+          {/* <div>
+            <Button onClick={onClickCreateReviewBtn}>리뷰 작성</Button>
+            <input
+              id="img-upload"
+              type="file"
+              accept="image/png, image/jpg, image/jpeg, image/gif"
+              multiple
+              hidden
+            />
+            <label htmlFor="img-upload">
+              <img
+                src="https://picsum.photos/200/300"
+                width="100"
+                height="100"
+              />
+            </label>
+            <input type="file" accept="video/*" hidden />
+            <label htmlFor="img-upload">
+              <img
+                src="https://picsum.photos/200/300"
+                width="100"
+                height="100"
+              />
+            </label>
+          </div> */}
+
           {reviews.length ? (
             <>
               이것은 너의 평균 평점이다
@@ -201,14 +266,15 @@ const KeyboardDetail = ({ location }) => {
                 }
               />
               {reviews.map((review, idx) => (
-                <>
+                <div key={`${review}_${idx}`}>
                   {reviewImageCounts[idx] || review.video ? (
                     <Carousel
                       infinite={false}
                       dots={false}
                       arrows
-                      nextArrow={<RightOutlined />}
-                      prevArrow={<LeftOutlined />}
+                      draggable
+                      prevArrow={<LeftArrow />}
+                      nextArrow={<RightArrow />}
                       style={{ maxWidth: '500px' }}
                     >
                       {review.video && (
@@ -280,7 +346,7 @@ const KeyboardDetail = ({ location }) => {
                   <div>
                     언제 썼는지도 보여줘라 {review.createdAt.split('T')[0]}
                   </div>
-                </>
+                </div>
               ))}
             </>
           ) : (

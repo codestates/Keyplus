@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from '../utils/customAxios';
+import exceptionAxios from 'axios';
 import KeyboardCard from './KeyboardCard';
 
 import './Keyboard.scss';
@@ -45,7 +46,7 @@ const Keyboard = () => {
     switch (value) {
       case '1':
         try {
-          const response = await axios.get('/keyboards');
+          const response = await exceptionAxios.get('/keyboards');
           setKeyboards(
             response.data.data.sort((a, b) => b.likeCount - a.likeCount)
           );
@@ -56,7 +57,7 @@ const Keyboard = () => {
         break;
       case '2':
         try {
-          const response = await axios.get('/keyboards');
+          const response = await exceptionAxios.get('/keyboards');
           setKeyboards(
             response.data.data.sort((a, b) => a.likeCount - b.likeCount)
           );
