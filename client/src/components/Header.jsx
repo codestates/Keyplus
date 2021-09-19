@@ -37,8 +37,7 @@ export const Header = () => {
     console.log(`여기가 유저스테이트`, userState);
     try {
       //유저정보가 있으면 (=로그인 되있으면) 로그아웃 시키고 랜딩페이지로 이동
-      await dispatch(logOut());
-      history.push('/landing');
+      await dispatch(logOut(history)).unwrap();
     } catch (err) {
       dispatch(isError(err.response));
     }
@@ -124,6 +123,11 @@ export const Header = () => {
                 <a href="#" className="nav-links">
                   타건샵
                 </a>
+              </li>
+              <li className="nav-item">
+                <Link to="/test" className="nav-links">
+                  테스트
+                </Link>
               </li>
             </div>
           </ul>
