@@ -18,32 +18,33 @@ module.exports = {
         },
       });
       if (!hasReview) {
-          console.log('🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥', req.files);
-          if (Object.keys(req.files).length !== 0) {
-            const img = req.files.img ? req.files.img.map(el => el.location) : '';
-            let review = await Review.create({
-              content,
-              rating,
-              image1: img[0] || null,
-              image2: img[1] || null,
-              image3: img[2] || null,
-              video: req.files.video ? req.files.video[0].location : null,
-              userId: user,
-              keyboardId: keyboard,
-            });
-            return res.status(200).json({ data: review });
-          } else {
+        if (Object.keys(req.files).length !== 0) {
+          const img = req.files.img
+            ? req.files.img.map((el) => el.location)
+            : '';
           let review = await Review.create({
-              content,
-              rating,
-              userId: user,
-              keyboardId: keyboard,
-            });
-            return res.status(200).json({ data: review });
-          }
+            content,
+            rating,
+            image1: img[0] || null,
+            image2: img[1] || null,
+            image3: img[2] || null,
+            video: req.files.video ? req.files.video[0].location : null,
+            userId: user,
+            keyboardId: keyboard,
+          });
+          return res.status(200).json({ data: review });
         } else {
-          return res.sendStatus(409)
+          let review = await Review.create({
+            content,
+            rating,
+            userId: user,
+            keyboardId: keyboard,
+          });
+          return res.status(200).json({ data: review });
         }
+      } else {
+        return res.sendStatus(409);
+      }
     } catch (error) {
       console.log(error);
       return res.sendStatus(500);
@@ -57,63 +58,49 @@ module.exports = {
     const user = req.userId;
     const { content, rating } = req.body;
 
-    try {
-      if (Object.keys(req.files).length !== 0) {
-        const img = req.files.img ? req.files.img.map((el) => el.location) : '';
-        await Review.update(
-          {
-            content,
-            rating,
-            image1: img[0] || null,
-            image2: img[1] || null,
-            image3: img[2] || null,
-            video: req.files.video ? req.files.video[0].location : null,
-            userId: user,
-            keyboardId: keyboard,
-          },
-          {
-            where: {
-              userId: req.userId,
-              keyboardId: req.params.id,
-            },
-          }
-        );
-        const review = await Review.findOne({
-          where: {
-            userId: user,
-            keyboardId: keyboard,
-          },
-          raw: true,
-        });
-        return res.status(200).json({ data: review });
-      } else {
-        await Review.update(
-          {
-            content,
-            rating,
-            image1: null,
-            image2: null,
-            image3: null,
-            video: null,
-            userId: user,
-            keyboardId: keyboard,
-          },
-          {
-            where: {
-              userId: req.userId,
-              keyboardId: req.params.id,
-            },
-          }
-        );
-        const review = await Review.findOne({
-          where: {
-            userId: user,
-            keyboardId: keyboard,
-          },
-          raw: true,
-        });
-        return res.status(200).json({ data: review });
+    const review = await Review.findOne({
+      where: {
+        userId: user,
+        keyboardId: keyboard,
+      },
+      raw: true,
+    });
+    if (Object.keys(req.files).length !== 0) {
+      if (req.files.img) {
+        review.image1 = req.files.img[0] || null;
+        review.image2 = req.files.img[1] || null;
+        review.image3 = req.files.img[2] || null;
       }
+      if (req.files.video) {
+        review.video = req.files.video;
+      }
+    }
+
+    try {
+      await Review.update(
+        {
+          content,
+          rating,
+          image1: review.image1,
+          image2: review.image2,
+          image3: review.image3,
+          video: review.video,
+          userId: user,
+          keyboardId: keyboard,
+        },
+        {
+          where: {
+            userId: req.userId,
+            keyboardId: req.params.id,
+          },
+        }
+      );
+
+      const updatedReview = await Review.findOne({
+        where: { userId: req.userId, keyboardId: req.params.id },
+        raw: true,
+      });
+      return res.status(200).json({ data: updatedReview });
     } catch (error) {
       console.log(error);
       return res.sendStatus(500);
