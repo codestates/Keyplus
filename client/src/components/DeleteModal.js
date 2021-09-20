@@ -20,7 +20,7 @@ const DeleteModal = () => {
   };
 
   //FIXME: 회원탈퇴 함수
-  const handleOk = async () => {
+  const onClickDelete = async () => {
     try {
       //회원 탈퇴 ok 버튼 누르면 컨텐츠가 탈퇴 진행중으로 바뀜
       setModalText('탈퇴 진행중입니다.');
@@ -30,16 +30,13 @@ const DeleteModal = () => {
         setVisible(false);
         setConfirmLoading(false);
       }, 2000);
-      await dispatch(deleteUser());
-      // window.location.replace('/');
-      return history.push('/landing');
-      // props.history.push('/');
+      await dispatch(deleteUser(history));
     } catch (err) {
       dispatch(isError(err.response));
     }
   };
 
-  const handleCancel = () => {
+  const onClickCancel = () => {
     console.log('취소버튼이 눌렸습니다!');
     setVisible(false);
   };
@@ -56,9 +53,9 @@ const DeleteModal = () => {
       <Modal
         title="회원탈퇴"
         visible={visible}
-        onOk={handleOk}
+        onOk={onClickDelete}
         confirmLoading={confirmLoading}
-        onCancel={handleCancel}
+        onCancel={onClickCancel}
       >
         <p>{modalText}</p>
       </Modal>
