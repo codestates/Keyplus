@@ -14,5 +14,7 @@ router.get('/naver', authController.naverLogin); // 네이버 오어스
 router.get('/naverCallback', authController.naverCallback);
 router.get('/kakao', authController.kakaoLogin); // 카카오 오어스
 router.get('/kakaoCallback', authController.kakaoCallback);
+router.post('/email', authController.validateEmail); // email 중복검사 및 인증번호전송
+router.post('/nickname', authController.validateNickname); // nickname 중복검사
 
 module.exports = router;

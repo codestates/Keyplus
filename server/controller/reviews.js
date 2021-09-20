@@ -6,6 +6,7 @@ const { Review, User, Keyboard, sequelize } = require('../models');
 
 module.exports = {
   addReview: async (req, res) => {
+    console.log(req.files);
     // 1. params 로 키보드 아이디를 받아온다.
     const keyboard = req.params.id;
     const user = req.userId;
