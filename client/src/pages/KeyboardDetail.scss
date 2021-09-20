@@ -4,8 +4,9 @@
 
 .keyboard-detail-img,
 .keyboard-detail-video {
+  display: block;
   max-width: 300px;
-  max-height: 150px;
+  max-height: 200px;
   object-fit: cover;
 }
 
@@ -26,11 +27,11 @@
 //   overflow: hidden;
 // }
 
-.keyboard-detail-video-cover .keyboard-detail-video {
-  object-fit: contain;
-  // background: #fecb58;
-  // background: linear-gradient(to bottom left, #fecb58, #27aacf);
-}
+// .keyboard-detail-video-cover .keyboard-detail-video {
+//   object-fit: contain;
+//   // background: #fecb58;
+//   // background: linear-gradient(to bottom left, #fecb58, #27aacf);
+// }
 
 // .video-nocover {
 //   position: relative;

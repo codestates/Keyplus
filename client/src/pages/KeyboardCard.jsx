@@ -200,12 +200,7 @@ const KeyboardCard = ({ keyboard }) => {
         <EditOutlined key="edit" />,
         <>
           {keyboard && (
-            <Link
-              to={{
-                pathname: `/keyboards/${keyboard.id}`,
-                state: { keyboardId: keyboard.id },
-              }}
-            >
+            <Link to={`/keyboards/${keyboard.id}`}>
               <SettingOutlined key="setting" />
             </Link>
           )}

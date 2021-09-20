@@ -30,15 +30,22 @@ import {
   PlusOutlined,
 } from '@ant-design/icons';
 
-import { addReviews } from '../reducers/api/reviewsAPI';
+import { addReviews, updateReviews } from '../reducers/api/reviewsAPI';
+import { useHistory } from 'react-router';
 
-const Test = () => {
+const ReviewCreate = ({ location, ...props }) => {
   const dispatch = useDispatch();
+  const history = useHistory();
   // const [previewURL, setPreviewURL] = useState([]);
-  const [previewImages, setPreviewImages] = useState([]);
-  const [previewVideo, setPreviewVideo] = useState(null);
-  const [content, setContent] = useState('');
-  const [rating, setRating] = useState(0);
+  const keyboardId = props.match.params?.id;
+  const [previewImages, setPreviewImages] = useState(
+    location.state?.images ?? []
+  );
+  const [previewVideo, setPreviewVideo] = useState(
+    location.state?.video ?? null
+  );
+  const [content, setContent] = useState(location.state?.content ?? '');
+  const [rating, setRating] = useState(location.state?.rating ?? 0);
 
   const onChangeImages = (e) => {
     const files = [...e.target.files];
@@ -80,22 +87,30 @@ const Test = () => {
     try {
       e.preventDefault();
       const formData = new FormData();
-
       for (const file of e.target.img.files) {
         formData.append('img', file);
       }
       formData.append('video', e.target.video.files[0]);
       formData.append('content', content);
       formData.append('rating', rating);
-      formData.append('keyboardId', 1);
-      const res = await dispatch(addReviews(formData)).unwrap();
+
+      if (location.state) {
+        await dispatch(updateReviews({ formData, keyboardId })).unwrap();
+      } else {
+        await dispatch(addReviews({ formData, keyboardId })).unwrap();
+      }
       message.success('리뷰 작성이 완료되었습니다.');
-      return res;
+      // window.location.replace(`/keyboards/${keyboardId}`);
+      history.push(`/keyboards/${keyboardId}`);
     } catch (err) {
+      // console.log(err);
+      if (!err.response) {
+        throw err;
+      }
       if (err.response.status === 409) {
         return message.warning('이미 리뷰를 남기셨습니다.');
       }
-      // dispatch(isError(err.response));
+      dispatch(isError(err.response));
       message.warning('서버에서 에러가 발생했습니다.');
     }
   };
@@ -148,16 +163,17 @@ const Test = () => {
               )}
             </div>
           </label> */}
-          {previewImages.map((url) => {
-            return (
-              <img
-                key={url}
-                alt="previewImg"
-                src={url}
-                style={{ width: '100px', height: '100px' }}
-              />
-            );
-          })}
+          {previewImages.map(
+            (url) =>
+              url && (
+                <img
+                  key={url}
+                  alt="previewImg"
+                  src={url}
+                  style={{ width: '100px', height: '100px' }}
+                />
+              )
+          )}
           <input
             type="file"
             id="img"
@@ -223,4 +239,4 @@ const Test = () => {
   );
 };
 
-export default Test;
+export default ReviewCreate;
