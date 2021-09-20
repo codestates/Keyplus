@@ -2,20 +2,26 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 // import { useHistory } from 'react-router';
 
-import { updateUserInfo } from '../reducers/api/userAPI';
+import { updateUserInfo, validateNickname } from '../reducers/api/userAPI';
 import DeleteModal from '../components/DeleteModal';
 import './Mypage.scss';
 import { message, Button, Space } from 'antd';
 import { isError } from '../reducers/errorReducer';
 import { Avatar } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
+import { useHistory } from 'react-router';
 
 const Mypage = () => {
-  // const history = useHistory();
-
+  const history = useHistory();
   const dispatch = useDispatch();
   const userState = useSelector((state) => state.user);
   console.log('내가 유저 정보', userState);
+
+  const likesState = useSelector((state) => state.likes);
+  console.log('내가 좋아요들', likesState);
+
+  const reviewsState = useSelector((state) => state.reviews);
+  console.log('내가 리뷰들', reviewsState);
 
   const [updateState, setUpdateState] = useState({
     email: userState.email,
@@ -32,39 +38,37 @@ const Mypage = () => {
 
   const { email, nickname, password } = updateState;
 
-  const successMessage = () => {
-    message.success('회원정보 수정이 완료되었습니다');
-  };
   const inputErrMessage = () => {
     message.warning('모든 칸을 채워주세요');
   };
-  const errorMessage = () => {
-    message.warning('처리도중 문제가 발생했습니다');
-  };
 
-  //FIXME: 회원정보 수정 함수
-  const onClickModify = async () => {
+  //FIXME: 닉네임 중복확인 함수
+  const onClickValidate = async (e) => {
+    e.preventDefault();
+    console.log('나는 업데이트 스택의 닉네임', updateState.nickname, nickname);
     try {
-      //인풋이 모두 채워지지 않았다면 인풋 에러메세지 보낸다.
-      // if (nickname === '' && password === '') {
-      //   inputErrMessage();
-      // }
-      //회원 정보 수정이 완료되면 확인 알림창 띄운다
-
-      // const { image } = userState;
-      // const data = { updateState, image };
-      // console.log('제발나와줘', data);
-
-      await dispatch(updateUserInfo(updateState)).unwrap();
-      successMessage();
+      await dispatch(validateNickname({ nickname })).unwrap();
+      //여기서 지금 스태이트가 비워짐
+      message.success('사용 가능한 닉네임 입니다');
     } catch (err) {
-      //회원 정보 수정에 실패했으면 실패 알림창 띄운다
       dispatch(isError(err.response));
-      errorMessage();
+      message.warning('사용 불가한 닉네임 입니다');
     }
   };
 
-  //FIXME: 회원정보가 없는 경우(=로그아웃 했는데 )
+  //FIXME: 회원정보 수정 함수
+  const onClickModify = async (e) => {
+    e.preventDefault();
+    try {
+      await dispatch(updateUserInfo(updateState)).unwrap();
+      message.success('회원정보 수정이 완료되었습니다');
+    } catch (err) {
+      console.log('나 왜 에러나? ', err.response);
+      //회원 정보 수정에 실패했으면 실패 알림창 띄운다
+      dispatch(isError(err.response));
+      message.warning('처리도중 문제가 발생했습니다');
+    }
+  };
 
   return (
     <>
@@ -83,7 +87,7 @@ const Mypage = () => {
             <input type="file" />
             <label htmlFor="file">사진을 업로드 해주세요</label>
           </figure>
-          <form>
+          <div>
             <label htmlFor="email">이메일</label>
             <input type="email" name="email" disabled value={email} />
             <label htmlFor="nickname">닉네임</label>
@@ -94,6 +98,7 @@ const Mypage = () => {
               required
               value={nickname || ''}
             />
+            <button onClick={onClickValidate}>닉네임 중복확인</button>
             {userState.socialType === 'local' && (
               <>
                 <label htmlFor="password">패스워드</label>
@@ -106,7 +111,7 @@ const Mypage = () => {
                 />
               </>
             )}
-          </form>
+          </div>
           <Space>
             <Button onClick={onClickModify}>회원정보 수정</Button>
           </Space>
@@ -115,6 +120,24 @@ const Mypage = () => {
         <div className="container">
           <div></div>
         </div>
+
+        {/* <div className="image-list-type">
+          <span
+            className={isUserPosts ? 'slide-btn selected' : 'slide-btn'}
+            onClick={getUserPosts}
+          >
+            게시글
+          </span>
+          <span
+            className={isUserPosts ? 'slide-btn' : 'slide-btn selected'}
+            onClick={getInterestPost}
+          >
+            관심글
+          </span>
+        </div>
+        <div>
+          <PostList posts={posts} />
+        </div> */}
 
         {/* FIXME: 회원탈퇴 */}
         <DeleteModal />
