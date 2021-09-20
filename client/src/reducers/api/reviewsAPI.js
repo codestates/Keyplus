@@ -21,10 +21,14 @@ export const getReviews = createAsyncThunk(
 //TODO: 공부 후 작성
 export const addReviews = createAsyncThunk(
   'reviews/addReviews',
-  async (data, { rejectWithValue }) => {
-    console.log(data);
+  async (formData, { rejectWithValue }) => {
+    // const data = {};
+    // for (const [key, value] of formData.entries()) {
+    //   data[key] = value;
+    // }
+    // console.log('🤢🤢🤢🤢🤢🤢🤢🤢🤢 client data ', data);
     try {
-      await axios.post(`/reviews/${data.keyboardId}`, data);
+      await axios.post(`/reviews/1`, formData);
     } catch (err) {
       let error = err;
       if (!error.response) {
