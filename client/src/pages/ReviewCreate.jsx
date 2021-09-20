@@ -38,8 +38,14 @@ const ReviewCreate = ({ location, ...props }) => {
   const history = useHistory();
   // const [previewURL, setPreviewURL] = useState([]);
   const keyboardId = props.match.params?.id;
-  const [previewImages, setPreviewImages] = useState(
-    location.state?.images ?? []
+  const [previewImage1, setPreviewImage1] = useState(
+    location.state?.images[0] ?? null
+  );
+  const [previewImage2, setPreviewImage2] = useState(
+    location.state?.images[1] ?? null
+  );
+  const [previewImage3, setPreviewImage3] = useState(
+    location.state?.images[2] ?? null
   );
   const [previewVideo, setPreviewVideo] = useState(
     location.state?.video ?? null
@@ -47,20 +53,24 @@ const ReviewCreate = ({ location, ...props }) => {
   const [content, setContent] = useState(location.state?.content ?? '');
   const [rating, setRating] = useState(location.state?.rating ?? 0);
 
-  const onChangeImages = (e) => {
-    const files = [...e.target.files];
-    if (files) {
-      setPreviewImages([]);
-      files.forEach((file) => {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          setPreviewImages((previewImages) => [
-            ...previewImages,
-            reader.result,
-          ]);
-        };
-        reader.readAsDataURL(file);
-      });
+  const onChangeImage = (e, num) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        switch (num) {
+          case 1:
+            setPreviewImage1(reader.result);
+            break;
+          case 2:
+            setPreviewImage2(reader.result);
+            break;
+          case 3:
+            setPreviewImage3(reader.result);
+            break;
+        }
+      };
+      reader.readAsDataURL(file);
     }
   };
 
@@ -94,9 +104,9 @@ const ReviewCreate = ({ location, ...props }) => {
     }
     try {
       const formData = new FormData();
-      for (const file of e.target.img.files) {
-        formData.append('img', file);
-      }
+      formData.append('img', e.target.img1.files[0]);
+      formData.append('img', e.target.img2.files[0]);
+      formData.append('img', e.target.img3.files[0]);
       formData.append('video', e.target.video.files[0]);
       formData.append('content', content);
       formData.append('rating', rating);
@@ -121,12 +131,7 @@ const ReviewCreate = ({ location, ...props }) => {
     }
   };
 
-  const uploadButton = (
-    <div>
-      <PlusOutlined />
-      <div style={{ marginTop: 8 }}>Upload</div>
-    </div>
-  );
+  // const uploadButton = <div>Upload</div>;
 
   return (
     <>
@@ -135,7 +140,7 @@ const ReviewCreate = ({ location, ...props }) => {
         onSubmit={onClickSubmitBtn}
         encType="multipart/form-data"
       >
-        <p>
+        <div>
           {/* <label htmlFor="img">여기는 이미지 3개까지 올려라</label> */}
 
           {/* {previewURL.length !== 0 &&
@@ -144,32 +149,94 @@ const ReviewCreate = ({ location, ...props }) => {
                 <img src={url} alt={url} />
               </div>
             ))} */}
-          {/* <label htmlFor="img">
-            <div style={{ width: '100px', height: '100px' }}>
-              {previewImages[0] ? (
-                <img src={previewImages[0]} style={{ width: '100%' }} />
+          <label
+            htmlFor="img1"
+            style={{ display: 'inline-block', cursor: 'pointer' }}
+          >
+            <div
+              style={{
+                width: '100px',
+                height: '100px',
+              }}
+            >
+              {previewImage1 ? (
+                <img
+                  src={previewImage1}
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                />
               ) : (
-                uploadButton
+                'upload'
               )}
             </div>
+          </label>
+          <input
+            type="file"
+            id="img1"
+            name="img1"
+            accept=".png, .jpg, jpeg"
+            onChange={(e) => onChangeImage(e, 1)}
+            hidden
+          />
 
-            <div style={{ width: '100px', height: '100px' }}>
-              {previewImages[1] ? (
-                <img src={previewImages[1]} style={{ width: '100%' }} />
+          <label
+            htmlFor="img2"
+            style={{ display: 'inline-block', cursor: 'pointer' }}
+          >
+            <div
+              style={{
+                width: '100px',
+                height: '100px',
+              }}
+            >
+              {previewImage2 ? (
+                <img
+                  src={previewImage2}
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                />
               ) : (
-                uploadButton
+                'upload'
               )}
             </div>
+          </label>
+          <input
+            type="file"
+            id="img2"
+            name="img2"
+            accept=".png, .jpg, jpeg"
+            onChange={(e) => onChangeImage(e, 2)}
+            hidden
+          />
 
-            <div style={{ width: '100px', height: '100px' }}>
-              {previewImages[2] ? (
-                <img src={previewImages[2]} style={{ width: '100%' }} />
+          <label
+            htmlFor="img3"
+            style={{ display: 'inline-block', cursor: 'pointer' }}
+          >
+            <div
+              style={{
+                width: '100px',
+                height: '100px',
+              }}
+            >
+              {previewImage3 ? (
+                <img
+                  src={previewImage3}
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                />
               ) : (
-                uploadButton
+                'upload'
               )}
             </div>
-          </label> */}
-          {previewImages.map(
+          </label>
+          <input
+            type="file"
+            id="img3"
+            name="img3"
+            accept=".png, .jpg, jpeg"
+            onChange={(e) => onChangeImage(e, 3)}
+            hidden
+          />
+
+          {/* {previewImages.map(
             (url) =>
               url && (
                 <img
@@ -179,50 +246,49 @@ const ReviewCreate = ({ location, ...props }) => {
                   style={{ width: '100px', height: '100px' }}
                 />
               )
-          )}
+          )} */}
+        </div>
+        <div>
+          {/* <label htmlFor="video">여기는 비디오 1개만 올려라</label> */}
+          <label
+            htmlFor="video"
+            style={{ display: 'inline-block', cursor: 'pointer' }}
+          >
+            <div
+              style={{
+                width: '300px',
+                height: '200px',
+              }}
+            >
+              {previewVideo ? (
+                <video
+                  controls
+                  src={previewVideo}
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  type="video/mp4"
+                />
+              ) : (
+                'upload'
+              )}
+            </div>
+          </label>
           <input
             type="file"
-            id="img"
-            multiple
-            name="img"
-            accept=".png, .jpg, jpeg"
-            onChange={onChangeImages}
+            id="video"
+            name="video"
+            accept=".mp4"
+            onChange={onChangeVideo}
+            hidden
           />
-        </p>
-        <p>
-          {/* <label htmlFor="video">여기는 비디오 1개만 올려라</label> */}
-          {/* <label htmlFor="video">
-            {previewVideo ? (
-              <video
-                controls
-                src={previewVideo}
-                style={{ width: '200px', height: '200px' }}
-                type="video/mp4"
-              />
-            ) : (
-              <img
-                src={`https://picsum.photos/200/300`}
-                width="200"
-                height="200"
-              />
-            )}
-          </label> */}
-          {previewVideo && (
+          {/* {previewVideo && (
             <video
               controls
               src={previewVideo}
               style={{ width: '200px', height: '200px' }}
               type="video/mp4"
             />
-          )}
-          <input
-            type="file"
-            id="video"
-            accept=".mp4"
-            name="video"
-            onChange={onChangeVideo}
-          />
-        </p>
+          )} */}
+        </div>
 
         <TextArea
           placeholder="리뷰를 100자까지 입력해주세요."
