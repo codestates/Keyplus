@@ -1,6 +1,3 @@
-const {
-  default: contentSecurityPolicy,
-} = require('helmet/dist/middlewares/content-security-policy');
 const db = require('../models');
 const { Review, User, Keyboard, sequelize } = require('../models');
 
@@ -21,34 +18,32 @@ module.exports = {
         },
       });
       if (!hasReview) {
-        console.log('🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥', req.files);
-        if (Object.keys(req.files).length !== 0) {
-          const img = req.files.img
-            ? req.files.img.map((el) => el.location)
-            : '';
+          console.log('🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥', req.files);
+          if (Object.keys(req.files).length !== 0) {
+            const img = req.files.img ? req.files.img.map(el => el.location) : '';
+            let review = await Review.create({
+              content,
+              rating,
+              image1: img[0] || null,
+              image2: img[1] || null,
+              image3: img[2] || null,
+              video: req.files.video ? req.files.video[0].location : null,
+              userId: user,
+              keyboardId: keyboard,
+            });
+            return res.status(200).json({ data: review });
+          } else {
           let review = await Review.create({
-            content,
-            rating,
-            image1: img[0] || null,
-            image2: img[1] || null,
-            image3: img[2] || null,
-            video: req.files.video ? req.files.video[0].location : null,
-            userId: user,
-            keyboardId: keyboard,
-          });
-          return res.status(200).json({ data: review });
+              content,
+              rating,
+              userId: user,
+              keyboardId: keyboard,
+            });
+            return res.status(200).json({ data: review });
+          }
         } else {
-          let review = await Review.create({
-            content,
-            rating,
-            userId: user,
-            keyboardId: keyboard,
-          });
-          return res.status(200).json({ data: review });
+          return res.sendStatus(409)
         }
-      } else {
-        return res.sendStatus(200);
-      }
     } catch (error) {
       console.log(error);
       return res.sendStatus(500);
