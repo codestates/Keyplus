@@ -37,8 +37,7 @@ export const Header = () => {
     console.log(`여기가 유저스테이트`, userState);
     try {
       //유저정보가 있으면 (=로그인 되있으면) 로그아웃 시키고 랜딩페이지로 이동
-      await dispatch(logOut());
-      history.push('/landing');
+      await dispatch(logOut(history));
     } catch (err) {
       dispatch(isError(err.response));
     }
