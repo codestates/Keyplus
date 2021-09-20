@@ -53,14 +53,14 @@ const KeyboardDetail = (props) => {
   const history = useHistory();
   // ! 로그인했을 때 / 안 했을 때 고려하기
   const userId = useSelector((state) => state.user?.id);
+  const likes = useSelector((state) => state.likes);
 
   const keyboardId = props.match.params?.id;
   const [keyboard, setKeyboard] = useState(null);
 
-  const likes = useSelector((state) => state.likes);
-  const checkLiked = (id) => likes.findIndex((like) => like.id === id) !== -1;
-
+  const checkLiked = (id) => likes.findIndex((like) => like.id == id) !== -1;
   const [liked, setLiked] = useState(checkLiked(keyboardId));
+
   const [likeCount, setLikeCount] = useState(0);
   const [reviews, setReviews] = useState([]);
   const [averageRating, setAverageRating] = useState(0);
@@ -202,7 +202,7 @@ const KeyboardDetail = (props) => {
           <div>블루투스 {keyboard.bluetooth}</div>
           <div>가격 {keyboard.price.toLocaleString()}</div>
           <div>
-            좋아요 {likeCount}{' '}
+            좋아요 {likeCount}
             {liked ? (
               <HeartFilled
                 style={{ color: '#ff0000' }}
@@ -264,11 +264,9 @@ const KeyboardDetail = (props) => {
                     >
                       {review.video && (
                         <>
-                          <div className="keyboard-detail-video-cover">
-                            <video className="keyboard-detail-video" controls>
-                              <source src={review.video} type="video/mp4" />
-                            </video>
-                          </div>
+                          <video className="keyboard-detail-video" controls>
+                            <source src={review.video} type="video/mp4" />
+                          </video>
                         </>
                       )}
 
@@ -326,7 +324,10 @@ const KeyboardDetail = (props) => {
                           {review.nickname}
                         </span>
                         <span
-                          style={{ fontSize: '8px', letterSpacing: '-0.05em' }}
+                          style={{
+                            fontSize: '8px',
+                            letterSpacing: '-0.05em',
+                          }}
                         >
                           {review.createdAt.split('T')[0]}
                         </span>
