@@ -48,6 +48,7 @@ export const deleteReviews = createAsyncThunk(
   async ({ keyboardId }, { rejectWithValue }) => {
     try {
       await axios.delete(`/reviews/${keyboardId}`);
+      window.location.replace(`/keyboards/${keyboardId}`);
     } catch (err) {
       return rejectWithValue(err);
     }

@@ -108,7 +108,7 @@ const KeyboardCard = ({ keyboard }) => {
 
   // ! 내가 이미 좋아요를 누른 상태였으면 liked가 true여야 함
   // ! 내 redux의 likes 리스트에 이 keyboard가 있어? 그럼 true야 / 근데 없어?(혹은 로그아웃이라 likes가 []) 그럼 false야)
-  const checkLiked = (id) => likes.findIndex((like) => like.id === id) !== -1;
+  const checkLiked = (id) => likes.findIndex((like) => like.id == id) !== -1;
 
   const [liked, setLiked] = useState(checkLiked(keyboard.id));
   const [likeCount, setLikeCount] = useState(keyboard.likeCount);
