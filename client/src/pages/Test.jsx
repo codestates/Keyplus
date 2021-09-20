@@ -88,9 +88,11 @@ const Test = () => {
       formData.append('content', content);
       formData.append('rating', rating);
       formData.append('keyboardId', 1);
-      await dispatch(addReviews(formData)).unwrap();
+      const res = await dispatch(addReviews(formData)).unwrap();
       message.success('리뷰 작성이 완료되었습니다.');
+      return res;
     } catch (err) {
+      console.log('asdfasdfsadfasdadsfasdfsadsfafsd ', err);
       dispatch(isError(err.response));
       message.warning('리뷰 작성 도중 오류가 발생했습니다.');
     }
