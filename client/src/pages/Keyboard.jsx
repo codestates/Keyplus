@@ -68,13 +68,24 @@ const Keyboard = () => {
         break;
       case '3':
         setKeyboards((keyboards) =>
-          [...keyboards].sort((a, b) => b.price - a.price)
+          [...keyboards].sort((a, b) => b.reviewCount - a.reviewCount)
         );
         break;
       case '4':
         setKeyboards((keyboards) =>
+          [...keyboards].sort((a, b) => a.reviewCount - b.reviewCount)
+        );
+        break;
+      case '5':
+        setKeyboards((keyboards) =>
+          [...keyboards].sort((a, b) => b.price - a.price)
+        );
+        break;
+      case '6':
+        setKeyboards((keyboards) =>
           [...keyboards].sort((a, b) => a.price - b.price)
         );
+        break;
       default:
         break;
     }
@@ -87,10 +98,12 @@ const Keyboard = () => {
         onChange={handleChange}
         style={{ marginBottom: '30px', minWidth: '150px' }}
       >
-        <Option value="1">좋아요 내림차순</Option>
-        <Option value="2">좋아요 오름차순</Option>
-        <Option value="3">가격 내림차순</Option>
-        <Option value="4">가격 오름차순</Option>
+        <Option value="1">좋아요 많은순</Option>
+        <Option value="2">좋아요 적은순</Option>
+        <Option value="3">리뷰 많은순</Option>
+        <Option value="4">리뷰 적은순</Option>
+        <Option value="5">가격 높은순</Option>
+        <Option value="6">가격 낮은순</Option>
       </Select>
       <section className="card-section">
         {keyboards.map((keyboard) => (
