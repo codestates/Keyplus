@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// import { useHistory } from 'react-router';
 
 import {
   deleteUser,
@@ -13,10 +12,12 @@ import { message, Button, Space } from 'antd';
 import { isError } from '../reducers/errorReducer';
 import { Avatar } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import { useHistory } from 'react-router';
+// import { useHistory } from 'react-router';
+import { Tabs } from 'antd';
+import KeyboardCard from './KeyboardCard';
 
 const Mypage = () => {
-  const history = useHistory();
+  // const history = useHistory();
   const dispatch = useDispatch();
   const userState = useSelector((state) => state.user);
   console.log('내가 유저 정보', userState);
@@ -33,6 +34,9 @@ const Mypage = () => {
     password: '',
   });
 
+  const [file, setFile] = useState(null);
+  const [newImg, setNewImg] = useState(userState.image);
+
   //FIXME: state 업데이트
   const onChangeUpdateState = (e) => {
     const { name, value } = e.target;
@@ -41,22 +45,19 @@ const Mypage = () => {
   console.log(`인풋밸류`, updateState);
 
   const { email, nickname, password } = updateState;
-
-  const inputErrMessage = () => {
-    message.warning('모든 칸을 채워주세요');
-  };
+  const [validNickname, setValidNickname] = useState(false);
 
   //FIXME: 닉네임 중복확인 함수
   const onClickValidate = async (e) => {
     e.preventDefault();
-    console.log('나는 업데이트 스택의 닉네임', updateState.nickname, nickname);
     try {
       await dispatch(validateNickname({ nickname })).unwrap();
-      //여기서 지금 스태이트가 비워짐
+      setValidNickname(true);
       message.success('사용 가능한 닉네임 입니다');
     } catch (err) {
       console.log(err.response);
       dispatch(isError(err.response));
+      setValidNickname(false);
       message.warning('사용 불가한 닉네임 입니다');
     }
   };
@@ -64,14 +65,64 @@ const Mypage = () => {
   //FIXME: 회원정보 수정 함수
   const onClickModify = async (e) => {
     e.preventDefault();
+    if (!validNickname) return message.warning('닉네임 중복검사를 해주세요');
     try {
-      await dispatch(updateUserInfo(updateState)).unwrap();
+      const formData = new FormData();
+      //req.file로 읽혀서 어떤 이름으로 보내든 상관 없음
+      formData.append('img', file); //e.target.img.files[0]
+      formData.append('email', email);
+      formData.append('nickname', nickname);
+      formData.append('password', password);
+      await dispatch(
+        updateUserInfo({ state: { ...updateState, image: newImg }, formData })
+      ).unwrap();
+      setValidNickname(false);
       message.success('회원정보 수정이 완료되었습니다');
     } catch (err) {
-      console.log('나 왜 에러나? ', err.response);
-      //회원 정보 수정에 실패했으면 실패 알림창 띄운다
+      if (!err.response) throw err;
       dispatch(isError(err.response));
       message.warning('처리도중 문제가 발생했습니다');
+    }
+  };
+
+  const { TabPane } = Tabs;
+
+  function callback(key) {
+    console.log(key);
+  }
+
+  // const onClickUpload = async (e) => {
+  //   try {
+  //     e.preventDefault();
+  //     const formData = new FormData();
+
+  //     for (const file of e.target.img.files) {
+  //       formData.append('img', file);
+  //     }
+  //     formData.append('img', e.target.video.files[0]);
+  //     await dispatch(addReviews(formData)).unwrap();
+  //     message.success('프로필 사진 업로드가 완료 되었습니다');
+  //   } catch (err) {
+  //     dispatch(isError(err.response));
+  //     message.warning('파일 업로드 중 오류가 발생했습니다');
+  //   }
+  // };
+
+  const profileImg = userState.image;
+  // console.log('내가 프로필', profileImg);
+
+  //FIXME: 미리보기
+  const onChangeImages = (e) => {
+    const newFile = e.target.files[0];
+    //FIXME: file state 업데이트 시키기
+    setFile(newFile);
+    if (newFile) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const imgUrl = reader.result;
+        setNewImg(imgUrl);
+      };
+      reader.readAsDataURL(newFile);
     }
   };
 
@@ -82,64 +133,78 @@ const Mypage = () => {
       <section>
         {/* FIXME: 회원정보 수정창 */}
         <div className="mypage-container">
-          <figure>
-            <div>{userState.image}</div>
-            {userState.image ? (
-              <Avatar src={userState.image} />
-            ) : (
-              <Avatar icon={<UserOutlined />} />
-            )}
-            <input type="file" />
-            <label htmlFor="file">사진을 업로드 해주세요</label>
-          </figure>
-          <div>
-            <label htmlFor="email">이메일</label>
-            <input type="email" name="email" disabled value={email} />
-            <label htmlFor="nickname">닉네임</label>
-            <input
-              type="text"
-              onChange={onChangeUpdateState}
-              name="nickname"
-              required
-              value={nickname || ''}
-            />
-            <button onClick={onClickValidate}>닉네임 중복확인</button>
+          <form encType="multipart/form-data" onSubmit={onClickModify}>
+            <div>
+              <label htmlFor="img">사진을 업로드 해주세요</label>
+              <input
+                type="file"
+                id="img"
+                name="img"
+                accept=".png, .jpg, jpeg"
+                onChange={onChangeImages}
+              />
+              {newImg ? (
+                <Avatar src={newImg} />
+              ) : (
+                // <Avatar icon={<UserOutlined />} />
+                <Avatar src={profileImg} />
+              )}
+            </div>
+            <div>
+              <label htmlFor="email">이메일</label>
+              <input type="email" name="email" disabled value={email} />
+            </div>
+            <div>
+              <label htmlFor="nickname">닉네임</label>
+              <input
+                type="text"
+                onChange={onChangeUpdateState}
+                name="nickname"
+                required
+                value={nickname || ''}
+              />
+            </div>
+            <button type="submit" onClick={onClickValidate}>
+              닉네임 중복확인
+            </button>
             {userState.socialType === 'local' && (
               <>
-                <label htmlFor="password">패스워드</label>
-                <input
-                  type="password"
-                  onChange={onChangeUpdateState}
-                  placeholder="******"
-                  name="password"
-                  value={password || ''}
-                />
+                <>
+                  <label htmlFor="password">패스워드</label>
+                  <input
+                    type="password"
+                    onChange={onChangeUpdateState}
+                    placeholder="******"
+                    name="password"
+                    value={password || ''}
+                  />
+                </>
               </>
             )}
-          </div>
-          <Space>
-            <Button onClick={onClickModify}>회원정보 수정</Button>
-          </Space>
+            <Space>
+              <Button type="submit">
+                {/* 회원정보 수정 */}
+                <input type="submit" value="회원정보 수정" />
+              </Button>
+            </Space>
+          </form>
         </div>
         {/* FIXME: 관심키보드 / 내 리뷰 */}
 
-        {/* <div className="image-list-type">
-          <span
-            className={isUserPosts ? 'slide-btn selected' : 'slide-btn'}
-            onClick={getUserPosts}
-          >
-            게시글
-          </span>
-          <span
-            className={isUserPosts ? 'slide-btn' : 'slide-btn selected'}
-            onClick={getInterestPost}
-          >
-            관심글
-          </span>
-        </div>
-        <div>
-          <PostList posts={posts} />
-        </div> */}
+        <Tabs defaultActiveKey="1" onChange={callback}>
+          <TabPane tab="관심 키보드" key="관심 키보드">
+            {likesState.map((keyboard) => (
+              <KeyboardCard
+                key={`${keyboard.id}_${keyboard.name}`}
+                keyboard={keyboard}
+              />
+            ))}
+          </TabPane>
+
+          <TabPane tab="내 리뷰" key="내 리뷰">
+            여긴 리뷰 페이지
+          </TabPane>
+        </Tabs>
 
         {/* FIXME: 회원탈퇴 */}
         <DeleteModal

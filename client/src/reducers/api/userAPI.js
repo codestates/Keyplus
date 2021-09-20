@@ -51,12 +51,12 @@ export const logOut = createAsyncThunk(
 
 export const updateUserInfo = createAsyncThunk(
   'user/updateUserInfo',
-  async (data, { rejectWithValue }) => {
-    console.log('나 무슨데이터야?', data);
+  async ({ state, formData }, { rejectWithValue }) => {
+    console.log('🌱🌱🌱🌱🌱', state, formData);
     try {
-      const user = await exceptionAxios.patch('/users', data);
+      const user = await exceptionAxios.patch('/users', formData);
       console.log('여기는 응답 받아온거~', user);
-      return user.data.data;
+      return state;
     } catch (err) {
       return rejectWithValue(err);
     }
@@ -114,7 +114,7 @@ export const validateEmail = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     console.log('변경할 이메일 받아온 거', data);
     try {
-      await axios.post('/auth/email', data);
+      await exceptionAxios.post('/auth/email', data);
       // console.log('새로운 이메일 응답 받아온 거', email);
       // return email.data.data;
     } catch (err) {
