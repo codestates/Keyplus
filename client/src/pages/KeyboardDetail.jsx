@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { useHistory } from 'react-router';
 import { Link, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addLikes, deleteLikes } from '../reducers/api/likesAPI';
@@ -49,6 +50,7 @@ const RightArrow = ({ currentSlide, slideCount, children, ...props }) => {
 
 const KeyboardDetail = (props) => {
   const dispatch = useDispatch();
+  const history = useHistory();
   // ! 로그인했을 때 / 안 했을 때 고려하기
   const userId = useSelector((state) => state.user?.id);
 

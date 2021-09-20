@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { addLikes, deleteLikes } from '../reducers/api/likesAPI';
 import { isError } from '../reducers/errorReducer';
@@ -31,7 +32,6 @@ import {
 } from '@ant-design/icons';
 
 import { addReviews, updateReviews } from '../reducers/api/reviewsAPI';
-import { useHistory } from 'react-router';
 
 const ReviewCreate = ({ location, ...props }) => {
   const dispatch = useDispatch();
@@ -103,14 +103,13 @@ const ReviewCreate = ({ location, ...props }) => {
       // window.location.replace(`/keyboards/${keyboardId}`);
       history.push(`/keyboards/${keyboardId}`);
     } catch (err) {
-      // console.log(err);
       if (!err.response) {
         throw err;
       }
       if (err.response.status === 409) {
         return message.warning('이미 리뷰를 남기셨습니다.');
       }
-      dispatch(isError(err.response));
+      // dispatch(isError(err.response));
       message.warning('서버에서 에러가 발생했습니다.');
     }
   };
