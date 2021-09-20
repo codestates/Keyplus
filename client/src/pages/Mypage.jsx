@@ -55,6 +55,7 @@ const Mypage = () => {
       //여기서 지금 스태이트가 비워짐
       message.success('사용 가능한 닉네임 입니다');
     } catch (err) {
+      console.log(err.response);
       dispatch(isError(err.response));
       message.warning('사용 불가한 닉네임 입니다');
     }

@@ -9,11 +9,7 @@ export const getReviews = createAsyncThunk(
       const reviews = await exceptionAxios.get('/reviews');
       return reviews.data.data;
     } catch (err) {
-      let error = err;
-      if (!error.response) {
-        throw err;
-      }
-      return rejectWithValue(err.response.data);
+      return rejectWithValue(err);
     }
   }
 );
@@ -30,11 +26,7 @@ export const addReviews = createAsyncThunk(
     try {
       await axios.post(`/reviews/1`, formData);
     } catch (err) {
-      let error = err;
-      if (!error.response) {
-        throw err;
-      }
-      return rejectWithValue(err.response.data);
+      return rejectWithValue(err);
     }
   }
 );
@@ -50,7 +42,7 @@ export const updateReviews = createAsyncThunk(
       if (!error.response) {
         throw err;
       }
-      return rejectWithValue(err.response.data);
+      return rejectWithValue(err);
     }
   }
 );
@@ -61,11 +53,7 @@ export const deleteReviews = createAsyncThunk(
     try {
       await axios.delete(`/reviews/${keyboardId}`);
     } catch (err) {
-      let error = err;
-      if (!error.response) {
-        throw err;
-      }
-      return rejectWithValue(err.response.data);
+      return rejectWithValue(err);
     }
   }
 );
