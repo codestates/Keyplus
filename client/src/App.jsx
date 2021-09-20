@@ -11,6 +11,8 @@ import Mypage from './pages/Mypage';
 import { useSelector } from 'react-redux';
 import Temp from './pages/Temp';
 import Spinner from './components/Spinner';
+import PrivateRoute from './utils/PrivateRoute';
+// import PublicRoute from './utils/PublicRoute';
 
 import './App.less';
 import Test from './pages/Test';
@@ -31,6 +33,7 @@ function App() {
             <Route path="/keyboards/:id" component={KeyboardDetail} />
             <Route path="/survey" component={Survey} />
             <Route path="/login" component={Login} />
+            <PrivateRoute path="/mypage" component={Mypage} exact />
             <Route path="/mypage" component={Mypage} />
             <Route path="/test" component={Test} />
           </>
