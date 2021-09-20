@@ -84,8 +84,15 @@ const ReviewCreate = ({ location, ...props }) => {
   };
 
   const onClickSubmitBtn = async (e) => {
+    e.preventDefault();
+    if (content === '') {
+      return message.warning('리뷰 내용을 작성해주세요.');
+    }
+
+    if (rating === 0) {
+      return message.warning('점수를 매겨주세요.');
+    }
     try {
-      e.preventDefault();
       const formData = new FormData();
       for (const file of e.target.img.files) {
         formData.append('img', file);
