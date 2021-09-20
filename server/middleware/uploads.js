@@ -6,14 +6,14 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const s3 = new AWS.S3({
-  accessKeyId: process.env.AWSKEYID,
-  secretAccessKey: process.env.AWSSECRETKEY,
-  region: process.env.AWSREGION,
+  accessKeyId: process.env.S3_KEY_ID,
+  secretAccessKey: process.env.S3_SECRET_KEY,
+  region: process.env.S3_REGION,
 });
 
 const storage = multerS3({
   s3: s3,
-  bucket: 'keyplus-s3-image',
+  bucket: process.env.S3_BUCKET_NAME,
   contentType: multerS3.AUTO_CONTENT_TYPE,
   acl: 'public-read',
   metadata: function (req, file, cb) {
@@ -21,11 +21,11 @@ const storage = multerS3({
   },
   key: function (req, file, cb) {
     if (file.originalname.match(/\.(mp4|MPEG-4|mkv)$/)) {
-      cb(null, `video/${Date.now()}_${file.originalname}`);
-    } else if (req.file) {
-      cb(null, `profile/${Date.now()}_${file.originalname}`);
+      cb(null, `reviewVideo/${Date.now()}_${file.originalname}`);
     } else if (req.files) {
       cb(null, `review/${Date.now()}_${file.originalname}`);
+    } else {
+      cb(null, `profile/${Date.now()}_${file.originalname}`);
     }
   },
 });

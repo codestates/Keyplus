@@ -1,24 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { logIn } from './api/userAPI';
+import {
+  deleteUser,
+  logIn,
+  logOut,
+  signUp,
+  socialLogIn,
+  updateUserInfo,
+  validateNickname,
+  validateEmail,
+} from './api/userAPI';
 
-// 회원가입, 로그인, 로그아웃, 유저정보조회, 회원정보변경, 회원탈퇴, 소셜로그인(구글,카카오,네이버), 이메일 중복(유효성) 검사, 닉네임 중복 검사
+// 회원가입, 로그인, 로그아웃, 유저정보조회(로그인하면 받아오기 때문에 필요 없다), 회원정보변경, 회원탈퇴, 소셜로그인(구글,카카오,네이버)
+// 컴포넌트단에서 하기 -> 이메일 중복(유효성) 검사, 닉네임 중복 검사
 
-const initialState = {
-  data: null,
-  // {
-  //   id: 0,
-  //   email: '',
-  //   nickname: '',
-  //   socialType: '',
-  //   isAdmin: false,
-  //   image: '',
-  // },
-  loading: false,
-  error: null,
-};
-
-const isPendingAction = (action) => action.type.endsWith('/pending');
-const isRejectedAction = (action) => action.type.endsWith('/rejected');
+const initialState = null;
 
 const userSlice = createSlice({
   name: 'user',
@@ -26,33 +21,39 @@ const userSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      // .addCase(signUp.fulfilled, (state, action) => {
-      //   state.loading = false;
-      //   state.data = action.payload;
-      // })
+      .addCase(signUp.fulfilled, () => {})
       .addCase(logIn.fulfilled, (state, action) => {
-        'user/login/fulfilled';
-        state.loading = false;
-        state.data = action.payload;
+        state = action.payload;
+        return state;
       })
-      // .addCase(logOut.fulfilled, (state, action) => {
-      //   state.loading = false;
-      //   state.data = null;
-      // })
-      .addMatcher(isPendingAction, (state, action) => {
-        state.loading = true;
+      .addCase(socialLogIn.fulfilled, (state, action) => {
+        state = action.payload;
+        return state;
       })
-      .addMatcher(isRejectedAction, (state, action) => {
-        state.loading = false;
-        state.error = action.error;
+      .addCase(logOut.fulfilled, (state) => {
+        state = null;
+        return state;
+      })
+      .addCase(updateUserInfo.fulfilled, (state, action) => {
+        state = action.payload;
+        return state;
+      })
+      .addCase(deleteUser.fulfilled, (state) => {
+        state = null;
+        return state;
+      })
+      .addCase(validateNickname.fulfilled, (state, action) => {
+        state = action.payload;
+        return state;
+      })
+      .addCase(validateEmail.fulfilled, (state, action) => {
+        state = action.payload;
+        return state;
+      })
+      .addDefaultCase((state) => {
+        return state;
       });
   },
-  // 로그인
-  // 로그아웃
-  // 회원가입
 });
-
-// export const { increment, decrement, incrementByAmount } = counterSlice.actions;
-// export default counterSlice.reducer;
 
 export default userSlice.reducer;
