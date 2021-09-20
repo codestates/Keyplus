@@ -9,11 +9,7 @@ export const getLikes = createAsyncThunk(
       const likes = await exceptionAxios.get('/likes');
       return likes.data.data;
     } catch (err) {
-      let error = err;
-      if (!error.response) {
-        throw err;
-      }
-      return rejectWithValue(err.response.data);
+      return rejectWithValue(err);
     }
   }
 );
@@ -22,14 +18,10 @@ export const addLikes = createAsyncThunk(
   'likes/addLikes',
   async (data, { rejectWithValue }) => {
     try {
-      const likedKeyboard = await axios.post(`/likes/${data}`);
+      const likedKeyboard = await exceptionAxios.post(`/likes/${data}`);
       return likedKeyboard.data.data;
     } catch (err) {
-      let error = err;
-      if (!error.response) {
-        throw err;
-      }
-      return rejectWithValue(err.response.data);
+      return rejectWithValue(err);
     }
   }
 );
@@ -38,14 +30,10 @@ export const deleteLikes = createAsyncThunk(
   'likes/deleteLikes',
   async (data, { rejectWithValue }) => {
     try {
-      await axios.delete(`/likes/${data}`);
+      await exceptionAxios.delete(`/likes/${data}`);
       return data;
     } catch (err) {
-      let error = err;
-      if (!error.response) {
-        throw err;
-      }
-      return rejectWithValue(err.response.data);
+      return rejectWithValue(err);
     }
   }
 );

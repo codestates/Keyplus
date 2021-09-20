@@ -1,48 +1,50 @@
-const { default: contentSecurityPolicy } = require('helmet/dist/middlewares/content-security-policy');
 const db = require('../models');
 const { Review, User, Keyboard, sequelize } = require('../models');
 
 module.exports = {
   addReview: async (req, res) => {
+    console.log(req.files);
     // 1. params 로 키보드 아이디를 받아온다.
     const keyboard = req.params.id;
     const user = req.userId;
     // 2. content, rating 를 클라이언트로부터 받아온다.
     const { content, rating } = req.body;
-      try {
-        // 3. 로그인이되어있는지 확인 후, 클라이언트로부터 받아온 정보를 Review table에 저장한다.
-        const hasReview = await Review.findOne({
-          where: {
+    try {
+      // 3. 로그인이되어있는지 확인 후, 클라이언트로부터 받아온 정보를 Review table에 저장한다.
+      const hasReview = await Review.findOne({
+        where: {
+          userId: user,
+          keyboardId: keyboard,
+        },
+      });
+      if (!hasReview) {
+        if (Object.keys(req.files).length !== 0) {
+          const img = req.files.img
+            ? req.files.img.map((el) => el.location)
+            : '';
+          let review = await Review.create({
+            content,
+            rating,
+            image1: img[0] || null,
+            image2: img[1] || null,
+            image3: img[2] || null,
+            video: req.files.video ? req.files.video[0].location : null,
             userId: user,
             keyboardId: keyboard,
-          }
-        })
-        if (!hasReview) {
-          if (Object.keys(req.files).length !== 0) {
-            const img = req.files.img ? req.files.img.map(el => el.location) : '';
-            let review = await Review.create({
-              content,
-              rating,
-              image1: img[0] || null,
-              image2: img[1] || null,
-              image3: img[2] || null,
-              video: req.files.video ? req.files.video[0].location : null,
-              userId: user,
-              keyboardId: keyboard,
-            });
-            return res.status(200).json({ data: review });
-          } else {
-          let review = await Review.create({
-              content,
-              rating,
-              userId: user,
-              keyboardId: keyboard,
-            });
-            return res.status(200).json({ data: review });
-          }
+          });
+          return res.status(200).json({ data: review });
         } else {
-          return res.sendStatus(200)
+          let review = await Review.create({
+            content,
+            rating,
+            userId: user,
+            keyboardId: keyboard,
+          });
+          return res.status(200).json({ data: review });
         }
+      } else {
+        return res.sendStatus(409);
+      }
     } catch (error) {
       console.log(error);
       return res.sendStatus(500);
@@ -55,58 +57,50 @@ module.exports = {
     const keyboard = req.params.id;
     const user = req.userId;
     const { content, rating } = req.body;
-    
+
+    const review = await Review.findOne({
+      where: {
+        userId: user,
+        keyboardId: keyboard,
+      },
+      raw: true,
+    });
+    if (Object.keys(req.files).length !== 0) {
+      if (req.files.img) {
+        review.image1 = req.files.img[0]?.location || null;
+        review.image2 = req.files.img[1]?.location || null;
+        review.image3 = req.files.img[2]?.location || null;
+      }
+      if (req.files.video) {
+        review.video = req.files.video[0]?.location || null;
+      }
+    }
+
     try {
-      if (Object.keys(req.files).length !== 0) {
-        const img = req.files.img ? req.files.img.map(el => el.location) : '';
-        await Review.update({
+      await Review.update(
+        {
           content,
           rating,
-          image1: img[0] || null,
-          image2: img[1] || null,
-          image3: img[2] || null,
-          video: req.files.video ? req.files.video[0].location : null,
+          image1: review.image1,
+          image2: review.image2,
+          image3: review.image3,
+          video: review.video,
           userId: user,
           keyboardId: keyboard,
-        }, {
+        },
+        {
           where: {
             userId: req.userId,
-            keyboardId: req.params.id
+            keyboardId: req.params.id,
           },
-        });
-        const review = await Review.findOne({
-          where: {
-            userId: user,
-            keyboardId: keyboard,
-          },
-          raw: true,
-        });
-        return res.status(200).json({ data: review });
-      } else {
-        await Review.update({ 
-          content,
-          rating,
-          image1: null,
-          image2: null,
-          image3: null,
-          video: null,
-          userId: user,
-          keyboardId: keyboard,
-        }, {
-          where: {
-          userId: req.userId,
-          keyboardId: req.params.id
-          },
-        });
-        const review = await Review.findOne({
-          where: {
-            userId: user,
-            keyboardId: keyboard,
-          },
-          raw: true,
-        });
-        return res.status(200).json({ data: review });
-      }
+        }
+      );
+
+      const updatedReview = await Review.findOne({
+        where: { userId: req.userId, keyboardId: req.params.id },
+        raw: true,
+      });
+      return res.status(200).json({ data: updatedReview });
     } catch (error) {
       console.log(error);
       return res.sendStatus(500);
@@ -121,7 +115,7 @@ module.exports = {
         where: {
           userId: req.userId,
           keyboardId: req.params.id,
-        }
+        },
       });
       return res.sendStatus(200);
     } catch (error) {
