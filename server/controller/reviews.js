@@ -21,6 +21,7 @@ module.exports = {
         },
       });
       if (!hasReview) {
+        console.log('🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥', req.files);
         if (Object.keys(req.files).length !== 0) {
           const img = req.files.img
             ? req.files.img.map((el) => el.location)

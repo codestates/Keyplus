@@ -10,8 +10,8 @@ export const Footer = () => {
       {/* 오른쪽: 서비스 소개: REPOSITORY & WIKI*/}
       {/* 오른쪽: Team Members: 정선아, 김민성, 백승문, 박준호 */}
       <footer className="footer">
-        <div className="container">
-          <div className="row">
+        <div className="footer-container">
+          <div className="footer-row">
             <div className="footer-col">
               <KEYPLUS />
             </div>

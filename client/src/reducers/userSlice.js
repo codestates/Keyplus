@@ -6,6 +6,8 @@ import {
   signUp,
   socialLogIn,
   updateUserInfo,
+  validateNickname,
+  validateEmail,
 } from './api/userAPI';
 
 // 회원가입, 로그인, 로그아웃, 유저정보조회(로그인하면 받아오기 때문에 필요 없다), 회원정보변경, 회원탈퇴, 소셜로그인(구글,카카오,네이버)
@@ -38,6 +40,14 @@ const userSlice = createSlice({
       })
       .addCase(deleteUser.fulfilled, (state) => {
         state = null;
+        return state;
+      })
+      .addCase(validateNickname.fulfilled, (state, action) => {
+        state = action.payload;
+        return state;
+      })
+      .addCase(validateEmail.fulfilled, (state, action) => {
+        state = action.payload;
         return state;
       })
       .addDefaultCase((state) => {

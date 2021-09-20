@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { memo, useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from '../utils/customAxios';
 import { isError } from '../reducers/errorReducer';
@@ -110,8 +110,6 @@ const KeyboardCard = ({ keyboard }) => {
   // ! 내 redux의 likes 리스트에 이 keyboard가 있어? 그럼 true야 / 근데 없어?(혹은 로그아웃이라 likes가 []) 그럼 false야)
   const checkLiked = (id) => likes.findIndex((like) => like.id === id) !== -1;
 
-  console.log(checkLiked(keyboard.id));
-
   const [liked, setLiked] = useState(checkLiked(keyboard.id));
   const [likeCount, setLikeCount] = useState(keyboard.likeCount);
 
@@ -200,7 +198,18 @@ const KeyboardCard = ({ keyboard }) => {
           {likeCount}
         </>,
         <EditOutlined key="edit" />,
-        <SettingOutlined key="setting" />,
+        <>
+          {keyboard && (
+            <Link
+              to={{
+                pathname: `/keyboards/${keyboard.id}`,
+                state: { keyboardId: keyboard.id },
+              }}
+            >
+              <SettingOutlined key="setting" />
+            </Link>
+          )}
+        </>,
       ]}
     >
       <Meta
