@@ -13,9 +13,13 @@ import {
   Button,
   Upload,
   Divider,
+  Input,
+  message,
 } from 'antd';
 
+const { TextArea } = Input;
 const { Meta } = Card;
+
 import {
   HeartOutlined,
   HeartFilled,
@@ -33,6 +37,8 @@ const Test = () => {
   // const [previewURL, setPreviewURL] = useState([]);
   const [previewImages, setPreviewImages] = useState([]);
   const [previewVideo, setPreviewVideo] = useState(null);
+  const [content, setContent] = useState('');
+  const [rating, setRating] = useState(0);
 
   const onChangeImages = (e) => {
     const files = [...e.target.files];
@@ -62,18 +68,32 @@ const Test = () => {
     }
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const formData = new FormData();
+  const onChangeContent = (e) => {
+    setContent(e.target.value);
+  };
 
-    for (const file of event.target.img.files) {
-      formData.append('img', file);
+  const onChangeRating = (value) => {
+    setRating(value);
+  };
+
+  const onClickSubmitBtn = async (e) => {
+    try {
+      e.preventDefault();
+      const formData = new FormData();
+
+      for (const file of e.target.img.files) {
+        formData.append('img', file);
+      }
+      formData.append('video', e.target.video.files[0]);
+      formData.append('content', content);
+      formData.append('rating', rating);
+      formData.append('keyboardId', 1);
+      await dispatch(addReviews(formData)).unwrap();
+      message.success('리뷰 작성이 완료되었습니다.');
+    } catch (err) {
+      dispatch(isError(err.response));
+      message.warning('리뷰 작성 도중 오류가 발생했습니다.');
     }
-    formData.append('video', event.target.video.files[0]);
-    formData.append('content', '리뷰 텍스트');
-    formData.append('rating', 3);
-    formData.append('keyboardId', 1);
-    await dispatch(addReviews(formData)).unwrap();
   };
 
   const uploadButton = (
@@ -86,8 +106,8 @@ const Test = () => {
   return (
     <>
       <form
-        name="accountFrm"
-        onSubmit={handleSubmit}
+        name="review-form"
+        onSubmit={onClickSubmitBtn}
         encType="multipart/form-data"
       >
         <p>
@@ -177,6 +197,18 @@ const Test = () => {
             onChange={onChangeVideo}
           />
         </p>
+
+        <TextArea
+          placeholder="리뷰를 100자까지 입력해주세요."
+          showCount
+          maxLength={100}
+          autoSize={{ minRows: 2, maxRows: 6 }}
+          value={content}
+          onChange={onChangeContent}
+        />
+
+        <Rate value={rating} onChange={onChangeRating} />
+
         <p>
           <Button>
             <input type="submit" value="리뷰 작성" />

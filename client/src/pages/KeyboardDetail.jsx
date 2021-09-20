@@ -350,7 +350,17 @@ const KeyboardDetail = ({ location }) => {
               ))}
             </>
           ) : (
-            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+            // <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+            <Empty
+              image={`/no-data.webp`}
+              // image={Empty.PRESENTED_IMAGE_SIMPLE}
+              imageStyle={{
+                height: 300,
+              }}
+              description={<span>작성된 리뷰가 없습니다!</span>}
+            >
+              <Button type="primary">리뷰 작성하러 가기</Button>
+            </Empty>
           )}
         </>
       )}
