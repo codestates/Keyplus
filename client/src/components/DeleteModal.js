@@ -7,7 +7,6 @@ import { isError } from '../reducers/errorReducer';
 import { withRouter } from 'react-router-dom';
 
 const DeleteModal = (props) => {
-  console.log(props);
   const [visible, setVisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   //FIXME: 회원탈퇴 OK버튼을 누르면 회원이 탈퇴됨
@@ -40,7 +39,6 @@ const DeleteModal = (props) => {
   };
 
   const onClickCancel = () => {
-    console.log('취소버튼이 눌렸습니다!');
     setVisible(false);
   };
 
@@ -50,7 +48,7 @@ const DeleteModal = (props) => {
 
   return (
     <>
-      <Button type="primary" onClick={showModal}>
+      <Button onClick={showModal}>
         {/* 회원탈퇴 */}
         {props.buttonText}
       </Button>

@@ -67,12 +67,12 @@ module.exports = {
     });
     if (Object.keys(req.files).length !== 0) {
       if (req.files.img) {
-        review.image1 = req.files.img[0] || null;
-        review.image2 = req.files.img[1] || null;
-        review.image3 = req.files.img[2] || null;
+        review.image1 = req.files.img[0]?.location || null;
+        review.image2 = req.files.img[1]?.location || null;
+        review.image3 = req.files.img[2]?.location || null;
       }
       if (req.files.video) {
-        review.video = req.files.video;
+        review.video = req.files.video[0]?.location || null;
       }
     }
 

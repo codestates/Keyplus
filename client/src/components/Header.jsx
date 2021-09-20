@@ -124,11 +124,6 @@ export const Header = () => {
                   타건샵
                 </a>
               </li>
-              <li className="nav-item">
-                <Link to="/test" className="nav-links">
-                  테스트
-                </Link>
-              </li>
             </div>
           </ul>
         </nav>
