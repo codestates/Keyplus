@@ -1,10 +1,21 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { useHistory } from 'react-router';
+import { Link, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addLikes, deleteLikes } from '../reducers/api/likesAPI';
 import { isError } from '../reducers/errorReducer';
 import axios from '../utils/customAxios';
 
-import { Carousel, Card, Empty, Rate, Avatar, Button, Upload } from 'antd';
+import {
+  Carousel,
+  Card,
+  Empty,
+  Rate,
+  Avatar,
+  Button,
+  Upload,
+  message,
+} from 'antd';
 
 const { Meta } = Card;
 import {
@@ -14,6 +25,8 @@ import {
   LeftOutlined,
   StarFilled,
   UserOutlined,
+  EditOutlined,
+  DeleteOutlined,
 } from '@ant-design/icons';
 
 import { yellow } from '@ant-design/colors';
@@ -21,7 +34,8 @@ import { yellow } from '@ant-design/colors';
 import Rating from 'react-rating';
 
 import './KeyboardDetail.scss';
-import { addReviews } from '../reducers/api/reviewsAPI';
+import { addReviews, deleteReviews } from '../reducers/api/reviewsAPI';
+import DeleteModal from '../components/DeleteModal';
 
 const LeftArrow = ({ currentSlide, slideCount, children, ...props }) => {
   // return <Button icon={<LeftOutlined />} {...props} />;
@@ -34,12 +48,13 @@ const RightArrow = ({ currentSlide, slideCount, children, ...props }) => {
   return <div {...props}>{children}</div>;
 };
 
-const KeyboardDetail = ({ location }) => {
+const KeyboardDetail = (props) => {
   const dispatch = useDispatch();
+  const history = useHistory();
   // ! 로그인했을 때 / 안 했을 때 고려하기
   const userId = useSelector((state) => state.user?.id);
 
-  const keyboardId = location.state.keyboardId;
+  const keyboardId = props.match.params?.id;
   const [keyboard, setKeyboard] = useState(null);
 
   const likes = useSelector((state) => state.likes);
@@ -48,7 +63,6 @@ const KeyboardDetail = ({ location }) => {
   const [liked, setLiked] = useState(checkLiked(keyboardId));
   const [likeCount, setLikeCount] = useState(0);
   const [reviews, setReviews] = useState([]);
-  const [reviewImageCounts, setReviewImageCounts] = useState([]);
   const [averageRating, setAverageRating] = useState(0);
 
   useEffect(async () => {
@@ -58,14 +72,7 @@ const KeyboardDetail = ({ location }) => {
       setKeyboard(keyboard);
       setLikeCount(keyboard.likeCount);
       setReviews(keyboard.reviews);
-      setReviewImageCounts(
-        keyboard.reviews.map((review) => {
-          if (review.image3) return 3;
-          if (review.image2) return 2;
-          if (review.image1) return 1;
-          return 0;
-        })
-      );
+
       setAverageRating(
         keyboard.reviews.reduce((acc, cur) => acc + cur.rating, 0) /
           keyboard.reviews.length
@@ -95,14 +102,15 @@ const KeyboardDetail = ({ location }) => {
     }
   };
 
-  const onClickCreateReviewBtn = async () => {
-    try {
-      await dispatch(
-        addReviews({ keyboardId, content: '리뷰 테스트', rating: 3 })
-      ).unwrap();
-    } catch (err) {
-      dispatch(isError(err.response));
+  const onClickCreateReviewBtn = () => {
+    for (let i = 0; i < reviews.length; i++) {
+      if (reviews[i].userId === userId) {
+        return message.warning('이미 리뷰를 남기셨습니다.');
+      }
     }
+    history.push({
+      pathname: `/review/${keyboardId}`,
+    });
   };
 
   // ! 리뷰 이미지가 0개면 no data
@@ -147,41 +155,39 @@ const KeyboardDetail = ({ location }) => {
             draggable
             prevArrow={<LeftArrow />}
             nextArrow={<RightArrow />}
-            style={{ maxWidth: '500px' }}
+            className="keyboard-detail-carousel"
           >
             {keyboard.image1 && (
               <img
-                className="img"
+                className="keyboard-detail-img"
                 src={`${process.env.REACT_APP_IMAGE_URL}/keyboard/${keyboard.image1}`}
                 alt={keyboard.name}
               />
             )}
             {keyboard.image2 && (
-              <div className="img-wrapper">
-                <img
-                  className="img"
-                  src={`${process.env.REACT_APP_IMAGE_URL}/keyboard/${keyboard.image2}`}
-                  alt={keyboard.name}
-                />
-              </div>
+              <img
+                className="keyboard-detail-img"
+                src={`${process.env.REACT_APP_IMAGE_URL}/keyboard/${keyboard.image2}`}
+                alt={keyboard.name}
+              />
             )}
             {keyboard.image3 && (
               <img
-                className="img"
+                className="keyboard-detail-img"
                 src={`${process.env.REACT_APP_IMAGE_URL}/keyboard/${keyboard.image3}`}
                 alt={keyboard.name}
               />
             )}
             {keyboard.image4 && (
               <img
-                className="img"
+                className="keyboard-detail-img"
                 src={`${process.env.REACT_APP_IMAGE_URL}/keyboard/${keyboard.image4}`}
                 alt={keyboard.name}
               />
             )}
             {keyboard.image5 && (
               <img
-                className="img"
+                className="keyboard-detail-img"
                 src={`${process.env.REACT_APP_IMAGE_URL}/keyboard/${keyboard.image5}`}
                 alt={keyboard.name}
               />
@@ -212,46 +218,25 @@ const KeyboardDetail = ({ location }) => {
 
           {/* image3이 있으면 3, image2가 있으면 2, image1이 있으면 1 */}
 
-          <h1 style={{ marginTop: '30px' }}>아래는 리뷰칸이지롱</h1>
-          {/* <div>
-            <Button onClick={onClickCreateReviewBtn}>리뷰 작성</Button>
-            <input
-              id="img-upload"
-              type="file"
-              accept="image/png, image/jpg, image/jpeg, image/gif"
-              multiple
-              hidden
-            />
-            <label htmlFor="img-upload">
-              <img
-                src="https://picsum.photos/200/300"
-                width="100"
-                height="100"
-              />
-            </label>
-            <input type="file" accept="video/*" hidden />
-            <label htmlFor="img-upload">
-              <img
-                src="https://picsum.photos/200/300"
-                width="100"
-                height="100"
-              />
-            </label>
-          </div> */}
+          <h1 style={{ marginTop: '30px' }}>리뷰</h1>
 
           {reviews.length ? (
             <>
-              이것은 너의 평균 평점이다
+              <div>
+                <Button type="primary" onClick={onClickCreateReviewBtn}>
+                  리뷰 작성하기
+                </Button>
+              </div>
+              평균 평점
               <Rating
-                fractions={10}
                 initialRating={averageRating.toFixed(1)}
+                fractions={10}
                 readonly
                 emptySymbol={
                   <StarFilled
                     style={{
                       fontSize: '20px',
                       color: '#f0f0f0',
-                      marginRight: '8px',
                     }}
                   />
                 }
@@ -260,14 +245,14 @@ const KeyboardDetail = ({ location }) => {
                     style={{
                       fontSize: '20px',
                       color: yellow[5],
-                      marginRight: '8px',
+                      // marginRight: '8px',
                     }}
                   />
                 }
               />
               {reviews.map((review, idx) => (
                 <div key={`${review}_${idx}`}>
-                  {reviewImageCounts[idx] || review.video ? (
+                  {review.image1 || review.video ? (
                     <Carousel
                       infinite={false}
                       dots={false}
@@ -275,76 +260,110 @@ const KeyboardDetail = ({ location }) => {
                       draggable
                       prevArrow={<LeftArrow />}
                       nextArrow={<RightArrow />}
-                      style={{ maxWidth: '500px' }}
+                      className="keyboard-detail-carousel"
                     >
                       {review.video && (
                         <>
-                          <div className="video-cover">
-                            <video className="video" controls>
-                              <source
-                                src={`${process.env.REACT_APP_IMAGE_URL}/main.mp4`}
-                                type="video/mp4"
-                              />
+                          <div className="keyboard-detail-video-cover">
+                            <video className="keyboard-detail-video" controls>
+                              <source src={review.video} type="video/mp4" />
                             </video>
                           </div>
                         </>
                       )}
 
-                      {reviewImageCounts[idx] >= 1 && (
+                      {review.image1 && (
                         <>
                           <img
                             src={review.image1}
                             alt={review.image1}
-                            className="img"
+                            className="keyboard-detail-img"
                           />
                         </>
                       )}
 
-                      {reviewImageCounts[idx] >= 2 && (
+                      {review.image2 && (
                         <>
                           <img
                             src={review.image2}
                             alt={review.image2}
-                            className="img"
+                            className="keyboard-detail-img"
                           />
                         </>
                       )}
 
-                      {reviewImageCounts[idx] >= 3 && (
+                      {review.image3 && (
                         <>
                           <img
                             src={review.image3}
                             alt={review.image3}
-                            className="img"
+                            className="keyboard-detail-img"
                           />
                         </>
                       )}
                     </Carousel>
                   ) : (
-                    <Empty
-                      image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
-                      imageStyle={{
-                        height: 60,
-                      }}
-                      description={<span>이미지 없다!</span>}
-                    ></Empty>
+                    <img
+                      src="/no-image.png"
+                      alt="no image"
+                      className="keyboard-detail-img"
+                    />
                   )}
                   <div>리뷰 내용 : {review.content}</div>
-                  <div>안녕하세요 {review.nickname}님?</div>
-                  {review.userImage ? (
-                    <Avatar src={review.userImage} />
-                  ) : (
-                    <Avatar icon={<UserOutlined />} />
-                  )}
-                  <Rate disabled defaultValue={review.rating} />
-                  <div>
-                    내가 썼냐?
-                    {review.userId === userId
-                      ? ' 그래 니가 썼다'
-                      : ' 다른 사람이 썼다'}
+
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <div>
+                      {review.userImage ? (
+                        <Avatar src={review.userImage} />
+                      ) : (
+                        <Avatar icon={<UserOutlined />} />
+                      )}
+                    </div>
+                    <div>
+                      <Rate disabled defaultValue={review.rating} />
+                      <div style={{ display: 'flex', lineHeight: '14px' }}>
+                        <span style={{ marginRight: '5px' }}>
+                          {review.nickname}
+                        </span>
+                        <span
+                          style={{ fontSize: '8px', letterSpacing: '-0.05em' }}
+                        >
+                          {review.createdAt.split('T')[0]}
+                        </span>
+                      </div>
+                    </div>
                   </div>
                   <div>
-                    언제 썼는지도 보여줘라 {review.createdAt.split('T')[0]}
+                    {review.userId === userId && (
+                      <>
+                        <Button>
+                          <Link
+                            to={{
+                              pathname: `/review/${keyboardId}`,
+                              state: {
+                                content: review.content,
+                                rating: review.rating,
+                                images: [
+                                  review.image1,
+                                  review.image2,
+                                  review.image3,
+                                ],
+                                video: review.video,
+                              },
+                            }}
+                          >
+                            수정
+                          </Link>
+                        </Button>
+                        <DeleteModal
+                          modalText="정말로 삭제하시겠습니까?"
+                          loadingText="삭제 진행중입니다."
+                          buttonText="삭제"
+                          action={deleteReviews}
+                          keyboardId={keyboardId}
+                        />
+                      </>
+                    )}
                   </div>
                 </div>
               ))}
@@ -359,7 +378,9 @@ const KeyboardDetail = ({ location }) => {
               }}
               description={<span>작성된 리뷰가 없습니다!</span>}
             >
-              <Button type="primary">리뷰 작성하러 가기</Button>
+              <Button type="primary" onClick={onClickCreateReviewBtn}>
+                리뷰 작성하기
+              </Button>
             </Empty>
           )}
         </>

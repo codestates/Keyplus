@@ -9,11 +9,7 @@ export const getReviews = createAsyncThunk(
       const reviews = await exceptionAxios.get('/reviews');
       return reviews.data.data;
     } catch (err) {
-      let error = err;
-      if (!error.response) {
-        throw err;
-      }
-      return rejectWithValue(err.response.data);
+      return rejectWithValue(err);
     }
   }
 );
@@ -21,20 +17,16 @@ export const getReviews = createAsyncThunk(
 //TODO: 공부 후 작성
 export const addReviews = createAsyncThunk(
   'reviews/addReviews',
-  async (formData, { rejectWithValue }) => {
+  async ({ formData, keyboardId }, { rejectWithValue }) => {
     // const data = {};
     // for (const [key, value] of formData.entries()) {
     //   data[key] = value;
     // }
     // console.log('🤢🤢🤢🤢🤢🤢🤢🤢🤢 client data ', data);
     try {
-      await axios.post(`/reviews/1`, formData);
+      await axios.post(`/reviews/${keyboardId}`, formData);
     } catch (err) {
-      let error = err;
-      if (!error.response) {
-        throw err;
-      }
-      return rejectWithValue(err.response.data);
+      return rejectWithValue(err);
     }
   }
 );
@@ -42,31 +34,22 @@ export const addReviews = createAsyncThunk(
 //TODO: 공부 후 작성
 export const updateReviews = createAsyncThunk(
   'reviews/updateReviews',
-  async (data, { rejectWithValue }) => {
+  async ({ formData, keyboardId }, { rejectWithValue }) => {
     try {
-      await axios.patch(`/reviews/${data.keyboardId}`);
+      await axios.patch(`/reviews/${keyboardId}`, formData);
     } catch (err) {
-      let error = err;
-      if (!error.response) {
-        throw err;
-      }
-      return rejectWithValue(err.response.data);
+      return rejectWithValue(err);
     }
   }
 );
 
 export const deleteReviews = createAsyncThunk(
   'reviews/deleteReviews',
-  async (data, { rejectWithValue }) => {
+  async ({ keyboardId }, { rejectWithValue }) => {
     try {
-      await axios.delete(`/reviews/${data}`);
-      return data;
+      await axios.delete(`/reviews/${keyboardId}`);
     } catch (err) {
-      let error = err;
-      if (!error.response) {
-        throw err;
-      }
-      return rejectWithValue(err.response.data);
+      return rejectWithValue(err);
     }
   }
 );

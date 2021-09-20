@@ -14,11 +14,7 @@ export const signUp = createAsyncThunk(
     try {
       await axios.post('/auth/signup', data);
     } catch (err) {
-      let error = err;
-      if (!error.response) {
-        throw err;
-      }
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(err);
     }
   }
 );
@@ -34,11 +30,7 @@ export const logIn = createAsyncThunk(
       ]);
       return user.data.data;
     } catch (err) {
-      let error = err;
-      if (!error.response) {
-        throw err;
-      }
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(err);
     }
   }
 );
@@ -52,36 +44,28 @@ export const logOut = createAsyncThunk(
       dispatch(logOutMyReviews());
       history.replace('/landing');
     } catch (err) {
-      let error = err;
-      if (!error.response) {
-        throw err;
-      }
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(err);
     }
   }
 );
 
 export const updateUserInfo = createAsyncThunk(
   'user/updateUserInfo',
-  async (data, { rejectWithValue }) => {
-    console.log('나 무슨데이터야?', data);
+  async ({ state, formData }, { rejectWithValue }) => {
+    console.log('🌱🌱🌱🌱🌱', state, formData);
     try {
-      const user = await exceptionAxios.patch('/users', data);
+      const user = await exceptionAxios.patch('/users', formData);
       console.log('여기는 응답 받아온거~', user);
-      return user.data.data;
+      return state;
     } catch (err) {
-      let error = err;
-      if (!error.response) {
-        throw err;
-      }
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(err);
     }
   }
 );
 
 export const deleteUser = createAsyncThunk(
   'user/deleteUser',
-  async (history, { dispatch, rejectWithValue }) => {
+  async ({ history }, { dispatch, rejectWithValue }) => {
     try {
       await axios.delete('/users');
       //unwrap 안하는 이유는 동기 액션이기 때문에 딱히 에러날 일이 없다.
@@ -89,11 +73,7 @@ export const deleteUser = createAsyncThunk(
       dispatch(logOutMyReviews());
       history.replace('/landing');
     } catch (err) {
-      let error = err;
-      if (!error.response) {
-        throw err;
-      }
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(err);
     }
   }
 );
@@ -109,11 +89,7 @@ export const socialLogIn = createAsyncThunk(
       ]);
       return user.data.data;
     } catch (err) {
-      let error = err;
-      if (!error.response) {
-        throw err;
-      }
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(err);
     }
   }
 );
@@ -128,11 +104,7 @@ export const validateNickname = createAsyncThunk(
       // return nickname;
       // return nickname.data.data;
     } catch (err) {
-      let error = err;
-      if (!error.response) {
-        throw err;
-      }
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(err);
     }
   }
 );
@@ -146,11 +118,7 @@ export const validateEmail = createAsyncThunk(
       // console.log('새로운 이메일 응답 받아온 거', email);
       // return email.data.data;
     } catch (err) {
-      let error = err;
-      if (!error.response) {
-        throw err;
-      }
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(err);
     }
   }
 );
