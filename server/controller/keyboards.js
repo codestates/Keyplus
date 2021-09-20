@@ -1,14 +1,27 @@
 const db = require('../models');
 const { User, Keyboard, Review } = require('../models');
 const { Op } = require('sequelize');
+const { clearConfigCache } = require('prettier');
 
 module.exports = {
   getAllKeyboards: async (req, res) => {
     // 1. 업로드되어있는 모든 키보드를 조회해서 클라이언트로 보내준다. ( findAll )
     try {
+      let reviewCount = [];
       const getAllKeyboard = await Keyboard.findAll({
         raw: true,
       });
+
+      for (let i = 0; i < getAllKeyboard.length; i++) {
+        const getReview = await Review.findAll({
+          where: {
+            keyboardId: getAllKeyboard[i].id,
+          },
+          raw: true,
+        });
+        reviewCount = { reviewCount: getReview.length };
+        Object.assign(getAllKeyboard[i], reviewCount);
+      }
       return res.status(200).json({ data: getAllKeyboard });
     } catch (error) {
       return res.status(500).json({ message: 'Server Error' });
@@ -75,12 +88,8 @@ module.exports = {
           },
           raw: true,
         });
-        for (let keyValue in getNickname) {
-          if (keyValue === 'image') {
-            getNickname['userImage'] = getNickname[keyValue];
-            delete getNickname['image'];
-          }
-        }
+        getNickname['userImage'] = getNickname['image'];
+        delete getNickname['image'];
         Object.assign(keyboardReview[i], getNickname);
       }
       reviews = { reviews: keyboardReview };
