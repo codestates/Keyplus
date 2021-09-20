@@ -38,10 +38,6 @@ export const updateReviews = createAsyncThunk(
     try {
       await axios.patch(`/reviews/${data.keyboardId}`);
     } catch (err) {
-      let error = err;
-      if (!error.response) {
-        throw err;
-      }
       return rejectWithValue(err);
     }
   }
