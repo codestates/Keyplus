@@ -123,7 +123,7 @@ export const validateNickname = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     console.log('변경할 닉네임 받아온 거', data);
     try {
-      await exceptionAxios.post('/users/nickname', data);
+      await exceptionAxios.post('/auth/nickname', data);
       // console.log('새로운 닉네임 응답 받아온 거', nickname);
       // return nickname;
       // return nickname.data.data;
@@ -142,7 +142,7 @@ export const validateEmail = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     console.log('변경할 이메일 받아온 거', data);
     try {
-      await axios.post('/users/email', data);
+      await exceptionAxios.post('/auth/email', data);
       // console.log('새로운 이메일 응답 받아온 거', email);
       // return email.data.data;
     } catch (err) {
