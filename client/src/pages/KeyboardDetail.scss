@@ -1,11 +1,15 @@
-.img,
-.video {
+.keyboard-detail-carousel {
   max-width: 300px;
-  max-height: 300px;
-  object-fit: contain;
 }
 
-.video {
+.keyboard-detail-img,
+.keyboard-detail-video {
+  max-width: 300px;
+  max-height: 150px;
+  object-fit: cover;
+}
+
+.keyboard-detail-video {
   position: absolute;
   top: 0;
   left: 0;
@@ -22,7 +26,7 @@
 //   overflow: hidden;
 // }
 
-.video-cover .video {
+.keyboard-detail-video-cover .keyboard-detail-video {
   object-fit: contain;
   // background: #fecb58;
   // background: linear-gradient(to bottom left, #fecb58, #27aacf);

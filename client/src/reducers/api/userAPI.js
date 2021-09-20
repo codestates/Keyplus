@@ -81,7 +81,7 @@ export const updateUserInfo = createAsyncThunk(
 
 export const deleteUser = createAsyncThunk(
   'user/deleteUser',
-  async (history, { dispatch, rejectWithValue }) => {
+  async ({ history }, { dispatch, rejectWithValue }) => {
     try {
       await axios.delete('/users');
       //unwrap 안하는 이유는 동기 액션이기 때문에 딱히 에러날 일이 없다.

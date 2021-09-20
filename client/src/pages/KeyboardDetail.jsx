@@ -14,6 +14,8 @@ import {
   LeftOutlined,
   StarFilled,
   UserOutlined,
+  EditOutlined,
+  DeleteOutlined,
 } from '@ant-design/icons';
 
 import { yellow } from '@ant-design/colors';
@@ -21,7 +23,8 @@ import { yellow } from '@ant-design/colors';
 import Rating from 'react-rating';
 
 import './KeyboardDetail.scss';
-import { addReviews } from '../reducers/api/reviewsAPI';
+import { addReviews, deleteReviews } from '../reducers/api/reviewsAPI';
+import DeleteModal from '../components/DeleteModal';
 
 const LeftArrow = ({ currentSlide, slideCount, children, ...props }) => {
   // return <Button icon={<LeftOutlined />} {...props} />;
@@ -67,6 +70,11 @@ const KeyboardDetail = ({ location }) => {
         })
       );
       setAverageRating(
+        keyboard.reviews.reduce((acc, cur) => acc + cur.rating, 0) /
+          keyboard.reviews.length
+      );
+      console.log(
+        '평균',
         keyboard.reviews.reduce((acc, cur) => acc + cur.rating, 0) /
           keyboard.reviews.length
       );
@@ -147,41 +155,39 @@ const KeyboardDetail = ({ location }) => {
             draggable
             prevArrow={<LeftArrow />}
             nextArrow={<RightArrow />}
-            style={{ maxWidth: '500px' }}
+            className="keyboard-detail-carousel"
           >
             {keyboard.image1 && (
               <img
-                className="img"
+                className="keyboard-detail-img"
                 src={`${process.env.REACT_APP_IMAGE_URL}/keyboard/${keyboard.image1}`}
                 alt={keyboard.name}
               />
             )}
             {keyboard.image2 && (
-              <div className="img-wrapper">
-                <img
-                  className="img"
-                  src={`${process.env.REACT_APP_IMAGE_URL}/keyboard/${keyboard.image2}`}
-                  alt={keyboard.name}
-                />
-              </div>
+              <img
+                className="keyboard-detail-img"
+                src={`${process.env.REACT_APP_IMAGE_URL}/keyboard/${keyboard.image2}`}
+                alt={keyboard.name}
+              />
             )}
             {keyboard.image3 && (
               <img
-                className="img"
+                className="keyboard-detail-img"
                 src={`${process.env.REACT_APP_IMAGE_URL}/keyboard/${keyboard.image3}`}
                 alt={keyboard.name}
               />
             )}
             {keyboard.image4 && (
               <img
-                className="img"
+                className="keyboard-detail-img"
                 src={`${process.env.REACT_APP_IMAGE_URL}/keyboard/${keyboard.image4}`}
                 alt={keyboard.name}
               />
             )}
             {keyboard.image5 && (
               <img
-                className="img"
+                className="keyboard-detail-img"
                 src={`${process.env.REACT_APP_IMAGE_URL}/keyboard/${keyboard.image5}`}
                 alt={keyboard.name}
               />
@@ -243,15 +249,14 @@ const KeyboardDetail = ({ location }) => {
             <>
               이것은 너의 평균 평점이다
               <Rating
-                fractions={10}
                 initialRating={averageRating.toFixed(1)}
+                fractions={10}
                 readonly
                 emptySymbol={
                   <StarFilled
                     style={{
                       fontSize: '20px',
                       color: '#f0f0f0',
-                      marginRight: '8px',
                     }}
                   />
                 }
@@ -260,7 +265,7 @@ const KeyboardDetail = ({ location }) => {
                     style={{
                       fontSize: '20px',
                       color: yellow[5],
-                      marginRight: '8px',
+                      // marginRight: '8px',
                     }}
                   />
                 }
@@ -275,12 +280,12 @@ const KeyboardDetail = ({ location }) => {
                       draggable
                       prevArrow={<LeftArrow />}
                       nextArrow={<RightArrow />}
-                      style={{ maxWidth: '500px' }}
+                      className="keyboard-detail-carousel"
                     >
                       {review.video && (
                         <>
                           <div className="video-cover">
-                            <video className="video" controls>
+                            <video className="keyboard-detail-video" controls>
                               <source
                                 src={`${process.env.REACT_APP_IMAGE_URL}/main.mp4`}
                                 type="video/mp4"
@@ -295,7 +300,7 @@ const KeyboardDetail = ({ location }) => {
                           <img
                             src={review.image1}
                             alt={review.image1}
-                            className="img"
+                            className="keyboard-detail-img"
                           />
                         </>
                       )}
@@ -305,7 +310,7 @@ const KeyboardDetail = ({ location }) => {
                           <img
                             src={review.image2}
                             alt={review.image2}
-                            className="img"
+                            className="keyboard-detail-img"
                           />
                         </>
                       )}
@@ -315,19 +320,17 @@ const KeyboardDetail = ({ location }) => {
                           <img
                             src={review.image3}
                             alt={review.image3}
-                            className="img"
+                            className="keyboard-detail-img"
                           />
                         </>
                       )}
                     </Carousel>
                   ) : (
-                    <Empty
-                      image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
-                      imageStyle={{
-                        height: 60,
-                      }}
-                      description={<span>이미지 없다!</span>}
-                    ></Empty>
+                    <img
+                      src="/no-image.png"
+                      alt="no image"
+                      className="keyboard-detail-img"
+                    />
                   )}
                   <div>리뷰 내용 : {review.content}</div>
                   <div>안녕하세요 {review.nickname}님?</div>
@@ -342,6 +345,12 @@ const KeyboardDetail = ({ location }) => {
                     {review.userId === userId
                       ? ' 그래 니가 썼다'
                       : ' 다른 사람이 썼다'}
+                    <button type="button">
+                      <EditOutlined />
+                    </button>
+                    <button type="button">
+                      <DeleteOutlined />
+                    </button>
                   </div>
                   <div>
                     언제 썼는지도 보여줘라 {review.createdAt.split('T')[0]}
@@ -364,6 +373,13 @@ const KeyboardDetail = ({ location }) => {
           )}
         </>
       )}
+      <DeleteModal
+        modalText="정말로 삭제하시겠습니까?"
+        loadingText="삭제 진행중입니다."
+        buttonText="리뷰 삭제"
+        action={deleteReviews}
+        keyboardId={keyboardId}
+      />
     </>
   );
 };

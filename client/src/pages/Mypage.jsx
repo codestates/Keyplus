@@ -2,7 +2,11 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 // import { useHistory } from 'react-router';
 
-import { updateUserInfo, validateNickname } from '../reducers/api/userAPI';
+import {
+  deleteUser,
+  updateUserInfo,
+  validateNickname,
+} from '../reducers/api/userAPI';
 import DeleteModal from '../components/DeleteModal';
 import './Mypage.scss';
 import { message, Button, Space } from 'antd';
@@ -98,9 +102,7 @@ const Mypage = () => {
               required
               value={nickname || ''}
             />
-            <button type="submit" onClick={onClickValidate}>
-              닉네임 중복확인
-            </button>
+            <button onClick={onClickValidate}>닉네임 중복확인</button>
             {userState.socialType === 'local' && (
               <>
                 <label htmlFor="password">패스워드</label>
@@ -115,15 +117,10 @@ const Mypage = () => {
             )}
           </div>
           <Space>
-            <Button type="submit" onClick={onClickModify}>
-              회원정보 수정
-            </Button>
+            <Button onClick={onClickModify}>회원정보 수정</Button>
           </Space>
         </div>
         {/* FIXME: 관심키보드 / 내 리뷰 */}
-        <div className="container">
-          <div></div>
-        </div>
 
         {/* <div className="image-list-type">
           <span
@@ -144,7 +141,12 @@ const Mypage = () => {
         </div> */}
 
         {/* FIXME: 회원탈퇴 */}
-        <DeleteModal />
+        <DeleteModal
+          modalText="정말로 탈퇴하시겠습니까?"
+          loadingText="탈퇴 진행중입니다."
+          buttonText="회원 탈퇴"
+          action={deleteUser}
+        />
       </section>
     </>
   );
