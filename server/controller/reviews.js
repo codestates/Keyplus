@@ -1,4 +1,3 @@
-const { default: contentSecurityPolicy } = require('helmet/dist/middlewares/content-security-policy');
 const db = require('../models');
 const { Review, User, Keyboard, sequelize } = require('../models');
 
@@ -18,6 +17,7 @@ module.exports = {
           }
         })
         if (!hasReview) {
+          console.log('🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥', req.files);
           if (Object.keys(req.files).length !== 0) {
             const img = req.files.img ? req.files.img.map(el => el.location) : '';
             let review = await Review.create({
@@ -41,7 +41,7 @@ module.exports = {
             return res.status(200).json({ data: review });
           }
         } else {
-          return res.sendStatus(200)
+          return res.sendStatus(409)
         }
     } catch (error) {
       console.log(error);
