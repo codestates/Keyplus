@@ -34,7 +34,6 @@ function App() {
             <Route path="/survey" component={Survey} />
             <Route path="/login" component={Login} />
             <PrivateRoute path="/mypage" component={Mypage} exact />
-            <Route path="/mypage" component={Mypage} />
             <Route path="/test" component={Test} />
           </>
         </Switch>

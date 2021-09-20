@@ -76,7 +76,7 @@ const Mypage = () => {
 
       <section>
         {/* FIXME: 회원정보 수정창 */}
-        <div className="container">
+        <div className="mypage-container">
           <figure>
             <div>{userState.image}</div>
             {userState.image ? (
@@ -98,7 +98,9 @@ const Mypage = () => {
               required
               value={nickname || ''}
             />
-            <button onClick={onClickValidate}>닉네임 중복확인</button>
+            <button type="submit" onClick={onClickValidate}>
+              닉네임 중복확인
+            </button>
             {userState.socialType === 'local' && (
               <>
                 <label htmlFor="password">패스워드</label>
@@ -113,7 +115,9 @@ const Mypage = () => {
             )}
           </div>
           <Space>
-            <Button onClick={onClickModify}>회원정보 수정</Button>
+            <Button type="submit" onClick={onClickModify}>
+              회원정보 수정
+            </Button>
           </Space>
         </div>
         {/* FIXME: 관심키보드 / 내 리뷰 */}
