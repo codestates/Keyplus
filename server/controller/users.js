@@ -2,7 +2,7 @@ const db = require('../models');
 const { User } = require('../models');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const nodemailer = require('nodemailer');
+
 const {
   generateAccessToken,
   sendAccessToken,
@@ -10,14 +10,6 @@ const {
 const dotenv = require('dotenv');
 
 dotenv.config();
-
-function generateRandomCode(n) {
-  let str = '';
-  for (let i = 0; i < n; i++) {
-    str += Math.floor(Math.random() * 10);
-  }
-  return str;
-}
 
 module.exports = {
   getUser: async (req, res) => {
