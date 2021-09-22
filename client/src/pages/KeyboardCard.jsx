@@ -114,7 +114,7 @@ const keySwitchComponent = {
 // #B8792A
 // #00b4f9
 
-const KeyboardCard = memo(({ keyboard }) => {
+const KeyboardCard = ({ keyboard }) => {
   const dispatch = useDispatch();
 
   const likes = useSelector((state) => state.likes);
@@ -317,6 +317,6 @@ const KeyboardCard = memo(({ keyboard }) => {
       </div>
     </Card>
   );
-});
+};
 
 export default KeyboardCard;
