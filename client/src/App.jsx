@@ -8,6 +8,7 @@ import KeyboardDetail from './pages/KeyboardDetail';
 import Landing from './pages/Landing';
 import Survey from './pages/Survey';
 import Login from './pages/Login';
+import Signup from './pages/Signup';
 import Mypage from './pages/Mypage';
 import Temp from './pages/Temp';
 import ReviewCreate from './pages/ReviewCreate';
@@ -33,6 +34,7 @@ function App() {
             <Route path="/keyboards/:id" component={KeyboardDetail} />
             <Route path="/survey" component={Survey} />
             <Route path="/login" component={Login} />
+            <Route path="/signup" component={Signup} />
             <PrivateRoute path="/mypage" component={Mypage} exact />
             <Route path="/review/:id" component={ReviewCreate} />
           </>

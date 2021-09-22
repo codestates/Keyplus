@@ -42,14 +42,16 @@ const userSlice = createSlice({
         state = null;
         return state;
       })
-      .addCase(validateNickname.fulfilled, (state, action) => {
-        state = action.payload;
-        return state;
-      })
-      .addCase(validateEmail.fulfilled, (state, action) => {
-        state = action.payload;
-        return state;
-      })
+      // .addCase(validateNickname.fulfilled, (state, action) => {
+      //   state = action.payload;
+      //   console.log('내가 스테이트', state);
+      //   return state;
+      // })
+      // .addCase(validateEmail.fulfilled, (state, action) => {
+      //   state = action.payload;
+      //   console.log('내가 스테이트', state);
+      //   return state;
+      // })
       .addDefaultCase((state) => {
         return state;
       });
