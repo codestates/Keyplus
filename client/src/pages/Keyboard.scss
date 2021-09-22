@@ -1,5 +1,15 @@
 @use '../styles/constants' as *;
 
+.keyboard-category {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  grid-template-rows: 1fr;
+
+  & > * {
+    border: 1px solid #000;
+  }
+}
+
 .card-section {
   // display: flex;
   // flex-wrap: wrap;
