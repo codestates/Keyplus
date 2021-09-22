@@ -77,7 +77,6 @@ const Mypage = () => {
         setValidNickname(true);
 
         const formData = new FormData();
-        //req.file로 읽혀서 어떤 이름으로 보내든 상관 없음
         formData.append('img', file); //e.target.img.files[0]
         formData.append('email', email);
         formData.append('nickname', nickname);
@@ -86,6 +85,7 @@ const Mypage = () => {
           updateUserInfo({ state: { ...updateState, image: newImg }, formData })
         ).unwrap();
         message.success('회원정보 수정이 완료되었습니다');
+        s;
         setValidNickname(false);
       } else {
         return message.warning('닉네임 중복검사를 해주세요');
@@ -103,11 +103,11 @@ const Mypage = () => {
     console.log(key);
   }
 
-  const profileImg = userState.image;
+  const prevImg = userState.image;
   // console.log('내가 프로필', profileImg);
 
-  //FIXME: 미리보기
-  const onChangeImages = (e) => {
+  //FIXME: 프로필 이미지 미리보기
+  const onChangeImage = (e) => {
     const newFile = e.target.files[0];
     //FIXME: file state 업데이트 시키기
     setFile(newFile);
@@ -136,13 +136,13 @@ const Mypage = () => {
                 id="img"
                 name="img"
                 accept=".png, .jpg, jpeg"
-                onChange={onChangeImages}
+                onChange={onChangeImage}
               />
               {newImg ? (
                 <Avatar src={newImg} />
               ) : (
                 // <Avatar icon={<UserOutlined />} />
-                <Avatar src={profileImg} />
+                <Avatar src={prevImg} />
               )}
             </div>
             <div>
@@ -164,7 +164,7 @@ const Mypage = () => {
             </button>
             {userState.socialType === 'local' && (
               <>
-                <>
+                <div>
                   <label htmlFor="password">패스워드</label>
                   <input
                     type="password"
@@ -173,7 +173,7 @@ const Mypage = () => {
                     name="password"
                     value={password || ''}
                   />
-                </>
+                </div>
               </>
             )}
             <Space>

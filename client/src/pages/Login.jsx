@@ -117,7 +117,7 @@ const Login = (props) => {
 
   return (
     <>
-      <section className="container">
+      <section className="login-container">
         <h2>Login</h2>
         <label htmlFor="email">이메일</label>
         <input
