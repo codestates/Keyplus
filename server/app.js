@@ -10,6 +10,7 @@ const likesRouter = require('./router/likes');
 const inquiriesRouter = require('./router/inquiries');
 const shopsRouter = require('./router/shops');
 const authRouter = require('./router/auth');
+const adminRouter = require('./router/admin');
 const models = require('./models');
 
 const app = express();
@@ -34,6 +35,7 @@ app.use('/likes', likesRouter);
 app.use('/inquiries', inquiriesRouter);
 app.use('/shops', shopsRouter);
 app.use('/auth', authRouter);
+app.use('/admin', adminRouter);
 
 app.get('/', (req, res) => {
   res.status(201).send('success');
