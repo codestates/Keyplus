@@ -33,24 +33,30 @@ const Mypage = () => {
     nickname: userState.nickname,
     password: '',
   });
-
   const [file, setFile] = useState(null);
   const [newImg, setNewImg] = useState(userState.image);
+  const [validNickname, setValidNickname] = useState(false);
 
   //FIXME: state 업데이트
   const onChangeUpdateState = (e) => {
     const { name, value } = e.target;
     setUpdateState({ ...updateState, [name]: value });
   };
-  console.log(`인풋밸류`, updateState);
+  console.log(`새로운 인풋밸류`, updateState);
 
   const { email, nickname, password } = updateState;
-  const [validNickname, setValidNickname] = useState(false);
+  const prevNickname = userState.nickname;
+  console.log('내가 prevNickname', prevNickname);
+  console.log('내가 newnickname', nickname);
 
   //FIXME: 닉네임 중복확인 함수
   const onClickValidate = async (e) => {
     e.preventDefault();
+
     try {
+      if (prevNickname === nickname) {
+        return message.success('사용 가능한 닉네임 입니다');
+      }
       await dispatch(validateNickname({ nickname })).unwrap();
       setValidNickname(true);
       message.success('사용 가능한 닉네임 입니다');
@@ -65,19 +71,25 @@ const Mypage = () => {
   //FIXME: 회원정보 수정 함수
   const onClickModify = async (e) => {
     e.preventDefault();
-    if (!validNickname) return message.warning('닉네임 중복검사를 해주세요');
+    // if (!validNickname) return message.warning('닉네임 중복검사를 해주세요');
     try {
-      const formData = new FormData();
-      //req.file로 읽혀서 어떤 이름으로 보내든 상관 없음
-      formData.append('img', file); //e.target.img.files[0]
-      formData.append('email', email);
-      formData.append('nickname', nickname);
-      formData.append('password', password);
-      await dispatch(
-        updateUserInfo({ state: { ...updateState, image: newImg }, formData })
-      ).unwrap();
-      setValidNickname(false);
-      message.success('회원정보 수정이 완료되었습니다');
+      if (prevNickname === nickname || validNickname) {
+        setValidNickname(true);
+
+        const formData = new FormData();
+        //req.file로 읽혀서 어떤 이름으로 보내든 상관 없음
+        formData.append('img', file); //e.target.img.files[0]
+        formData.append('email', email);
+        formData.append('nickname', nickname);
+        formData.append('password', password);
+        await dispatch(
+          updateUserInfo({ state: { ...updateState, image: newImg }, formData })
+        ).unwrap();
+        message.success('회원정보 수정이 완료되었습니다');
+        setValidNickname(false);
+      } else {
+        return message.warning('닉네임 중복검사를 해주세요');
+      }
     } catch (err) {
       if (!err.response) throw err;
       dispatch(isError(err.response));
@@ -90,23 +102,6 @@ const Mypage = () => {
   function callback(key) {
     console.log(key);
   }
-
-  // const onClickUpload = async (e) => {
-  //   try {
-  //     e.preventDefault();
-  //     const formData = new FormData();
-
-  //     for (const file of e.target.img.files) {
-  //       formData.append('img', file);
-  //     }
-  //     formData.append('img', e.target.video.files[0]);
-  //     await dispatch(addReviews(formData)).unwrap();
-  //     message.success('프로필 사진 업로드가 완료 되었습니다');
-  //   } catch (err) {
-  //     dispatch(isError(err.response));
-  //     message.warning('파일 업로드 중 오류가 발생했습니다');
-  //   }
-  // };
 
   const profileImg = userState.image;
   // console.log('내가 프로필', profileImg);
