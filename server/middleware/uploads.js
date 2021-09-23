@@ -22,7 +22,7 @@ const storage = multerS3({
   key: function (req, file, cb) {
     if (file.originalname.match(/\.(mp4|MPEG-4|mkv)$/)) {
       cb(null, `reviewVideo/${Date.now()}_${file.originalname}`);
-    } else if (req.files.keyboardImg) {
+    } else if (req.files?.keyboardImg) {
       cb(null, `keyboards/${Date.now()}_${file.originalname}`);
     } else if (req.files) {
       cb(null, `review/${Date.now()}_${file.originalname}`);
