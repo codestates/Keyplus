@@ -19,15 +19,12 @@ module.exports = {
       });
       if (!hasReview) {
         if (Object.keys(req.files).length !== 0) {
-          const img = req.files.img
-            ? req.files.img.map((el) => el.location)
-            : '';
           let review = await Review.create({
             content,
             rating,
-            image1: img[0] || null,
-            image2: img[1] || null,
-            image3: img[2] || null,
+            image1: req.files.img1 ? req.files.img1[0].location : null,
+            image2: req.files.img2 ? req.files.img2[0].location : null,
+            image3: req.files.img3 ? req.files.img3[0].location : null,
             video: req.files.video ? req.files.video[0].location : null,
             userId: user,
             keyboardId: keyboard,
@@ -66,14 +63,10 @@ module.exports = {
       raw: true,
     });
     if (Object.keys(req.files).length !== 0) {
-      if (req.files.img) {
-        review.image1 = req.files.img[0]?.location || null;
-        review.image2 = req.files.img[1]?.location || null;
-        review.image3 = req.files.img[2]?.location || null;
-      }
-      if (req.files.video) {
-        review.video = req.files.video[0]?.location || null;
-      }
+      if (req.files.img1) review.image1 = req.files.img1[0].location;
+      if (req.files.img2) review.image2 = req.files.img2[0].location;
+      if (req.files.img3) review.image3 = req.files.img3[0].location;
+      if (req.files.video) review.video = req.files.video[0].location;
     }
 
     try {
