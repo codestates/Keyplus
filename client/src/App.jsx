@@ -10,6 +10,7 @@ import Survey from './pages/Survey';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Mypage from './pages/Mypage';
+import Inquiry from './pages/Inquiry';
 import Temp from './pages/Temp';
 import ReviewCreate from './pages/ReviewCreate';
 import Spinner from './components/Spinner';
@@ -58,6 +59,12 @@ function App() {
               restricted={true}
               path="/signup"
               component={Signup}
+              exact
+            />
+            <PublicRoute
+              restricted={true}
+              path="/inquiry"
+              component={Inquiry}
               exact
             />
             <PrivateRoute path="/mypage" component={Mypage} exact />
