@@ -9,6 +9,7 @@ import {
 } from '../reducers/api/userAPI';
 import { isError } from '../reducers/errorReducer';
 import './Login.scss';
+import { Link } from 'react-router-dom';
 
 const Login = (props) => {
   // const { data, loading, error } = useSelector((state) => state.user);
@@ -151,6 +152,9 @@ const Login = (props) => {
         {/* {loading && <h1>Loading...</h1>}
       {error && <h1>{error.message}</h1>}
       {data && <h1>{data.nickname}</h1>} */}
+        <div>
+          <Link to="/signup">회원가입 하러가기</Link>
+        </div>
       </section>
     </>
   );

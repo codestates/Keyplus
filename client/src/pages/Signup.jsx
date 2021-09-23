@@ -10,6 +10,7 @@ import {
 } from '../reducers/api/userAPI';
 import { UserOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
 
 const Signup = () => {
   const dispatch = useDispatch();
@@ -44,6 +45,14 @@ const Signup = () => {
   const [isClicked, setIsClicked] = useState(false);
   const [code, setCode] = useState('');
   const [input, setInput] = useState('');
+
+  const emailVerify = () => {
+    if (input == code) {
+      setValidEmail(true);
+      return message.success('이메일 인증에 성공했습니다');
+    }
+  };
+
   const emailValidate = async (e) => {
     e.preventDefault();
     try {
@@ -63,13 +72,6 @@ const Signup = () => {
       // dispatch(isError(err.response));
       setValidEmail(false);
       message.warning('이미 사용중인 이메일 입니다');
-    }
-  };
-
-  const emailVerify = () => {
-    if (input == code) {
-      setValidEmail(true);
-      return message.success('이메일 인증에 성공했습니다');
     }
   };
 
@@ -131,7 +133,7 @@ const Signup = () => {
       }
       if (!passwordValidate(password)) {
         return message.warning(
-          '최소 8 자, 최소 하나의 문자, 하나의 숫자 및 하나의 특수 문자의 비밀번호가 필요합니다'
+          '최소 6 자, 최소 하나의 문자, 하나의 숫자 및 하나의 특수 문자의 비밀번호가 필요합니다'
         );
       }
 
@@ -161,7 +163,7 @@ const Signup = () => {
   return (
     <>
       <section>
-        <form action="" onSubmit={onClickSignup}>
+        <form onSubmit={onClickSignup}>
           <div>
             <label htmlFor="img">사진을 업로드 해주세요</label>
             <input
@@ -189,7 +191,7 @@ const Signup = () => {
               value={email || ''}
             />
           </div>
-          <button type="submit" onClick={emailValidate}>
+          <button type="button" onClick={emailValidate}>
             전송
           </button>
           <p>이메일 확인 후 인증번호를 입력해 주세요</p>
@@ -201,7 +203,7 @@ const Signup = () => {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
               />
-              <button type="submit" onClick={emailVerify}>
+              <button type="button" onClick={emailVerify}>
                 확인
               </button>
             </>
@@ -212,11 +214,11 @@ const Signup = () => {
               type="text"
               onChange={onChangeUpdateState}
               name="nickname"
-              required
+              // required
               value={nickname || ''}
             />
           </div>
-          <button type="submit" onClick={nicknameValidate}>
+          <button type="button" onClick={nicknameValidate}>
             닉네임 중복확인
           </button>
 
@@ -227,7 +229,7 @@ const Signup = () => {
               onChange={onChangeUpdateState}
               placeholder="******"
               name="password"
-              required
+              // required
               value={password || ''}
             />
           </div>
@@ -238,13 +240,15 @@ const Signup = () => {
               onChange={onChangeUpdateState}
               placeholder="******"
               name="repassword"
-              required
+              // required
               value={repassword || ''}
             />
           </div>
           <button type="submit">회원가입</button>
         </form>
-        <div>로그인 하러 가기</div>
+        <div>
+          <Link to="/login">로그인 하러가기</Link>
+        </div>
       </section>
     </>
   );
