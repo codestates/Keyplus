@@ -14,7 +14,7 @@ import Temp from './pages/Temp';
 import ReviewCreate from './pages/ReviewCreate';
 import Spinner from './components/Spinner';
 import PrivateRoute from './utils/PrivateRoute';
-// import PublicRoute from './utils/PublicRoute';
+import PublicRoute from './utils/PublicRoute';
 
 import './App.less';
 
@@ -30,13 +30,38 @@ function App() {
             {/* <Redirect exact path="/" to="keyboard" /> */}
             <Route path="/landing" component={Landing} />
             <Route path="/temp" component={Temp} />
-            <Route exact path="/keyboards" component={Keyboard} />
-            <Route path="/keyboards/:id" component={KeyboardDetail} />
-            <Route path="/survey" component={Survey} />
-            <Route path="/login" component={Login} />
-            <Route path="/signup" component={Signup} />
+            <PublicRoute
+              restricted={false}
+              path="/keyboards"
+              component={Keyboard}
+              exact
+            />
+            <PublicRoute
+              restricted={false}
+              path="/keyboards/:id"
+              component={KeyboardDetail}
+              exact
+            />
+            <PublicRoute
+              restricted={false}
+              path="/survey"
+              component={Survey}
+              exact
+            />
+            <PublicRoute
+              restricted={true}
+              path="/login"
+              component={Login}
+              exact
+            />
+            <PublicRoute
+              restricted={true}
+              path="/signup"
+              component={Signup}
+              exact
+            />
             <PrivateRoute path="/mypage" component={Mypage} exact />
-            <Route path="/review/:id" component={ReviewCreate} />
+            <PrivateRoute path="/review/:id" component={ReviewCreate} />
           </>
         </Switch>
       </AppLayout>
