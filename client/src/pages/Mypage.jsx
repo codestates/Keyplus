@@ -85,7 +85,6 @@ const Mypage = () => {
           updateUserInfo({ state: { ...updateState, image: newImg }, formData })
         ).unwrap();
         message.success('회원정보 수정이 완료되었습니다');
-        s;
         setValidNickname(false);
       } else {
         return message.warning('닉네임 중복검사를 해주세요');
@@ -138,10 +137,12 @@ const Mypage = () => {
                 accept=".png, .jpg, jpeg"
                 onChange={onChangeImage}
               />
+              {/* {prevImg === '' && <Avatar icon={<UserOutlined />} />} */}
               {newImg ? (
                 <Avatar src={newImg} />
+              ) : prevImg === '' ? (
+                <Avatar icon={<UserOutlined />} />
               ) : (
-                // <Avatar icon={<UserOutlined />} />
                 <Avatar src={prevImg} />
               )}
             </div>
