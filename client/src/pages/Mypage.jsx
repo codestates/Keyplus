@@ -57,12 +57,12 @@ const Mypage = () => {
       if (prevNickname === nickname) {
         return message.success('사용 가능한 닉네임 입니다');
       }
-      await dispatch(validateNickname({ nickname })).unwrap();
+      await validateNickname({ nickname });
       setValidNickname(true);
       message.success('사용 가능한 닉네임 입니다');
     } catch (err) {
       console.log(err.response);
-      dispatch(isError(err.response));
+      // dispatch(isError(err.response));
       setValidNickname(false);
       message.warning('사용 불가한 닉네임 입니다');
     }
@@ -81,9 +81,7 @@ const Mypage = () => {
         formData.append('email', email);
         formData.append('nickname', nickname);
         formData.append('password', password);
-        await dispatch(
-          updateUserInfo({ state: { ...updateState, image: newImg }, formData })
-        ).unwrap();
+        await dispatch(updateUserInfo({ formData })).unwrap();
         message.success('회원정보 수정이 완료되었습니다');
         setValidNickname(false);
       } else {

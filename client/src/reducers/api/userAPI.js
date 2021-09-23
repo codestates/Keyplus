@@ -76,12 +76,12 @@ export const logOut = createAsyncThunk(
 
 export const updateUserInfo = createAsyncThunk(
   'user/updateUserInfo',
-  async ({ state, formData }, { rejectWithValue }) => {
-    console.log('🌱🌱🌱🌱🌱', state, formData);
+  async ({ formData }, { rejectWithValue }) => {
+    console.log('🌱🌱🌱🌱🌱', formData);
     try {
       const user = await exceptionAxios.patch('/users', formData);
       console.log('여기는 응답 받아온거', user);
-      return state;
+      return user.data.data;
     } catch (err) {
       return rejectWithValue(err);
     }
