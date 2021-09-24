@@ -53,7 +53,8 @@ module.exports = {
     // 3. 클라이언트로부터 받아온 업데이트 된 리뷰 정보를 DB에 새롭게 저장한다.
     const keyboard = req.params.id;
     const user = req.userId;
-    const { content, rating } = req.body;
+    const { content, rating, deleteImg1, deleteImg2, deleteImg3, deleteVideo } =
+      req.body;
 
     const review = await Review.findOne({
       where: {
@@ -62,11 +63,26 @@ module.exports = {
       },
       raw: true,
     });
-    if (Object.keys(req.files).length !== 0) {
-      if (req.files.img1) review.image1 = req.files.img1[0].location;
-      if (req.files.img2) review.image2 = req.files.img2[0].location;
-      if (req.files.img3) review.image3 = req.files.img3[0].location;
-      if (req.files.video) review.video = req.files.video[0].location;
+
+    if (req.files?.img1) {
+      review.image1 = req.files.img1[0].location;
+    } else if (deleteImg1 === '1') {
+      review.image1 = null;
+    }
+    if (req.files?.img2) {
+      review.image2 = req.files.img2[0].location;
+    } else if (deleteImg2 === '1') {
+      review.image2 = null;
+    }
+    if (req.files?.img3) {
+      review.image3 = req.files.img3[0].location;
+    } else if (deleteImg3 === '1') {
+      review.image3 = null;
+    }
+    if (req.files?.video) {
+      review.video = req.files.video[0].location;
+    } else if (deleteVideo === '1') {
+      review.video = null;
     }
 
     try {

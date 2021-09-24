@@ -27,7 +27,7 @@ import './KeyboardCard.scss';
 import { Link } from 'react-router-dom';
 import { addLikes, deleteLikes } from '../reducers/api/likesAPI';
 
-import { Card, Avatar } from 'antd';
+import { Card, Avatar, message } from 'antd';
 
 const { Meta } = Card;
 
@@ -116,6 +116,7 @@ const keySwitchComponent = {
 
 const KeyboardCard = ({ keyboard }) => {
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
 
   const likes = useSelector((state) => state.likes);
 
@@ -129,6 +130,10 @@ const KeyboardCard = ({ keyboard }) => {
   const onClickHeart = async () => {
     // 만약 지금 liked: true => deleteLike 요청
     // 만약 지금 liked: false => addLike 요청
+
+    if (!user) {
+      return message.warning('로그인을 먼저 해주세요.');
+    }
 
     try {
       // ! Add a Like에서 바뀐 키보드 정보를 보내줄 필요 없음 ?

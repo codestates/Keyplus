@@ -25,6 +25,7 @@ const Keyboard = () => {
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.loading);
 
+  // ! state
   const [keyboards, setKeyboards] = useState([]);
   const [allKeyboards, setAllKeyboards] = useState([]);
   const [sortingNumber, setSortingNumber] = useState(1);
@@ -214,7 +215,6 @@ const Keyboard = () => {
     if (!mountedAllCategory.current) {
       mountedAllCategory.current = true;
     } else {
-      console.log('할때마다해라');
       // * 초기화
       setKeyboards([...allKeyboards]);
 
@@ -494,13 +494,11 @@ const Keyboard = () => {
     setAllCategory((prev) =>
       prev.filter((category) => !category.endsWith('이하'))
     );
-    console.log('radio checked', e.target.value);
     setPriceRadio(e.target.value);
     setAllCategory((prev) => [...prev, e.target.value]);
   };
 
   const onClickPriceRadio = (e) => {
-    console.log(e.target.checked);
     if (priceRadio) {
       e.target.checked = false;
       setPriceRadio(null);
@@ -578,7 +576,7 @@ const Keyboard = () => {
         <>
           <div className="keyboard-category">
             <div>브랜드</div>
-            <div>
+            <div className="horizontal-scroll">
               <Checkbox
                 checked={brandLogitech}
                 onChange={onChangeBrandLogitech}
@@ -602,7 +600,7 @@ const Keyboard = () => {
               </Checkbox>
             </div>
             <div>키 스위치</div>
-            <div>
+            <div className="horizontal-scroll">
               <Checkbox checked={switchBrown} onChange={onChangeSwitchBrown}>
                 갈축
               </Checkbox>
@@ -623,7 +621,11 @@ const Keyboard = () => {
               </Checkbox>
             </div>
             <div>가격</div>
-            <Radio.Group onChange={onChangePriceRadio} value={priceRadio}>
+            <Radio.Group
+              onChange={onChangePriceRadio}
+              value={priceRadio}
+              className="horizontal-scroll"
+            >
               <Radio value={'5만원 이하'} onClick={onClickPriceRadio}>
                 5만원 이하
               </Radio>
@@ -641,7 +643,7 @@ const Keyboard = () => {
               </Radio>
             </Radio.Group>
             <div>기타</div>
-            <div>
+            <div className="horizontal-scroll">
               <Checkbox checked={tenkeyLess} onChange={onChangeTenkeyLess}>
                 텐키리스
               </Checkbox>
@@ -661,9 +663,10 @@ const Keyboard = () => {
             )}
             <div>
               {allCategory.map((category) => (
-                <span
+                <div
                   key={category}
                   style={{
+                    display: 'inline-block',
                     color: '#fff',
                     backgroundColor: '#000',
                     padding: '5px',
@@ -672,7 +675,7 @@ const Keyboard = () => {
                   }}
                 >
                   {category}
-                </span>
+                </div>
               ))}
             </div>
           </div>
@@ -681,6 +684,7 @@ const Keyboard = () => {
           <Space
             split={<Divider type="vertical" />}
             style={{ marginBottom: '10px' }}
+            className="horizontal-scroll"
           >
             <Typography.Link onClick={onClickHeartDescendingBtn}>
               {sortingNumber === 1 && <FaCheck />}
