@@ -62,7 +62,7 @@ function App() {
               exact
             />
             <PublicRoute
-              restricted={true}
+              restricted={false}
               path="/inquiry"
               component={Inquiry}
               exact
