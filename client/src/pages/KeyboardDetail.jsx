@@ -87,6 +87,9 @@ const KeyboardDetail = (props) => {
     // 만약 지금 liked: true => deleteLike 요청
     // 만약 지금 liked: false => addLike 요청
 
+    if (!userId) {
+      return message.warning('로그인을 먼저 해주세요.');
+    }
     try {
       // ! Add a Like에서 바뀐 키보드 정보를 보내줄 필요 없음 ?
       if (liked) {
@@ -103,6 +106,9 @@ const KeyboardDetail = (props) => {
   };
 
   const onClickCreateReviewBtn = () => {
+    if (!userId) {
+      return message.warning('로그인을 먼저 해주세요.');
+    }
     for (let i = 0; i < reviews.length; i++) {
       if (reviews[i].userId === userId) {
         return message.warning('이미 리뷰를 남기셨습니다.');
@@ -113,7 +119,7 @@ const KeyboardDetail = (props) => {
     });
   };
 
-  // ! 리뷰 이미지가 0개면 no data
+  //  리뷰 이미지가 0개면 no data
   // ! 리뷰 이미지가 1개 이상이면 그때부터 캐러셀을 여는데 항목 개수가 2개 이상일 때만
 
   const [fileList, setFileList] = useState([
@@ -252,7 +258,10 @@ const KeyboardDetail = (props) => {
               />
               {reviews.map((review, idx) => (
                 <div key={`${review}_${idx}`}>
-                  {review.image1 || review.video ? (
+                  {review.image1 ||
+                  review.image2 ||
+                  review.image3 ||
+                  review.video ? (
                     <Carousel
                       infinite={false}
                       dots={false}
