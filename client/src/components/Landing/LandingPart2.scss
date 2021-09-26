@@ -1,0 +1,37 @@
+@use '../../styles/constants' as *;
+
+.part2-background {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  // height: calc(100vh - 120px);
+
+  .carousel.carousel-slider .control-arrow {
+    background: none;
+  }
+  .slide {
+    height: 100vh;
+
+    .part2-carousel-image {
+      height: inherit;
+      object-fit: cover;
+    }
+  }
+
+  .part2-text-wrapper {
+    position: absolute;
+    right: 5%;
+    bottom: 5%;
+    transform: translate(5%, 5%);
+    white-space: nowrap;
+
+    .part2-text {
+      color: #fff;
+      font-size: 48px;
+      font-weight: 700;
+      text-align: right;
+      text-shadow: 2px 8px 6px rgba(0, 0, 0, 0.2),
+        0px -5px 35px rgba(255, 255, 255, 0.3);
+    }
+  }
+}
