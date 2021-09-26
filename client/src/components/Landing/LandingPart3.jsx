@@ -4,14 +4,12 @@ import './LandingPart3.scss';
 import './LandingPart3.scss';
 
 const LandingPart3 = () => {
-
-
   return (
     <>
       <div className="part3-background">
         <div className="part3-image-wrapper">
           <div
-            data-aos="fade"
+            data-aos="fade-right"
             data-aos-delay="50"
             data-aos-duration="1000"
             data-aos-easing="ease-out"
@@ -22,7 +20,7 @@ const LandingPart3 = () => {
         </div>
         <div className="part3-image-wrapper">
           <div
-            data-aos="fade"
+            data-aos="fade-left"
             data-aos-delay="550"
             data-aos-duration="1000"
             data-aos-easing="ease-out"
@@ -33,7 +31,7 @@ const LandingPart3 = () => {
         </div>
         <div className="part3-image-wrapper">
           <div
-            data-aos="fade"
+            data-aos="fade-down"
             data-aos-delay="1050"
             data-aos-duration="1000"
             data-aos-easing="ease-out"
@@ -44,21 +42,19 @@ const LandingPart3 = () => {
         </div>
         <div className="part3-text-wrapper">
           <div
-            data-aos="fade-down"
+            data-aos="fade"
             data-aos-delay="1600"
-            data-aos-duration="1300"
+            data-aos-duration="500"
             data-aos-easing="ease-out"
             className="part3-text"
           >
-            디자인, 타건감, LED, 소리, 가격, 무선 등
-            <br />
-            수많은 고민 요소들, 해결해드립니다.
+            <span>디자인, 타건감, LED, 소리, 가격, 무선 등</span> <br />
+            <span>수많은 고민 요소들, 해결해드립니다.</span>
           </div>
         </div>
       </div>
     </>
   );
-
 };
 
 export default LandingPart3;
