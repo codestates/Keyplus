@@ -19,9 +19,9 @@ const Landing = () => {
       <div className="landing-main">
         <LandingHeader />
         <LandingPart1 />
-        {/* <LandingPart2 /> */}
+        <LandingPart2 />
         <LandingPart3 />
-        {/* <LandingPart4 /> */}
+        <LandingPart4 />
         <LandingPart5 />
         <Footer />
       </div>
