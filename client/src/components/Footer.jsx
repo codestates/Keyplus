@@ -3,7 +3,7 @@ import { ReactComponent as KEYPLUS } from '../assets/images/KEYPLUS_footer_36.sv
 import './Footer.scss';
 import { Link } from 'react-router-dom';
 
-export const Footer = () => {
+const Footer = () => {
   return (
     <>
       {/* 왼쪽: 로고 회색깔로 넣기 */}
@@ -66,3 +66,5 @@ export const Footer = () => {
     </>
   );
 };
+
+export default Footer;

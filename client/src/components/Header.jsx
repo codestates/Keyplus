@@ -18,7 +18,7 @@ import { logOut } from '../reducers/api/userAPI';
 import { isError } from '../reducers/errorReducer';
 import { useHistory } from 'react-router';
 
-export const Header = () => {
+const Header = () => {
   const [isOpenSidebar, setIsOpenSidebar] = useState(false);
   const [offset, setOffset] = useState(0);
   const [width, setWidth] = useState(window.innerWidth);
@@ -178,3 +178,5 @@ export const Header = () => {
     </>
   );
 };
+
+export default Header;
