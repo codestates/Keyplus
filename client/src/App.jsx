@@ -24,54 +24,54 @@ function App() {
 
   return (
     <>
-      <AppLayout>
-        <Switch>
-          <>
-            {loading && <Spinner />}
-            {/* <Redirect exact path="/" to="keyboard" /> */}
-            <Route path="/landing" component={Landing} />
-            <Route path="/temp" component={Temp} />
-            <PublicRoute
-              restricted={false}
-              path="/keyboards"
-              component={Keyboard}
-              exact
-            />
-            <PublicRoute
-              restricted={false}
-              path="/keyboards/:id"
-              component={KeyboardDetail}
-              exact
-            />
-            <PublicRoute
-              restricted={false}
-              path="/survey"
-              component={Survey}
-              exact
-            />
-            <PublicRoute
-              restricted={true}
-              path="/login"
-              component={Login}
-              exact
-            />
-            <PublicRoute
-              restricted={true}
-              path="/signup"
-              component={Signup}
-              exact
-            />
-            <PublicRoute
-              restricted={false}
-              path="/inquiry"
-              component={Inquiry}
-              exact
-            />
-            <PrivateRoute path="/mypage" component={Mypage} exact />
-            <PrivateRoute path="/review/:id" component={ReviewCreate} />
-          </>
-        </Switch>
-      </AppLayout>
+      <Switch>
+        <Route path="/landing" component={Landing} />
+        <AppLayout>
+          {loading && <Spinner />}
+          {/* <Redirect exact path="/" to="keyboard" /> */}
+
+          <Route path="/temp" component={Temp} />
+          <PublicRoute
+            restricted={false}
+            path="/keyboards"
+            component={Keyboard}
+            exact
+          />
+          <PublicRoute
+            restricted={false}
+            path="/keyboards/:id"
+            component={KeyboardDetail}
+            exact
+          />
+          <PublicRoute
+            restricted={false}
+            path="/survey"
+            component={Survey}
+            exact
+          />
+          <PublicRoute
+            restricted={true}
+            path="/login"
+            component={Login}
+            exact
+          />
+          <PublicRoute
+            restricted={true}
+            path="/signup"
+            component={Signup}
+            exact
+          />
+          <PublicRoute
+            restricted={false}
+            path="/inquiry"
+            component={Inquiry}
+            exact
+          />
+
+          <PrivateRoute path="/mypage" component={Mypage} exact />
+          <PrivateRoute path="/review/:id" component={ReviewCreate} />
+        </AppLayout>
+      </Switch>
     </>
   );
 }
