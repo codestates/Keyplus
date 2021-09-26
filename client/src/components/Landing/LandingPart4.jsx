@@ -1,28 +1,40 @@
 import React from 'react';
+import './LandingPart4.scss';
+import { useHistory } from 'react-router';
 
 const LandingPart4 = () => {
+  const history = useHistory();
+
   return (
     <>
-      {' '}
-      <div
-        style={{
-          height: '1000px',
-          backgroundImage: "url('/landing-part-1.png')",
-          backgroundSize: 'cover',
-        }}
-      >
-        <div className="text-wrapper">
+      <div className="part4-background">
+        <div className="part4-text-wrapper">
           <div
             data-aos="fade-up"
             data-aos-delay="50"
             data-aos-duration="1300"
             data-aos-easing="ease-out"
-            className="text"
+            className="part4-text"
           >
-            기계식 키보드, 고르기 어려우신가요?
-            <br />
-            Keyplus가 도와드릴게요!
+            다양한 브랜드의 기계식 키보드를 한눈에 볼 수 있습니다.
           </div>
+        </div>
+
+        <div className="part4-logo">
+          <img src="logo.png" alt="" />
+        </div>
+
+        <div className="part4-button-wrapper">
+          <button
+            data-aos="fade"
+            data-aos-delay="50"
+            data-aos-duration="700"
+            data-aos-easing="ease-in-out"
+            className="part4-button"
+            onClick={() => history.push('/keyboards')}
+          >
+            키보드 구경하러 가기
+          </button>
         </div>
       </div>
     </>
