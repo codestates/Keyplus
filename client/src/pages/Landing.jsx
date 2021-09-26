@@ -21,7 +21,7 @@ const Landing = () => {
         <LandingPart1 />
         {/* <LandingPart2 /> */}
         <LandingPart3 />
-        {/* <LandingPart4 /> */}
+        <LandingPart4 />
         <LandingPart5 />
         <Footer />
       </div>
