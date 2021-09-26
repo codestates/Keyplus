@@ -12,19 +12,23 @@ import LandingPart4 from '../components/Landing/LandingPart4';
 import LandingPart5 from '../components/Landing/LandingPart5';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import LandingHeader from '../components/LandingHeader';
 
 const Landing = () => {
   return (
     <>
-      <Header />
       <div className="landing-main">
+        <LandingHeader />
         <LandingPart1 />
-        <LandingPart2 />
-        <LandingPart3 />
+        <div
+          style={{ height: '100vh', width: '100%', backgroundColor: '#fff' }}
+        ></div>
+        {/* <LandingPart2 /> */}
+        {/* <LandingPart3 /> */}
         <LandingPart4 />
         <LandingPart5 />
+        <Footer />
       </div>
-      <Footer />
     </>
   );
 };
