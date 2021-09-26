@@ -1,8 +1,11 @@
 import React from 'react';
+import './LandingPart3.scss';
 
 import './LandingPart3.scss';
 
 const LandingPart3 = () => {
+
+
   return (
     <>
       <div className="part3-background">
@@ -55,6 +58,7 @@ const LandingPart3 = () => {
       </div>
     </>
   );
+
 };
 
 export default LandingPart3;
