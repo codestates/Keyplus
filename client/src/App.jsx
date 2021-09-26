@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Redirect, Route, Switch } from 'react-router';
 import { useSelector } from 'react-redux';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 import AppLayout from './components/AppLayout';
 import Keyboard from './pages/Keyboard';
@@ -21,6 +23,10 @@ import './App.less';
 
 function App() {
   const loading = useSelector((state) => state.loading);
+
+  useEffect(() => {
+    AOS.init();
+  }, []);
 
   return (
     <>
