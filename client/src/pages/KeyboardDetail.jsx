@@ -390,6 +390,8 @@ const KeyboardDetail = (props) => {
                             style={{
                               display: 'flex',
                               alignItems: 'center',
+                              flexShrink: '0',
+                              width: '165px',
                             }}
                           >
                             <div>
@@ -421,7 +423,9 @@ const KeyboardDetail = (props) => {
                               </div>
                             </div>
                           </div>
-                          <div>리뷰 내용 : {review.content}</div>
+                          <div style={{ flexGrow: '1' }}>
+                            리뷰 내용 : {review.content}
+                          </div>
                         </div>
                         {review.userId === userId && (
                           <>
