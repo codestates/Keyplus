@@ -4,12 +4,21 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const dotenv = require('dotenv');
 const axios = require('axios');
+const nodemailer = require('nodemailer');
 dotenv.config();
 
 const {
   generateAccessToken,
   sendAccessToken,
 } = require('./tokenfunction/index');
+
+function generateRandomCode(n) {
+  let str = '';
+  for (let i = 0; i < n; i++) {
+    str += Math.floor(Math.random() * 10);
+  }
+  return str;
+}
 
 module.exports = {
   login: async (req, res) => {
@@ -65,6 +74,7 @@ module.exports = {
     }
   },
   signup: async (req, res) => {
+    console.log(req.file);
     // 1. email, nickname, password, image 를 클라이언트에서 받아온다.
     const { email, nickname, password } = req.body;
 
@@ -281,6 +291,63 @@ module.exports = {
       console.log('hihihihihi');
       res.sendStatus(500);
       console.log('hihihihihi');
+    }
+  },
+  validateEmail: async (req, res) => {
+    // 1. Email 을 클라이언트에서 받아온 후, DB에 저장되어있는지 확인.
+    console.log('🌱🌱🌱🌱🌱', req.body);
+    const { email } = req.body;
+    const foundEmail = await User.findOne({ where: { email } });
+    // 2. 저장되어있다면 오류메시지를 보내준다.
+    try {
+      if (foundEmail) {
+        return res.status(409).json({ message: 'Email already exists' });
+      }
+      // 3. 저장되어있지않으면 인증코드를 res에 담아서 클라이언트로 보내준다.
+      const transporter = nodemailer.createTransport({
+        service: 'Naver',
+        host: 'smtp.naver.com',
+        port: 587,
+        auth: {
+          user: process.env.MAILID,
+          pass: process.env.MAILPW,
+        },
+      });
+      const verificationCode = generateRandomCode(6);
+      const mailOptions = {
+        from: `noreply from @keyplus.kr ${process.env.MAILID}`,
+        to: req.body.email,
+        subject: '[Keyplus] 이메일 인증번호를 입력해주세요.',
+        html: `<h2>이메일 인증을 완료하실려면 <b>인증번호</b>를 입력해주세요.</h2><p>인증번호를 입력하셔야만 이메일 인증이 완료됩니다.</p> <div>Keyplus 인증번호 : ${verificationCode}</div>`,
+      };
+      transporter.sendMail(mailOptions, function (err, info) {
+        if (err) {
+          console.log(err);
+        }
+        res.send({ data: info });
+      });
+      return res
+        .status(200)
+        .json({ data: { verificationCode: verificationCode } });
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json({ message: 'Server Error' });
+    }
+  },
+  validateNickname: async (req, res) => {
+    // 1. Nickname 을 클라이언트에서 받아온 후, DB에 저장되어있는지 확인.
+    const { nickname } = req.body;
+    const foundNickName = await User.findOne({ where: { nickname } });
+    try {
+      // 2. 저장되어있다면 오류메시지를 보내준다.
+      if (foundNickName) {
+        return res.status(409).json({ message: 'Nickname already exists' });
+      }
+      // 3. 저장되어있지않으면 OK 메시지
+      return res.sendStatus(200);
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json({ message: 'Server Error' });
     }
   },
 };

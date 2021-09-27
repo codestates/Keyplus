@@ -24,6 +24,9 @@ body {
   // font-family: $font-main;
   // color: $primary;
   height: 100%;
+
+  //? 모바일 버전 하단 여백 제거
+  overflow: hidden;
 }
 
 h1 {

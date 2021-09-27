@@ -1,0 +1,13 @@
+@use '../../styles/constants' as *;
+
+.landing-main {
+  background-color: #000;
+  word-break: break-all;
+  min-height: calc(100vh - 443px);
+}
+
+@media screen and (max-width: $md-breakpoint) {
+  .landing-main {
+    min-height: calc(100vh - 718px);
+  }
+}
