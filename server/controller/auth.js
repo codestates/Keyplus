@@ -4,12 +4,21 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const dotenv = require('dotenv');
 const axios = require('axios');
+const nodemailer = require('nodemailer');
 dotenv.config();
 
 const {
   generateAccessToken,
   sendAccessToken,
 } = require('./tokenfunction/index');
+
+function generateRandomCode(n) {
+  let str = '';
+  for (let i = 0; i < n; i++) {
+    str += Math.floor(Math.random() * 10);
+  }
+  return str;
+}
 
 module.exports = {
   login: async (req, res) => {
@@ -286,6 +295,7 @@ module.exports = {
   },
   validateEmail: async (req, res) => {
     // 1. Email 을 클라이언트에서 받아온 후, DB에 저장되어있는지 확인.
+    console.log('🌱🌱🌱🌱🌱', req.body);
     const { email } = req.body;
     const foundEmail = await User.findOne({ where: { email } });
     // 2. 저장되어있다면 오류메시지를 보내준다.
@@ -305,10 +315,10 @@ module.exports = {
       });
       const verificationCode = generateRandomCode(6);
       const mailOptions = {
-        from: process.env.MAILID,
+        from: `noreply from @keyplus.kr ${process.env.MAILID}`,
         to: req.body.email,
-        subject: '[Keyplus] 인증번호가 도착했습니다.',
-        text: `Keyplus 인증번호 : ${verificationCode}`,
+        subject: '[Keyplus] 이메일 인증번호를 입력해주세요.',
+        html: `<h2>이메일 인증을 완료하실려면 <b>인증번호</b>를 입력해주세요.</h2><p>인증번호를 입력하셔야만 이메일 인증이 완료됩니다.</p> <div>Keyplus 인증번호 : ${verificationCode}</div>`,
       };
       transporter.sendMail(mailOptions, function (err, info) {
         if (err) {
