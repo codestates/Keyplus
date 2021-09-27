@@ -22,9 +22,15 @@ const storage = multerS3({
   key: function (req, file, cb) {
     if (file.originalname.match(/\.(mp4|MPEG-4|mkv)$/)) {
       cb(null, `reviewVideo/${Date.now()}_${file.originalname}`);
+<<<<<<< HEAD
     } else if (req.files && req.files.keyboardImg) {
       cb(null, `keyboards/${Date.now()}_${file.originalname}`);
     } else if (req.files && req.files.img1) {
+=======
+    } else if (req.files?.keyboardImg) {
+      cb(null, `keyboard/${file.originalname}`);
+    } else if (req.files?.img1) {
+>>>>>>> 16f5560245a21efcf8a7712f3ff02d8a13d6c2ef
       cb(null, `review/${Date.now()}_${file.originalname}`);
     } else if (req.files && req.files.img2) {
       cb(null, `review/${Date.now()}_${file.originalname}`);
