@@ -64,22 +64,22 @@ module.exports = {
       raw: true,
     });
 
-    if (req.files?.img1) {
+    if (req.files && req.files.img1) {
       review.image1 = req.files.img1[0].location;
     } else if (deleteImg1 === '1') {
       review.image1 = null;
     }
-    if (req.files?.img2) {
+    if (req.files && req.files.img2) {
       review.image2 = req.files.img2[0].location;
     } else if (deleteImg2 === '1') {
       review.image2 = null;
     }
-    if (req.files?.img3) {
+    if (req.files && req.files.img3) {
       review.image3 = req.files.img3[0].location;
     } else if (deleteImg3 === '1') {
       review.image3 = null;
     }
-    if (req.files?.video) {
+    if (req.files && req.files.video) {
       review.video = req.files.video[0].location;
     } else if (deleteVideo === '1') {
       review.video = null;
