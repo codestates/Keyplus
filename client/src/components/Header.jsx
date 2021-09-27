@@ -11,7 +11,7 @@ import {
   ExportOutlined,
 } from '@ant-design/icons';
 
-import './Header.scss';
+import './styles/Header.scss';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut } from '../reducers/api/userAPI';

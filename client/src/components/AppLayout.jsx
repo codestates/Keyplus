@@ -2,7 +2,7 @@ import React from 'react';
 
 import Header from './Header';
 import Footer from './Footer';
-import './Main.scss';
+import './styles/Main.scss';
 
 const AppLayout = ({ children }) => {
   return (

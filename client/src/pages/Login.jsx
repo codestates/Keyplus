@@ -8,7 +8,7 @@ import {
   naverLogIn,
 } from '../reducers/api/userAPI';
 import { isError } from '../reducers/errorReducer';
-import './Login.scss';
+import './styles/Login.scss';
 import { Link } from 'react-router-dom';
 
 const Login = (props) => {

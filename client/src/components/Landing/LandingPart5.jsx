@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './LandingPart5.scss';
+import '../styles/LandingPart5.scss';
 
 const LandingPart5 = () => {
   return (

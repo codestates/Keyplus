@@ -4,7 +4,7 @@ import axios from '../utils/customAxios';
 import exceptionAxios from 'axios';
 import KeyboardCard from './KeyboardCard';
 
-import './Keyboard.scss';
+import './styles/Keyboard.scss';
 import { isError } from '../reducers/errorReducer';
 import 'antd/dist/antd.css';
 import {

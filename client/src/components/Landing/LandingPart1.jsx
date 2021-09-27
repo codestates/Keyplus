@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router';
 
-import './LandingPart1.scss';
+import '../styles/LandingPart1.scss';
 
 const LandingPart1 = () => {
   const history = useHistory();

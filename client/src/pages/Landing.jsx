@@ -4,7 +4,7 @@ import { deleteUser, logIn, logOut, signUp } from '../reducers/api/userAPI';
 import { addLikes, deleteLikes } from '../reducers/api/likesAPI';
 import { isError } from '../reducers/errorReducer';
 
-import './Landing.scss';
+import './styles/Landing.scss';
 import LandingPart1 from '../components/Landing/LandingPart1';
 import LandingPart2 from '../components/Landing/LandingPart2';
 import LandingPart3 from '../components/Landing/LandingPart3';

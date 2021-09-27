@@ -2,7 +2,7 @@ import React from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import styles from 'react-responsive-carousel/lib/styles/carousel.min.css';
 
-import './LandingPart2.scss';
+import '../styles/LandingPart2.scss';
 
 const LandingPart2 = () => {
   return (

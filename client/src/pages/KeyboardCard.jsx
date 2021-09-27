@@ -23,7 +23,7 @@ import { BiWon } from 'react-icons/bi';
 import { FcIdea, FcNoIdea } from 'react-icons/fc';
 import { AiFillBulb, AiOutlineBulb } from 'react-icons/ai';
 
-import './KeyboardCard.scss';
+import './styles/KeyboardCard.scss';
 import { Link } from 'react-router-dom';
 import { addLikes, deleteLikes } from '../reducers/api/likesAPI';
 
