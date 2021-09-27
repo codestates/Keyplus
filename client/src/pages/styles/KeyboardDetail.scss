@@ -32,6 +32,15 @@
     // }
   }
 
+  .keyboard-name-like {
+    @include flexbox(space-between);
+
+    .keyboard-name {
+      font-weight: 700;
+      font-size: 28px;
+    }
+  }
+
   .keyboard-detail-info-text {
     & > * {
       @include flexbox(space-between);
@@ -42,13 +51,8 @@
     //! color는 나중에 antd 설정 바꾸기
     text-align: center;
 
-    .keyboard-name {
-      font-weight: 700;
-      font-size: 28px;
-
-      @media screen and (max-width: $md-breakpoint) {
-        font-size: 22px;
-      }
+    @media screen and (max-width: $md-breakpoint) {
+      font-size: 22px;
     }
   }
 }
