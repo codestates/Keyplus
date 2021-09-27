@@ -120,76 +120,80 @@ const Login = (props) => {
   return (
     <>
       <section className="login-container">
-        <aside className="login-aside">
-          <img src="login.jpg" />
-        </aside>
+        <div className="login-flexbox">
+          <aside className="login-aside">
+            <img src="login.jpg" />
+          </aside>
 
-        <main className="login-main">
-          <h2 className="title">Login</h2>
+          <div className="login-main">
+            <h2 className="title">Login</h2>
 
-          <form className="login-form" onSubmit={onClickLogin}>
-            <div className="inputbox">
-              <label htmlFor="email">이메일</label>
-              <input
-                type="text"
-                placeholder="example@example.com"
-                onChange={onChangeLoginState}
-                name="email"
-                required
-                value={loginState.email}
-              />
-              <div style={{ color: 'red', fontSize: '12px' }}>{emailError}</div>
+            <form className="login-form" onSubmit={onClickLogin}>
+              <div className="inputbox">
+                <label htmlFor="email">이메일</label>
+                <input
+                  type="text"
+                  placeholder="example@example.com"
+                  onChange={onChangeLoginState}
+                  name="email"
+                  required
+                  value={loginState.email}
+                />
+                <div style={{ color: 'red', fontSize: '12px' }}>
+                  {emailError}
+                </div>
+              </div>
+
+              <div className="inputbox">
+                <label htmlFor="password">패스워드</label>
+                <input
+                  type="password"
+                  placeholder="******"
+                  onChange={onChangeLoginState}
+                  name="password"
+                  required
+                  value={loginState.password}
+                />
+              </div>
+              <div style={{ color: 'red', fontSize: '12px' }}>{errMessage}</div>
+              <button type="submit">로그인</button>
+            </form>
+
+            <div className="login-oauth">
+              <button
+                className="socialbtn"
+                style={{
+                  backgroundImage: `url(${'images/social-login-kakao.png'})`,
+                }}
+                onClick={onClickGoogle}
+              >
+                Google
+              </button>
+              <button
+                className="socialbtn"
+                style={{
+                  backgroundImage: `url(${'images/social-login-kakao.png'})`,
+                }}
+                onClick={onClickKakao}
+              >
+                Kakaotalk
+              </button>
+              <button
+                className="socialbtn"
+                style={{
+                  backgroundImage: `url(${'images/social-login-kakao.png'})`,
+                }}
+                onClick={onClickNaver}
+              >
+                Naver
+              </button>
             </div>
 
-            <div className="inputbox">
-              <label htmlFor="password">패스워드</label>
-              <input
-                type="password"
-                placeholder="******"
-                onChange={onChangeLoginState}
-                name="password"
-                required
-                value={loginState.password}
-              />
+            <div>
+              <Link to="/signup">회원가입 하러가기</Link>
             </div>
-            <div style={{ color: 'red', fontSize: '12px' }}>{errMessage}</div>
-            <button type="submit">로그인</button>
-          </form>
-
-          <div className="login-oauth">
-            <button
-              className="socialbtn"
-              style={{
-                backgroundImage: `url(${'images/social-login-kakao.png'})`,
-              }}
-              onClick={onClickGoogle}
-            >
-              Google
-            </button>
-            <button
-              className="socialbtn"
-              style={{
-                backgroundImage: `url(${'images/social-login-kakao.png'})`,
-              }}
-              onClick={onClickKakao}
-            >
-              Kakaotalk
-            </button>
-            <button
-              className="socialbtn"
-              style={{
-                backgroundImage: `url(${'images/social-login-kakao.png'})`,
-              }}
-              onClick={onClickNaver}
-            >
-              Naver
-            </button>
           </div>
-
-          <div>
-            <Link to="/signup">회원가입 하러가기</Link>
-          </div>
-        </main>
+        </div>
       </section>
     </>
   );
