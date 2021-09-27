@@ -1,6 +1,6 @@
 import React from 'react';
 import { ReactComponent as KEYPLUS } from '../assets/images/KEYPLUS_footer_36.svg';
-import './Footer.scss';
+import './styles/Footer.scss';
 import { Link } from 'react-router-dom';
 
 const Footer = () => {

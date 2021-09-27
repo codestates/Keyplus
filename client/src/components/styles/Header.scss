@@ -1,26 +1,26 @@
-@use '../styles/constants' as *;
+@use '../../styles/constants' as *;
 
-.landing-header {
+.header {
   background-color: #000;
   color: #fff;
   width: 100%;
   height: 120px;
   display: flex;
   justify-content: space-between;
-  position: fixed;
+  position: sticky;
   top: -1px;
   z-index: 999;
   padding: 50px 50px 0;
   -webkit-transition: background-color 0.5s linear;
   transition: background-color 0.5s linear;
 
-  &.landing-bgc-white {
-    background-color: transparent;
-    color: #fff;
+  &.bgc-white {
+    background-color: #fff;
+    color: #000;
   }
 }
 
-.landing-header-logo {
+.header-logo {
   display: block;
   position: absolute;
   left: 50%;
@@ -37,11 +37,11 @@
   }
 }
 
-.landing-navigation {
+.navigation {
 }
 
-.landing-nav-menu,
-.landing-button-menu {
+.nav-menu,
+.button-menu {
   display: flex;
   column-gap: 30px;
   height: 100%;
@@ -51,14 +51,14 @@
 // .button-item {
 // }
 
-.landing-nav-item-wrapper {
+.nav-item-wrapper {
   display: flex;
   justify-content: center;
   column-gap: 30px;
 }
 
-.landing-nav-links,
-.landing-button-links {
+.nav-links,
+.button-links {
   display: flex;
   text-decoration: none;
   height: 100%;
@@ -68,21 +68,21 @@
 // .buttons {
 // }
 
-.landing-menu-icon {
+.menu-icon {
   display: none;
 }
 
 @media screen and (max-width: $md-breakpoint) {
-  .landing-header {
+  .header {
     height: 50px;
     padding: 15px 10px 0;
   }
 
-  .landing-header-logo {
+  .header-logo {
     margin-top: 15px;
   }
 
-  .landing-nav-menu {
+  .nav-menu {
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -93,30 +93,30 @@
     opacity: 1;
     transition: all 0.5s ease;
   }
-  .landing-buttons {
+  .buttons {
     margin-right: 0;
   }
 
-  .landing-button-menu {
+  .button-menu {
     column-gap: 10px;
   }
 
-  .landing-nav-menu.active {
+  .nav-menu.active {
     background-color: #000;
     left: 0;
     opacity: 1;
     transition: all 0.5s ease;
 
-    &.landing-bgc-white {
-      background-color: #000;
+    &.bgc-white {
+      background-color: #fff;
     }
   }
 
-  .landing-nav-item-wrapper {
+  .nav-item-wrapper {
     display: none;
   }
 
-  .landing-nav-item-wrapper.active {
+  .nav-item-wrapper.active {
     display: flex;
     justify-content: center;
     column-gap: 30px;
@@ -129,7 +129,7 @@
     font-weight: 700;
   }
 
-  .landing-nav-links {
+  .nav-links {
     width: 100%;
     transition: all 0.3s ease;
 
@@ -139,14 +139,14 @@
     }
   }
 
-  .landing-navbar-logo {
+  .navbar-logo {
     position: absolute;
     top: 0;
     left: 0;
     transform: translate(25%, 50%);
   }
 
-  .landing-menu-icon {
+  .menu-icon {
     display: flex;
     font-size: 1.8rem;
     cursor: pointer;

@@ -1,13 +1,17 @@
-@use '../styles/constants' as *;
+@use '../../styles/constants' as *;
 
-.landing-main {
-  background-color: #000;
+main {
+  padding: 0 80px 70px;
   word-break: break-all;
   min-height: calc(100vh - 443px);
+  // margin-top: 120px;
 }
 
 @media screen and (max-width: $md-breakpoint) {
-  .landing-main {
+  main {
+    padding: 0 20px 30px;
+
     min-height: calc(100vh - 718px);
+    // margin-top: 50px;
   }
 }

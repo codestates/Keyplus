@@ -33,7 +33,7 @@ import { yellow } from '@ant-design/colors';
 
 import Rating from 'react-rating';
 
-import './KeyboardDetail.scss';
+import './styles/KeyboardDetail.scss';
 import { addReviews, deleteReviews } from '../reducers/api/reviewsAPI';
 import DeleteModal from '../components/DeleteModal';
 

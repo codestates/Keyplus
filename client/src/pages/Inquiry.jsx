@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Inquiry.scss';
+import './styles/Inquiry.scss';
 import exceptionAxios from 'axios';
 import { message } from 'antd';
 

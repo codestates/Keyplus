@@ -5,7 +5,7 @@ import { addLikes, deleteLikes } from '../reducers/api/likesAPI';
 import { isError } from '../reducers/errorReducer';
 import axios from '../utils/customAxios';
 
-import './ReviewCreate.scss';
+import './styles/ReviewCreate.scss';
 
 import {
   Carousel,

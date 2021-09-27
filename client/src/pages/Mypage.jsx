@@ -7,7 +7,7 @@ import {
   validateNickname,
 } from '../reducers/api/userAPI';
 import DeleteModal from '../components/DeleteModal';
-import './Mypage.scss';
+import './styles/Mypage.scss';
 import { message, Button, Space } from 'antd';
 import { isError } from '../reducers/errorReducer';
 import { Avatar } from 'antd';
