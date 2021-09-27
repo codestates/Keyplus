@@ -12,12 +12,10 @@ import { message, Button, Space } from 'antd';
 import { isError } from '../reducers/errorReducer';
 import { Avatar } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-// import { useHistory } from 'react-router';
 import { Tabs } from 'antd';
 import KeyboardCard from './KeyboardCard';
 
 const Mypage = () => {
-  // const history = useHistory();
   const dispatch = useDispatch();
   const userState = useSelector((state) => state.user);
   console.log('내가 유저 정보', userState);

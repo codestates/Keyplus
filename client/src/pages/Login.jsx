@@ -37,7 +37,8 @@ const Login = (props) => {
   };
 
   //TODO: click handler
-  const onClickLogin = async () => {
+  const onClickLogin = async (e) => {
+    e.preventDefault();
     try {
       //인풋이 모두 채워지지 않았을 땐 dispatch하지 않는다.
       if (!(email !== '' && password !== '')) {
@@ -119,42 +120,76 @@ const Login = (props) => {
   return (
     <>
       <section className="login-container">
-        <h2>Login</h2>
-        <label htmlFor="email">이메일</label>
-        <input
-          type="text"
-          placeholder="example@example.com"
-          onChange={onChangeLoginState}
-          name="email"
-          required
-          value={loginState.email}
-        />
-        <div style={{ color: 'red', fontSize: '12px' }}>{emailError}</div>
+        <aside className="login-aside">
+          <img src="login.jpg" />
+        </aside>
 
-        <label htmlFor="password">패스워드</label>
-        <input
-          type="password"
-          placeholder="******"
-          onChange={onChangeLoginState}
-          name="password"
-          required
-          value={loginState.password}
-        />
+        <main className="login-main">
+          <h2 className="title">Login</h2>
 
-        <div className="oauth">
-          <button onClick={onClickGoogle}>Google</button>
-          <button onClick={onClickKakao}>Kakaotalk</button>
-          <button onClick={onClickNaver}>Naver</button>
-        </div>
+          <form className="login-form" onSubmit={onClickLogin}>
+            <div className="inputbox">
+              <label htmlFor="email">이메일</label>
+              <input
+                type="text"
+                placeholder="example@example.com"
+                onChange={onChangeLoginState}
+                name="email"
+                required
+                value={loginState.email}
+              />
+              <div style={{ color: 'red', fontSize: '12px' }}>{emailError}</div>
+            </div>
 
-        <div style={{ color: 'red', fontSize: '12px' }}>{errMessage}</div>
-        <button onClick={onClickLogin}>로그인</button>
-        {/* {loading && <h1>Loading...</h1>}
-      {error && <h1>{error.message}</h1>}
-      {data && <h1>{data.nickname}</h1>} */}
-        <div>
-          <Link to="/signup">회원가입 하러가기</Link>
-        </div>
+            <div className="inputbox">
+              <label htmlFor="password">패스워드</label>
+              <input
+                type="password"
+                placeholder="******"
+                onChange={onChangeLoginState}
+                name="password"
+                required
+                value={loginState.password}
+              />
+            </div>
+            <div style={{ color: 'red', fontSize: '12px' }}>{errMessage}</div>
+            <button type="submit">로그인</button>
+          </form>
+
+          <div className="login-oauth">
+            <button
+              className="socialbtn"
+              style={{
+                backgroundImage: `url(${'images/social-login-kakao.png'})`,
+              }}
+              onClick={onClickGoogle}
+            >
+              Google
+            </button>
+            <button
+              className="socialbtn"
+              style={{
+                backgroundImage: `url(${'images/social-login-kakao.png'})`,
+              }}
+              onClick={onClickKakao}
+            >
+              Kakaotalk
+            </button>
+            <button
+              className="socialbtn"
+              style={{
+                backgroundImage: `url(${'images/social-login-kakao.png'})`,
+              }}
+              onClick={onClickNaver}
+            >
+              Naver
+            </button>
+          </div>
+
+          <div>
+            <Link to="/signup">회원가입 하러가기</Link>
+          </div>
+        </main>
       </section>
     </>
   );

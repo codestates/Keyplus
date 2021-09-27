@@ -26,7 +26,7 @@ const Inquiry = () => {
     const { name, value } = e.target;
     setUpdateState({ ...updateState, [name]: value });
   };
-  console.log(`새로운 인풋밸류`, updateState);
+
   const { email, name, title, contents } = updateState;
 
   const isEmail = (email) => {
@@ -115,7 +115,7 @@ const Inquiry = () => {
             onChange={onChangeUpdateState}
           />
           <div>
-            <button type="ssubmit">메일 전송</button>
+            <button type="submit">메일 전송</button>
           </div>
         </form>
       </section>
