@@ -13,7 +13,8 @@ const s3 = new AWS.S3({
 
 const storage = multerS3({
   s3: s3,
-  bucket: process.env.S3_BUCKET_NAME,
+  // bucket: process.env.S3_BUCKET_NAME,
+  bucket: 'keyplus-s3-image',
   contentType: multerS3.AUTO_CONTENT_TYPE,
   acl: 'public-read',
   metadata: function (req, file, cb) {
