@@ -11,14 +11,14 @@ import {
   ExportOutlined,
 } from '@ant-design/icons';
 
-import './Header.scss';
+import './styles/Header.scss';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut } from '../reducers/api/userAPI';
 import { isError } from '../reducers/errorReducer';
 import { useHistory } from 'react-router';
 
-export const Header = () => {
+const Header = () => {
   const [isOpenSidebar, setIsOpenSidebar] = useState(false);
   const [offset, setOffset] = useState(0);
   const [width, setWidth] = useState(window.innerWidth);
@@ -37,8 +37,7 @@ export const Header = () => {
     console.log(`여기가 유저스테이트`, userState);
     try {
       //유저정보가 있으면 (=로그인 되있으면) 로그아웃 시키고 랜딩페이지로 이동
-      await dispatch(logOut());
-      history.push('/landing');
+      await dispatch(logOut(history)).unwrap();
     } catch (err) {
       dispatch(isError(err.response));
     }
@@ -111,24 +110,32 @@ export const Header = () => {
               }
             >
               <li className="nav-item">
-                <a href="#" className="nav-links">
+                <Link to="/" className="nav-links" onClick={onClickToggleBtn}>
                   설문조사
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
-                <Link to="/keyboards" className="nav-links">
+                <Link
+                  to="/keyboards"
+                  className="nav-links"
+                  onClick={onClickToggleBtn}
+                >
                   키보드
                 </Link>
               </li>
               <li className="nav-item">
-                <a href="#" className="nav-links">
+                <Link
+                  to="/map"
+                  className="nav-links"
+                  onClick={onClickToggleBtn}
+                >
                   타건샵
-                </a>
+                </Link>
               </li>
             </div>
           </ul>
         </nav>
-        <a className="header-logo">
+        <Link to="/" className="header-logo">
           {width > 768 ? (
             offset > 0 ? (
               <KEYPLUS_WHITE_36 />
@@ -140,7 +147,7 @@ export const Header = () => {
           ) : (
             <KEYPLUS_BLACK_24 />
           )}
-        </a>
+        </Link>
         <nav className="buttons">
           <ul className="button-menu">
             <li className="button-item">
@@ -171,3 +178,5 @@ export const Header = () => {
     </>
   );
 };
+
+export default Header;

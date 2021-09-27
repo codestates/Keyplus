@@ -1,4 +1,4 @@
-@use '../styles/constants' as *;
+@use '../../styles/constants' as *;
 
 .footer {
   background-color: #000;
@@ -6,11 +6,12 @@
   height: 323px;
 }
 
-.container {
+.footer-container {
   max-width: 1170px;
   margin: auto;
 }
-.row {
+
+.footer-row {
   display: flex;
   flex-wrap: wrap;
 }

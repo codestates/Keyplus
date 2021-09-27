@@ -1,0 +1,41 @@
+@use '../../styles/constants' as *;
+
+.keyboard-category {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  grid-template-rows: 1fr;
+  margin-bottom: 20px;
+
+  & > * {
+    border: 1px solid #000;
+  }
+}
+
+.horizontal-scroll {
+  display: flex !important;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+
+  &::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+  }
+
+  & > * {
+    flex: 0 0 auto;
+  }
+}
+
+.card-section {
+  // display: flex;
+  // flex-wrap: wrap;
+  // justify-content: center;
+  // column-gap: 30px;
+  // row-gap: 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-gap: 2rem;
+  justify-content: space-around;
+  justify-items: center;
+}
