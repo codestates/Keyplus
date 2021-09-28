@@ -10,7 +10,7 @@
   margin: 0 auto;
   margin-bottom: -70px;
   position: relative;
-  min-height: 850px;
+  min-height: 840px;
 
   @media screen and (max-width: $md-breakpoint) {
     height: calc(100vh - 50px);
@@ -73,6 +73,10 @@
       font-weight: 400;
       letter-spacing: 1px;
     }
+    .input-wrapper {
+      position: relative;
+    }
+
     input {
       width: 100%;
       padding: 10px 20px;
@@ -84,15 +88,20 @@
       letter-spacing: 1px;
       border-radius: 30px;
     }
+
     button {
+      // position: absolute;
+      // top: 36px;
+      // right: 8px;
       position: absolute;
-      top: 36px;
-      right: 8px;
+      top: 50%;
+      right: 5%;
+      transform: translate(5%, -50%);
       cursor: pointer;
     }
-    .verifybtn {
-      top: 45px;
-    }
+    // .verifybtn {
+    //   top: 45px;
+    // }
     .inputlong {
       padding-right: 70px;
     }
