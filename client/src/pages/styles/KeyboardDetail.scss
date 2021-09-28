@@ -153,16 +153,19 @@
       }
 
       .name-date {
-        @include flexbox(flex-start, baseline);
+        @include flexbox(space-between, baseline);
         column-gap: 10px;
         font-size: 12px;
-        letter-spacing: -1px;
+        letter-spacing: -0.05em;
       }
 
       .name {
+        flex: 1;
       }
 
       .date {
+        flex-basis: 46px;
+        flex-shrink: 0;
         font-size: 10px;
       }
     }
