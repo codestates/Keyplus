@@ -90,7 +90,11 @@ const Header = () => {
               }
             >
               <li className="nav-item">
-                <Link to="/" className="nav-links" onClick={onClickToggleBtn}>
+                <Link
+                  to="/"
+                  className="nav-links"
+                  onClick={isOpenSidebar && onClickToggleBtn}
+                >
                   설문조사
                 </Link>
               </li>
@@ -98,7 +102,7 @@ const Header = () => {
                 <Link
                   to="/keyboards"
                   className="nav-links"
-                  onClick={onClickToggleBtn}
+                  onClick={isOpenSidebar && onClickToggleBtn}
                 >
                   키보드
                 </Link>
@@ -107,7 +111,7 @@ const Header = () => {
                 <Link
                   to="/map"
                   className="nav-links"
-                  onClick={onClickToggleBtn}
+                  onClick={isOpenSidebar && onClickToggleBtn}
                 >
                   타건샵
                 </Link>
