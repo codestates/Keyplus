@@ -37,14 +37,14 @@ const keySwitchComponent = {
       <span
         style={{
           display: 'inline-block',
-          width: '15px',
-          height: '15px',
+          width: '12px',
+          height: '12px',
           borderRadius: '50%',
           verticalAlign: 'middle',
           backgroundColor: '#ff656c',
         }}
       ></span>
-      <span style={{ verticalAlign: 'middle' }}>저적</span>
+      <span style={{ verticalAlign: 'middle', fontSize: '12px' }}>저적</span>
     </div>
   ),
   적축: (
@@ -52,14 +52,14 @@ const keySwitchComponent = {
       <span
         style={{
           display: 'inline-block',
-          width: '15px',
-          height: '15px',
+          width: '12px',
+          height: '12px',
           borderRadius: '50%',
           verticalAlign: 'middle',
           backgroundColor: '#ff1A48',
         }}
       ></span>
-      <span style={{ verticalAlign: 'middle' }}>적축</span>
+      <span style={{ verticalAlign: 'middle', fontSize: '12px' }}>적축</span>
     </div>
   ),
   청축: (
@@ -67,14 +67,14 @@ const keySwitchComponent = {
       <span
         style={{
           display: 'inline-block',
-          width: '15px',
-          height: '15px',
+          width: '12px',
+          height: '12px',
           borderRadius: '50%',
           verticalAlign: 'middle',
           backgroundColor: '#00b4f9',
         }}
       ></span>
-      <span style={{ verticalAlign: 'middle' }}>청축</span>
+      <span style={{ verticalAlign: 'middle', fontSize: '12px' }}>청축</span>
     </div>
   ),
   갈축: (
@@ -82,14 +82,14 @@ const keySwitchComponent = {
       <span
         style={{
           display: 'inline-block',
-          width: '15px',
-          height: '15px',
+          width: '12px',
+          height: '12px',
           borderRadius: '50%',
           verticalAlign: 'middle',
           backgroundColor: '#B8792A',
         }}
       ></span>
-      <span style={{ verticalAlign: 'middle' }}>갈축</span>
+      <span style={{ verticalAlign: 'middle', fontSize: '12px' }}>갈축</span>
     </div>
   ),
   흑축: (
@@ -97,14 +97,14 @@ const keySwitchComponent = {
       <span
         style={{
           display: 'inline-block',
-          width: '15px',
-          height: '15px',
+          width: '12px',
+          height: '12px',
           borderRadius: '50%',
           verticalAlign: 'middle',
           backgroundColor: '#0d0d0d',
         }}
       ></span>
-      <span style={{ verticalAlign: 'middle' }}>흑축</span>
+      <span style={{ verticalAlign: 'middle', fontSize: '12px' }}>흑축</span>
     </div>
   ),
 };
@@ -226,10 +226,14 @@ const KeyboardCard = memo(({ keyboard }) => {
         //   />
         // }
         title={
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span style={{ lineHeight: '24px' }}>
-              {`${keyboard.brand} ${keyboard.name}`}
-            </span>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              fontSize: '14px',
+            }}
+          >
+            <span>{`${keyboard.brand} ${keyboard.name}`}</span>
 
             <div>
               {liked ? (
@@ -237,7 +241,7 @@ const KeyboardCard = memo(({ keyboard }) => {
                   style={{
                     display: 'inline',
                     color: '#ff0000',
-                    marginRight: '5px',
+                    marginRight: '3px',
                   }}
                   onClick={onClickHeart}
                 />
@@ -246,7 +250,7 @@ const KeyboardCard = memo(({ keyboard }) => {
                   style={{
                     display: 'inline',
                     color: '#ff0000',
-                    marginRight: '5px',
+                    marginRight: '3px',
                   }}
                   onClick={onClickHeart}
                 />

@@ -12,7 +12,7 @@
   grid-template-columns: 140px 1fr;
   grid-template-rows: 1fr;
   margin-bottom: 30px;
-  border: 1px solid #dfdfdf;
+  border: 1px solid #d4d4d4;
   letter-spacing: -0.05em;
 
   @media screen and (max-width: $md-breakpoint) {
@@ -24,12 +24,12 @@
   }
 
   & > *:nth-child(odd) {
-    background-color: #eeeeee;
+    background-color: #dfdfdf;
     font-weight: 500;
   }
 
   & > *:not(:nth-last-child(2), :nth-last-child(1)) {
-    border-bottom: 1px solid #dfdfdf;
+    border-bottom: 1px solid #d4d4d4;
   }
 
   .radio-group {
@@ -40,7 +40,7 @@
   .clear-button-wrapper {
     @include flexbox();
     background-color: unset;
-    border-right: 1px solid #eeeeee;
+    border-right: 1px solid #d4d4d4;
 
     & > button {
       padding: 0;
@@ -63,10 +63,15 @@
 
     .selected-category {
       display: inline-block;
-      color: #fff;
+      padding: 2px 10px;
       background-color: #808080;
-      padding: 5px 10px;
       border-radius: 20px;
+      color: #fff;
+      font-size: 12px;
+
+      & > span {
+        vertical-align: text-top;
+      }
     }
   }
 }

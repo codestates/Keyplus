@@ -548,7 +548,7 @@ const Keyboard = () => {
                 <div className="selected-category-wrapper">
                   {allCategory.map((category) => (
                     <div key={category} className="selected-category">
-                      {category}
+                      <span>{category}</span>
                     </div>
                   ))}
                 </div>
