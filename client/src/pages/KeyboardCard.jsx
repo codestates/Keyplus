@@ -294,32 +294,35 @@ const KeyboardCard = memo(({ keyboard }) => {
         </linearGradient>
       </svg>
 
-      <div>
-        {keyboard.color ? (
-          <IoColorFill style={{ fill: 'url(#rainbow-gradient)' }} />
-        ) : (
-          <IoColorFillOutline />
-        )}
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <div style={{ display: 'flex', columnGap: '5px' }}>
+          {keyboard.color ? (
+            <IoColorFill style={{ fill: 'url(#rainbow-gradient)' }} />
+          ) : (
+            <IoColorFillOutline />
+          )}
 
-        {/* {keyboard.backlight ? <FcIdea /> : <FcNoIdea />} */}
-        {keyboard.backlight ? (
-          <AiFillBulb style={{ fill: 'url(#bulb-gradient)' }} />
-        ) : (
-          <AiOutlineBulb />
-        )}
-        {keyboard.tenkey ? (
-          <IoKeypad style={{ fill: 'red' }} />
-        ) : (
-          <IoKeypadOutline />
-        )}
+          {keyboard.backlight ? (
+            <AiFillBulb style={{ fill: 'url(#bulb-gradient)' }} />
+          ) : (
+            <AiOutlineBulb />
+          )}
+          {keyboard.tenkey ? (
+            <IoKeypad style={{ fill: 'red' }} />
+          ) : (
+            <IoKeypadOutline />
+          )}
 
-        {keyboard.bluetooth ? (
-          <FaBluetooth style={{ fill: '#2084ce' }} />
-        ) : (
-          <FaBluetooth />
-        )}
-        <BiWon />
-        {`${keyboard.price.toLocaleString()}`}
+          {keyboard.bluetooth ? (
+            <FaBluetooth style={{ fill: '#2084ce' }} />
+          ) : (
+            <FaBluetooth />
+          )}
+        </div>
+        <div>
+          <BiWon />
+          {`${keyboard.price.toLocaleString()}`}
+        </div>
       </div>
     </Card>
   );
