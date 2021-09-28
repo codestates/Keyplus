@@ -55,13 +55,19 @@
     }
   }
 
-  .selected-category {
-    display: inline-block;
-    color: #fff;
-    background-color: #808080;
-    padding: 5px 10px;
-    border-radius: 20px;
-    margin-right: 3px;
+  .selected-category-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 3px;
+    column-gap: 3px;
+
+    .selected-category {
+      display: inline-block;
+      color: #fff;
+      background-color: #808080;
+      padding: 5px 10px;
+      border-radius: 20px;
+    }
   }
 }
 

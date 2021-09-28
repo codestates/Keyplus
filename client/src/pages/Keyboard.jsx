@@ -545,7 +545,7 @@ const Keyboard = () => {
                     <span>전체 해제</span>
                   </button>
                 </div>
-                <div>
+                <div className="selected-category-wrapper">
                   {allCategory.map((category) => (
                     <div key={category} className="selected-category">
                       {category}
@@ -565,27 +565,39 @@ const Keyboard = () => {
                 className="horizontal-scroll"
               >
                 <Typography.Link onClick={onClickHeartDescendingBtn}>
-                  {sortingNumber === 1 && <FaCheck />}
+                  <span style={{ marginRight: '5px' }}>
+                    {sortingNumber === 1 && <FaCheck />}
+                  </span>
                   좋아요 많은순
                 </Typography.Link>
                 <Typography.Link onClick={onClickHeartAscendingBtn}>
-                  {sortingNumber === 2 && <FaCheck />}
+                  <span style={{ marginRight: '5px' }}>
+                    {sortingNumber === 2 && <FaCheck />}
+                  </span>
                   좋아요 적은순
                 </Typography.Link>
                 <Typography.Link onClick={onClickReviewDescendingBtn}>
-                  {sortingNumber === 3 && <FaCheck />}
+                  <span style={{ marginRight: '5px' }}>
+                    {sortingNumber === 3 && <FaCheck />}
+                  </span>
                   리뷰 많은순
                 </Typography.Link>
                 <Typography.Link onClick={onClickReviewAscendingBtn}>
-                  {sortingNumber === 4 && <FaCheck />}
+                  <span style={{ marginRight: '5px' }}>
+                    {sortingNumber === 4 && <FaCheck />}
+                  </span>
                   리뷰 적은순
                 </Typography.Link>
                 <Typography.Link onClick={onClickPriceAscendingBtn}>
-                  {sortingNumber === 5 && <FaCheck />}
+                  <span style={{ marginRight: '5px' }}>
+                    {sortingNumber === 5 && <FaCheck />}
+                  </span>
                   가격 낮은순
                 </Typography.Link>
                 <Typography.Link onClick={onClickPriceDescendingBtn}>
-                  {sortingNumber === 6 && <FaCheck />}
+                  <span style={{ marginRight: '5px' }}>
+                    {sortingNumber === 6 && <FaCheck />}
+                  </span>
                   가격 높은순
                 </Typography.Link>
               </Space>
