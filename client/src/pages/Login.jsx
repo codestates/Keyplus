@@ -62,60 +62,16 @@ const Login = (props) => {
 
   //오어스 로그인
   const onClickGoogle = async () => {
-    // try {
-    //   await dispatch(
-    //     googleLogIn({
-    //       //TODO: auth 코드
-    //     })
-    //   );
-    // } catch (err) {
-    //   dispatch(isError(err.response));
-    // }
-    // window.location.href = `${process.env.REACT_APP_API_URL}/auth/google`;
     window.location.href = `${process.env.REACT_APP_API_URL}/auth/google`;
   };
 
   const onClickKakao = async () => {
-    // try {
-    //   await dispatch(
-    //     kakaoLogIn({
-    //       //TODO: auth 코드
-    //     })
-    //   );
-    // } catch (err) {
-    //   dispatch(isError(err.response));
-    // }
     window.location.href = `${process.env.REACT_APP_API_URL}/auth/kakao`;
   };
 
   const onClickNaver = async () => {
-    // try {
-    //   await dispatch(
-    //     naverLogIn({
-    //       //TODO: auth 코드
-    //     })
-    //   );
-    // } catch (err) {
-    //   dispatch(isError(err.response));
-    // }
     window.location.href = `${process.env.REACT_APP_API_URL}/auth/naver`;
   };
-
-  /*
-  1. 이메일 인풋 
-  2. 패스워드 인풋
-  3. 오어스 버튼 세개 
-  4. 회원가입 버튼 클릭 시 api 요청
-  */
-
-  /*
-  signup
-  1. 이메일 인풋과 이메일 확인 버튼 
-  2. 이메일 확인 버튼 누르면 api가 쏴져야한다. 
-  3. 이메일 형식에 맞지 않은 경우 경고 메세지를 보여준다.
-  4. 이메일 형식에 맞는 경우, 이메일 확인 버튼 누르면 api가 쏴져야한다. 
-  5. 그러면서 이
-  */
 
   return (
     <>
@@ -156,40 +112,36 @@ const Login = (props) => {
                 />
               </div>
               <div style={{ color: 'red', fontSize: '12px' }}>{errMessage}</div>
-              <button type="submit">로그인</button>
+              <button type="submit" className="loginbtn">
+                로그인
+              </button>
             </form>
 
             <div className="login-oauth">
               <button
-                className="socialbtn"
+                className="oauthbtn"
                 style={{
-                  backgroundImage: `url(${'images/social-login-kakao.png'})`,
+                  backgroundImage: `url(${'google.png'})`,
                 }}
                 onClick={onClickGoogle}
-              >
-                Google
-              </button>
+              ></button>
               <button
-                className="socialbtn"
+                className="oauthbtn"
                 style={{
-                  backgroundImage: `url(${'images/social-login-kakao.png'})`,
+                  backgroundImage: `url(${'kakao.png'})`,
                 }}
                 onClick={onClickKakao}
-              >
-                Kakaotalk
-              </button>
+              ></button>
               <button
-                className="socialbtn"
+                className="oauthbtn"
                 style={{
-                  backgroundImage: `url(${'images/social-login-kakao.png'})`,
+                  backgroundImage: `url(${'naver.png'})`,
                 }}
                 onClick={onClickNaver}
-              >
-                Naver
-              </button>
+              ></button>
             </div>
 
-            <div>
+            <div className="signup-path">
               <Link to="/signup">회원가입 하러가기</Link>
             </div>
           </div>
