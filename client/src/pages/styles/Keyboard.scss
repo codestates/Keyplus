@@ -1,13 +1,46 @@
 @use '../../styles/constants' as *;
+@use '../../styles/mixins' as *;
+
+.keyboard {
+  & > * {
+    @include mobile-margin();
+  }
+}
 
 .keyboard-category {
   display: grid;
-  grid-template-columns: 100px 1fr;
+  grid-template-columns: 140px 1fr;
   grid-template-rows: 1fr;
   margin-bottom: 20px;
+  border: 1px solid #dfdfdf;
+  letter-spacing: -0.05em;
+
+  @media screen and (max-width: $md-breakpoint) {
+    grid-template-columns: 100px 1fr;
+  }
 
   & > * {
-    border: 1px solid #000;
+    // padding: 20px;
+    // @media screen and (max-width: $md-breakpoint) {
+    padding: 10px;
+    // }
+  }
+
+  & > *:nth-child(odd) {
+    background-color: #eeeeee;
+  }
+
+  & > *:not(:last-child) {
+    border-bottom: 1px solid #dfdfdf;
+  }
+
+  .radio-group {
+    align-items: center;
+    // padding: 20px;
+
+    // @media screen and (max-width: $md-breakpoint) {
+    padding: 10px;
+    // }
   }
 }
 

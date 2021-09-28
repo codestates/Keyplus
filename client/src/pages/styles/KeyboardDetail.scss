@@ -2,6 +2,10 @@
 @use '../../styles/mixins' as *;
 
 .keyboard-detail {
+  & > * {
+    @include mobile-margin();
+  }
+
   max-width: $md-breakpoint;
   margin: 0 auto;
 
@@ -48,7 +52,7 @@
     margin-top: 10px;
     margin-bottom: 50px;
 
-    @include mobile-margin();
+    // @include mobile-margin();
 
     .keyboard-name {
       font-weight: 700;
@@ -72,7 +76,7 @@
   }
 
   .keyboard-detail-info-text {
-    @include mobile-margin();
+    // @include mobile-margin();
 
     & > * {
       @include flexbox(space-between);
@@ -91,7 +95,7 @@
   }
 
   .review-create-button-wrapper {
-    @include mobile-margin();
+    // @include mobile-margin();
     @include flexbox(flex-end);
     margin-top: 10px;
   }
@@ -124,7 +128,7 @@
   }
 
   .review-info {
-    @include mobile-margin();
+    // @include mobile-margin();
     display: flex;
     column-gap: 20px;
     padding-bottom: 25px;
