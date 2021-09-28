@@ -20,6 +20,7 @@ const { Option } = Select;
 
 import { FaCheck } from 'react-icons/fa';
 import { FiRotateCw } from 'react-icons/fi';
+import useWidthSize from '../hooks/useWidthSize';
 
 const Keyboard = () => {
   const dispatch = useDispatch();
@@ -29,6 +30,7 @@ const Keyboard = () => {
   const [keyboards, setKeyboards] = useState([]);
   const [allKeyboards, setAllKeyboards] = useState([]);
   const [sortingNumber, setSortingNumber] = useState(1);
+  const [optionValue, setOptionValue] = useState('1');
 
   // ! 모든 카테고리
   const [allCategory, setAllCategory] = useState([]);
@@ -55,6 +57,9 @@ const Keyboard = () => {
   const [bluetooth, setBluetooth] = useState(false);
   const [backlight, setBacklight] = useState(false);
 
+  // ! 화면 크기
+  const width = useWidthSize();
+
   useEffect(async () => {
     try {
       const response = await axios.get('/keyboards');
@@ -71,96 +76,11 @@ const Keyboard = () => {
     }
   }, []);
 
-  // // ! 브랜드용 useEffect
-  // const mountedBrand = useRef(false);
-  // useEffect(() => {
-  //   if (!mountedBrand.current) {
-  //     mountedBrand.current = true;
-  //   } else {
-  //     const brands = [];
-  //     if (brandLogitech) brands.push('로지텍');
-  //     if (brandKeychron) brands.push('키크론');
-  //     if (brandAbko) brands.push('앱코');
-  //     if (brandLeopold) brands.push('레오폴드');
-  //     if (brandVarmilo) brands.push('바밀로');
-  //     setKeyboards((prev) =>
-  //       prev.filter((keyboard) => brands.indexOf(keyboard.brand) !== -1)
-  //     );
-  //   }
-  // }, [brandLogitech, brandKeychron, brandAbko, brandLeopold, brandVarmilo]);
-
-  // // ! 스위치용 useEffect
-  // const mountedSwitch = useRef(false);
-  // useEffect(() => {
-  //   if (!mountedSwitch.current) {
-  //     mountedSwitch.current = true;
-  //   } else {
-  //     const switches = [];
-  //     if (switchBrown) switches.push('갈축');
-  //     if (switchRed) switches.push('적축');
-  //     if (switchBlue) switches.push('청축');
-  //     if (switchBlack) switches.push('흑축');
-  //     if (switchSilentRed) switches.push('저소음적축');
-  //     console.log(switches);
-  //     setKeyboards((prev) =>
-  //       prev.filter((keyboard) => {
-  //         let flag = false;
-  //         for (let i = 0; i < switches.length; i++) {
-  //           if (keyboard.switch[switches[i]]) flag = true;
-  //         }
-  //         return flag;
-  //       })
-  //     );
-  //   }
-  // }, [switchBrown, switchRed, switchBlue, switchBlack, switchSilentRed]);
-
-  // // ! 가격용 useEffect
-  // const mountedPrice = useRef(false);
-  // useEffect(() => {
-  //   if (!mountedPrice.current) {
-  //     mountedPrice.current = true;
-  //   } else {
-  //     // 카테고리 선택에 따라 목록 다시 보여주기
-  //     console.log(allCategory);
-  //   }
-  // }, [priceRadio]);
-
-  // // ! 텐키용 useEffect
-  // const mountedTenkey = useRef(false);
-  // useEffect(() => {
-  //   if (!mountedTenkey.current) {
-  //     mountedTenkey.current = true;
-  //   } else {
-  //     // 카테고리 선택에 따라 목록 다시 보여주기
-  //     console.log(allCategory);
-  //   }
-  // }, [tenkeyLess]);
-
-  // // ! 블루투스용 useEffect
-  // const mountedBluetooth = useRef(false);
-  // useEffect(() => {
-  //   if (!mountedBluetooth.current) {
-  //     mountedBluetooth.current = true;
-  //   } else {
-  //     // 카테고리 선택에 따라 목록 다시 보여주기
-  //     console.log(allCategory);
-  //   }
-  // }, [bluetooth]);
-
-  // // ! 백라이트용 useEffect
-  // const mountedBacklight = useRef(false);
-  // useEffect(() => {
-  //   if (!mountedBacklight.current) {
-  //     mountedBacklight.current = true;
-  //   } else {
-  //     // 카테고리 선택에 따라 목록 다시 보여주기
-  //     console.log(allCategory);
-  //   }
-  // }, [backlight]);
   // ! 정렬
   const onClickHeartDescendingBtn = async () => {
     try {
       setSortingNumber(1);
+      setOptionValue('1');
       const response = await exceptionAxios.get('/keyboards');
       setAllKeyboards(
         response.data.data.sort((a, b) => b.likeCount - a.likeCount)
@@ -173,6 +93,7 @@ const Keyboard = () => {
   const onClickHeartAscendingBtn = async () => {
     try {
       setSortingNumber(2);
+      setOptionValue('2');
       const response = await exceptionAxios.get('/keyboards');
       setAllKeyboards(
         response.data.data.sort((a, b) => a.likeCount - b.likeCount)
@@ -185,27 +106,31 @@ const Keyboard = () => {
 
   const onClickReviewDescendingBtn = async () => {
     setSortingNumber(3);
+    setOptionValue('3');
     setAllKeyboards((keyboards) =>
       [...keyboards].sort((a, b) => b.reviewCount - a.reviewCount)
     );
   };
   const onClickReviewAscendingBtn = async () => {
     setSortingNumber(4);
+    setOptionValue(4);
     setAllKeyboards((keyboards) =>
       [...keyboards].sort((a, b) => a.reviewCount - b.reviewCount)
     );
   };
 
-  const onClickPriceDescendingBtn = async () => {
-    setSortingNumber(5);
-    setAllKeyboards((keyboards) =>
-      [...keyboards].sort((a, b) => b.price - a.price)
-    );
-  };
   const onClickPriceAscendingBtn = async () => {
-    setSortingNumber(6);
+    setSortingNumber(5);
+    setOptionValue('5');
     setAllKeyboards((keyboards) =>
       [...keyboards].sort((a, b) => a.price - b.price)
+    );
+  };
+  const onClickPriceDescendingBtn = async () => {
+    setSortingNumber(6);
+    setOptionValue('6');
+    setAllKeyboards((keyboards) =>
+      [...keyboards].sort((a, b) => b.price - a.price)
     );
   };
 
@@ -217,51 +142,6 @@ const Keyboard = () => {
     } else {
       // * 초기화
       setKeyboards([...allKeyboards]);
-
-      // switch (sortingNumber) {
-      //   case 1: // 좋아요 많은순
-      //     setKeyboards(
-      //       [...allKeyboards].sort((a, b) => b.likeCount - a.likeCount)
-      //     );
-      //     // setAllKeyboards((prev) =>
-      //     //   prev.sort((a, b) => b.likeCount - a.likeCount)
-      //     // );
-      //     break;
-      //   case 2: // 좋아요 적은순
-      //     setKeyboards(
-      //       [...allKeyboards].sort((a, b) => a.likeCount - b.likeCount)
-      //     );
-      //     // setAllKeyboards((prev) =>
-      //     //   prev.sort((a, b) => a.likeCount - b.likeCount)
-      //     // );
-      //     break;
-      //   case 3: // 리뷰 많은순
-      //     setKeyboards(
-      //       [...allKeyboards].sort((a, b) => b.reviewCount - a.reviewCount)
-      //     );
-      //     // setAllKeyboards((prev) =>
-      //     // prev.sort((a, b) => b.reviewCount - a.reviewCount)
-      //     // );
-      //     break;
-      //   case 4: // 리뷰 적은순
-      //     setKeyboards(
-      //       [...allKeyboards].sort((a, b) => a.reviewCount - b.reviewCount)
-      //     );
-      //     // setAllKeyboards((prev) =>
-      //     // prev.sort((a, b) => a.reviewCount - b.reviewCount)
-      //     // );
-      //     break;
-      //   case 5: // 가격 낮은순
-      //     setKeyboards([...allKeyboards].sort((a, b) => a.price - b.price));
-      //     // setAllKeyboards((prev) => prev.sort((a, b) => a.price - b.price));
-      //     break;
-      //   case 6: // 가격 높은순
-      //     setKeyboards([...allKeyboards].sort((a, b) => b.price - a.price));
-      //     // setAllKeyboards((prev) => prev.sort((a, b) => b.price - a.price));
-      //     break;
-      //   default:
-      //     break;
-      // }
 
       if (allCategory.length !== 0) {
         // * 브랜드
@@ -344,54 +224,61 @@ const Keyboard = () => {
     }
   }, [allKeyboards, allCategory, sortingNumber]);
 
-  // async function handleChange(value) {
-  //   switch (value) {
-  //     case '1':
-  //       try {
-  //         const response = await exceptionAxios.get('/keyboards');
-  //         setKeyboards(
-  //           response.data.data.sort((a, b) => b.likeCount - a.likeCount)
-  //         );
-  //       } catch (err) {
-  //         console.log(err);
-  //         dispatch(isError(err.response));
-  //       }
-  //       break;
-  //     case '2':
-  //       try {
-  //         const response = await exceptionAxios.get('/keyboards');
-  //         setKeyboards(
-  //           response.data.data.sort((a, b) => a.likeCount - b.likeCount)
-  //         );
-  //       } catch (err) {
-  //         console.log(err);
-  //         dispatch(isError(err.response));
-  //       }
-  //       break;
-  //     case '3':
-  //       setKeyboards((keyboards) =>
-  //         [...keyboards].sort((a, b) => b.reviewCount - a.reviewCount)
-  //       );
-  //       break;
-  //     case '4':
-  //       setKeyboards((keyboards) =>
-  //         [...keyboards].sort((a, b) => a.reviewCount - b.reviewCount)
-  //       );
-  //       break;
-  //     case '5':
-  //       setKeyboards((keyboards) =>
-  //         [...keyboards].sort((a, b) => b.price - a.price)
-  //       );
-  //       break;
-  //     case '6':
-  //       setKeyboards((keyboards) =>
-  //         [...keyboards].sort((a, b) => a.price - b.price)
-  //       );
-  //       break;
-  //     default:
-  //       break;
-  //   }
-  // }
+  async function handleChange(value) {
+    switch (value) {
+      case '1':
+        try {
+          setSortingNumber(1);
+          const response = await exceptionAxios.get('/keyboards');
+          setKeyboards(
+            response.data.data.sort((a, b) => b.likeCount - a.likeCount)
+          );
+        } catch (err) {
+          console.log(err);
+          dispatch(isError(err.response));
+        }
+        break;
+      case '2':
+        try {
+          setSortingNumber(2);
+          const response = await exceptionAxios.get('/keyboards');
+          setKeyboards(
+            response.data.data.sort((a, b) => a.likeCount - b.likeCount)
+          );
+        } catch (err) {
+          console.log(err);
+          dispatch(isError(err.response));
+        }
+        break;
+      case '3':
+        setSortingNumber(3);
+        setKeyboards((keyboards) =>
+          [...keyboards].sort((a, b) => b.reviewCount - a.reviewCount)
+        );
+        break;
+      case '4':
+        setSortingNumber(4);
+        setKeyboards((keyboards) =>
+          [...keyboards].sort((a, b) => a.reviewCount - b.reviewCount)
+        );
+        break;
+      case '5':
+        setSortingNumber(5);
+        setKeyboards((keyboards) =>
+          [...keyboards].sort((a, b) => a.price - b.price)
+        );
+        break;
+      case '6':
+        setSortingNumber(6);
+        setKeyboards((keyboards) =>
+          [...keyboards].sort((a, b) => b.price - a.price)
+        );
+        break;
+
+      default:
+        break;
+    }
+  }
 
   // ! 브랜드
   const onChangeBrandLogitech = (e) => {
@@ -566,12 +453,8 @@ const Keyboard = () => {
     setBacklight(false);
   };
 
-  const handleAllKeyboards = (value) => {
-    setAllKeyboards(value);
-  };
-
   return (
-    <>
+    <div className="keyboard">
       {!loading && (
         <>
           <div className="keyboard-category">
@@ -624,7 +507,7 @@ const Keyboard = () => {
             <Radio.Group
               onChange={onChangePriceRadio}
               value={priceRadio}
-              className="horizontal-scroll"
+              className="horizontal-scroll radio-group"
             >
               <Radio value={'5만원 이하'} onClick={onClickPriceRadio}>
                 5만원 이하
@@ -655,77 +538,82 @@ const Keyboard = () => {
               </Checkbox>
             </div>
             {allCategory.length !== 0 && (
-              <div>
-                <Button onClick={onClickResetBtn}>
-                  <FiRotateCw /> 전체 해제
-                </Button>
-              </div>
-            )}
-            <div>
-              {allCategory.map((category) => (
-                <div
-                  key={category}
-                  style={{
-                    display: 'inline-block',
-                    color: '#fff',
-                    backgroundColor: '#000',
-                    padding: '5px',
-                    borderRadius: '10px',
-                    marginRight: '3px',
-                  }}
-                >
-                  {category}
+              <>
+                <div>
+                  <Button onClick={onClickResetBtn}>
+                    <FiRotateCw /> 전체 해제
+                  </Button>
                 </div>
-              ))}
-            </div>
+                <div>
+                  {allCategory.map((category) => (
+                    <div
+                      key={category}
+                      style={{
+                        display: 'inline-block',
+                        color: '#fff',
+                        backgroundColor: '#000',
+                        padding: '5px',
+                        borderRadius: '10px',
+                        marginRight: '3px',
+                      }}
+                    >
+                      {category}
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
           </div>
 
           {/* ! 정렬  */}
-          <Space
-            split={<Divider type="vertical" />}
-            style={{ marginBottom: '10px' }}
-            className="horizontal-scroll"
-          >
-            <Typography.Link onClick={onClickHeartDescendingBtn}>
-              {sortingNumber === 1 && <FaCheck />}
-              좋아요 많은순
-            </Typography.Link>
-            <Typography.Link onClick={onClickHeartAscendingBtn}>
-              {sortingNumber === 2 && <FaCheck />}
-              좋아요 적은순
-            </Typography.Link>
-            <Typography.Link onClick={onClickReviewDescendingBtn}>
-              {sortingNumber === 3 && <FaCheck />}
-              리뷰 많은순
-            </Typography.Link>
-            <Typography.Link onClick={onClickReviewAscendingBtn}>
-              {sortingNumber === 4 && <FaCheck />}
-              리뷰 적은순
-            </Typography.Link>
-            <Typography.Link onClick={onClickPriceDescendingBtn}>
-              {sortingNumber === 5 && <FaCheck />}
-              가격 낮은순
-            </Typography.Link>
-            <Typography.Link onClick={onClickPriceAscendingBtn}>
-              {sortingNumber === 6 && <FaCheck />}
-              가격 높은순
-            </Typography.Link>
-          </Space>
+          {width > 768 ? (
+            <Space
+              split={<Divider type="vertical" />}
+              style={{ marginBottom: '10px' }}
+              className="horizontal-scroll"
+            >
+              <Typography.Link onClick={onClickHeartDescendingBtn}>
+                {sortingNumber === 1 && <FaCheck />}
+                좋아요 많은순
+              </Typography.Link>
+              <Typography.Link onClick={onClickHeartAscendingBtn}>
+                {sortingNumber === 2 && <FaCheck />}
+                좋아요 적은순
+              </Typography.Link>
+              <Typography.Link onClick={onClickReviewDescendingBtn}>
+                {sortingNumber === 3 && <FaCheck />}
+                리뷰 많은순
+              </Typography.Link>
+              <Typography.Link onClick={onClickReviewAscendingBtn}>
+                {sortingNumber === 4 && <FaCheck />}
+                리뷰 적은순
+              </Typography.Link>
+              <Typography.Link onClick={onClickPriceAscendingBtn}>
+                {sortingNumber === 5 && <FaCheck />}
+                가격 낮은순
+              </Typography.Link>
+              <Typography.Link onClick={onClickPriceDescendingBtn}>
+                {sortingNumber === 6 && <FaCheck />}
+                가격 높은순
+              </Typography.Link>
+            </Space>
+          ) : (
+            <div style={{ display: 'flex', marginBottom: '10px' }}>
+              <Select defaultValue={optionValue} onChange={handleChange}>
+                <Option value="1">좋아요 많은순</Option>
+                <Option value="2">좋아요 적은순</Option>
+                <Option value="3">리뷰 많은순</Option>
+                <Option value="4">리뷰 적은순</Option>
+                <Option value="5">가격 낮은순</Option>
+                <Option value="6">가격 높은순</Option>
+              </Select>
+            </div>
+          )}
+
           <div>총 {keyboards.length}개</div>
         </>
       )}
-      {/* <Select
-        defaultValue="1"
-        onChange={handleChange}
-        style={{ marginBottom: '30px', minWidth: '150px' }}
-      >
-        <Option value="1">좋아요 많은순</Option>
-        <Option value="2">좋아요 적은순</Option>
-        <Option value="3">리뷰 많은순</Option>
-        <Option value="4">리뷰 적은순</Option>
-        <Option value="5">가격 높은순</Option>
-        <Option value="6">가격 낮은순</Option>
-      </Select> */}
+
       <section className="card-section">
         {keyboards.map((keyboard) => (
           <KeyboardCard
@@ -734,7 +622,7 @@ const Keyboard = () => {
           />
         ))}
       </section>
-    </>
+    </div>
   );
 };
 
