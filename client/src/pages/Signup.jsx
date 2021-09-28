@@ -203,52 +203,58 @@ const Signup = () => {
 
               <div className="inputbox">
                 <label htmlFor="email">이메일</label>
-                <input
-                  type="email"
-                  onChange={onChangeUpdateState}
-                  name="email"
-                  placeholder="example@example.com"
-                  required
-                  value={email || ''}
-                />
+                <div className="input-wrapper">
+                  <input
+                    type="email"
+                    onChange={onChangeUpdateState}
+                    name="email"
+                    placeholder="example@example.com"
+                    required
+                    value={email || ''}
+                  />
+                  <button type="button" onClick={emailValidate}>
+                    전송
+                  </button>
+                </div>
                 <p className="text">이메일 확인 후 인증번호를 입력해 주세요</p>
-                <button type="button" onClick={emailValidate}>
-                  전송
-                </button>
               </div>
               {isClicked && (
                 <>
                   <div className="inputbox">
                     <p>인증번호</p>
-                    <input
-                      type="text"
-                      value={input}
-                      onChange={(e) => setInput(e.target.value)}
-                    />
-                    <button
-                      className="verifybtn"
-                      type="button"
-                      onClick={emailVerify}
-                    >
-                      확인
-                    </button>
+                    <div className="input-wrapper">
+                      <input
+                        type="text"
+                        value={input}
+                        onChange={(e) => setInput(e.target.value)}
+                      />
+                      <button
+                        className="verifybtn"
+                        type="button"
+                        onClick={emailVerify}
+                      >
+                        확인
+                      </button>
+                    </div>
                   </div>
                 </>
               )}
               <div className="inputbox">
                 <label htmlFor="nickname">닉네임</label>
-                <input
-                  className="inputlong"
-                  type="text"
-                  onChange={onChangeUpdateState}
-                  name="nickname"
-                  placeholder="nickname"
-                  // required
-                  value={nickname || ''}
-                />
-                <button type="button" onClick={nicknameValidate}>
-                  중복확인
-                </button>
+                <div className="input-wrapper">
+                  <input
+                    className="inputlong"
+                    type="text"
+                    onChange={onChangeUpdateState}
+                    name="nickname"
+                    placeholder="nickname"
+                    // required
+                    value={nickname || ''}
+                  />
+                  <button type="button" onClick={nicknameValidate}>
+                    중복확인
+                  </button>
+                </div>
               </div>
 
               <div className="inputbox">
