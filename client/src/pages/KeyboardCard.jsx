@@ -37,14 +37,14 @@ const keySwitchComponent = {
       <span
         style={{
           display: 'inline-block',
-          width: '15px',
-          height: '15px',
+          width: '12px',
+          height: '12px',
           borderRadius: '50%',
           verticalAlign: 'middle',
           backgroundColor: '#ff656c',
         }}
       ></span>
-      <span style={{ verticalAlign: 'middle' }}>저적</span>
+      <span style={{ verticalAlign: 'middle', fontSize: '12px' }}>저적</span>
     </div>
   ),
   적축: (
@@ -52,14 +52,14 @@ const keySwitchComponent = {
       <span
         style={{
           display: 'inline-block',
-          width: '15px',
-          height: '15px',
+          width: '12px',
+          height: '12px',
           borderRadius: '50%',
           verticalAlign: 'middle',
           backgroundColor: '#ff1A48',
         }}
       ></span>
-      <span style={{ verticalAlign: 'middle' }}>적축</span>
+      <span style={{ verticalAlign: 'middle', fontSize: '12px' }}>적축</span>
     </div>
   ),
   청축: (
@@ -67,14 +67,14 @@ const keySwitchComponent = {
       <span
         style={{
           display: 'inline-block',
-          width: '15px',
-          height: '15px',
+          width: '12px',
+          height: '12px',
           borderRadius: '50%',
           verticalAlign: 'middle',
           backgroundColor: '#00b4f9',
         }}
       ></span>
-      <span style={{ verticalAlign: 'middle' }}>청축</span>
+      <span style={{ verticalAlign: 'middle', fontSize: '12px' }}>청축</span>
     </div>
   ),
   갈축: (
@@ -82,14 +82,14 @@ const keySwitchComponent = {
       <span
         style={{
           display: 'inline-block',
-          width: '15px',
-          height: '15px',
+          width: '12px',
+          height: '12px',
           borderRadius: '50%',
           verticalAlign: 'middle',
           backgroundColor: '#B8792A',
         }}
       ></span>
-      <span style={{ verticalAlign: 'middle' }}>갈축</span>
+      <span style={{ verticalAlign: 'middle', fontSize: '12px' }}>갈축</span>
     </div>
   ),
   흑축: (
@@ -97,14 +97,14 @@ const keySwitchComponent = {
       <span
         style={{
           display: 'inline-block',
-          width: '15px',
-          height: '15px',
+          width: '12px',
+          height: '12px',
           borderRadius: '50%',
           verticalAlign: 'middle',
           backgroundColor: '#0d0d0d',
         }}
       ></span>
-      <span style={{ verticalAlign: 'middle' }}>흑축</span>
+      <span style={{ verticalAlign: 'middle', fontSize: '12px' }}>흑축</span>
     </div>
   ),
 };
@@ -114,7 +114,7 @@ const keySwitchComponent = {
 // #B8792A
 // #00b4f9
 
-const KeyboardCard = ({ keyboard }) => {
+const KeyboardCard = memo(({ keyboard }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
 
@@ -127,7 +127,7 @@ const KeyboardCard = ({ keyboard }) => {
   const [liked, setLiked] = useState(checkLiked(keyboard.id));
   const [likeCount, setLikeCount] = useState(keyboard.likeCount);
 
-  const onClickHeart = async () => {
+  const onClickHeart = useCallback(async () => {
     // 만약 지금 liked: true => deleteLike 요청
     // 만약 지금 liked: false => addLike 요청
 
@@ -148,7 +148,8 @@ const KeyboardCard = ({ keyboard }) => {
     } catch (err) {
       dispatch(isError(err.response));
     }
-  };
+  }, [user, keyboard, liked]);
+
   return (
     <Card
       style={{ width: '100%' }}
@@ -225,10 +226,14 @@ const KeyboardCard = ({ keyboard }) => {
         //   />
         // }
         title={
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span style={{ lineHeight: '24px' }}>
-              {`${keyboard.brand} ${keyboard.name}`}
-            </span>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              fontSize: '14px',
+            }}
+          >
+            <span>{`${keyboard.brand} ${keyboard.name}`}</span>
 
             <div>
               {liked ? (
@@ -236,7 +241,7 @@ const KeyboardCard = ({ keyboard }) => {
                   style={{
                     display: 'inline',
                     color: '#ff0000',
-                    marginRight: '5px',
+                    marginRight: '3px',
                   }}
                   onClick={onClickHeart}
                 />
@@ -245,7 +250,7 @@ const KeyboardCard = ({ keyboard }) => {
                   style={{
                     display: 'inline',
                     color: '#ff0000',
-                    marginRight: '5px',
+                    marginRight: '3px',
                   }}
                   onClick={onClickHeart}
                 />
@@ -293,35 +298,38 @@ const KeyboardCard = ({ keyboard }) => {
         </linearGradient>
       </svg>
 
-      <div>
-        {keyboard.color ? (
-          <IoColorFill style={{ fill: 'url(#rainbow-gradient)' }} />
-        ) : (
-          <IoColorFillOutline />
-        )}
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <div style={{ display: 'flex', columnGap: '5px' }}>
+          {keyboard.color ? (
+            <IoColorFill style={{ fill: 'url(#rainbow-gradient)' }} />
+          ) : (
+            <IoColorFillOutline />
+          )}
 
-        {/* {keyboard.backlight ? <FcIdea /> : <FcNoIdea />} */}
-        {keyboard.backlight ? (
-          <AiFillBulb style={{ fill: 'url(#bulb-gradient)' }} />
-        ) : (
-          <AiOutlineBulb />
-        )}
-        {keyboard.tenkey ? (
-          <IoKeypad style={{ fill: 'red' }} />
-        ) : (
-          <IoKeypadOutline />
-        )}
+          {keyboard.backlight ? (
+            <AiFillBulb style={{ fill: 'url(#bulb-gradient)' }} />
+          ) : (
+            <AiOutlineBulb />
+          )}
+          {keyboard.tenkey ? (
+            <IoKeypad style={{ fill: 'red' }} />
+          ) : (
+            <IoKeypadOutline />
+          )}
 
-        {keyboard.bluetooth ? (
-          <FaBluetooth style={{ fill: '#2084ce' }} />
-        ) : (
-          <FaBluetooth />
-        )}
-        <BiWon />
-        {`${keyboard.price.toLocaleString()}`}
+          {keyboard.bluetooth ? (
+            <FaBluetooth style={{ fill: '#2084ce' }} />
+          ) : (
+            <FaBluetooth />
+          )}
+        </div>
+        <div style={{ letterSpacing: '-0.05em', fontSize: '12px' }}>
+          <BiWon />
+          <span>{`${keyboard.price.toLocaleString()}`}</span>
+        </div>
       </div>
     </Card>
   );
-};
+});
 
 export default KeyboardCard;

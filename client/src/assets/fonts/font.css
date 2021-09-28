@@ -21,6 +21,9 @@
     url('./NotoSansKR-Regular.otf') format('truetype'),
     url('./NotoSansKR-Regular.woff') format('woff'),
     url('./NotoSansKR-Regular.eot?iefix') format('embedded-opentype'),
+    url('./NotoSansKR-Medium.otf') format('truetype'),
+    url('./NotoSansKR-Medium.woff') format('woff'),
+    url('./NotoSansKR-Medium.eot?iefix') format('embedded-opentype'),
     url('./NotoSansKR-Bold.otf') format('truetype'),
     url('./NotoSansKR-Bold.woff') format('woff'),
     url('./NotoSansKR-Bold.eot?iefix') format('embedded-opentype');

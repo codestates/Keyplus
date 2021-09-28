@@ -10,13 +10,25 @@ import DeleteModal from '../components/DeleteModal';
 
 import './styles/KeyboardDetail.scss';
 
-import { Carousel, Empty, Rate, Avatar, Button, message, Tabs } from 'antd';
+import {
+  Carousel,
+  Empty,
+  Rate,
+  Avatar,
+  Button,
+  message,
+  Tabs,
+  List,
+  Card,
+  Space,
+} from 'antd';
 const { TabPane } = Tabs;
 import {
   HeartOutlined,
   HeartFilled,
   StarFilled,
   UserOutlined,
+  MessageFilled,
 } from '@ant-design/icons';
 import { yellow } from '@ant-design/colors';
 import Rating from 'react-rating';
@@ -28,6 +40,45 @@ const LeftArrow = ({ currentSlide, slideCount, children, ...props }) => {
 const RightArrow = ({ currentSlide, slideCount, children, ...props }) => {
   return <div {...props}>{children}</div>;
 };
+
+const data = [
+  {
+    title: '색상',
+    content: '짧음',
+  },
+  {
+    title: '색상',
+    content: '짧음',
+  },
+  {
+    title: '색상',
+    content: '짧음',
+  },
+  {
+    title: '색상',
+    content: '짧음',
+  },
+];
+
+const listData = [];
+for (let i = 0; i < 23; i++) {
+  listData.push({
+    href: 'https://ant.design',
+    title: `ant design part ${i}`,
+    avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+    description:
+      'Ant Design, a design language for background applications, is refined by Ant UED Team.',
+    content:
+      'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
+  });
+}
+
+const IconText = ({ icon, text }) => (
+  <Space>
+    {React.createElement(icon)}
+    {text}
+  </Space>
+);
 
 const KeyboardDetail = (props) => {
   const history = useHistory();
@@ -147,98 +198,112 @@ const KeyboardDetail = (props) => {
             </Carousel>
             <div className="keyboard-name-like">
               <div className="keyboard-name">
-                {keyboard.brand}
-                {keyboard.name}
+                {keyboard.brand} {keyboard.name}
               </div>
 
               <div className="keyboard-like">
-                좋아요 {likeCount}
-                {liked ? (
-                  <HeartFilled
-                    style={{ color: '#ff0000' }}
-                    onClick={onClickHeart}
-                  />
-                ) : (
-                  <HeartOutlined
-                    style={{ color: '#ff0000' }}
-                    onClick={onClickHeart}
-                  />
-                )}
+                <span className="like-heart">
+                  {liked ? (
+                    <HeartFilled
+                      style={{ color: '#ff0000' }}
+                      onClick={onClickHeart}
+                    />
+                  ) : (
+                    <HeartOutlined
+                      style={{ color: '#ff0000' }}
+                      onClick={onClickHeart}
+                    />
+                  )}
+                </span>
+                <span className="like-count">{likeCount}</span>
               </div>
             </div>
 
             <Tabs defaultActiveKey="1" centered>
-              <TabPane tab="Tab 1" key="1">
-                <div className="keyboard-detail-info-text">
-                  <div>
-                    <div>색상</div>
-                    <div className="keyboard-color">
+              <TabPane tab="상세정보" key="1">
+                <List grid>
+                  <List.Item>
+                    <Card title="Color">
                       {keyboard.color ? '다채색' : '무채색'}
-                    </div>
-                  </div>
-                  <div>
-                    <div>백라이트</div>
-                    <div className="keyboard-backlight">
-                      {keyboard.backlight ? '지원' : '미지원'}
-                    </div>
-                  </div>
-                  <div>
-                    <div>텐키</div>
-                    <div className="keyboard-tenkey">
-                      {keyboard.tenkey ? '있음' : '없음'}
-                    </div>
-                  </div>
-                  <div>
-                    <div>블루투스</div>
-                    <div className="keyboard-bluetooth">
+                    </Card>
+                  </List.Item>
+                  <List.Item>
+                    <Card title="BackLight">
                       {keyboard.bluetooth ? '지원' : '미지원'}
-                    </div>
-                  </div>
-                  <div>
-                    <div>가격</div>
-                    <div className="keyboard-price">
-                      {keyboard.price.toLocaleString()}
-                    </div>
-                  </div>
-                </div>
+                    </Card>
+                  </List.Item>
+                  <List.Item>
+                    <Card title="TenKey">
+                      {keyboard.tenkey ? '있음' : '없음'}
+                    </Card>
+                  </List.Item>
+                  <List.Item>
+                    <Card title="Bluetooth">
+                      {keyboard.bluetooth ? '지원' : '미지원'}
+                    </Card>
+                  </List.Item>
+                  <List.Item>
+                    <Card title="Price">
+                      {keyboard.price.toLocaleString()}원
+                    </Card>
+                  </List.Item>
+                </List>
               </TabPane>
-              <TabPane tab="Tab 2" key="2">
+              <TabPane tab="리뷰" key="2">
                 {reviews.length ? (
                   <>
-                    <div>
-                      <Button type="primary" onClick={onClickCreateReviewBtn}>
+                    <div className="review-create-button-wrapper">
+                      <Button onClick={onClickCreateReviewBtn}>
                         리뷰 작성하기
                       </Button>
                     </div>
-                    평균 평점
-                    <Rating
-                      initialRating={averageRating.toFixed(1)}
-                      fractions={10}
-                      readonly
-                      emptySymbol={
-                        <StarFilled
-                          style={{
-                            fontSize: '20px',
-                            color: '#f0f0f0',
-                          }}
+                    <div className="reviews-info">
+                      <div className="reviews-rating">
+                        <span className="title">사용자 총 평점</span>
+                        <Rating
+                          initialRating={averageRating.toFixed(1)}
+                          fractions={10}
+                          readonly
+                          emptySymbol={
+                            <StarFilled
+                              style={{
+                                fontSize: '30px',
+                                color: '#f0f0f0',
+                              }}
+                            />
+                          }
+                          fullSymbol={
+                            <StarFilled
+                              style={{
+                                fontSize: '30px',
+                                color: yellow[5],
+                                // marginRight: '8px',
+                              }}
+                            />
+                          }
                         />
-                      }
-                      fullSymbol={
-                        <StarFilled
-                          style={{
-                            fontSize: '20px',
-                            color: yellow[5],
-                            // marginRight: '8px',
-                          }}
-                        />
-                      }
-                    />
+                        <div className="number-wrapper">
+                          <span className="number">
+                            {averageRating.toFixed(1)}
+                          </span>
+                          /5
+                        </div>
+                      </div>
+                      <div className="reviews-count">
+                        <span className="title">전체 리뷰수</span>
+                        <MessageFilled style={{ fontSize: '30px' }} />
+                        <div className="number-wrapper">
+                          <span className="number"> {reviews.length}</span>
+                        </div>
+                      </div>
+                    </div>
+
                     {reviews.map((review, idx) => (
-                      <div key={`${review}_${idx}`}>
-                        {review.image1 ||
-                        review.image2 ||
-                        review.image3 ||
-                        review.video ? (
+                      <div key={`${review}_${idx}`} className="review">
+                        {(review.image1 ||
+                          review.image2 ||
+                          review.image3 ||
+                          review.video) && (
                           <Carousel
                             infinite={false}
                             dots
@@ -246,14 +311,11 @@ const KeyboardDetail = (props) => {
                             draggable
                             prevArrow={<LeftArrow />}
                             nextArrow={<RightArrow />}
-                            className="keyboard-detail-carousel"
+                            className="review-carousel"
                           >
                             {review.video && (
                               <>
-                                <video
-                                  className="keyboard-detail-video"
-                                  controls
-                                >
+                                <video className="review-video" controls>
                                   <source src={review.video} type="video/mp4" />
                                 </video>
                               </>
@@ -264,7 +326,7 @@ const KeyboardDetail = (props) => {
                                 <img
                                   src={review.image1}
                                   alt={review.image1}
-                                  className="keyboard-detail-img"
+                                  className="review-img"
                                 />
                               </>
                             )}
@@ -274,7 +336,7 @@ const KeyboardDetail = (props) => {
                                 <img
                                   src={review.image2}
                                   alt={review.image2}
-                                  className="keyboard-detail-img"
+                                  className="review-img"
                                 />
                               </>
                             )}
@@ -284,87 +346,69 @@ const KeyboardDetail = (props) => {
                                 <img
                                   src={review.image3}
                                   alt={review.image3}
-                                  className="keyboard-detail-img"
+                                  className="review-img"
                                 />
                               </>
                             )}
                           </Carousel>
-                        ) : (
-                          <img
-                            src="/no-image.png"
-                            alt="no image"
-                            className="keyboard-detail-img"
-                          />
                         )}
-                        <div>리뷰 내용 : {review.content}</div>
-
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                          <div>
-                            {review.userImage ? (
-                              <Avatar src={review.userImage} />
-                            ) : (
-                              <Avatar icon={<UserOutlined />} />
-                            )}
-                          </div>
-                          <div>
-                            <Rate disabled defaultValue={review.rating} />
-                            <div
-                              style={{ display: 'flex', lineHeight: '14px' }}
-                            >
-                              <span style={{ marginRight: '5px' }}>
-                                {review.nickname}
-                              </span>
-                              <span
-                                style={{
-                                  fontSize: '8px',
-                                  letterSpacing: '-0.05em',
-                                }}
-                              >
-                                {review.createdAt.split('T')[0]}
-                              </span>
+                        <div className="review-info">
+                          <div className="review-profile">
+                            <div className="review-profile-image">
+                              {review.userImage ? (
+                                <Avatar src={review.userImage} />
+                              ) : (
+                                <Avatar icon={<UserOutlined />} />
+                              )}
+                            </div>
+                            <div>
+                              <Rate disabled defaultValue={review.rating} />
+                              <div className="name-date">
+                                <span className="name">{review.nickname}</span>
+                                <span className="date">
+                                  {review.createdAt.split('T')[0]}
+                                </span>
+                              </div>
                             </div>
                           </div>
+                          <div className="review-text">{review.content}</div>
                         </div>
-                        <div>
-                          {review.userId === userId && (
-                            <>
-                              <Button>
-                                <Link
-                                  to={{
-                                    pathname: `/review/${keyboardId}`,
-                                    state: {
-                                      content: review.content,
-                                      rating: review.rating,
-                                      images: [
-                                        review.image1,
-                                        review.image2,
-                                        review.image3,
-                                      ],
-                                      video: review.video,
-                                    },
-                                  }}
-                                >
-                                  수정
-                                </Link>
-                              </Button>
-                              <DeleteModal
-                                modalText="정말로 삭제하시겠습니까?"
-                                loadingText="삭제 진행중입니다."
-                                buttonText="삭제"
-                                action={deleteReviews}
-                                keyboardId={keyboardId}
-                              />
-                            </>
-                          )}
-                        </div>
+                        {review.userId === userId && (
+                          <div className="review-button">
+                            <Button>
+                              <Link
+                                to={{
+                                  pathname: `/review/${keyboardId}`,
+                                  state: {
+                                    content: review.content,
+                                    rating: review.rating,
+                                    images: [
+                                      review.image1,
+                                      review.image2,
+                                      review.image3,
+                                    ],
+                                    video: review.video,
+                                  },
+                                }}
+                              >
+                                수정
+                              </Link>
+                            </Button>
+                            <DeleteModal
+                              modalText="정말로 삭제하시겠습니까?"
+                              loadingText="삭제 진행중입니다."
+                              buttonText="삭제"
+                              action={deleteReviews}
+                              keyboardId={keyboardId}
+                            />
+                          </div>
+                        )}
                       </div>
                     ))}
                   </>
                 ) : (
-                  // <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
                   <Empty
-                    image={`/no-data.webp`}
-                    // image={Empty.PRESENTED_IMAGE_SIMPLE}
+                    image={`/no-data.jpg`}
                     imageStyle={{
                       height: 300,
                     }}
@@ -378,7 +422,6 @@ const KeyboardDetail = (props) => {
               </TabPane>
             </Tabs>
           </div>
-          {/* <h1 style={{ marginTop: '30px' }}>리뷰</h1> */}
         </div>
       )}
     </>
