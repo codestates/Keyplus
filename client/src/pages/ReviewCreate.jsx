@@ -33,13 +33,18 @@ import {
   PlusOutlined,
 } from '@ant-design/icons';
 import { IoCloseOutline } from 'react-icons/io5';
+// import {
+//   AiOutlinePicture,
+//   AiOutlinePlayCircle,
+//   AiOutlineUpload,
+// } from 'react-icons/ai';
+import { RiImageAddFill, RiVideoAddFill } from 'react-icons/ri';
 
 import { addReviews, updateReviews } from '../reducers/api/reviewsAPI';
 
 const ReviewCreate = ({ location, ...props }) => {
   const dispatch = useDispatch();
   const history = useHistory();
-  // const [previewURL, setPreviewURL] = useState([]);
   const keyboardId = props.match.params?.id;
   const [previewImage1, setPreviewImage1] = useState(
     location.state?.images[0] ?? null
@@ -127,7 +132,6 @@ const ReviewCreate = ({ location, ...props }) => {
 
   //* onClickDeleteBtn
   const onClickDeleteImgBtn = (num) => {
-    console.log('여기냐?', num);
     switch (num) {
       case 1:
         setPreviewImage1(null);
@@ -216,7 +220,6 @@ const ReviewCreate = ({ location, ...props }) => {
         await dispatch(addReviews({ formData, data })).unwrap();
       }
       message.success('리뷰 작성이 완료되었습니다.');
-      // window.location.replace(`/keyboards/${keyboardId}`);
       history.push(`/keyboards/${keyboardId}`);
     } catch (err) {
       if (!err.response) {
@@ -229,25 +232,16 @@ const ReviewCreate = ({ location, ...props }) => {
       message.warning('서버에서 에러가 발생했습니다.');
     }
   };
-
-  // const uploadButton = <div>Upload</div>;
-
-  //* image Upload (onClick에 ref 제어 달려 있는 애)
-  //* image Preview (hover에 삭제 달려 있는 애)
-
-  //*
-
   return (
-    <>
+    <div className="review-create">
+      <h1 className="review-create-header">Review </h1>
       <form
         name="review-form"
         onSubmit={onClickSubmitBtn}
         encType="multipart/form-data"
+        className="review-create-form"
       >
-        {/* <div className="input-file"> */}
-        {/* {[previewImage1, previewImage2, previewImage3].map(
-            (preview, idx) => */}
-        <div className="input-file-area">
+        <div className="input-files-area">
           <div className="input-file">
             {previewImage1 ? (
               <div className="preview-image-wrapper">
@@ -270,10 +264,8 @@ const ReviewCreate = ({ location, ...props }) => {
                 </div>
               </div>
             ) : (
-              <div className="input-file">
-                <div className="upload-icon" onClick={() => handleImgRef(1)}>
-                  upload
-                </div>
+              <div className="upload-icon" onClick={() => handleImgRef(1)}>
+                <RiImageAddFill style={{ fontSize: '40px' }} />
               </div>
             )}
           </div>
@@ -299,13 +291,11 @@ const ReviewCreate = ({ location, ...props }) => {
                 </div>
               </div>
             ) : (
-              <div className="input-file">
-                <div className="upload-icon" onClick={() => handleImgRef(2)}>
-                  upload
-                </div>
+              <div className="upload-icon" onClick={() => handleImgRef(2)}>
+                <RiImageAddFill style={{ fontSize: '40px' }} />
               </div>
             )}
-          </div>{' '}
+          </div>
           <div className="input-file">
             {previewImage3 ? (
               <div className="preview-image-wrapper">
@@ -328,15 +318,17 @@ const ReviewCreate = ({ location, ...props }) => {
                 </div>
               </div>
             ) : (
-              <div className="input-file">
-                <div className="upload-icon" onClick={() => handleImgRef(3)}>
-                  upload
+              <div className="upload-icon" onClick={() => handleImgRef(3)}>
+                {/* 이미지
+                <br />
+                업로드 */}
+                <div style={{ display: 'flex' }}>
+                  <RiImageAddFill style={{ fontSize: '40px' }} />
                 </div>
               </div>
             )}
           </div>
-        </div>
-        <div className="input-file-area">
+
           <div className="input-file">
             {previewVideo ? (
               <div className="preview-image-wrapper">
@@ -349,15 +341,18 @@ const ReviewCreate = ({ location, ...props }) => {
                   <IoCloseOutline
                     style={{
                       color: 'white',
-                      width: '50px',
-                      height: '50px',
+                      width: '40px',
+                      height: '40px',
                     }}
                   />
                 </div>
               </div>
             ) : (
               <div className="upload-icon" onClick={handleVideoRef}>
-                upload
+                {/* 동영상
+                <br />
+                  업로드 */}
+                <RiVideoAddFill style={{ fontSize: '40px' }} />
               </div>
             )}
           </div>
@@ -399,24 +394,33 @@ const ReviewCreate = ({ location, ...props }) => {
           ref={videoRef}
           hidden
         />
+
         <TextArea
-          placeholder="리뷰를 100자까지 입력해주세요."
+          placeholder="리뷰를 500자까지 입력해주세요."
           showCount
-          maxLength={100}
-          autoSize={{ minRows: 2, maxRows: 6 }}
+          maxLength={500}
+          autoSize={{ minRows: 4, maxRows: 8 }}
           value={content}
           onChange={onChangeContent}
+          className="review-create-content"
         />
 
-        <Rate value={rating} onChange={onChangeRating} />
+        <div className="review-create-rating-wrapper">
+          <p>별을 눌러 점수를 매겨주세요.</p>
+          <Rate
+            value={rating}
+            onChange={onChangeRating}
+            style={{ fontSize: '30px' }}
+          />
+        </div>
 
-        <p>
-          <Button>
+        <div className="review-create-button-wrapper">
+          <Button type="primary">
             <input type="submit" value="리뷰 작성" />
           </Button>
-        </p>
+        </div>
       </form>
-    </>
+    </div>
   );
 };
 

@@ -202,7 +202,6 @@ const KeyboardDetail = (props) => {
               </div>
 
               <div className="keyboard-like">
-                <span className="like-count">{likeCount}</span>
                 <span className="like-heart">
                   {liked ? (
                     <HeartFilled
@@ -216,6 +215,7 @@ const KeyboardDetail = (props) => {
                     />
                   )}
                 </span>
+                <span className="like-count">{likeCount}</span>
               </div>
             </div>
 

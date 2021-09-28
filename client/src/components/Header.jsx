@@ -61,14 +61,14 @@ const Header = () => {
             {isOpenSidebar ? (
               <CloseOutlined
                 style={{
-                  fontSize: '24px',
+                  fontSize: width > 768 ? '24px' : '21px',
                   color: offset > 0 ? '#fff' : '#000',
                 }}
               />
             ) : (
               <MenuOutlined
                 style={{
-                  fontSize: '24px',
+                  fontSize: width > 768 ? '24px' : '21px',
                   color: offset > 0 ? '#fff' : '#000',
                 }}
               />
@@ -90,7 +90,11 @@ const Header = () => {
               }
             >
               <li className="nav-item">
-                <Link to="/" className="nav-links" onClick={onClickToggleBtn}>
+                <Link
+                  to="/"
+                  className="nav-links"
+                  onClick={isOpenSidebar && onClickToggleBtn}
+                >
                   설문조사
                 </Link>
               </li>
@@ -98,7 +102,7 @@ const Header = () => {
                 <Link
                   to="/keyboards"
                   className="nav-links"
-                  onClick={onClickToggleBtn}
+                  onClick={isOpenSidebar && onClickToggleBtn}
                 >
                   키보드
                 </Link>
@@ -107,7 +111,7 @@ const Header = () => {
                 <Link
                   to="/map"
                   className="nav-links"
-                  onClick={onClickToggleBtn}
+                  onClick={isOpenSidebar && onClickToggleBtn}
                 >
                   타건샵
                 </Link>
@@ -134,7 +138,7 @@ const Header = () => {
               <button onClick={onClickMypage} className="button-links">
                 <UserOutlined
                   style={{
-                    fontSize: '24px',
+                    fontSize: width > 768 ? '24px' : '21px',
                     color: offset > 0 ? '#fff' : '#000',
                   }}
                 />
@@ -145,7 +149,7 @@ const Header = () => {
                 <button onClick={onClickLogout} className="button-links">
                   <ExportOutlined
                     style={{
-                      fontSize: '24px',
+                      fontSize: width > 768 ? '24px' : '21px',
                       color: offset > 0 ? '#fff' : '#000',
                     }}
                   />
