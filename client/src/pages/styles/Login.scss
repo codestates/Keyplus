@@ -46,6 +46,11 @@
   flex-direction: column;
   height: 100%;
 
+  @media screen and (max-width: $md-breakpoint) {
+    justify-content: flex-start;
+    margin-top: 20px;
+  }
+
   .title {
     font-weight: 600;
     text-transform: uppercase;
