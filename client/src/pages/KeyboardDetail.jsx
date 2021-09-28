@@ -28,9 +28,7 @@ import {
   HeartFilled,
   StarFilled,
   UserOutlined,
-  MessageOutlined,
-  LikeOutlined,
-  StarOutlined,
+  MessageFilled,
 } from '@ant-design/icons';
 import { yellow } from '@ant-design/colors';
 import Rating from 'react-rating';
@@ -200,23 +198,24 @@ const KeyboardDetail = (props) => {
             </Carousel>
             <div className="keyboard-name-like">
               <div className="keyboard-name">
-                {keyboard.brand}
-                {keyboard.name}
+                {keyboard.brand} {keyboard.name}
               </div>
 
               <div className="keyboard-like">
-                좋아요 {likeCount}
-                {liked ? (
-                  <HeartFilled
-                    style={{ color: '#ff0000' }}
-                    onClick={onClickHeart}
-                  />
-                ) : (
-                  <HeartOutlined
-                    style={{ color: '#ff0000' }}
-                    onClick={onClickHeart}
-                  />
-                )}
+                <span className="like-count">{likeCount}</span>
+                <span className="like-heart">
+                  {liked ? (
+                    <HeartFilled
+                      style={{ color: '#ff0000' }}
+                      onClick={onClickHeart}
+                    />
+                  ) : (
+                    <HeartOutlined
+                      style={{ color: '#ff0000' }}
+                      onClick={onClickHeart}
+                    />
+                  )}
+                </span>
               </div>
             </div>
 
@@ -249,152 +248,113 @@ const KeyboardDetail = (props) => {
                     </Card>
                   </List.Item>
                 </List>
-                {/* <div className="keyboard-detail-info-text">
-                  <div>
-                    <div>색상</div>
-                    <div className="keyboard-color">
-                      {keyboard.color ? '다채색' : '무채색'}
-                    </div>
-                  </div>
-                  <div>
-                    <div>백라이트</div>
-                    <div className="keyboard-backlight">
-                      {keyboard.backlight ? '지원' : '미지원'}
-                    </div>
-                  </div>
-                  <div>
-                    <div>텐키</div>
-                    <div className="keyboard-tenkey">
-                      {keyboard.tenkey ? '있음' : '없음'}
-                    </div>
-                  </div>
-                  <div>
-                    <div>블루투스</div>
-                    <div className="keyboard-bluetooth">
-                      {keyboard.bluetooth ? '지원' : '미지원'}
-                    </div>
-                  </div>
-                  <div>
-                    <div>가격</div>
-                    <div className="keyboard-price">
-                      {keyboard.price.toLocaleString()}
-                    </div>
-                  </div>
-                </div> */}
               </TabPane>
               <TabPane tab="리뷰" key="2">
                 {reviews.length ? (
                   <>
-                    <div>
-                      <Button type="primary" onClick={onClickCreateReviewBtn}>
+                    <div className="review-create-button-wrapper">
+                      <Button onClick={onClickCreateReviewBtn}>
                         리뷰 작성하기
                       </Button>
                     </div>
-                    평균 평점
-                    <Rating
-                      initialRating={averageRating.toFixed(1)}
-                      fractions={10}
-                      readonly
-                      emptySymbol={
-                        <StarFilled
-                          style={{
-                            fontSize: '20px',
-                            color: '#f0f0f0',
-                          }}
+                    <div className="reviews-info">
+                      <div className="reviews-rating">
+                        <span className="title">사용자 총 평점</span>
+                        <Rating
+                          initialRating={averageRating.toFixed(1)}
+                          fractions={10}
+                          readonly
+                          emptySymbol={
+                            <StarFilled
+                              style={{
+                                fontSize: '30px',
+                                color: '#f0f0f0',
+                              }}
+                            />
+                          }
+                          fullSymbol={
+                            <StarFilled
+                              style={{
+                                fontSize: '30px',
+                                color: yellow[5],
+                                // marginRight: '8px',
+                              }}
+                            />
+                          }
                         />
-                      }
-                      fullSymbol={
-                        <StarFilled
-                          style={{
-                            fontSize: '20px',
-                            color: yellow[5],
-                            // marginRight: '8px',
-                          }}
-                        />
-                      }
-                    />
+                        <div className="number-wrapper">
+                          <span className="number">
+                            {averageRating.toFixed(1)}
+                          </span>
+                          /5
+                        </div>
+                      </div>
+                      <div className="reviews-count">
+                        <span className="title">전체 리뷰수</span>
+                        <MessageFilled style={{ fontSize: '30px' }} />
+                        <div className="number-wrapper">
+                          <span className="number"> {reviews.length}</span>
+                        </div>
+                      </div>
+                    </div>
+
                     {reviews.map((review, idx) => (
-                      <>
-                        <div key={`${review}_${idx}`}>
-                          {review.image1 ||
+                      <div key={`${review}_${idx}`} className="review">
+                        {(review.image1 ||
                           review.image2 ||
                           review.image3 ||
-                          review.video ? (
-                            <Carousel
-                              infinite={false}
-                              dots
-                              arrows
-                              draggable
-                              prevArrow={<LeftArrow />}
-                              nextArrow={<RightArrow />}
-                              className="keyboard-detail-review-carousel"
-                            >
-                              {review.video && (
-                                <>
-                                  <video
-                                    className="keyboard-detail-review-video"
-                                    controls
-                                  >
-                                    <source
-                                      src={review.video}
-                                      type="video/mp4"
-                                    />
-                                  </video>
-                                </>
-                              )}
-
-                              {review.image1 && (
-                                <>
-                                  <img
-                                    src={review.image1}
-                                    alt={review.image1}
-                                    className="keyboard-detail-review-img"
-                                  />
-                                </>
-                              )}
-
-                              {review.image2 && (
-                                <>
-                                  <img
-                                    src={review.image2}
-                                    alt={review.image2}
-                                    className="keyboard-detail-review-img"
-                                  />
-                                </>
-                              )}
-
-                              {review.image3 && (
-                                <>
-                                  <img
-                                    src={review.image3}
-                                    alt={review.image3}
-                                    className="keyboard-detail-review-img"
-                                  />
-                                </>
-                              )}
-                            </Carousel>
-                          ) : (
-                            <img
-                              src="/no-image.png"
-                              alt="no image"
-                              className="keyboard-detail-review-img"
-                            />
-                          )}
-                        </div>
-                        <div
-                          style={{
-                            display: 'flex',
-                          }}
-                        >
-                          <div
-                            style={{
-                              display: 'flex',
-                              alignItems: 'center',
-                              flexShrink: '0',
-                              width: '165px',
-                            }}
+                          review.video) && (
+                          <Carousel
+                            infinite={false}
+                            dots
+                            arrows
+                            draggable
+                            prevArrow={<LeftArrow />}
+                            nextArrow={<RightArrow />}
+                            className="review-carousel"
                           >
-                            <div>
+                            {review.video && (
+                              <>
+                                <video className="review-video" controls>
+                                  <source src={review.video} type="video/mp4" />
+                                </video>
+                              </>
+                            )}
+
+                            {review.image1 && (
+                              <>
+                                <img
+                                  src={review.image1}
+                                  alt={review.image1}
+                                  className="review-img"
+                                />
+                              </>
+                            )}
+
+                            {review.image2 && (
+                              <>
+                                <img
+                                  src={review.image2}
+                                  alt={review.image2}
+                                  className="review-img"
+                                />
+                              </>
+                            )}
+
+                            {review.image3 && (
+                              <>
+                                <img
+                                  src={review.image3}
+                                  alt={review.image3}
+                                  className="review-img"
+                                />
+                              </>
+                            )}
+                          </Carousel>
+                        )}
+                        <div className="review-info">
+                          <div className="review-profile">
+                            <div className="review-profile-image">
                               {review.userImage ? (
                                 <Avatar src={review.userImage} />
                               ) : (
@@ -403,32 +363,18 @@ const KeyboardDetail = (props) => {
                             </div>
                             <div>
                               <Rate disabled defaultValue={review.rating} />
-                              <div
-                                style={{
-                                  display: 'flex',
-                                  lineHeight: '14px',
-                                }}
-                              >
-                                <span style={{ marginRight: '5px' }}>
-                                  {review.nickname}
-                                </span>
-                                <span
-                                  style={{
-                                    fontSize: '8px',
-                                    letterSpacing: '-0.05em',
-                                  }}
-                                >
+                              <div className="name-date">
+                                <span className="name">{review.nickname}</span>
+                                <span className="date">
                                   {review.createdAt.split('T')[0]}
                                 </span>
                               </div>
                             </div>
                           </div>
-                          <div style={{ flexGrow: '1' }}>
-                            리뷰 내용 : {review.content}
-                          </div>
+                          <div className="review-text">{review.content}</div>
                         </div>
                         {review.userId === userId && (
-                          <>
+                          <div className="review-button">
                             <Button>
                               <Link
                                 to={{
@@ -455,16 +401,14 @@ const KeyboardDetail = (props) => {
                               action={deleteReviews}
                               keyboardId={keyboardId}
                             />
-                          </>
+                          </div>
                         )}
-                      </>
+                      </div>
                     ))}
                   </>
                 ) : (
-                  // <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
                   <Empty
-                    image={`/no-data.webp`}
-                    // image={Empty.PRESENTED_IMAGE_SIMPLE}
+                    image={`/no-data.jpg`}
                     imageStyle={{
                       height: 300,
                     }}
