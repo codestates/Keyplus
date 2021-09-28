@@ -539,24 +539,15 @@ const Keyboard = () => {
             </div>
             {allCategory.length !== 0 && (
               <>
-                <div>
-                  <Button onClick={onClickResetBtn}>
-                    <FiRotateCw /> 전체 해제
-                  </Button>
+                <div className="clear-button-wrapper">
+                  <button onClick={onClickResetBtn}>
+                    <FiRotateCw />
+                    <span>전체 해제</span>
+                  </button>
                 </div>
                 <div>
                   {allCategory.map((category) => (
-                    <div
-                      key={category}
-                      style={{
-                        display: 'inline-block',
-                        color: '#fff',
-                        backgroundColor: '#000',
-                        padding: '5px',
-                        borderRadius: '10px',
-                        marginRight: '3px',
-                      }}
-                    >
+                    <div key={category} className="selected-category">
                       {category}
                     </div>
                   ))}
@@ -566,39 +557,39 @@ const Keyboard = () => {
           </div>
 
           {/* ! 정렬  */}
-          {width > 768 ? (
-            <Space
-              split={<Divider type="vertical" />}
-              style={{ marginBottom: '10px' }}
-              className="horizontal-scroll"
-            >
-              <Typography.Link onClick={onClickHeartDescendingBtn}>
-                {sortingNumber === 1 && <FaCheck />}
-                좋아요 많은순
-              </Typography.Link>
-              <Typography.Link onClick={onClickHeartAscendingBtn}>
-                {sortingNumber === 2 && <FaCheck />}
-                좋아요 적은순
-              </Typography.Link>
-              <Typography.Link onClick={onClickReviewDescendingBtn}>
-                {sortingNumber === 3 && <FaCheck />}
-                리뷰 많은순
-              </Typography.Link>
-              <Typography.Link onClick={onClickReviewAscendingBtn}>
-                {sortingNumber === 4 && <FaCheck />}
-                리뷰 적은순
-              </Typography.Link>
-              <Typography.Link onClick={onClickPriceAscendingBtn}>
-                {sortingNumber === 5 && <FaCheck />}
-                가격 낮은순
-              </Typography.Link>
-              <Typography.Link onClick={onClickPriceDescendingBtn}>
-                {sortingNumber === 6 && <FaCheck />}
-                가격 높은순
-              </Typography.Link>
-            </Space>
-          ) : (
-            <div style={{ display: 'flex', marginBottom: '10px' }}>
+          <div className="keyboard-order-count-area">
+            {width > 768 ? (
+              <Space
+                split={<Divider type="vertical" />}
+                style={{ columnGap: '6px !important' }}
+                className="horizontal-scroll"
+              >
+                <Typography.Link onClick={onClickHeartDescendingBtn}>
+                  {sortingNumber === 1 && <FaCheck />}
+                  좋아요 많은순
+                </Typography.Link>
+                <Typography.Link onClick={onClickHeartAscendingBtn}>
+                  {sortingNumber === 2 && <FaCheck />}
+                  좋아요 적은순
+                </Typography.Link>
+                <Typography.Link onClick={onClickReviewDescendingBtn}>
+                  {sortingNumber === 3 && <FaCheck />}
+                  리뷰 많은순
+                </Typography.Link>
+                <Typography.Link onClick={onClickReviewAscendingBtn}>
+                  {sortingNumber === 4 && <FaCheck />}
+                  리뷰 적은순
+                </Typography.Link>
+                <Typography.Link onClick={onClickPriceAscendingBtn}>
+                  {sortingNumber === 5 && <FaCheck />}
+                  가격 낮은순
+                </Typography.Link>
+                <Typography.Link onClick={onClickPriceDescendingBtn}>
+                  {sortingNumber === 6 && <FaCheck />}
+                  가격 높은순
+                </Typography.Link>
+              </Space>
+            ) : (
               <Select defaultValue={optionValue} onChange={handleChange}>
                 <Option value="1">좋아요 많은순</Option>
                 <Option value="2">좋아요 적은순</Option>
@@ -607,10 +598,10 @@ const Keyboard = () => {
                 <Option value="5">가격 낮은순</Option>
                 <Option value="6">가격 높은순</Option>
               </Select>
-            </div>
-          )}
+            )}
 
-          <div>총 {keyboards.length}개</div>
+            <div className="keyboard-count">총 {keyboards.length}개</div>
+          </div>
         </>
       )}
 

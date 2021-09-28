@@ -114,7 +114,7 @@ const keySwitchComponent = {
 // #B8792A
 // #00b4f9
 
-const KeyboardCard = ({ keyboard }) => {
+const KeyboardCard = memo(({ keyboard }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
 
@@ -127,7 +127,7 @@ const KeyboardCard = ({ keyboard }) => {
   const [liked, setLiked] = useState(checkLiked(keyboard.id));
   const [likeCount, setLikeCount] = useState(keyboard.likeCount);
 
-  const onClickHeart = async () => {
+  const onClickHeart = useCallback(async () => {
     // 만약 지금 liked: true => deleteLike 요청
     // 만약 지금 liked: false => addLike 요청
 
@@ -148,7 +148,8 @@ const KeyboardCard = ({ keyboard }) => {
     } catch (err) {
       dispatch(isError(err.response));
     }
-  };
+  }, [user, keyboard, liked]);
+
   return (
     <Card
       style={{ width: '100%' }}
@@ -322,6 +323,6 @@ const KeyboardCard = ({ keyboard }) => {
       </div>
     </Card>
   );
-};
+});
 
 export default KeyboardCard;
