@@ -18,8 +18,7 @@
     }
   }
 
-  .keyboard-detail-img,
-  .keyboard-detail-video {
+  .keyboard-detail-img {
     display: block;
     width: 100%;
     height: 100%;
@@ -32,27 +31,59 @@
     // }
   }
 
+  .slick-slider.keyboard-detail-review-carousel {
+    max-width: inherit;
+    max-height: 300px;
+    // margin: 0 auto;
+    // @media screen and (max-width: $md-breakpoint) {
+    //   max-width: 100%;
+    // }
+
+    .slick-list {
+      max-height: inherit;
+    }
+  }
+
+  .keyboard-detail-review-img,
+  .keyboard-detail-review-video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: inherit;
+    max-height: 200px;
+    background-color: #000;
+    object-fit: contain;
+    // object-fit: cover;
+    // max-width: 100%;
+    // object-position: center;
+
+    @media screen and (max-width: $md-breakpoint) {
+      max-height: 150px;
+    }
+  }
+
   .keyboard-name-like {
     @include flexbox(space-between);
+    margin-bottom: 50px;
+
+    @include mobile-margin();
 
     .keyboard-name {
       font-weight: 700;
       font-size: 28px;
+
+      @media screen and (max-width: $md-breakpoint) {
+        font-size: 22px;
+      }
     }
   }
 
   .keyboard-detail-info-text {
+    @include mobile-margin();
+
     & > * {
       @include flexbox(space-between);
-      // padding: 0 10%;
       font-size: 18px;
-    }
-
-    //! color는 나중에 antd 설정 바꾸기
-    text-align: center;
-
-    @media screen and (max-width: $md-breakpoint) {
-      font-size: 22px;
     }
   }
 }
