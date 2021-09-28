@@ -61,14 +61,14 @@ const Header = () => {
             {isOpenSidebar ? (
               <CloseOutlined
                 style={{
-                  fontSize: '24px',
+                  fontSize: width > 768 ? '24px' : '21px',
                   color: offset > 0 ? '#fff' : '#000',
                 }}
               />
             ) : (
               <MenuOutlined
                 style={{
-                  fontSize: '24px',
+                  fontSize: width > 768 ? '24px' : '21px',
                   color: offset > 0 ? '#fff' : '#000',
                 }}
               />
@@ -138,7 +138,7 @@ const Header = () => {
               <button onClick={onClickMypage} className="button-links">
                 <UserOutlined
                   style={{
-                    fontSize: '24px',
+                    fontSize: width > 768 ? '24px' : '21px',
                     color: offset > 0 ? '#fff' : '#000',
                   }}
                 />
@@ -149,7 +149,7 @@ const Header = () => {
                 <button onClick={onClickLogout} className="button-links">
                   <ExportOutlined
                     style={{
-                      fontSize: '24px',
+                      fontSize: width > 768 ? '24px' : '21px',
                       color: offset > 0 ? '#fff' : '#000',
                     }}
                   />
