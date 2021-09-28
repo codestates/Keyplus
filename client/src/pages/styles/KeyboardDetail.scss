@@ -8,62 +8,44 @@
   .slick-slider.keyboard-detail-carousel {
     max-width: inherit;
     max-height: 300px;
-    // margin: 0 auto;
-    // @media screen and (max-width: $md-breakpoint) {
-    //   max-width: 100%;
-    // }
 
     .slick-list {
       max-height: inherit;
     }
   }
 
-  .keyboard-detail-img {
+  .keyboard-detail-img,
+  .review-img,
+  .review-video {
     display: block;
     width: 100%;
     height: 100%;
     max-width: inherit;
     max-height: 300px;
+
     object-fit: cover;
-
-    // @media screen and (max-width: $md-breakpoint) {
-    //   max-width: 100%;
-    // }
   }
 
-  .slick-slider.keyboard-detail-review-carousel {
+  .review-img,
+  .review-video {
+    max-height: 200px;
+    object-fit: contain;
+    background-color: #000;
+  }
+
+  .slick-slider.review-carousel {
     max-width: inherit;
     max-height: 300px;
-    // margin: 0 auto;
-    // @media screen and (max-width: $md-breakpoint) {
-    //   max-width: 100%;
-    // }
 
     .slick-list {
       max-height: inherit;
-    }
-  }
-
-  .keyboard-detail-review-img,
-  .keyboard-detail-review-video {
-    display: block;
-    width: 100%;
-    height: 100%;
-    max-width: inherit;
-    max-height: 200px;
-    background-color: #000;
-    object-fit: contain;
-    // object-fit: cover;
-    // max-width: 100%;
-    // object-position: center;
-
-    @media screen and (max-width: $md-breakpoint) {
-      max-height: 150px;
     }
   }
 
   .keyboard-name-like {
     @include flexbox(space-between);
+
+    margin-top: 10px;
     margin-bottom: 50px;
 
     @include mobile-margin();
@@ -76,6 +58,17 @@
         font-size: 22px;
       }
     }
+
+    .keyboard-like {
+      font-size: 16px;
+
+      .like-count {
+        margin-right: 5px;
+      }
+
+      .like-heart {
+      }
+    }
   }
 
   .keyboard-detail-info-text {
@@ -85,5 +78,100 @@
       @include flexbox(space-between);
       font-size: 18px;
     }
+  }
+
+  #rc-tabs-1-tab-1,
+  #rc-tabs-1-tab-2 {
+    // font-size: 16px;
+  }
+
+  .review:not(:last-child) {
+    border-bottom: 1px dashed #dfdfdf;
+    margin-bottom: 40px;
+  }
+
+  .review-create-button-wrapper {
+    @include mobile-margin();
+    @include flexbox(flex-end);
+    margin-top: 10px;
+  }
+
+  .reviews-info {
+    @include flexbox(center, flex-start);
+    column-gap: 50px;
+    padding: 50px 0;
+    border-bottom: 1px dashed #dfdfdf;
+    margin-bottom: 40px;
+
+    & > * {
+      @include flexbox();
+      flex-direction: column;
+      row-gap: 10px;
+    }
+
+    .title {
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+    .number-wrapper {
+      font-size: 24px;
+
+      .number {
+        font-weight: 700;
+      }
+    }
+  }
+
+  .review-info {
+    @include mobile-margin();
+    display: flex;
+    column-gap: 20px;
+    padding-bottom: 25px;
+
+    &:not(:first-child) {
+      padding-top: 25px;
+    }
+
+    @media screen and (max-width: $md-breakpoint) {
+      flex-direction: column;
+      row-gap: 10px;
+    }
+
+    .review-profile {
+      @include flexbox(center, flex-start);
+      column-gap: 10px;
+      width: 175px;
+      flex-shrink: 0;
+
+      .review-profile-image {
+        margin-top: 5px;
+      }
+
+      .name-date {
+        @include flexbox(flex-start, baseline);
+        column-gap: 10px;
+        font-size: 12px;
+        letter-spacing: -1px;
+      }
+
+      .name {
+      }
+
+      .date {
+        font-size: 10px;
+      }
+    }
+
+    .review-text {
+      margin-top: 5px;
+      flex-grow: 1;
+    }
+  }
+  .review-button {
+    @include flexbox(flex-end);
+    flex-direction: row;
+    column-gap: 10px;
+    margin-bottom: 25px;
   }
 }
