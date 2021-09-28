@@ -1,0 +1,137 @@
+@use '../../styles/constants' as *;
+@use '../../styles/mixins' as *;
+
+.signup-container {
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  max-width: 1500px;
+  min-width: 320px;
+  height: 100%;
+  height: calc(100vh - 120px);
+  margin: 0 auto;
+  margin-bottom: -70px;
+  position: relative;
+  min-height: 568px;
+
+  @media screen and (max-width: $md-breakpoint) {
+    height: calc(100vh - 50px);
+    margin-bottom: -30px;
+  }
+
+  .signup-flexbox {
+    @include flexbox();
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.signup-aside {
+  flex: 1;
+  height: 100%;
+  position: relative;
+
+  @media screen and (max-width: $md-breakpoint) {
+    display: none;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.signup-main {
+  @include flexbox();
+  flex: 1;
+  flex-direction: column;
+  height: 100%;
+
+  .title {
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 30px;
+    border-bottom: 4px solid rgb(138, 138, 138);
+    letter-spacing: 1px;
+  }
+
+  .uploadbox {
+    width: 100%;
+    padding: 10px 20px;
+  }
+
+  .inputbox {
+    margin-bottom: 20px;
+    label {
+      font-size: 14px;
+      margin-bottom: 5px;
+      display: inline-block;
+      color: rgb(138, 138, 138);
+      font-weight: 400;
+      letter-spacing: 1px;
+    }
+    input {
+      width: 100%;
+      padding: 10px 20px;
+      outline: none;
+      font-weight: 400;
+      border: 1px solid rgb(138, 138, 138) !important;
+      font-size: 14px;
+      letter-spacing: 1px;
+      border-radius: 30px;
+    }
+    // button {
+    //   // margin-left: -21.5%;
+    //   margin-left: -19.9%;
+    //   // height: 45px;
+    //   height: 43px;
+    //   width: 90px;
+    //   border-radius: 30px;
+    //   background-color: rgb(138, 138, 138);
+    //   color: #fff;
+    // }
+  }
+
+  .signupbtn {
+    // width: 50%;
+    // position: relative;
+    // left: 15%;
+    width: 100%;
+    // margin: 0 auto;
+    // display: block;
+    padding: 10px 20px;
+    outline: none;
+    border: 1px solid rgb(138, 138, 138);
+    font-weight: 400;
+    font-size: 14px;
+    letter-spacing: 1px;
+    border-radius: 30px;
+    cursor: pointer;
+    margin-top: 15px;
+    color: #fff;
+    transition: all 0.3s ease-out;
+    background-color: rgb(165, 165, 165);
+
+    &:hover {
+      color: #fff;
+      background-color: rgb(138, 138, 138);
+    }
+  }
+}
+
+.login-path {
+  margin-top: 24px;
+  font-size: 14px;
+  color: rgb(138, 138, 138);
+  transition: all 0.3s ease-out;
+
+  &:hover {
+    color: #000;
+  }
+}
+
+.avatar-hover {
+  &:hover {
+    visibility: visible;
+    opacity: 1;
+  }
+}

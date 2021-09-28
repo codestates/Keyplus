@@ -11,6 +11,7 @@ import {
 import { UserOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
+import './styles/Signup.scss';
 
 const Signup = () => {
   const dispatch = useDispatch();
@@ -162,92 +163,113 @@ const Signup = () => {
 
   return (
     <>
-      <section>
-        <form onSubmit={onClickSignup}>
-          <div>
-            <label htmlFor="img">사진을 업로드 해주세요</label>
-            <input
-              type="file"
-              id="img"
-              name="img"
-              accept=".png, .jpg, jpeg"
-              onChange={onChangeImage}
-            />
-            {profileImg ? (
-              <Avatar src={profileImg} />
-            ) : (
-              <Avatar icon={<UserOutlined />} />
-              // <Avatar src={prevImg} />
-            )}
-          </div>
+      <section className="signup-container">
+        <div className="signup-flexbox">
+          <div className="signup-main">
+            <h2 className="title">Signup</h2>
 
-          <div>
-            <label htmlFor="email">이메일</label>
-            <input
-              type="email"
-              onChange={onChangeUpdateState}
-              name="email"
-              required
-              value={email || ''}
-            />
-          </div>
-          <button type="button" onClick={emailValidate}>
-            전송
-          </button>
-          <p>이메일 확인 후 인증번호를 입력해 주세요</p>
-          {isClicked && (
-            <>
-              <p>인증번호</p>
-              <input
-                type="text"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-              />
-              <button type="button" onClick={emailVerify}>
-                확인
+            <form className="signup-form" onSubmit={onClickSignup}>
+              <div className="uploadbox">
+                <input
+                  type="file"
+                  id="img"
+                  name="img"
+                  accept=".png, .jpg, jpeg"
+                  onChange={onChangeImage}
+                />
+
+                {profileImg ? (
+                  <div className="avatar-hover">
+                    <Avatar src={profileImg} size={64} />
+                  </div>
+                ) : (
+                  <Avatar
+                    className="avatar"
+                    icon={<UserOutlined />}
+                    size={64}
+                  />
+                )}
+              </div>
+
+              <div className="inputbox">
+                <label htmlFor="email">이메일</label>
+                <input
+                  type="email"
+                  onChange={onChangeUpdateState}
+                  name="email"
+                  placeholder="example@example.com"
+                  required
+                  value={email || ''}
+                />
+
+                <button type="button" onClick={emailValidate}>
+                  전송
+                </button>
+              </div>
+              <p>이메일 확인 후 인증번호를 입력해 주세요</p>
+              {isClicked && (
+                <>
+                  <p>인증번호</p>
+                  <input
+                    type="text"
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                  />
+                  <button type="button" onClick={emailVerify}>
+                    확인
+                  </button>
+                </>
+              )}
+              <div className="inputbox">
+                <label htmlFor="nickname">닉네임</label>
+                <input
+                  type="text"
+                  onChange={onChangeUpdateState}
+                  name="nickname"
+                  placeholder="nickname"
+                  // required
+                  value={nickname || ''}
+                />
+              </div>
+              <button type="button" onClick={nicknameValidate}>
+                닉네임 중복확인
               </button>
-            </>
-          )}
-          <div>
-            <label htmlFor="nickname">닉네임</label>
-            <input
-              type="text"
-              onChange={onChangeUpdateState}
-              name="nickname"
-              // required
-              value={nickname || ''}
-            />
-          </div>
-          <button type="button" onClick={nicknameValidate}>
-            닉네임 중복확인
-          </button>
 
-          <div>
-            <label htmlFor="password">패스워드</label>
-            <input
-              type="password"
-              onChange={onChangeUpdateState}
-              placeholder="******"
-              name="password"
-              // required
-              value={password || ''}
-            />
+              <div className="inputbox">
+                <label htmlFor="password">패스워드</label>
+                <input
+                  type="password"
+                  onChange={onChangeUpdateState}
+                  placeholder="******"
+                  name="password"
+                  // required
+                  value={password || ''}
+                />
+              </div>
+              <div className="inputbox">
+                <label htmlFor="repassword">패스워드 확인</label>
+                <input
+                  type="password"
+                  onChange={onChangeUpdateState}
+                  placeholder="******"
+                  name="repassword"
+                  // required
+                  value={repassword || ''}
+                />
+              </div>
+              <button type="submit" className="signupbtn">
+                회원가입
+              </button>
+            </form>
+
+            <div className="login-path">
+              <Link to="/login">로그인 하러가기</Link>
+            </div>
           </div>
-          <div>
-            <label htmlFor="repassword">패스워드 확인</label>
-            <input
-              type="password"
-              onChange={onChangeUpdateState}
-              placeholder="******"
-              name="repassword"
-              // required
-              value={repassword || ''}
-            />
-          </div>
-          <button type="submit">회원가입</button>
-        </form>
-        <div>
-          <Link to="/login">로그인 하러가기</Link>
+
+          <aside className="signup-aside">
+            <img src="signup.jpg" />
+          </aside>
         </div>
       </section>
     </>
