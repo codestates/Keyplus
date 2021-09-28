@@ -323,7 +323,7 @@ const KeyboardCard = memo(({ keyboard }) => {
             <FaBluetooth />
           )}
         </div>
-        <div style={{ letterSpacing: '-0.05em', fontSize: '12px' }}>
+        <div style={{ fontSize: '12px' }}>
           <BiWon />
           <span>{`${keyboard.price.toLocaleString()}`}</span>
         </div>
