@@ -99,6 +99,13 @@
     }
   }
 
+  .review-button {
+    @include flexbox(flex-end);
+    flex-direction: row;
+    column-gap: 10px;
+    margin-bottom: 25px;
+  }
+
   .no-data-area {
     @include flexbox();
     flex-direction: column;

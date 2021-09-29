@@ -44,16 +44,9 @@ const Header = () => {
     }
   };
 
-  const onClickMypage = async () => {
-    try {
-      if (userState === null) {
-        history.push('/login');
-      } else {
-        history.push('/mypage');
-      }
-    } catch (err) {
-      dispatch(isError(err.response));
-    }
+  const onClickMypage = () => {
+    history.push('/mypage');
+    window.location.reload();
   };
 
   return (
