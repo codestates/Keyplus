@@ -21,7 +21,7 @@ const LandingPart4 = () => {
         </div>
 
         <div className="part4-logo">
-          <img src="logo.png" alt="" />
+          <img src="logo.png" alt="logo-collection" style={{ width: '100%' }} />
         </div>
 
         <div className="part4-button-wrapper">

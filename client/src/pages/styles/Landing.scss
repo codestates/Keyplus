@@ -1,6 +1,8 @@
 @use '../../styles/constants' as *;
 
 .landing-main {
+  overflow-x: hidden;
+
   background-color: #000;
   word-break: break-all;
   min-height: calc(100vh - 443px);

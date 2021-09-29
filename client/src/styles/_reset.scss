@@ -12,21 +12,18 @@ html {
   font-family: $font-main;
   font-size: 16px;
 
+  // height: 100%;
+
   //! solution 1
-  overflow-x: hidden;
-  margin-right: calc(-1 * (100vw - 100%));
+  // overflow-x: hidden;
+  // margin-right: calc(-1 * (100vw - 100%));
 
   //! solution 2
   // overflow-y: overlay;
 }
 
 body {
-  // font-family: $font-main;
-  // color: $primary;
   height: 100%;
-
-  //? 모바일 버전 하단 여백 제거
-  overflow: hidden;
 }
 
 h1 {
