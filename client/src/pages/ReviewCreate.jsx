@@ -234,7 +234,9 @@ const ReviewCreate = ({ location, ...props }) => {
   };
   return (
     <div className="review-create">
-      <h1 className="review-create-header">Review </h1>
+      <div className="review-create-header-wrapper">
+        <h1 className="review-create-header">Review</h1>
+      </div>
       <form
         name="review-form"
         onSubmit={onClickSubmitBtn}
@@ -257,7 +259,7 @@ const ReviewCreate = ({ location, ...props }) => {
                 <img
                   src={previewImage1}
                   alt="preview"
-                  className="keyboard-detail-img"
+                  className="preview-image"
                 />
                 <div
                   className="hover-overlay"
@@ -293,7 +295,7 @@ const ReviewCreate = ({ location, ...props }) => {
                 <img
                   src={previewImage2}
                   alt="preview"
-                  className="keyboard-detail-img"
+                  className="preview-image"
                 />
                 <div
                   className="hover-overlay"
@@ -329,7 +331,7 @@ const ReviewCreate = ({ location, ...props }) => {
                 <img
                   src={previewImage3}
                   alt="preview"
-                  className="keyboard-detail-img"
+                  className="preview-image"
                 />
                 <div
                   className="hover-overlay"
@@ -369,10 +371,13 @@ const ReviewCreate = ({ location, ...props }) => {
             {previewVideo ? (
               <div className="preview-image-wrapper">
                 <video
-                  type="video/mp4"
-                  src={previewVideo}
-                  className="keyboard-detail-img"
-                />
+                  playsinline
+                  preload="metadata"
+                  poster={`${previewVideo}`}
+                  className="preview-video"
+                >
+                  <source src={`${previewVideo}#t=0.5`} type="video/mp4" />
+                </video>
                 <div className="hover-overlay" onClick={onClickDeleteVideoBtn}>
                   <IoCloseOutline
                     style={{

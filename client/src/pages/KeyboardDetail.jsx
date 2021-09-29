@@ -27,6 +27,84 @@ const RightArrow = ({ currentSlide, slideCount, children, ...props }) => {
   return <div {...props}>{children}</div>;
 };
 
+const keySwitchComponent = {
+  저소음적축: (
+    <div style={{ display: 'inline-block', marginRight: '5px' }}>
+      <span
+        style={{
+          display: 'inline-block',
+          width: '14px',
+          height: '14px',
+          borderRadius: '50%',
+          verticalAlign: 'middle',
+          backgroundColor: '#ff656c',
+        }}
+      ></span>
+      <span style={{ verticalAlign: 'middle', fontSize: '14px' }}>저적</span>
+    </div>
+  ),
+  적축: (
+    <div style={{ display: 'inline-block', marginRight: '5px' }}>
+      <span
+        style={{
+          display: 'inline-block',
+          width: '14px',
+          height: '14px',
+          borderRadius: '50%',
+          verticalAlign: 'middle',
+          backgroundColor: '#ff1A48',
+        }}
+      ></span>
+      <span style={{ verticalAlign: 'middle', fontSize: '14px' }}>적축</span>
+    </div>
+  ),
+  청축: (
+    <div style={{ display: 'inline-block', marginRight: '5px' }}>
+      <span
+        style={{
+          display: 'inline-block',
+          width: '14px',
+          height: '14px',
+          borderRadius: '50%',
+          verticalAlign: 'middle',
+          backgroundColor: '#00b4f9',
+        }}
+      ></span>
+      <span style={{ verticalAlign: 'middle', fontSize: '14px' }}>청축</span>
+    </div>
+  ),
+  갈축: (
+    <div style={{ display: 'inline-block', marginRight: '5px' }}>
+      <span
+        style={{
+          display: 'inline-block',
+          width: '14px',
+          height: '14px',
+          borderRadius: '50%',
+          verticalAlign: 'middle',
+          backgroundColor: '#B8792A',
+        }}
+      ></span>
+      <span style={{ verticalAlign: 'middle', fontSize: '14px' }}>갈축</span>
+    </div>
+  ),
+  흑축: (
+    <div style={{ display: 'inline-block', marginRight: '5px' }}>
+      <span
+        style={{
+          display: 'inline-block',
+          width: '14px',
+          height: '14px',
+          borderRadius: '50%',
+          verticalAlign: 'middle',
+          backgroundColor: '#0d0d0d',
+        }}
+      ></span>
+      <span style={{ verticalAlign: 'middle', fontSize: '14px' }}>흑축</span>
+    </div>
+  ),
+};
+
 const KeyboardDetail = (props) => {
   const history = useHistory();
 
@@ -170,6 +248,22 @@ const KeyboardDetail = (props) => {
               <TabPane tab="상세정보" key="1">
                 <List grid>
                   <List.Item>
+                    <Card title="Switch">
+                      {Object.keys(keyboard.switch).map((keySwitch, idx) => (
+                        <span key={`${keySwitch}_${idx}`}>
+                          {keyboard.switch[keySwitch] && (
+                            <>{keySwitchComponent[keySwitch]}</>
+                          )}
+                        </span>
+                      ))}
+                    </Card>
+                  </List.Item>
+                  <List.Item>
+                    <Card title="Price">
+                      {keyboard.price.toLocaleString()}원
+                    </Card>
+                  </List.Item>
+                  <List.Item>
                     <Card title="Color">
                       {keyboard.color ? '다채색' : '무채색'}
                     </Card>
@@ -187,11 +281,6 @@ const KeyboardDetail = (props) => {
                   <List.Item>
                     <Card title="Bluetooth">
                       {keyboard.bluetooth ? '지원' : '미지원'}
-                    </Card>
-                  </List.Item>
-                  <List.Item>
-                    <Card title="Price">
-                      {keyboard.price.toLocaleString()}원
                     </Card>
                   </List.Item>
                 </List>
@@ -224,7 +313,6 @@ const KeyboardDetail = (props) => {
                               style={{
                                 fontSize: '30px',
                                 color: yellow[5],
-                                // marginRight: '8px',
                               }}
                             />
                           }
@@ -248,109 +336,6 @@ const KeyboardDetail = (props) => {
                     {reviews.map((review, idx) => (
                       <div key={`${review}_${idx}`} className="review">
                         <Review review={review} userId={userId} />
-                        {/* {(review.image1 ||
-                          review.image2 ||
-                          review.image3 ||
-                          review.video) && (
-                          <Carousel
-                            infinite={false}
-                            dots
-                            arrows
-                            draggable
-                            prevArrow={<LeftArrow />}
-                            nextArrow={<RightArrow />}
-                            className="review-carousel"
-                          >
-                            {review.video && (
-                              <>
-                                <video className="review-video" controls>
-                                  <source src={review.video} type="video/mp4" />
-                                </video>
-                              </>
-                            )}
-
-                            {review.image1 && (
-                              <>
-                                <img
-                                  src={review.image1}
-                                  alt={review.image1}
-                                  className="review-img"
-                                />
-                              </>
-                            )}
-
-                            {review.image2 && (
-                              <>
-                                <img
-                                  src={review.image2}
-                                  alt={review.image2}
-                                  className="review-img"
-                                />
-                              </>
-                            )}
-
-                            {review.image3 && (
-                              <>
-                                <img
-                                  src={review.image3}
-                                  alt={review.image3}
-                                  className="review-img"
-                                />
-                              </>
-                            )}
-                          </Carousel>
-                        )}
-                        <div className="review-info">
-                          <div className="review-profile">
-                            <div className="review-profile-image">
-                              {review.userImage ? (
-                                <Avatar src={review.userImage} />
-                              ) : (
-                                <Avatar icon={<UserOutlined />} />
-                              )}
-                            </div>
-                            <div>
-                              <Rate disabled defaultValue={review.rating} />
-                              <div className="name-date">
-                                <span className="name">{review.nickname}</span>
-                                <span className="date">
-                                  {review.createdAt.split('T')[0]}
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="review-text">{review.content}</div>
-                        </div>
-                        {review.userId === userId && (
-                          <div className="review-button">
-                            <Button>
-                              <Link
-                                to={{
-                                  pathname: `/review/${keyboardId}`,
-                                  state: {
-                                    content: review.content,
-                                    rating: review.rating,
-                                    images: [
-                                      review.image1,
-                                      review.image2,
-                                      review.image3,
-                                    ],
-                                    video: review.video,
-                                  },
-                                }}
-                              >
-                                수정
-                              </Link>
-                            </Button>
-                            <DeleteModal
-                              modalText="정말로 삭제하시겠습니까?"
-                              loadingText="삭제 진행중입니다."
-                              buttonText="삭제"
-                              action={deleteReviews}
-                              keyboardId={keyboardId}
-                            />
-                          </div>
-                        )} */}
                       </div>
                     ))}
                   </>

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { deleteReviews } from '../reducers/api/reviewsAPI';
-import DeleteModal from './DeleteModal';
+import ButtonModal from './ButtonModal';
 
 import './styles/Review.scss';
 
@@ -32,8 +32,14 @@ const Review = ({ review, userId }) => {
         >
           {review.video && (
             <>
-              <video className="review-video" controls>
-                <source src={review.video} type="video/mp4" />
+              <video
+                className="review-video"
+                controls
+                preload="metadata"
+                playsinline
+                poster={`${review.video}#t=0.5`}
+              >
+                <source src={`${review.video}#t=0.5`} type="video/mp4" />
               </video>
             </>
           )}
@@ -105,7 +111,7 @@ const Review = ({ review, userId }) => {
               수정
             </Link>
           </Button>
-          <DeleteModal
+          <ButtonModal
             modalText="정말로 삭제하시겠습니까?"
             loadingText="삭제 진행중입니다."
             buttonText="삭제"
