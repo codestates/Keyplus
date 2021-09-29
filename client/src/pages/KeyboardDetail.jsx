@@ -1,33 +1,19 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
-import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { addLikes, deleteLikes } from '../reducers/api/likesAPI';
-import { deleteReviews } from '../reducers/api/reviewsAPI';
 import axios from '../utils/customAxios';
-import DeleteModal from '../components/DeleteModal';
+import Review from '../components/Review';
 
 import './styles/KeyboardDetail.scss';
 
-import {
-  Carousel,
-  Empty,
-  Rate,
-  Avatar,
-  Button,
-  message,
-  Tabs,
-  List,
-  Card,
-  Space,
-} from 'antd';
+import { Carousel, Button, message, Tabs, List, Card } from 'antd';
 const { TabPane } = Tabs;
 import {
   HeartOutlined,
   HeartFilled,
   StarFilled,
-  UserOutlined,
   MessageFilled,
 } from '@ant-design/icons';
 import { yellow } from '@ant-design/colors';
@@ -40,45 +26,6 @@ const LeftArrow = ({ currentSlide, slideCount, children, ...props }) => {
 const RightArrow = ({ currentSlide, slideCount, children, ...props }) => {
   return <div {...props}>{children}</div>;
 };
-
-const data = [
-  {
-    title: '색상',
-    content: '짧음',
-  },
-  {
-    title: '색상',
-    content: '짧음',
-  },
-  {
-    title: '색상',
-    content: '짧음',
-  },
-  {
-    title: '색상',
-    content: '짧음',
-  },
-];
-
-const listData = [];
-for (let i = 0; i < 23; i++) {
-  listData.push({
-    href: 'https://ant.design',
-    title: `ant design part ${i}`,
-    avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-    description:
-      'Ant Design, a design language for background applications, is refined by Ant UED Team.',
-    content:
-      'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
-  });
-}
-
-const IconText = ({ icon, text }) => (
-  <Space>
-    {React.createElement(icon)}
-    {text}
-  </Space>
-);
 
 const KeyboardDetail = (props) => {
   const history = useHistory();
@@ -300,7 +247,8 @@ const KeyboardDetail = (props) => {
 
                     {reviews.map((review, idx) => (
                       <div key={`${review}_${idx}`} className="review">
-                        {(review.image1 ||
+                        <Review review={review} userId={userId} />
+                        {/* {(review.image1 ||
                           review.image2 ||
                           review.image3 ||
                           review.video) && (
@@ -402,7 +350,7 @@ const KeyboardDetail = (props) => {
                               keyboardId={keyboardId}
                             />
                           </div>
-                        )}
+                        )} */}
                       </div>
                     ))}
                   </>
