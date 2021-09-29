@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { deleteReviews } from '../reducers/api/reviewsAPI';
-import DeleteModal from './DeleteModal';
+import ButtonModal from './ButtonModal';
 
 import './styles/Review.scss';
 
@@ -110,7 +110,7 @@ const Review = ({ review, userId }) => {
               수정
             </Link>
           </Button>
-          <DeleteModal
+          <ButtonModal
             modalText="정말로 삭제하시겠습니까?"
             loadingText="삭제 진행중입니다."
             buttonText="삭제"
