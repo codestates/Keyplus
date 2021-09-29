@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import LandingHeader from '../components/LandingHeader';
 import LandingPart1 from '../components/Landing/LandingPart1';
