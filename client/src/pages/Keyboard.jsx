@@ -29,8 +29,7 @@ const Keyboard = () => {
   // ! state
   const [keyboards, setKeyboards] = useState([]);
   const [allKeyboards, setAllKeyboards] = useState([]);
-  const [sortingNumber, setSortingNumber] = useState(1);
-  const [optionValue, setOptionValue] = useState('1');
+  const [sortingNumber, setSortingNumber] = useState('1');
 
   // ! 모든 카테고리
   const [allCategory, setAllCategory] = useState([]);
@@ -79,8 +78,7 @@ const Keyboard = () => {
   // ! 정렬
   const onClickHeartDescendingBtn = async () => {
     try {
-      setSortingNumber(1);
-      setOptionValue('1');
+      setSortingNumber('1');
       const response = await exceptionAxios.get('/keyboards');
       setAllKeyboards(
         response.data.data.sort((a, b) => b.likeCount - a.likeCount)
@@ -92,8 +90,7 @@ const Keyboard = () => {
   };
   const onClickHeartAscendingBtn = async () => {
     try {
-      setSortingNumber(2);
-      setOptionValue('2');
+      setSortingNumber('2');
       const response = await exceptionAxios.get('/keyboards');
       setAllKeyboards(
         response.data.data.sort((a, b) => a.likeCount - b.likeCount)
@@ -105,34 +102,86 @@ const Keyboard = () => {
   };
 
   const onClickReviewDescendingBtn = async () => {
-    setSortingNumber(3);
-    setOptionValue('3');
+    setSortingNumber('3');
     setAllKeyboards((keyboards) =>
       [...keyboards].sort((a, b) => b.reviewCount - a.reviewCount)
     );
   };
   const onClickReviewAscendingBtn = async () => {
-    setSortingNumber(4);
-    setOptionValue(4);
+    setSortingNumber('4');
     setAllKeyboards((keyboards) =>
       [...keyboards].sort((a, b) => a.reviewCount - b.reviewCount)
     );
   };
 
   const onClickPriceAscendingBtn = async () => {
-    setSortingNumber(5);
-    setOptionValue('5');
+    setSortingNumber('5');
     setAllKeyboards((keyboards) =>
       [...keyboards].sort((a, b) => a.price - b.price)
     );
   };
   const onClickPriceDescendingBtn = async () => {
-    setSortingNumber(6);
-    setOptionValue('6');
+    setSortingNumber('6');
     setAllKeyboards((keyboards) =>
       [...keyboards].sort((a, b) => b.price - a.price)
     );
   };
+
+  async function handleChange(value) {
+    switch (value) {
+      case '1':
+        try {
+          setSortingNumber('1');
+          const response = await exceptionAxios.get('/keyboards');
+          setAllKeyboards(
+            response.data.data.sort((a, b) => b.likeCount - a.likeCount)
+          );
+        } catch (err) {
+          console.log(err);
+          dispatch(isError(err.response));
+        }
+        break;
+      case '2':
+        try {
+          setSortingNumber('2');
+          const response = await exceptionAxios.get('/keyboards');
+          setAllKeyboards(
+            response.data.data.sort((a, b) => a.likeCount - b.likeCount)
+          );
+        } catch (err) {
+          console.log(err);
+          dispatch(isError(err.response));
+        }
+        break;
+      case '3':
+        setSortingNumber('3');
+        setAllKeyboards((keyboards) =>
+          [...keyboards].sort((a, b) => b.reviewCount - a.reviewCount)
+        );
+        break;
+      case '4':
+        setSortingNumber('4');
+        setAllKeyboards((keyboards) =>
+          [...keyboards].sort((a, b) => a.reviewCount - b.reviewCount)
+        );
+        break;
+      case '5':
+        setSortingNumber('5');
+        setAllKeyboards((keyboards) =>
+          [...keyboards].sort((a, b) => a.price - b.price)
+        );
+        break;
+      case '6':
+        setSortingNumber('6');
+        setAllKeyboards((keyboards) =>
+          [...keyboards].sort((a, b) => b.price - a.price)
+        );
+        break;
+
+      default:
+        break;
+    }
+  }
 
   // ! 전체 카테고리, 정렬용 useEffect
   const mountedAllCategory = useRef(false);
@@ -223,62 +272,6 @@ const Keyboard = () => {
       }
     }
   }, [allKeyboards, allCategory, sortingNumber]);
-
-  async function handleChange(value) {
-    switch (value) {
-      case '1':
-        try {
-          setSortingNumber(1);
-          const response = await exceptionAxios.get('/keyboards');
-          setKeyboards(
-            response.data.data.sort((a, b) => b.likeCount - a.likeCount)
-          );
-        } catch (err) {
-          console.log(err);
-          dispatch(isError(err.response));
-        }
-        break;
-      case '2':
-        try {
-          setSortingNumber(2);
-          const response = await exceptionAxios.get('/keyboards');
-          setKeyboards(
-            response.data.data.sort((a, b) => a.likeCount - b.likeCount)
-          );
-        } catch (err) {
-          console.log(err);
-          dispatch(isError(err.response));
-        }
-        break;
-      case '3':
-        setSortingNumber(3);
-        setKeyboards((keyboards) =>
-          [...keyboards].sort((a, b) => b.reviewCount - a.reviewCount)
-        );
-        break;
-      case '4':
-        setSortingNumber(4);
-        setKeyboards((keyboards) =>
-          [...keyboards].sort((a, b) => a.reviewCount - b.reviewCount)
-        );
-        break;
-      case '5':
-        setSortingNumber(5);
-        setKeyboards((keyboards) =>
-          [...keyboards].sort((a, b) => a.price - b.price)
-        );
-        break;
-      case '6':
-        setSortingNumber(6);
-        setKeyboards((keyboards) =>
-          [...keyboards].sort((a, b) => b.price - a.price)
-        );
-        break;
-
-      default:
-        break;
-    }
-  }
 
   // ! 브랜드
   const onChangeBrandLogitech = (e) => {
@@ -566,43 +559,43 @@ const Keyboard = () => {
               >
                 <Typography.Link onClick={onClickHeartDescendingBtn}>
                   <span style={{ marginRight: '5px' }}>
-                    {sortingNumber === 1 && <FaCheck />}
+                    {sortingNumber === '1' && <FaCheck />}
                   </span>
                   좋아요 많은순
                 </Typography.Link>
                 <Typography.Link onClick={onClickHeartAscendingBtn}>
                   <span style={{ marginRight: '5px' }}>
-                    {sortingNumber === 2 && <FaCheck />}
+                    {sortingNumber === '2' && <FaCheck />}
                   </span>
                   좋아요 적은순
                 </Typography.Link>
                 <Typography.Link onClick={onClickReviewDescendingBtn}>
                   <span style={{ marginRight: '5px' }}>
-                    {sortingNumber === 3 && <FaCheck />}
+                    {sortingNumber === '3' && <FaCheck />}
                   </span>
                   리뷰 많은순
                 </Typography.Link>
                 <Typography.Link onClick={onClickReviewAscendingBtn}>
                   <span style={{ marginRight: '5px' }}>
-                    {sortingNumber === 4 && <FaCheck />}
+                    {sortingNumber === '4' && <FaCheck />}
                   </span>
                   리뷰 적은순
                 </Typography.Link>
                 <Typography.Link onClick={onClickPriceAscendingBtn}>
                   <span style={{ marginRight: '5px' }}>
-                    {sortingNumber === 5 && <FaCheck />}
+                    {sortingNumber === '5' && <FaCheck />}
                   </span>
                   가격 낮은순
                 </Typography.Link>
                 <Typography.Link onClick={onClickPriceDescendingBtn}>
                   <span style={{ marginRight: '5px' }}>
-                    {sortingNumber === 6 && <FaCheck />}
+                    {sortingNumber === '6' && <FaCheck />}
                   </span>
                   가격 높은순
                 </Typography.Link>
               </Space>
             ) : (
-              <Select defaultValue={optionValue} onChange={handleChange}>
+              <Select defaultValue={sortingNumber} onChange={handleChange}>
                 <Option value="1">좋아요 많은순</Option>
                 <Option value="2">좋아요 적은순</Option>
                 <Option value="3">리뷰 많은순</Option>
