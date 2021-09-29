@@ -5,16 +5,11 @@
 .review-video {
   display: block;
   width: 100%;
-  height: 100%;
-  max-width: inherit;
-  max-height: 300px;
-
-  object-fit: cover;
-}
-
-.review-img,
-.review-video {
-  max-height: 200px;
+  max-width: 100%;
+  // height: auto !important;
+  height: 200px;
+  // min-height: 200px;
+  // max-height: 200px;
   object-fit: contain;
   background-color: #000;
 }
