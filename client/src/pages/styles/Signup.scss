@@ -10,10 +10,11 @@
   margin: 0 auto;
   margin-bottom: -70px;
   position: relative;
-  min-height: 840px;
+  min-height: 850px;
 
   @media screen and (max-width: $md-breakpoint) {
     height: calc(100vh - 50px);
+    padding-top: 50px;
     margin-bottom: -30px;
   }
 
@@ -45,7 +46,10 @@
   flex: 1;
   flex-direction: column;
   height: 100%;
-  padding: 10px 20px;
+
+  @media screen and (max-width: $md-breakpoint) {
+    justify-content: flex-start;
+  }
 
   .title {
     font-weight: 600;
