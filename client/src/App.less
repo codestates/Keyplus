@@ -3,6 +3,7 @@
 html,
 body {
   height: unset;
+  font-family: unset;
 }
 
 .ant-carousel .slick-prev,
@@ -15,16 +16,32 @@ body {
   color: currentColor;
   width: unset;
   height: unset;
+  z-index: 5;
+}
+
+.ant-carousel .slick-prev {
+  left: 2%;
+}
+
+.ant-carousel .slick-next {
+  right: 2%;
+}
+
+.ant-carousel .slick-prev::before,
+.ant-carousel .slick-next::before {
+  display: block;
+  color: rgba(255, 255, 255, 0.5);
+  content: '';
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  width: 15px;
+  height: 15px;
 }
 
 .ant-carousel .slick-prev::before {
-  content: '<';
-  display: block;
-  transform: scaleY(1.5);
+  transform: rotate(135deg);
 }
 
 .ant-carousel .slick-next::before {
-  content: '>';
-  display: block;
-  transform: scaleY(1.5);
+  transform: rotate(-45deg);
 }

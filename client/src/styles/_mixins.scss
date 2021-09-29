@@ -1,0 +1,14 @@
+@use './constants' as *;
+
+@mixin flexbox($jc: center, $ai: center) {
+  display: flex;
+  justify-content: $jc;
+  align-items: $ai;
+}
+
+@mixin mobile-margin($ml: 16px, $mr: 16px) {
+  @media screen and (max-width: $md-breakpoint) {
+    margin-left: $ml;
+    margin-right: $mr;
+  }
+}

@@ -9,7 +9,9 @@ const imageUpload = uploads.fields([
     name: 'video',
     maxCount: 1,
   },
-  { name: 'img', maxCount: 3 },
+  { name: 'img1', maxCount: 1 },
+  { name: 'img2', maxCount: 1 },
+  { name: 'img3', maxCount: 1 },
 ]);
 
 router.post('/:id', isAuth, imageUpload, reviewsController.addReview); // 키보드별 리뷰 작성  ( params로 들어오는 id 는 키보드의 id)

@@ -1,8 +1,9 @@
 import React from 'react';
 import { ReactComponent as KEYPLUS } from '../assets/images/KEYPLUS_footer_36.svg';
-import './Footer.scss';
+import './styles/Footer.scss';
+import { Link } from 'react-router-dom';
 
-export const Footer = () => {
+const Footer = () => {
   return (
     <>
       {/* 왼쪽: 로고 회색깔로 넣기 */}
@@ -17,9 +18,7 @@ export const Footer = () => {
             </div>
             <div className="footer-col">
               <h4>문의하기</h4>
-              <a href="#" target="_blank" rel="noreferrer">
-                1:1 문의하기
-              </a>
+              <Link to="/inquiry">1:1 문의하기</Link>
             </div>
             <div className="footer-col">
               <h4>서비스 소개</h4>
@@ -67,3 +66,5 @@ export const Footer = () => {
     </>
   );
 };
+
+export default Footer;

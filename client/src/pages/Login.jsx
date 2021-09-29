@@ -8,7 +8,8 @@ import {
   naverLogIn,
 } from '../reducers/api/userAPI';
 import { isError } from '../reducers/errorReducer';
-import './Login.scss';
+import './styles/Login.scss';
+import { Link } from 'react-router-dom';
 
 const Login = (props) => {
   // const { data, loading, error } = useSelector((state) => state.user);
@@ -36,7 +37,8 @@ const Login = (props) => {
   };
 
   //TODO: click handler
-  const onClickLogin = async () => {
+  const onClickLogin = async (e) => {
+    e.preventDefault();
     try {
       //인풋이 모두 채워지지 않았을 땐 dispatch하지 않는다.
       if (!(email !== '' && password !== '')) {
@@ -60,97 +62,90 @@ const Login = (props) => {
 
   //오어스 로그인
   const onClickGoogle = async () => {
-    // try {
-    //   await dispatch(
-    //     googleLogIn({
-    //       //TODO: auth 코드
-    //     })
-    //   );
-    // } catch (err) {
-    //   dispatch(isError(err.response));
-    // }
-    // window.location.href = `${process.env.REACT_APP_API_URL}/auth/google`;
     window.location.href = `${process.env.REACT_APP_API_URL}/auth/google`;
   };
 
   const onClickKakao = async () => {
-    // try {
-    //   await dispatch(
-    //     kakaoLogIn({
-    //       //TODO: auth 코드
-    //     })
-    //   );
-    // } catch (err) {
-    //   dispatch(isError(err.response));
-    // }
     window.location.href = `${process.env.REACT_APP_API_URL}/auth/kakao`;
   };
 
   const onClickNaver = async () => {
-    // try {
-    //   await dispatch(
-    //     naverLogIn({
-    //       //TODO: auth 코드
-    //     })
-    //   );
-    // } catch (err) {
-    //   dispatch(isError(err.response));
-    // }
     window.location.href = `${process.env.REACT_APP_API_URL}/auth/naver`;
   };
 
-  /*
-  1. 이메일 인풋 
-  2. 패스워드 인풋
-  3. 오어스 버튼 세개 
-  4. 회원가입 버튼 클릭 시 api 요청
-  */
-
-  /*
-  signup
-  1. 이메일 인풋과 이메일 확인 버튼 
-  2. 이메일 확인 버튼 누르면 api가 쏴져야한다. 
-  3. 이메일 형식에 맞지 않은 경우 경고 메세지를 보여준다.
-  4. 이메일 형식에 맞는 경우, 이메일 확인 버튼 누르면 api가 쏴져야한다. 
-  5. 그러면서 이
-  */
-
   return (
     <>
-      <section className="container">
-        <h2>Login</h2>
-        <label htmlFor="email">이메일</label>
-        <input
-          type="text"
-          placeholder="example@example.com"
-          onChange={onChangeLoginState}
-          name="email"
-          required
-          value={loginState.email}
-        />
-        <div style={{ color: 'red', fontSize: '12px' }}>{emailError}</div>
+      <section className="login-container">
+        <div className="login-flexbox">
+          <aside className="login-aside">
+            <img src="login.jpg" />
+          </aside>
 
-        <label htmlFor="password">패스워드</label>
-        <input
-          type="password"
-          placeholder="******"
-          onChange={onChangeLoginState}
-          name="password"
-          required
-          value={loginState.password}
-        />
+          <div className="login-main">
+            <h2 className="title">Login</h2>
 
-        <div className="oauth">
-          <button onClick={onClickGoogle}>Google</button>
-          <button onClick={onClickKakao}>Kakaotalk</button>
-          <button onClick={onClickNaver}>Naver</button>
+            <form className="login-form" onSubmit={onClickLogin}>
+              <div className="inputbox">
+                <label htmlFor="email">이메일</label>
+                <input
+                  type="text"
+                  placeholder="example@example.com"
+                  onChange={onChangeLoginState}
+                  name="email"
+                  required
+                  value={loginState.email}
+                />
+                <div style={{ color: 'red', fontSize: '12px' }}>
+                  {emailError}
+                </div>
+              </div>
+
+              <div className="inputbox">
+                <label htmlFor="password">비밀번호</label>
+                <input
+                  type="password"
+                  placeholder="password"
+                  onChange={onChangeLoginState}
+                  name="password"
+                  required
+                  value={loginState.password}
+                />
+              </div>
+              <div style={{ color: 'red', fontSize: '12px' }}>{errMessage}</div>
+              <button type="submit" className="loginbtn">
+                로그인
+              </button>
+            </form>
+
+            <div className="login-oauth">
+              <button
+                className="oauthbtn"
+                style={{
+                  backgroundImage: `url(${'google.png'})`,
+                }}
+                onClick={onClickGoogle}
+              ></button>
+              <button
+                className="oauthbtn"
+                style={{
+                  backgroundImage: `url(${'kakao.png'})`,
+                }}
+                onClick={onClickKakao}
+              ></button>
+              <button
+                className="oauthbtn"
+                style={{
+                  backgroundImage: `url(${'naver.png'})`,
+                }}
+                onClick={onClickNaver}
+              ></button>
+            </div>
+
+            <div className="signup-path">
+              <Link to="/signup">회원가입 하러가기</Link>
+            </div>
+          </div>
         </div>
-
-        <div style={{ color: 'red', fontSize: '12px' }}>{errMessage}</div>
-        <button onClick={onClickLogin}>로그인</button>
-        {/* {loading && <h1>Loading...</h1>}
-      {error && <h1>{error.message}</h1>}
-      {data && <h1>{data.nickname}</h1>} */}
       </section>
     </>
   );

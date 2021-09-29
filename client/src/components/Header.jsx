@@ -11,17 +11,19 @@ import {
   ExportOutlined,
 } from '@ant-design/icons';
 
-import './Header.scss';
+import './styles/Header.scss';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut } from '../reducers/api/userAPI';
 import { isError } from '../reducers/errorReducer';
 import { useHistory } from 'react-router';
+import useWidthSize from '../hooks/useWidthSize';
+import usePageYOffset from '../hooks/usePageYOffset';
 
-export const Header = () => {
+const Header = () => {
+  const offset = usePageYOffset();
+  const width = useWidthSize();
   const [isOpenSidebar, setIsOpenSidebar] = useState(false);
-  const [offset, setOffset] = useState(0);
-  const [width, setWidth] = useState(window.innerWidth);
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -31,47 +33,25 @@ export const Header = () => {
     setIsOpenSidebar((prev) => !prev);
   };
 
-  //FIXME: 로그아웃 함수
   const onClickLogout = async () => {
-    console.log('로그아웃 버튼 클릭됬어?');
-    console.log(`여기가 유저스테이트`, userState);
     try {
-      //유저정보가 있으면 (=로그인 되있으면) 로그아웃 시키고 랜딩페이지로 이동
       await dispatch(logOut(history)).unwrap();
     } catch (err) {
       dispatch(isError(err.response));
     }
   };
 
-  //FIXME: Mypage 함수
   const onClickMypage = async () => {
-    console.log('마이페이지 버튼 클릭됬어?');
     try {
       if (userState === null) {
-        //로그인 되지 않은 상태라면 로그인 페이지로 이동시킴
         history.push('/login');
       } else {
-        //유저정보가 있으면 (=로그인 되있으면) 마이페이지로 이동
         history.push('/mypage');
       }
     } catch (err) {
       dispatch(isError(err.response));
     }
   };
-
-  useEffect(() => {
-    window.onscroll = () => {
-      if (offset === 0 && window.pageYOffset > 0) setOffset(1);
-      else if (window.pageYOffset === 0) setOffset(0);
-    };
-  }, [offset]);
-
-  useEffect(() => {
-    window.onresize = () => {
-      if (width <= 768 && window.innerWidth > 768) setWidth(769);
-      else if (width > 768 && window.innerWidth <= 768) setWidth(768);
-    };
-  }, [width]);
 
   return (
     <>
@@ -81,14 +61,14 @@ export const Header = () => {
             {isOpenSidebar ? (
               <CloseOutlined
                 style={{
-                  fontSize: '24px',
+                  fontSize: width > 768 ? '24px' : '21px',
                   color: offset > 0 ? '#fff' : '#000',
                 }}
               />
             ) : (
               <MenuOutlined
                 style={{
-                  fontSize: '24px',
+                  fontSize: width > 768 ? '24px' : '21px',
                   color: offset > 0 ? '#fff' : '#000',
                 }}
               />
@@ -110,24 +90,36 @@ export const Header = () => {
               }
             >
               <li className="nav-item">
-                <a href="#" className="nav-links">
+                <Link
+                  to="/"
+                  className="nav-links"
+                  onClick={isOpenSidebar && onClickToggleBtn}
+                >
                   설문조사
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
-                <Link to="/keyboards" className="nav-links">
+                <Link
+                  to="/keyboards"
+                  className="nav-links"
+                  onClick={isOpenSidebar && onClickToggleBtn}
+                >
                   키보드
                 </Link>
               </li>
               <li className="nav-item">
-                <a href="#" className="nav-links">
+                <Link
+                  to="/map"
+                  className="nav-links"
+                  onClick={isOpenSidebar && onClickToggleBtn}
+                >
                   타건샵
-                </a>
+                </Link>
               </li>
             </div>
           </ul>
         </nav>
-        <a className="header-logo">
+        <Link to="/" className="header-logo">
           {width > 768 ? (
             offset > 0 ? (
               <KEYPLUS_WHITE_36 />
@@ -139,14 +131,14 @@ export const Header = () => {
           ) : (
             <KEYPLUS_BLACK_24 />
           )}
-        </a>
+        </Link>
         <nav className="buttons">
           <ul className="button-menu">
             <li className="button-item">
               <button onClick={onClickMypage} className="button-links">
                 <UserOutlined
                   style={{
-                    fontSize: '24px',
+                    fontSize: width > 768 ? '24px' : '21px',
                     color: offset > 0 ? '#fff' : '#000',
                   }}
                 />
@@ -157,7 +149,7 @@ export const Header = () => {
                 <button onClick={onClickLogout} className="button-links">
                   <ExportOutlined
                     style={{
-                      fontSize: '24px',
+                      fontSize: width > 768 ? '24px' : '21px',
                       color: offset > 0 ? '#fff' : '#000',
                     }}
                   />
@@ -170,3 +162,5 @@ export const Header = () => {
     </>
   );
 };
+
+export default Header;
