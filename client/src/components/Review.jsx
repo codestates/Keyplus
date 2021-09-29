@@ -35,8 +35,9 @@ const Review = ({ review, userId }) => {
               <video
                 className="review-video"
                 controls
-                playsinline
                 preload="metadata"
+                playsinline
+                poster={`${review.video}#t=0.5`}
               >
                 <source src={`${review.video}#t=0.5`} type="video/mp4" />
               </video>
