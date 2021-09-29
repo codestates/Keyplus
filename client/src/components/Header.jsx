@@ -1,4 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { logOut } from '../reducers/api/userAPI';
+import { isError } from '../reducers/errorReducer';
+
+import useWidthSize from '../hooks/useWidthSize';
+import usePageYOffset from '../hooks/usePageYOffset';
+
+import './styles/Header.scss';
+
 import { ReactComponent as KEYPLUS_WHITE_36 } from '../assets/images/KEYPLUS_white_36.svg';
 import { ReactComponent as KEYPLUS_BLACK_36 } from '../assets/images/KEYPLUS_black_36.svg';
 import { ReactComponent as KEYPLUS_WHITE_24 } from '../assets/images/KEYPLUS_white_24.svg';
@@ -10,15 +22,6 @@ import {
   MenuOutlined,
   ExportOutlined,
 } from '@ant-design/icons';
-
-import './styles/Header.scss';
-import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { logOut } from '../reducers/api/userAPI';
-import { isError } from '../reducers/errorReducer';
-import { useHistory } from 'react-router';
-import useWidthSize from '../hooks/useWidthSize';
-import usePageYOffset from '../hooks/usePageYOffset';
 
 const Header = () => {
   const offset = usePageYOffset();
@@ -146,11 +149,14 @@ const Header = () => {
             </li>
             {userState !== null && (
               <li className="button-item">
-                <button onClick={onClickLogout} className="button-links">
+                <button
+                  onClick={onClickLogout}
+                  className="landing-button-links"
+                >
                   <ExportOutlined
                     style={{
-                      fontSize: width > 768 ? '24px' : '21px',
-                      color: offset > 0 ? '#fff' : '#000',
+                      fontSize: '24px',
+                      color: '#fff',
                     }}
                   />
                 </button>

@@ -248,6 +248,22 @@ const KeyboardDetail = (props) => {
               <TabPane tab="상세정보" key="1">
                 <List grid>
                   <List.Item>
+                    <Card title="Switch">
+                      {Object.keys(keyboard.switch).map((keySwitch, idx) => (
+                        <span key={`${keySwitch}_${idx}`}>
+                          {keyboard.switch[keySwitch] && (
+                            <>{keySwitchComponent[keySwitch]}</>
+                          )}
+                        </span>
+                      ))}
+                    </Card>
+                  </List.Item>
+                  <List.Item>
+                    <Card title="Price">
+                      {keyboard.price.toLocaleString()}원
+                    </Card>
+                  </List.Item>
+                  <List.Item>
                     <Card title="Color">
                       {keyboard.color ? '다채색' : '무채색'}
                     </Card>
@@ -265,22 +281,6 @@ const KeyboardDetail = (props) => {
                   <List.Item>
                     <Card title="Bluetooth">
                       {keyboard.bluetooth ? '지원' : '미지원'}
-                    </Card>
-                  </List.Item>
-                  <List.Item>
-                    <Card title="Price">
-                      {keyboard.price.toLocaleString()}원
-                    </Card>
-                  </List.Item>
-                  <List.Item>
-                    <Card title="Switch">
-                      {Object.keys(keyboard.switch).map((keySwitch, idx) => (
-                        <span key={`${keySwitch}_${idx}`}>
-                          {keyboard.switch[keySwitch] && (
-                            <>{keySwitchComponent[keySwitch]}</>
-                          )}
-                        </span>
-                      ))}
                     </Card>
                   </List.Item>
                 </List>
