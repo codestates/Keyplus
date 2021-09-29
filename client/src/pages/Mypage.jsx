@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
@@ -6,7 +6,9 @@ import {
   updateUserInfo,
   validateNickname,
 } from '../reducers/api/userAPI';
-import ButtonModal from '../components/ButtonModal';
+
+import TextModal from '../components/TextModal';
+
 import './styles/Mypage.scss';
 import { message, Button, Space } from 'antd';
 import { isError } from '../reducers/errorReducer';
@@ -14,17 +16,19 @@ import { Avatar } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { Tabs } from 'antd';
 import KeyboardCard from './KeyboardCard';
+import Review from '../components/Review';
+// import '../components/styles/Review.scss';
 
 const Mypage = () => {
   const dispatch = useDispatch();
   const userState = useSelector((state) => state.user);
-  console.log('내가 유저 정보', userState);
 
   const likesState = useSelector((state) => state.likes);
-  console.log('내가 좋아요들', likesState);
 
   const reviewsState = useSelector((state) => state.reviews);
-  console.log('내가 리뷰들', reviewsState);
+  console.log('내가 리덕스에 있는 리뷰다', reviewsState);
+
+  const userId = useSelector((state) => state.user?.id);
 
   const [updateState, setUpdateState] = useState({
     email: userState.email,
@@ -35,7 +39,7 @@ const Mypage = () => {
   const [newImg, setNewImg] = useState(userState.image);
   const [validNickname, setValidNickname] = useState(false);
 
-  //FIXME: state 업데이트
+  //! state 업데이트
   const onChangeUpdateState = (e) => {
     const { name, value } = e.target;
     setUpdateState({ ...updateState, [name]: value });
@@ -44,14 +48,13 @@ const Mypage = () => {
 
   const { email, nickname, password } = updateState;
   const prevNickname = userState.nickname;
-  console.log('내가 prevNickname', prevNickname);
-  console.log('내가 newnickname', nickname);
 
-  //FIXME: 닉네임 중복확인 함수
+  //! 닉네임 중복확인 함수
   const onClickValidate = async (e) => {
     e.preventDefault();
 
     try {
+      //! 닉네임이 바뀌지 않았을 경우
       if (prevNickname === nickname) {
         return message.success('사용 가능한 닉네임 입니다');
       }
@@ -66,7 +69,7 @@ const Mypage = () => {
     }
   };
 
-  //FIXME: 회원정보 수정 함수
+  //! 회원정보 수정 함수
   const onClickModify = async (e) => {
     e.preventDefault();
     // if (!validNickname) return message.warning('닉네임 중복검사를 해주세요');
@@ -99,12 +102,16 @@ const Mypage = () => {
   }
 
   const prevImg = userState.image;
-  // console.log('내가 프로필', profileImg);
 
-  //FIXME: 프로필 이미지 미리보기
+  //! 프로필 이미지 미리보기
+  const imgref = useRef(null);
+  const handleImgRef = () => {
+    imgref.current.click();
+  };
+
   const onChangeImage = (e) => {
     const newFile = e.target.files[0];
-    //FIXME: file state 업데이트 시키기
+    //! file state 업데이트 시키기
     setFile(newFile);
     if (newFile) {
       const reader = new FileReader();
@@ -116,96 +123,131 @@ const Mypage = () => {
     }
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <>
-      <h2>회원정보 수정</h2>
-
-      <section>
-        {/* FIXME: 회원정보 수정창 */}
-        <div className="mypage-container">
-          <form encType="multipart/form-data" onSubmit={onClickModify}>
-            <div>
-              <label htmlFor="img">사진을 업로드 해주세요</label>
-              <input
-                type="file"
-                id="img"
-                name="img"
-                accept=".png, .jpg, jpeg"
-                onChange={onChangeImage}
-              />
-              {/* {prevImg === '' && <Avatar icon={<UserOutlined />} />} */}
-              {newImg ? (
-                <Avatar src={newImg} />
-              ) : prevImg === '' ? (
-                <Avatar icon={<UserOutlined />} />
-              ) : (
-                <Avatar src={prevImg} />
-              )}
-            </div>
-            <div>
-              <label htmlFor="email">이메일</label>
-              <input type="email" name="email" disabled value={email} />
-            </div>
-            <div>
-              <label htmlFor="nickname">닉네임</label>
-              <input
-                type="text"
-                onChange={onChangeUpdateState}
-                name="nickname"
-                required
-                value={nickname || ''}
-              />
-            </div>
-            <button type="submit" onClick={onClickValidate}>
-              닉네임 중복확인
-            </button>
-            {userState.socialType === 'local' && (
-              <>
-                <div>
-                  <label htmlFor="password">패스워드</label>
+      <div className="mypage-wrapper">
+        <section className="mypage-container">
+          <div className="mypage-flexbox">
+            <div className="mypage-main">
+              <h2 className="title">회원정보 수정</h2>
+              {/* 회원정보 수정창 */}
+              <form encType="multipart/form-data" onSubmit={onClickModify}>
+                <div className="upload-box">
                   <input
-                    type="password"
-                    onChange={onChangeUpdateState}
-                    placeholder="******"
-                    name="password"
-                    value={password || ''}
+                    type="file"
+                    id="img"
+                    name="img"
+                    accept=".png, .jpg, jpeg"
+                    onChange={(e) => onChangeImage(e)}
+                    ref={imgref}
+                    hidden
+                  />
+
+                  {newImg ? (
+                    <div className="upload-image" onClick={handleImgRef}>
+                      <Avatar size={80} src={newImg} />
+                    </div>
+                  ) : prevImg === '' ? (
+                    <div className="upload-image" onClick={handleImgRef}>
+                      <Avatar size={80} icon={<UserOutlined />} />
+                    </div>
+                  ) : (
+                    <div className="upload-image" onClick={handleImgRef}>
+                      <Avatar size={80} src={prevImg} />
+                    </div>
+                  )}
+                </div>
+                <div>
+                  <p className="text profile">사진을 업로드 해주세요</p>
+                </div>
+
+                <div className="input-box">
+                  <label htmlFor="email">이메일</label>
+                  <input type="email" name="email" value={email} disabled />
+                </div>
+
+                <div className="input-box">
+                  <label htmlFor="nickname">닉네임</label>
+                  <div className="input-wrapper">
+                    <input
+                      className="inputlong"
+                      type="text"
+                      onChange={onChangeUpdateState}
+                      name="nickname"
+                      required
+                      value={nickname || ''}
+                    />
+
+                    <button type="submit" onClick={onClickValidate}>
+                      중복확인
+                    </button>
+                  </div>
+                </div>
+
+                {userState.socialType === 'local' && (
+                  <>
+                    <div className="input-box">
+                      <label htmlFor="password">패스워드</label>
+                      <input
+                        type="password"
+                        onChange={onChangeUpdateState}
+                        placeholder="password"
+                        name="password"
+                        value={password || ''}
+                      />
+                    </div>
+                  </>
+                )}
+
+                <div>
+                  <button type="submit" className="mypage-btn">
+                    회원정보 수정
+                  </button>
+                </div>
+                <div className="mypage-delete-btn">
+                  <TextModal
+                    modalText="정말로 탈퇴하시겠습니까?"
+                    loadingText="탈퇴 진행중입니다."
+                    buttonText="회원 탈퇴"
+                    action={deleteUser}
                   />
                 </div>
-              </>
-            )}
-            <Space>
-              <Button type="submit">
-                {/* 회원정보 수정 */}
-                <input type="submit" value="회원정보 수정" />
-              </Button>
-            </Space>
-          </form>
-        </div>
-        {/* FIXME: 관심키보드 / 내 리뷰 */}
+              </form>
+              {/* FIXME: 관심키보드 / 내 리뷰 */}{' '}
+              <div className="mypage-tabs">
+                <Tabs defaultActiveKey="1" onChange={callback}>
+                  <TabPane tab="관심 키보드" key="관심 키보드">
+                    {/* <div className="mypage-tabs"> */}
+                    {likesState.map((keyboard) => (
+                      <div key={keyboard} className="mypage-tab-item">
+                        <KeyboardCard
+                          key={`${keyboard.id}_${keyboard.name}`}
+                          keyboard={keyboard}
+                        />
+                      </div>
+                    ))}
+                    {/* </div> */}
+                  </TabPane>
 
-        <Tabs defaultActiveKey="1" onChange={callback}>
-          <TabPane tab="관심 키보드" key="관심 키보드">
-            {likesState.map((keyboard) => (
-              <KeyboardCard
-                key={`${keyboard.id}_${keyboard.name}`}
-                keyboard={keyboard}
-              />
-            ))}
-          </TabPane>
-
-          <TabPane tab="내 리뷰" key="내 리뷰">
-            여긴 리뷰 페이지
-          </TabPane>
-        </Tabs>
-
-        {/* FIXME: 회원탈퇴 */}
-        <ButtonModal
-          modalText="정말로 탈퇴하시겠습니까?"
-          loadingText="탈퇴 진행중입니다."
-          buttonText="회원 탈퇴"
-          action={deleteUser}
-        />
-      </section>
+                  <TabPane tab="내 리뷰" key="내 리뷰">
+                    {/* <div className="mypage-tabs"> */}
+                    {reviewsState.map((review, idx) => (
+                      <div key={`${review}_${idx}`} className="mypage-tab-item">
+                        <Review review={review} userId={userId} />
+                      </div>
+                    ))}
+                    {/* </div> */}
+                  </TabPane>
+                </Tabs>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
     </>
   );
 };

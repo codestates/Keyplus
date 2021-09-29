@@ -2,6 +2,9 @@
 @use '../../styles/mixins' as *;
 
 .keyboard {
+  max-width: 1300px;
+  margin: 0 auto;
+
   & > * {
     @include mobile-margin();
   }

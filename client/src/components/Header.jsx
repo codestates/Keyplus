@@ -1,4 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { logOut } from '../reducers/api/userAPI';
+import { isError } from '../reducers/errorReducer';
+
+import useWidthSize from '../hooks/useWidthSize';
+import usePageYOffset from '../hooks/usePageYOffset';
+
+import './styles/Header.scss';
+
 import { ReactComponent as KEYPLUS_WHITE_36 } from '../assets/images/KEYPLUS_white_36.svg';
 import { ReactComponent as KEYPLUS_BLACK_36 } from '../assets/images/KEYPLUS_black_36.svg';
 import { ReactComponent as KEYPLUS_WHITE_24 } from '../assets/images/KEYPLUS_white_24.svg';
@@ -11,18 +23,9 @@ import {
   ExportOutlined,
 } from '@ant-design/icons';
 
-import './styles/Header.scss';
-import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { logOut } from '../reducers/api/userAPI';
-import { isError } from '../reducers/errorReducer';
-import { useHistory } from 'react-router';
-import useWidthSize from '../hooks/useWidthSize';
-import usePageYOffset from '../hooks/usePageYOffset';
-
 const Header = () => {
   const offset = usePageYOffset();
-  const width = useWidthSize();
+  const width = useWidthSize(768);
   const [isOpenSidebar, setIsOpenSidebar] = useState(false);
 
   const dispatch = useDispatch();
@@ -41,16 +44,9 @@ const Header = () => {
     }
   };
 
-  const onClickMypage = async () => {
-    try {
-      if (userState === null) {
-        history.push('/login');
-      } else {
-        history.push('/mypage');
-      }
-    } catch (err) {
-      dispatch(isError(err.response));
-    }
+  const onClickMypage = () => {
+    history.push('/mypage');
+    window.location.reload();
   };
 
   return (
@@ -91,7 +87,7 @@ const Header = () => {
             >
               <li className="nav-item">
                 <Link
-                  to="/"
+                  to="/survey"
                   className="nav-links"
                   onClick={isOpenSidebar && onClickToggleBtn}
                 >
@@ -146,7 +142,10 @@ const Header = () => {
             </li>
             {userState !== null && (
               <li className="button-item">
-                <button onClick={onClickLogout} className="button-links">
+                <button
+                  onClick={onClickLogout}
+                  className="landing-button-links"
+                >
                   <ExportOutlined
                     style={{
                       fontSize: width > 768 ? '24px' : '21px',

@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom';
 
 import { deleteReviews } from '../reducers/api/reviewsAPI';
 import ButtonModal from './ButtonModal';
+import Button from './Button';
 
 import './styles/Review.scss';
 
-import { Avatar, Button, Carousel, Rate } from 'antd';
+import { Avatar, Carousel, Rate } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 
 const LeftArrow = ({ currentSlide, slideCount, children, ...props }) => {

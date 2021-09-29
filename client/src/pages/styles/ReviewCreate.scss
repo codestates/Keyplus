@@ -14,13 +14,21 @@
     @include mobile-margin();
   }
 
-  .review-create-header {
-    letter-spacing: -0.03em;
-    text-transform: uppercase;
-    margin-bottom: 20px;
+  .review-create-header-wrapper {
+    @include flexbox();
 
-    @media screen and (max-width: $md-breakpoint) {
-      font-size: 18px;
+    .review-create-header {
+      display: inline-block;
+      font-size: 26px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 50px;
+      border-bottom: 4px solid rgb(138, 138, 138);
+      letter-spacing: 1px;
+
+      @media screen and (max-width: $md-breakpoint) {
+        font-size: 21px;
+      }
     }
   }
 

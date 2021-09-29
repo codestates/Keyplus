@@ -16,12 +16,13 @@ const LandingPart4 = () => {
             data-aos-easing="ease-out"
             className="part4-text"
           >
-            다양한 브랜드의 기계식 키보드를 한눈에 볼 수 있습니다.
+            다양한 브랜드의 기계식 키보드를
+            <br /> 한눈에 볼 수 있습니다.
           </div>
         </div>
 
         <div className="part4-logo">
-          <img src="logo.png" alt="" />
+          <img src="logo.png" alt="logo-collection" style={{ width: '100%' }} />
         </div>
 
         <div className="part4-button-wrapper">

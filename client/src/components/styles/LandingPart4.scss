@@ -1,3 +1,6 @@
+@use '../../styles/constants' as *;
+@use '../../styles/mixins' as *;
+
 .part4-background {
   position: relative;
   width: 100%;
@@ -5,15 +8,15 @@
 
   .part4-text-wrapper {
     position: absolute;
+    top: 5%;
     left: 50%;
-    top: 0;
-    transform: translate(-50%, 0);
+    transform: translate(-50%, -5%);
     white-space: nowrap;
     margin-bottom: 30px;
 
     .part4-text {
       color: #fff;
-      font-size: 48px;
+      font-size: 44px;
       font-weight: 700;
       text-align: center;
       text-shadow: 2px 8px 6px rgba(0, 0, 0, 0.2),
@@ -24,8 +27,10 @@
   .part4-logo {
     position: absolute;
     left: 50%;
-    top: 40%;
-    transform: translate(-50%, -50%);
+    top: 45%;
+    transform: translate(-50%, -45%);
+    width: 70%;
+    margin: 0 auto;
   }
 
   .part4-button-wrapper {
@@ -47,6 +52,29 @@
       text-align: center;
       padding: 10px 130px;
       border: 1px solid #fff;
+    }
+  }
+}
+
+@media screen and (max-width: $landing-breakpoint) {
+  .part4-background {
+    height: 500px;
+
+    .part4-text-wrapper {
+      .part4-text {
+        font-size: calc(100vw / 25);
+      }
+    }
+
+    .part4-logo {
+      width: 80%;
+    }
+
+    .part4-button-wrapper {
+      .part4-button {
+        font-size: calc(100vw / 40);
+        padding: 10px 50px;
+      }
     }
   }
 }

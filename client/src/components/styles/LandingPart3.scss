@@ -1,4 +1,5 @@
 @use '../../styles/constants' as *;
+@use '../../styles/mixins' as *;
 
 .part3-background {
   position: relative;
@@ -10,26 +11,12 @@
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    // width: 100%;
     white-space: nowrap;
 
-    @media screen and (max-width: $md-breakpoint) {
-      width: 100%;
-    }
-
     .part3-image {
-      width: 75%;
       margin: 0 auto;
-      // width: auto;
-
-      @media screen and (max-width: $md-breakpoint) {
-        width: 100%;
-      }
 
       & > * {
-        // width: 100%;
-        // height: auto;
-        // object-fit: cover;
         max-width: 100%;
         height: auto;
       }
@@ -39,8 +26,8 @@
   .part3-text-wrapper {
     position: absolute;
     left: 50%;
-    bottom: 38%;
-    transform: translate(-50%, -38%);
+    bottom: 50%;
+    transform: translate(-50%, 50%);
     white-space: nowrap;
 
     .part3-text {
@@ -48,11 +35,29 @@
       font-size: 44px;
       font-weight: 700;
       text-align: center;
-      text-shadow: 2px 8px 6px rgba(0, 0, 0, 0.2),
-        0px -5px 35px rgba(255, 255, 255, 0.3);
 
       & > span {
         background-color: #333333;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $landing-breakpoint) {
+  .part3-background {
+    height: 500px;
+
+    .part3-image-wrapper {
+      width: 50%;
+
+      .part3-image {
+        width: 100%;
+      }
+    }
+
+    .part3-text-wrapper {
+      .part3-text {
+        font-size: calc(100vw / 25);
       }
     }
   }

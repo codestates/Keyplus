@@ -1,46 +1,24 @@
-import React, { useEffect, useState, useRef, useCallback } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useHistory } from 'react-router';
+<<<<<<< Updated upstream
+import { useDispatch } from 'react-redux';
+=======
 import { useDispatch, useSelector } from 'react-redux';
-import { addLikes, deleteLikes } from '../reducers/api/likesAPI';
-import { isError } from '../reducers/errorReducer';
-import axios from '../utils/customAxios';
+>>>>>>> Stashed changes
+
+import { addReviews, updateReviews } from '../reducers/api/reviewsAPI';
+import Button from '../components/Button';
 
 import './styles/ReviewCreate.scss';
 
-import {
-  Carousel,
-  Card,
-  Empty,
-  Rate,
-  Avatar,
-  Button,
-  Upload,
-  Divider,
-  Input,
-  message,
-} from 'antd';
-
+import { Rate, Input, message } from 'antd';
 const { TextArea } = Input;
-const { Meta } = Card;
+<<<<<<< Updated upstream
+=======
 
-import {
-  HeartOutlined,
-  HeartFilled,
-  RightOutlined,
-  LeftOutlined,
-  StarFilled,
-  UserOutlined,
-  PlusOutlined,
-} from '@ant-design/icons';
+>>>>>>> Stashed changes
 import { IoCloseOutline } from 'react-icons/io5';
-// import {
-//   AiOutlinePicture,
-//   AiOutlinePlayCircle,
-//   AiOutlineUpload,
-// } from 'react-icons/ai';
 import { RiImageAddFill, RiVideoAddFill } from 'react-icons/ri';
-
-import { addReviews, updateReviews } from '../reducers/api/reviewsAPI';
 
 const ReviewCreate = ({ location, ...props }) => {
   const dispatch = useDispatch();
@@ -71,6 +49,10 @@ const ReviewCreate = ({ location, ...props }) => {
   const img2Ref = useRef(null);
   const img3Ref = useRef(null);
   const videoRef = useRef(null);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   //* onChange
   const onChangeImage = (e, num) => {
@@ -234,7 +216,9 @@ const ReviewCreate = ({ location, ...props }) => {
   };
   return (
     <div className="review-create">
-      <h1 className="review-create-header">Review </h1>
+      <div className="review-create-header-wrapper">
+        <h1 className="review-create-header">Review</h1>
+      </div>
       <form
         name="review-form"
         onSubmit={onClickSubmitBtn}
@@ -417,8 +401,8 @@ const ReviewCreate = ({ location, ...props }) => {
         </div>
 
         <div className="review-create-button-wrapper">
-          <Button type="primary">
-            <input type="submit" value="리뷰 작성" />
+          <Button>
+            <button type="submit">리뷰 작성</button>
           </Button>
         </div>
       </form>
