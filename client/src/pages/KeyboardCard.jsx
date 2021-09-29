@@ -1,17 +1,15 @@
-import React, { memo, useCallback, useEffect, useState } from 'react';
+import React, { memo, useCallback, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import axios from '../utils/customAxios';
+
+import { addLikes, deleteLikes } from '../reducers/api/likesAPI';
 import { isError } from '../reducers/errorReducer';
 
-import {
-  HeartOutlined,
-  HeartFilled,
-  BulbFilled,
-  BulbOutlined,
-  EditOutlined,
-  EllipsisOutlined,
-  SettingOutlined,
-} from '@ant-design/icons';
+import './styles/KeyboardCard.scss';
+
+import { Card, message } from 'antd';
+const { Meta } = Card;
+import { HeartOutlined, HeartFilled } from '@ant-design/icons';
 import { FaBluetooth } from 'react-icons/fa';
 import {
   IoColorFillOutline,
@@ -20,16 +18,7 @@ import {
   IoKeypadOutline,
 } from 'react-icons/io5';
 import { BiWon } from 'react-icons/bi';
-import { FcIdea, FcNoIdea } from 'react-icons/fc';
 import { AiFillBulb, AiOutlineBulb } from 'react-icons/ai';
-
-import './styles/KeyboardCard.scss';
-import { Link } from 'react-router-dom';
-import { addLikes, deleteLikes } from '../reducers/api/likesAPI';
-
-import { Card, Avatar, message } from 'antd';
-
-const { Meta } = Card;
 
 const keySwitchComponent = {
   저소음적축: (
@@ -108,35 +97,22 @@ const keySwitchComponent = {
     </div>
   ),
 };
-// #ff656c
-// #ff1A48
-// #0d0d0d
-// #B8792A
-// #00b4f9
 
 const KeyboardCard = memo(({ keyboard }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
 
   const likes = useSelector((state) => state.likes);
-
-  // ! 내가 이미 좋아요를 누른 상태였으면 liked가 true여야 함
-  // ! 내 redux의 likes 리스트에 이 keyboard가 있어? 그럼 true야 / 근데 없어?(혹은 로그아웃이라 likes가 []) 그럼 false야)
   const checkLiked = (id) => likes.findIndex((like) => like.id == id) !== -1;
-
   const [liked, setLiked] = useState(checkLiked(keyboard.id));
   const [likeCount, setLikeCount] = useState(keyboard.likeCount);
 
   const onClickHeart = useCallback(async () => {
-    // 만약 지금 liked: true => deleteLike 요청
-    // 만약 지금 liked: false => addLike 요청
-
     if (!user) {
       return message.warning('로그인을 먼저 해주세요.');
     }
 
     try {
-      // ! Add a Like에서 바뀐 키보드 정보를 보내줄 필요 없음 ?
       if (liked) {
         await dispatch(deleteLikes(keyboard.id)).unwrap();
         setLikeCount((prevLikeCount) => prevLikeCount - 1);
@@ -189,42 +165,8 @@ const KeyboardCard = memo(({ keyboard }) => {
           )}
         </>
       }
-      // actions={[
-      //   <>
-      //     {liked ? (
-      //       <HeartFilled
-      //         style={{ display: 'inline', color: '#ff0000' }}
-      //         onClick={onClickHeart}
-      //       />
-      //     ) : (
-      //       <HeartOutlined
-      //         style={{ display: 'inline', color: '#ff0000' }}
-      //         onClick={onClickHeart}
-      //       />
-      //     )}
-      //     {likeCount}
-      //   </>,
-      //   <EditOutlined key="edit" />,
-      //   <>
-      //     {keyboard && (
-      //       <Link to={`/keyboards/${keyboard.id}`}>
-      //         <SettingOutlined key="setting" />
-      //       </Link>
-      //     )}
-      //   </>,
-      // ]}
     >
       <Meta
-        // avatar={
-        //   <Avatar
-        //     src={process.env.PUBLIC_URL + `/${keyboard.brand}.png`}
-        //     style={{
-        //       width: '100px',
-        //       height: '24px',
-        //       borderRadius: '0px',
-        //     }}
-        //   />
-        // }
         title={
           <div
             style={{
@@ -266,13 +208,6 @@ const KeyboardCard = memo(({ keyboard }) => {
         ))}
       />
       <div style={{ height: '10px' }}></div>
-
-      {/* <svg width="0" height="0">
-        <linearGradient id="blue-gradient" x1="100%" y1="100%" x2="0%" y2="0%">
-          <stop stopColor="#7a6ded" offset="0%" />
-          <stop stopColor="#591885" offset="100%" />
-        </linearGradient>
-      </svg> */}
 
       <svg width="1em" height="1em">
         <linearGradient id="rainbow-gradient" gradientTransform="rotate(90)">

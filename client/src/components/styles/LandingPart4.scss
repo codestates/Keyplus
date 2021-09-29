@@ -1,3 +1,5 @@
+@use '../../styles/constants' as *;
+
 .part4-background {
   position: relative;
   width: 100%;
@@ -24,8 +26,14 @@
   .part4-logo {
     position: absolute;
     left: 50%;
-    top: 40%;
-    transform: translate(-50%, -50%);
+    top: 35%;
+    transform: translate(-50%, -35%);
+    width: 70%;
+    margin: 0 auto;
+
+    @media screen and (max-width: $md-breakpoint) {
+      width: 100%;
+    }
   }
 
   .part4-button-wrapper {

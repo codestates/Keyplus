@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
@@ -6,7 +6,9 @@ import {
   updateUserInfo,
   validateNickname,
 } from '../reducers/api/userAPI';
+
 import TextModal from '../components/TextModal';
+
 import './styles/Mypage.scss';
 import { message, Button, Space } from 'antd';
 import { isError } from '../reducers/errorReducer';
@@ -14,6 +16,8 @@ import { Avatar } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { Tabs } from 'antd';
 import KeyboardCard from './KeyboardCard';
+import Review from '../components/Review';
+// import '../components/styles/Review.scss';
 
 const Mypage = () => {
   const dispatch = useDispatch();
@@ -23,6 +27,8 @@ const Mypage = () => {
 
   const reviewsState = useSelector((state) => state.reviews);
   console.log('내가 리덕스에 있는 리뷰다', reviewsState);
+
+  const userId = useSelector((state) => state.user?.id);
 
   const [updateState, setUpdateState] = useState({
     email: userState.email,
@@ -117,6 +123,10 @@ const Mypage = () => {
     }
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <>
       <div className="mypage-wrapper">
@@ -198,7 +208,7 @@ const Mypage = () => {
                     회원정보 수정
                   </button>
                 </div>
-                <div className="">
+                <div className="mypage-delete-btn">
                   <TextModal
                     modalText="정말로 탈퇴하시겠습니까?"
                     loadingText="탈퇴 진행중입니다."
@@ -207,25 +217,33 @@ const Mypage = () => {
                   />
                 </div>
               </form>
+              {/* FIXME: 관심키보드 / 내 리뷰 */}{' '}
+              <div className="mypage-tabs">
+                <Tabs defaultActiveKey="1" onChange={callback}>
+                  <TabPane tab="관심 키보드" key="관심 키보드">
+                    {/* <div className="mypage-tabs"> */}
+                    {likesState.map((keyboard) => (
+                      <div key={keyboard} className="mypage-tab-item">
+                        <KeyboardCard
+                          key={`${keyboard.id}_${keyboard.name}`}
+                          keyboard={keyboard}
+                        />
+                      </div>
+                    ))}
+                    {/* </div> */}
+                  </TabPane>
 
-              {/* FIXME: 관심키보드 / 내 리뷰 */}
-              <Tabs defaultActiveKey="1" onChange={callback}>
-                <TabPane tab="관심 키보드" key="관심 키보드">
-                  {likesState.map((keyboard) => (
-                    <KeyboardCard
-                      key={`${keyboard.id}_${keyboard.name}`}
-                      keyboard={keyboard}
-                    />
-                  ))}
-                </TabPane>
-
-                <TabPane tab="내 리뷰" key="내 리뷰">
-                  {/* {reviewsState.map((review) => (
-
-                ))} */}
-                  여긴 리뷰 페이지
-                </TabPane>
-              </Tabs>
+                  <TabPane tab="내 리뷰" key="내 리뷰">
+                    {/* <div className="mypage-tabs"> */}
+                    {reviewsState.map((review, idx) => (
+                      <div key={`${review}_${idx}`} className="mypage-tab-item">
+                        <Review review={review} userId={userId} />
+                      </div>
+                    ))}
+                    {/* </div> */}
+                  </TabPane>
+                </Tabs>
+              </div>
             </div>
           </div>
         </section>

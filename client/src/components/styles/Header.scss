@@ -1,18 +1,20 @@
 @use '../../styles/constants' as *;
 
 .header {
-  background-color: #000;
-  color: #fff;
-  width: 100%;
-  height: 120px;
-  display: flex;
-  justify-content: space-between;
   position: fixed;
   top: -1px;
-  z-index: 999;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 120px;
   padding: 50px 50px 0;
-  -webkit-transition: background-color 0.5s linear;
-  transition: background-color 0.5s linear;
+  z-index: 999;
+
+  background-color: #000;
+  color: #fff;
+
+  -webkit-transition: background-color 0.5s ease;
+  transition: background-color 0.5s ease;
 
   &.bgc-white {
     background-color: #fff;
@@ -47,10 +49,6 @@
   height: 100%;
 }
 
-// .nav-item,
-// .button-item {
-// }
-
 .nav-item-wrapper {
   display: flex;
   justify-content: center;
@@ -63,10 +61,12 @@
   text-decoration: none;
   height: 100%;
   cursor: pointer;
-}
 
-// .buttons {
-// }
+  // ? desktop 링크 hover color
+  &:hover {
+    color: #bbbbbb;
+  }
+}
 
 .menu-icon {
   display: none;
@@ -91,7 +91,7 @@
     top: 50px;
     left: -100%;
     opacity: 1;
-    transition: all 0.5s ease;
+    transition: left 0.5s ease;
   }
   .buttons {
     margin-right: 0;
@@ -105,7 +105,7 @@
     background-color: #000;
     left: 0;
     opacity: 1;
-    transition: all 0.5s ease;
+    // transition: all 0.5s ease;
 
     &.bgc-white {
       background-color: #fff;
@@ -133,6 +133,7 @@
     width: 100%;
     transition: all 0.3s ease;
 
+    // ? mobile 링크 hover color
     &:hover {
       color: #bbbbbb;
       padding-left: 8px;

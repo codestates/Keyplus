@@ -1,37 +1,19 @@
 @use '../../styles/constants' as *;
 @use '../../styles/mixins' as *;
 
-// .mypage-wrapper {
-//   overflow: auto;
-//   ::-webkit-scrollbar {
-//     display: none;
-//   }
-//   -ms-overflow-style: none; /* IE and Edge */
-//   scrollbar-width: none; /* Firefox */
-// }
-
 .mypage-container {
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   max-width: 800px;
   min-width: 320px;
   height: 100%;
-  // height: calc(100vh - 120px);
   margin: 0 auto;
   margin-bottom: -70px;
   position: relative;
-  // min-height: 850px;
 
   @media screen and (max-width: $md-breakpoint) {
-    // height: calc(100vh - 50px);
     padding-top: 50px;
     margin-bottom: -30px;
   }
-
-  // .mypage-flexbox {
-  //   @include flexbox();
-  //   width: 100%;
-  //   height: 100%;
-  // }
 }
 
 .mypage-main {
@@ -93,6 +75,11 @@
       transform: translateY(-50%);
       cursor: pointer;
       padding: 0;
+      transition: all 0.3s ease-out;
+
+      &:hover {
+        color: #000;
+      }
     }
   }
 
@@ -140,4 +127,27 @@
     box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
       rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
   }
+}
+
+.mypage-tabs {
+  width: 65%;
+  margin-bottom: 30px;
+
+  @media screen and (max-width: $md-breakpoint) {
+    width: 85%;
+  }
+}
+
+.mypage-delete-btn {
+  text-align: center;
+  color: rgb(165, 165, 165);
+  transition: all 0.3s ease-out;
+
+  &:hover {
+    color: #000;
+  }
+}
+
+.mypage-tab-item {
+  margin-bottom: 30px;
 }
