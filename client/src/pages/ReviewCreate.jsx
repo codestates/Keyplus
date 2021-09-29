@@ -371,6 +371,7 @@ const ReviewCreate = ({ location, ...props }) => {
                 {/* <div className="preview-video-container"> */}
                 <video
                   playsinline
+                  poster
                   type="video/mp4"
                   src={previewVideo}
                   className="preview-video"
