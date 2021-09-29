@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, Button } from 'antd';
+import { Modal } from 'antd';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 import { isError } from '../reducers/errorReducer';
 import { withRouter } from 'react-router-dom';
+
+import Button from './Button';
 
 const ButtonModal = (props) => {
   const [visible, setVisible] = useState(false);
@@ -41,7 +43,9 @@ const ButtonModal = (props) => {
 
   return (
     <>
-      <Button onClick={showModal}>{props.buttonText}</Button>
+      <Button>
+        <button onClick={showModal}>{props.buttonText}</button>
+      </Button>
       <Modal
         title={props.buttonText}
         visible={visible}

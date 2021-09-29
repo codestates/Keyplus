@@ -143,7 +143,7 @@ const LandingHeader = () => {
                 >
                   <ExportOutlined
                     style={{
-                      fontSize: '24px',
+                      fontSize: width > 768 ? '24px' : '21px',
                       color: '#fff',
                     }}
                   />

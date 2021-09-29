@@ -5,10 +5,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addLikes, deleteLikes } from '../reducers/api/likesAPI';
 import axios from '../utils/customAxios';
 import Review from '../components/Review';
+import Button from '../components/Button';
 
 import './styles/KeyboardDetail.scss';
 
-import { Carousel, Button, message, Tabs, List, Card } from 'antd';
+import { Carousel, message, Tabs, List, Card } from 'antd';
 const { TabPane } = Tabs;
 import {
   HeartOutlined,
@@ -289,8 +290,10 @@ const KeyboardDetail = (props) => {
                 {reviews.length ? (
                   <>
                     <div className="review-create-button-wrapper">
-                      <Button onClick={onClickCreateReviewBtn}>
-                        리뷰 작성하기
+                      <Button>
+                        <button onClick={onClickCreateReviewBtn}>
+                          리뷰 작성하기
+                        </button>
                       </Button>
                     </div>
                     <div className="reviews-info">
@@ -352,8 +355,10 @@ const KeyboardDetail = (props) => {
                     <div style={{ marginBottom: '20px' }}>
                       작성된 리뷰가 없습니다!
                     </div>
-                    <Button type="primary" onClick={onClickCreateReviewBtn}>
-                      리뷰 작성하기
+                    <Button>
+                      <button onClick={onClickCreateReviewBtn}>
+                        리뷰 작성하기
+                      </button>
                     </Button>
                   </div>
                 )}
