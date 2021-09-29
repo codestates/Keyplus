@@ -371,8 +371,9 @@ const ReviewCreate = ({ location, ...props }) => {
                 {/* <div className="preview-video-container"> */}
                 <video
                   playsinline
+                  preload="metadata"
                   type="video/mp4"
-                  src={previewVideo}
+                  src={`${previewVideo}#t=0.5`}
                   className="preview-video"
                 />
                 {/* </div> */}
