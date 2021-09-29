@@ -68,7 +68,7 @@ const Keyboard = () => {
       setAllKeyboards(
         response.data.data.sort((a, b) => b.likeCount - a.likeCount)
       );
-      setSortingNumber(1);
+      setSortingNumber('1');
     } catch (err) {
       console.log(err);
       dispatch(isError(err.response));

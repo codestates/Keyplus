@@ -234,7 +234,9 @@ const ReviewCreate = ({ location, ...props }) => {
   };
   return (
     <div className="review-create">
-      <h1 className="review-create-header">Review </h1>
+      <div className="review-create-header-wrapper">
+        <h1 className="review-create-header">Review</h1>
+      </div>
       <form
         name="review-form"
         onSubmit={onClickSubmitBtn}
