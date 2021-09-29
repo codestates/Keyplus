@@ -31,11 +31,9 @@ function App() {
   return (
     <>
       <Switch>
-        <Route path="/landing" component={Landing} />
+        <Route exact path="/" component={Landing} />
         <AppLayout>
           {loading && <Spinner />}
-          {/* <Redirect exact path="/" to="keyboard" /> */}
-
           <Route path="/temp" component={Temp} />
           <PublicRoute
             restricted={false}

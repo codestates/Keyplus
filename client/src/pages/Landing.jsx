@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import LandingHeader from '../components/LandingHeader';
 import LandingPart1 from '../components/Landing/LandingPart1';
@@ -11,6 +11,10 @@ import Footer from '../components/Footer';
 import './styles/Landing.scss';
 
 const Landing = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <>
       <div className="landing-main">

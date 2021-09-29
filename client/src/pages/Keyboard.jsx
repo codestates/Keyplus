@@ -1,11 +1,16 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
 import axios from '../utils/customAxios';
 import exceptionAxios from 'axios';
+
 import KeyboardCard from './KeyboardCard';
+import { isError } from '../reducers/errorReducer';
+
+import useWidthSize from '../hooks/useWidthSize';
 
 import './styles/Keyboard.scss';
-import { isError } from '../reducers/errorReducer';
+
 import 'antd/dist/antd.css';
 import {
   Select,
@@ -17,10 +22,8 @@ import {
   Button,
 } from 'antd';
 const { Option } = Select;
-
 import { FaCheck } from 'react-icons/fa';
 import { FiRotateCw } from 'react-icons/fi';
-import useWidthSize from '../hooks/useWidthSize';
 
 const Keyboard = () => {
   const dispatch = useDispatch();

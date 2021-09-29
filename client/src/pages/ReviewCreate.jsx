@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useRef, useCallback } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useHistory } from 'react-router';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { addReviews, updateReviews } from '../reducers/api/reviewsAPI';
 import Button from '../components/Button';
@@ -9,7 +9,6 @@ import './styles/ReviewCreate.scss';
 
 import { Rate, Input, message } from 'antd';
 const { TextArea } = Input;
-
 import { IoCloseOutline } from 'react-icons/io5';
 import { RiImageAddFill, RiVideoAddFill } from 'react-icons/ri';
 
@@ -42,6 +41,10 @@ const ReviewCreate = ({ location, ...props }) => {
   const img2Ref = useRef(null);
   const img3Ref = useRef(null);
   const videoRef = useRef(null);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   //* onChange
   const onChangeImage = (e, num) => {

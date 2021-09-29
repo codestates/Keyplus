@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Modal } from 'antd';
-import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
-import { isError } from '../reducers/errorReducer';
 import { withRouter } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
+import { isError } from '../reducers/errorReducer';
 import Button from './Button';
+
+import { Modal } from 'antd';
 
 const ButtonModal = (props) => {
   const [visible, setVisible] = useState(false);

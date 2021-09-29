@@ -94,7 +94,7 @@ const Header = () => {
             >
               <li className="nav-item">
                 <Link
-                  to="/"
+                  to="/survey"
                   className="nav-links"
                   onClick={isOpenSidebar && onClickToggleBtn}
                 >
