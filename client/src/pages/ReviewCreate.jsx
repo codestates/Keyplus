@@ -257,7 +257,7 @@ const ReviewCreate = ({ location, ...props }) => {
                 <img
                   src={previewImage1}
                   alt="preview"
-                  className="keyboard-detail-img"
+                  className="preview-image"
                 />
                 <div
                   className="hover-overlay"
@@ -293,7 +293,7 @@ const ReviewCreate = ({ location, ...props }) => {
                 <img
                   src={previewImage2}
                   alt="preview"
-                  className="keyboard-detail-img"
+                  className="preview-image"
                 />
                 <div
                   className="hover-overlay"
@@ -329,7 +329,7 @@ const ReviewCreate = ({ location, ...props }) => {
                 <img
                   src={previewImage3}
                   alt="preview"
-                  className="keyboard-detail-img"
+                  className="preview-image"
                 />
                 <div
                   className="hover-overlay"
@@ -368,11 +368,14 @@ const ReviewCreate = ({ location, ...props }) => {
             />
             {previewVideo ? (
               <div className="preview-image-wrapper">
+                {/* <div className="preview-video-container"> */}
                 <video
+                  playsinline
                   type="video/mp4"
                   src={previewVideo}
-                  className="keyboard-detail-img"
+                  className="preview-video"
                 />
+                {/* </div> */}
                 <div className="hover-overlay" onClick={onClickDeleteVideoBtn}>
                   <IoCloseOutline
                     style={{
