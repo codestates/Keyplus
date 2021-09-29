@@ -372,10 +372,11 @@ const ReviewCreate = ({ location, ...props }) => {
                 <video
                   playsinline
                   preload="metadata"
-                  type="video/mp4"
-                  src={`${previewVideo}#t=0.5`}
+                  poster={`${previewVideo}#t=0.5`}
                   className="preview-video"
-                />
+                >
+                  <source src={`${previewVideo}#t=0.5`} type="video/mp4" />
+                </video>
                 {/* </div> */}
                 <div className="hover-overlay" onClick={onClickDeleteVideoBtn}>
                   <IoCloseOutline
