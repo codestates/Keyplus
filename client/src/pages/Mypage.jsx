@@ -6,7 +6,7 @@ import {
   updateUserInfo,
   validateNickname,
 } from '../reducers/api/userAPI';
-import DeleteModal from '../components/DeleteModal';
+import ButtonModal from '../components/ButtonModal';
 import './styles/Mypage.scss';
 import { message, Button, Space } from 'antd';
 import { isError } from '../reducers/errorReducer';
@@ -199,7 +199,7 @@ const Mypage = () => {
         </Tabs>
 
         {/* FIXME: 회원탈퇴 */}
-        <DeleteModal
+        <ButtonModal
           modalText="정말로 탈퇴하시겠습니까?"
           loadingText="탈퇴 진행중입니다."
           buttonText="회원 탈퇴"

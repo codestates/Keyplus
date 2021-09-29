@@ -258,22 +258,22 @@ const Signup = () => {
               </div>
 
               <div className="inputbox">
-                <label htmlFor="password">패스워드</label>
+                <label htmlFor="password">비밀번호</label>
                 <input
                   type="password"
                   onChange={onChangeUpdateState}
-                  placeholder="******"
+                  placeholder="password"
                   name="password"
                   // required
                   value={password || ''}
                 />
               </div>
               <div className="inputbox">
-                <label htmlFor="repassword">패스워드 확인</label>
+                <label htmlFor="repassword">비밀번호 확인</label>
                 <input
                   type="password"
                   onChange={onChangeUpdateState}
-                  placeholder="******"
+                  placeholder="confirm password"
                   name="repassword"
                   // required
                   value={repassword || ''}

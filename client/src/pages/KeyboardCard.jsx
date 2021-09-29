@@ -108,11 +108,6 @@ const keySwitchComponent = {
     </div>
   ),
 };
-// #ff656c
-// #ff1A48
-// #0d0d0d
-// #B8792A
-// #00b4f9
 
 const KeyboardCard = memo(({ keyboard }) => {
   const dispatch = useDispatch();
@@ -266,13 +261,6 @@ const KeyboardCard = memo(({ keyboard }) => {
         ))}
       />
       <div style={{ height: '10px' }}></div>
-
-      {/* <svg width="0" height="0">
-        <linearGradient id="blue-gradient" x1="100%" y1="100%" x2="0%" y2="0%">
-          <stop stopColor="#7a6ded" offset="0%" />
-          <stop stopColor="#591885" offset="100%" />
-        </linearGradient>
-      </svg> */}
 
       <svg width="1em" height="1em">
         <linearGradient id="rainbow-gradient" gradientTransform="rotate(90)">

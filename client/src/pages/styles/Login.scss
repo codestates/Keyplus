@@ -13,6 +13,7 @@
 
   @media screen and (max-width: $md-breakpoint) {
     height: calc(100vh - 50px);
+    padding-top: 50px;
     margin-bottom: -30px;
   }
 
@@ -45,6 +46,10 @@
   flex: 1;
   flex-direction: column;
   height: 100%;
+
+  @media screen and (max-width: $md-breakpoint) {
+    justify-content: flex-start;
+  }
 
   .title {
     font-weight: 600;

@@ -6,7 +6,7 @@ import { deleteUser } from '../reducers/api/userAPI';
 import { isError } from '../reducers/errorReducer';
 import { withRouter } from 'react-router-dom';
 
-const DeleteModal = (props) => {
+const ButtonModal = (props) => {
   const [visible, setVisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   //FIXME: 회원탈퇴 OK버튼을 누르면 회원이 탈퇴됨
@@ -65,4 +65,4 @@ const DeleteModal = (props) => {
   );
 };
 
-export default withRouter(DeleteModal);
+export default withRouter(ButtonModal);

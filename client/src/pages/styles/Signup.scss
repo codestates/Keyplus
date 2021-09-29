@@ -10,10 +10,11 @@
   margin: 0 auto;
   margin-bottom: -70px;
   position: relative;
-  min-height: 840px;
+  min-height: 850px;
 
   @media screen and (max-width: $md-breakpoint) {
     height: calc(100vh - 50px);
+    padding-top: 50px;
     margin-bottom: -30px;
   }
 
@@ -45,7 +46,10 @@
   flex: 1;
   flex-direction: column;
   height: 100%;
-  padding: 10px 20px;
+
+  @media screen and (max-width: $md-breakpoint) {
+    justify-content: flex-start;
+  }
 
   .title {
     font-weight: 600;
@@ -80,7 +84,7 @@
     input {
       width: 100%;
       padding: 10px 20px;
-      padding-right: 45px;
+      padding-right: 52px;
       outline: none;
       font-weight: 400;
       border: 1px solid rgb(138, 138, 138) !important;
@@ -95,15 +99,16 @@
       // right: 8px;
       position: absolute;
       top: 50%;
-      right: 5%;
-      transform: translate(5%, -50%);
+      right: 20px;
+      transform: translateY(-50%);
       cursor: pointer;
+      padding: 0;
     }
     // .verifybtn {
     //   top: 45px;
     // }
     .inputlong {
-      padding-right: 70px;
+      padding-right: 78px;
     }
   }
 

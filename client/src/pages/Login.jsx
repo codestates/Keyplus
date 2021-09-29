@@ -101,10 +101,10 @@ const Login = (props) => {
               </div>
 
               <div className="inputbox">
-                <label htmlFor="password">패스워드</label>
+                <label htmlFor="password">비밀번호</label>
                 <input
                   type="password"
-                  placeholder="******"
+                  placeholder="password"
                   onChange={onChangeLoginState}
                   name="password"
                   required
