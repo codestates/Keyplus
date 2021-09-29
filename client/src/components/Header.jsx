@@ -25,7 +25,7 @@ import {
 
 const Header = () => {
   const offset = usePageYOffset();
-  const width = useWidthSize();
+  const width = useWidthSize(768);
   const [isOpenSidebar, setIsOpenSidebar] = useState(false);
 
   const dispatch = useDispatch();
