@@ -32,8 +32,13 @@ const Review = ({ review, userId }) => {
         >
           {review.video && (
             <>
-              <video className="review-video" controls playsinline>
-                <source src={review.video} type="video/mp4" />
+              <video
+                className="review-video"
+                controls
+                playsinline
+                preload="metadata"
+              >
+                <source src={`${review.video}#t=0.5`} type="video/mp4" />
               </video>
             </>
           )}
