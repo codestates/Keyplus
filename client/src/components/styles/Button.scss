@@ -1,0 +1,16 @@
+#button-wrapper {
+  display: inline-block;
+  cursor: pointer;
+  border: 1px solid rgba(0, 0, 0, 0.7);
+  border-radius: 2px;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    color: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(0, 0, 0, 0.4);
+  }
+
+  #button {
+    padding: 4px 15px;
+  }
+}

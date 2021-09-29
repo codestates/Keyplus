@@ -155,8 +155,8 @@ const Header = () => {
                 >
                   <ExportOutlined
                     style={{
-                      fontSize: '24px',
-                      color: '#fff',
+                      fontSize: width > 768 ? '24px' : '21px',
+                      color: offset > 0 ? '#fff' : '#000',
                     }}
                   />
                 </button>

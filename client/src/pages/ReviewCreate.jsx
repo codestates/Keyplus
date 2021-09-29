@@ -1,46 +1,17 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
-import { addLikes, deleteLikes } from '../reducers/api/likesAPI';
-import { isError } from '../reducers/errorReducer';
-import axios from '../utils/customAxios';
+
+import { addReviews, updateReviews } from '../reducers/api/reviewsAPI';
+import Button from '../components/Button';
 
 import './styles/ReviewCreate.scss';
 
-import {
-  Carousel,
-  Card,
-  Empty,
-  Rate,
-  Avatar,
-  Button,
-  Upload,
-  Divider,
-  Input,
-  message,
-} from 'antd';
-
+import { Rate, Input, message } from 'antd';
 const { TextArea } = Input;
-const { Meta } = Card;
 
-import {
-  HeartOutlined,
-  HeartFilled,
-  RightOutlined,
-  LeftOutlined,
-  StarFilled,
-  UserOutlined,
-  PlusOutlined,
-} from '@ant-design/icons';
 import { IoCloseOutline } from 'react-icons/io5';
-// import {
-//   AiOutlinePicture,
-//   AiOutlinePlayCircle,
-//   AiOutlineUpload,
-// } from 'react-icons/ai';
 import { RiImageAddFill, RiVideoAddFill } from 'react-icons/ri';
-
-import { addReviews, updateReviews } from '../reducers/api/reviewsAPI';
 
 const ReviewCreate = ({ location, ...props }) => {
   const dispatch = useDispatch();
@@ -419,8 +390,8 @@ const ReviewCreate = ({ location, ...props }) => {
         </div>
 
         <div className="review-create-button-wrapper">
-          <Button type="primary">
-            <input type="submit" value="리뷰 작성" />
+          <Button>
+            <button type="submit">리뷰 작성</button>
           </Button>
         </div>
       </form>
