@@ -243,6 +243,15 @@ const ReviewCreate = ({ location, ...props }) => {
       >
         <div className="input-files-area">
           <div className="input-file">
+            <input
+              type="file"
+              id="img1"
+              name="img1"
+              accept=".png, .jpg, jpeg"
+              onChange={(e) => onChangeImage(e, 1)}
+              ref={img1Ref}
+              hidden
+            />
             {previewImage1 ? (
               <div className="preview-image-wrapper">
                 <img
@@ -270,6 +279,15 @@ const ReviewCreate = ({ location, ...props }) => {
             )}
           </div>
           <div className="input-file">
+            <input
+              type="file"
+              id="img2"
+              name="img2"
+              accept=".png, .jpg, jpeg"
+              onChange={(e) => onChangeImage(e, 2)}
+              ref={img2Ref}
+              hidden
+            />
             {previewImage2 ? (
               <div className="preview-image-wrapper">
                 <img
@@ -297,6 +315,15 @@ const ReviewCreate = ({ location, ...props }) => {
             )}
           </div>
           <div className="input-file">
+            <input
+              type="file"
+              id="img3"
+              name="img3"
+              accept=".png, .jpg, jpeg"
+              onChange={(e) => onChangeImage(e, 3)}
+              ref={img3Ref}
+              hidden
+            />
             {previewImage3 ? (
               <div className="preview-image-wrapper">
                 <img
@@ -330,6 +357,15 @@ const ReviewCreate = ({ location, ...props }) => {
           </div>
 
           <div className="input-file">
+            <input
+              type="file"
+              id="video"
+              name="video"
+              accept=".mp4"
+              onChange={onChangeVideo}
+              ref={videoRef}
+              hidden
+            />
             {previewVideo ? (
               <div className="preview-image-wrapper">
                 <video
@@ -357,43 +393,6 @@ const ReviewCreate = ({ location, ...props }) => {
             )}
           </div>
         </div>
-
-        <input
-          type="file"
-          id="img1"
-          name="img1"
-          accept=".png, .jpg, jpeg"
-          onChange={(e) => onChangeImage(e, 1)}
-          ref={img1Ref}
-          hidden
-        />
-        <input
-          type="file"
-          id="img2"
-          name="img2"
-          accept=".png, .jpg, jpeg"
-          onChange={(e) => onChangeImage(e, 2)}
-          ref={img2Ref}
-          hidden
-        />
-        <input
-          type="file"
-          id="img3"
-          name="img3"
-          accept=".png, .jpg, jpeg"
-          onChange={(e) => onChangeImage(e, 3)}
-          ref={img3Ref}
-          hidden
-        />
-        <input
-          type="file"
-          id="video"
-          name="video"
-          accept=".mp4"
-          onChange={onChangeVideo}
-          ref={videoRef}
-          hidden
-        />
 
         <TextArea
           placeholder="리뷰를 500자까지 입력해주세요."

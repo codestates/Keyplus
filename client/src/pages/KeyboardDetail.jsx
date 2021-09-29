@@ -407,17 +407,22 @@ const KeyboardDetail = (props) => {
                     ))}
                   </>
                 ) : (
-                  <Empty
-                    image={`/no-data.jpg`}
-                    imageStyle={{
-                      height: 300,
-                    }}
-                    description={<span>작성된 리뷰가 없습니다!</span>}
-                  >
+                  <div className="no-data-area">
+                    <img
+                      src="/no-data.jpg"
+                      alt="no data"
+                      style={{
+                        maxWidth: '350px',
+                        objectFit: 'cover',
+                      }}
+                    />
+                    <div style={{ marginBottom: '20px' }}>
+                      작성된 리뷰가 없습니다!
+                    </div>
                     <Button type="primary" onClick={onClickCreateReviewBtn}>
                       리뷰 작성하기
                     </Button>
-                  </Empty>
+                  </div>
                 )}
               </TabPane>
             </Tabs>
