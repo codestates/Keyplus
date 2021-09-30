@@ -18,7 +18,12 @@ const initialState = null;
 const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {},
+  reducers: {
+    logOutForce(state) {
+      state = null;
+      return state;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(signUp.fulfilled, () => {})
@@ -58,4 +63,5 @@ const userSlice = createSlice({
   },
 });
 
+export const { logOutForce } = userSlice.actions;
 export default userSlice.reducer;
