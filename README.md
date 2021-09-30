@@ -10,14 +10,14 @@ Keyplus가 도와드릴게요!
 **사용자에게 딱 맞는 기계식 키보드를 추천**해주는 서비스입니다.
 
 <br />
-<h2><a href="keyplus.kr"><strong>Homepage</strong></a></h2>
+<h2><a href="keyplus.kr"><strong>🏠 &nbsp;Homepage</strong></a></h2>
 
 
 <img src="https://media.discordapp.net/attachments/871554528389005335/892987580147175484/landing.png" />
 
 <br />
 
-## Flowchart
+## 👣 &nbsp;Flowchart
 ### Client
 ![Client Flowchart](https://media.discordapp.net/attachments/871554528389005335/884722844230103040/Keyplus_-_Client.jpg)
 
@@ -27,12 +27,12 @@ Keyplus가 도와드릴게요!
 
 <br />
 
-## System Architecture
+## 🔨 &nbsp;System Architecture
 ![System Architecture](https://media.discordapp.net/attachments/871554528389005335/892989436348993587/Web_App_Reference_Architecture_V2_7.png?width=1790&height=1062)
 
 <br />
 
-## Team Member
+## 😊 &nbsp;Team Member
 | <a href="https://github.com/chloemk">김민성</a>  | <a href="https://github.com/seona-jung">정선아</a>   | <a href="https://github.com/do8972">박준호</a>  | <a href="https://github.com/goodbsm2421">백승문</a>  |
 | :----: |:----:| :----:| :---:|
 | Front-end | Front-end | Back-end |Back-end |
