@@ -19,6 +19,7 @@ const RightArrow = ({ currentSlide, slideCount, children, ...props }) => {
 };
 
 const Review = ({ review, userId }) => {
+  console.log(review.createdAt);
   return (
     <>
       {(review.image1 || review.image2 || review.image3 || review.video) && (
@@ -37,7 +38,7 @@ const Review = ({ review, userId }) => {
                 className="review-video"
                 controls
                 preload="metadata"
-                playsinline
+                playsInline
                 poster={`${review.video}#t=0.5`}
               >
                 <source src={`${review.video}#t=0.5`} type="video/mp4" />

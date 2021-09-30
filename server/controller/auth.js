@@ -7,6 +7,8 @@ const axios = require('axios');
 const nodemailer = require('nodemailer');
 dotenv.config();
 
+const { sign } = require('jsonwebtoken');
+
 const {
   generateAccessToken,
   sendAccessToken,
@@ -21,6 +23,14 @@ function generateRandomCode(n) {
 }
 
 module.exports = {
+  persist: async (req, res) => {
+    return res
+      .status(200)
+      .cookie('persist', generateRandomCode(10), {
+        maxAge: 60 * 1000,
+      })
+      .json({ message: 'persist' });
+  },
   login: async (req, res) => {
     // 1. email과 password 를 클라이언트에서 받아온다.
     const { email, password } = req.body;

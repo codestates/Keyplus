@@ -21,6 +21,9 @@ import axiosConfig from './utils/axiosConfig';
 axiosConfig();
 
 const persistor = persistStore(store);
+if (!document.cookie) {
+  persistor.purge();
+}
 
 ReactDOM.render(
   <React.StrictMode>

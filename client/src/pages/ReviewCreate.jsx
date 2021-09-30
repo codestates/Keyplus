@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useHistory } from 'react-router';
-import { useDispatch } from 'react-redux';
+
+import { useDispatch, useSelector } from 'react-redux';
+
 
 import { addReviews, updateReviews } from '../reducers/api/reviewsAPI';
 import Button from '../components/Button';
@@ -346,7 +348,7 @@ const ReviewCreate = ({ location, ...props }) => {
             {previewVideo ? (
               <div className="preview-image-wrapper">
                 <video
-                  playsinline
+                  playsInline
                   preload="metadata"
                   poster={`${previewVideo}`}
                   className="preview-video"

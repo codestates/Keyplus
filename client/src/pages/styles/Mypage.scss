@@ -18,7 +18,6 @@
 
 .mypage-main {
   @include flexbox();
-  flex: 1;
   flex-direction: column;
   height: 100%;
 

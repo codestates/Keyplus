@@ -24,7 +24,7 @@ import './App.less';
 function App() {
   const loading = useSelector((state) => state.loading);
 
-  useEffect(() => {
+  useEffect(async () => {
     AOS.init();
   }, []);
 
