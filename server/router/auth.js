@@ -5,7 +5,7 @@ const { uploads } = require('../middleware/uploads');
 
 const router = express.Router();
 
-router.post('/persist', authController.persist); // login API
+router.get('/persist', authController.persist); // login API
 router.post('/login', authController.login); // login API
 router.post('/logout', isAuth, authController.logout); // logout API
 router.post('/signup', uploads.single('img'), authController.signup); // singup API

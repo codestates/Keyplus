@@ -7,8 +7,6 @@ const axios = require('axios');
 const nodemailer = require('nodemailer');
 dotenv.config();
 
-const { sign } = require('jsonwebtoken');
-
 const {
   generateAccessToken,
   sendAccessToken,
