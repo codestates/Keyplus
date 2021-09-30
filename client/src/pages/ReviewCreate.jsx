@@ -348,7 +348,7 @@ const ReviewCreate = ({ location, ...props }) => {
             {previewVideo ? (
               <div className="preview-image-wrapper">
                 <video
-                  playsinline
+                  playsInline
                   preload="metadata"
                   poster={`${previewVideo}`}
                   className="preview-video"

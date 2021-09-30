@@ -27,28 +27,29 @@
     justify-content: flex-start;
   }
 
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
   .title {
     font-weight: 600;
     text-transform: uppercase;
     margin: 30px 0;
     border-bottom: 4px solid rgb(138, 138, 138);
     letter-spacing: 1px;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
   }
 
   .inquiry-select {
-    transform: translate(105px, -20px);
-    // color: rgb(138, 138, 138);
-    @media screen and (max-width: $md-breakpoint) {
-      text-align: center;
-    }
+    margin-bottom: 20px;
   }
 
   .inquiry-input-box {
     margin-bottom: 20px;
-    // max-width: 267px;
-    max-width: 70%;
-    transform: translateX(25%);
+    width: 70%;
 
     label {
       font-size: 14px;
@@ -79,6 +80,7 @@
       font-size: 14px;
       letter-spacing: 1px;
       border-radius: 10px;
+      resize: none;
     }
 
     button {
