@@ -176,7 +176,7 @@ const Signup = () => {
             <h2 className="title">Signup</h2>
 
             <form className="signup-form" onSubmit={onClickSignup}>
-              <div className="uploadbox">
+              <div className="upload-box">
                 <input
                   type="file"
                   id="img"
@@ -188,11 +188,11 @@ const Signup = () => {
                 />
 
                 {profileImg ? (
-                  <div className="upload-icon" onClick={handleImgRef}>
+                  <div className="upload-image" onClick={handleImgRef}>
                     <Avatar src={profileImg} size={80} />
                   </div>
                 ) : (
-                  <div className="upload-icon" onClick={handleImgRef}>
+                  <div className="upload-image" onClick={handleImgRef}>
                     <Avatar icon={<UserOutlined />} size={80} />
                   </div>
                 )}
@@ -201,7 +201,7 @@ const Signup = () => {
                 <p className="text profile">프로필 사진을 업로드 해주세요</p>
               </div>
 
-              <div className="inputbox">
+              <div className="input-box">
                 <label htmlFor="email">이메일</label>
                 <div className="input-wrapper">
                   <input
@@ -220,7 +220,7 @@ const Signup = () => {
               </div>
               {isClicked && (
                 <>
-                  <div className="inputbox">
+                  <div className="input-box">
                     <p>인증번호</p>
                     <div className="input-wrapper">
                       <input
@@ -239,7 +239,7 @@ const Signup = () => {
                   </div>
                 </>
               )}
-              <div className="inputbox">
+              <div className="input-box">
                 <label htmlFor="nickname">닉네임</label>
                 <div className="input-wrapper">
                   <input
@@ -257,7 +257,7 @@ const Signup = () => {
                 </div>
               </div>
 
-              <div className="inputbox">
+              <div className="input-box">
                 <label htmlFor="password">비밀번호</label>
                 <input
                   type="password"
@@ -268,7 +268,7 @@ const Signup = () => {
                   value={password || ''}
                 />
               </div>
-              <div className="inputbox">
+              <div className="input-box">
                 <label htmlFor="repassword">비밀번호 확인</label>
                 <input
                   type="password"
@@ -279,7 +279,7 @@ const Signup = () => {
                   value={repassword || ''}
                 />
               </div>
-              <button type="submit" className="signupbtn">
+              <button type="submit" className="signup-btn">
                 회원가입
               </button>
             </form>

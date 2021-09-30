@@ -5,6 +5,9 @@ import '../styles/LandingPart1.scss';
 
 const LandingPart1 = () => {
   const history = useHistory();
+  // const onClickScrollDown = () => {
+  //   window.scrollTo(0,document.body.scrollHeight);
+  // }
 
   return (
     <>

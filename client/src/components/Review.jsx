@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom';
 
 import { deleteReviews } from '../reducers/api/reviewsAPI';
 import ButtonModal from './ButtonModal';
+import Button from './Button';
 
 import './styles/Review.scss';
 
-import { Avatar, Button, Carousel, Rate } from 'antd';
+import { Avatar, Carousel, Rate } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 
 const LeftArrow = ({ currentSlide, slideCount, children, ...props }) => {
@@ -18,6 +19,7 @@ const RightArrow = ({ currentSlide, slideCount, children, ...props }) => {
 };
 
 const Review = ({ review, userId }) => {
+  console.log(review.createdAt);
   return (
     <>
       {(review.image1 || review.image2 || review.image3 || review.video) && (
@@ -36,7 +38,7 @@ const Review = ({ review, userId }) => {
                 className="review-video"
                 controls
                 preload="metadata"
-                playsinline
+                playsInline
                 poster={`${review.video}#t=0.5`}
               >
                 <source src={`${review.video}#t=0.5`} type="video/mp4" />

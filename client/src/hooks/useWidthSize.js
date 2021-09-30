@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 
-const useWidthSize = () => {
+const useWidthSize = (breakpoint) => {
   const [widthSize, setWidthSize] = useState(null);
 
   useEffect(() => {
     const handleResize = () => {
-      if (widthSize <= 768 && window.innerWidth > 768) setWidthSize(769);
-      else if (widthSize > 768 && window.innerWidth <= 768) setWidthSize(768);
+      if (widthSize <= breakpoint && window.innerWidth > breakpoint)
+        setWidthSize(breakpoint + 1);
+      else if (widthSize > breakpoint && window.innerWidth <= breakpoint)
+        setWidthSize(breakpoint);
     };
 
     window.addEventListener('resize', handleResize);

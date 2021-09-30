@@ -1,10 +1,108 @@
+@use '../../styles/constants' as *;
+@use '../../styles/mixins' as *;
+
 .inquiry-container {
-  border: 1px solid #000;
-}
-textarea {
-  border: 1px solid #000;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  max-width: 800px;
+  min-width: 320px;
+  height: 100%;
+  // height: calc(100vh - 120px);
+  // margin-top: -80px;
+  margin: 0 auto;
+  margin-bottom: -70px;
+  position: relative;
+
+  @media screen and (max-width: $md-breakpoint) {
+    padding-top: 50px;
+    margin-bottom: -30px;
+  }
 }
 
-input {
-  border: 1px solid #000;
+.inquiry-main {
+  @include flexbox();
+  flex-direction: column;
+  height: 100%;
+
+  @media screen and (max-width: $md-breakpoint) {
+    justify-content: flex-start;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .title {
+    font-weight: 600;
+    text-transform: uppercase;
+    margin: 30px 0;
+    border-bottom: 4px solid rgb(138, 138, 138);
+    letter-spacing: 1px;
+    margin-bottom: 30px;
+  }
+
+  .inquiry-select {
+    margin-bottom: 20px;
+  }
+
+  .inquiry-input-box {
+    margin-bottom: 20px;
+    width: 70%;
+
+    label {
+      font-size: 14px;
+      margin-bottom: 5px;
+      display: inline-block;
+      color: rgb(138, 138, 138);
+      font-weight: 400;
+      letter-spacing: 1px;
+    }
+
+    input {
+      width: 100%;
+      padding: 7px 15px;
+      outline: none;
+      font-weight: 400;
+      border: 1px solid rgb(138, 138, 138) !important;
+      font-size: 14px;
+      letter-spacing: 1px;
+      border-radius: 10px;
+    }
+
+    textarea {
+      width: 100%;
+      padding: 7px 15px;
+      outline: none;
+      font-weight: 400;
+      border: 1px solid rgb(138, 138, 138) !important;
+      font-size: 14px;
+      letter-spacing: 1px;
+      border-radius: 10px;
+      resize: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px 20px;
+      outline: none;
+      border: 1px solid rgb(138, 138, 138);
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 1px;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 15px;
+      margin-bottom: 30px;
+      color: #fff;
+      transition: all 0.3s ease-out;
+      background-color: rgb(165, 165, 165);
+
+      &:hover {
+        color: #fff;
+        background-color: rgb(138, 138, 138);
+      }
+    }
+  }
 }

@@ -25,7 +25,7 @@ import {
 
 const Header = () => {
   const offset = usePageYOffset();
-  const width = useWidthSize();
+  const width = useWidthSize(768);
   const [isOpenSidebar, setIsOpenSidebar] = useState(false);
 
   const dispatch = useDispatch();
@@ -44,16 +44,11 @@ const Header = () => {
     }
   };
 
-  const onClickMypage = async () => {
-    try {
-      if (userState === null) {
-        history.push('/login');
-      } else {
-        history.push('/mypage');
-      }
-    } catch (err) {
-      dispatch(isError(err.response));
+  const onClickMypage = () => {
+    if (userState) {
+      return history.push('/mypage');
     }
+    window.location.replace('/login');
   };
 
   return (
@@ -94,7 +89,7 @@ const Header = () => {
             >
               <li className="nav-item">
                 <Link
-                  to="/"
+                  to="/survey"
                   className="nav-links"
                   onClick={isOpenSidebar && onClickToggleBtn}
                 >
@@ -155,8 +150,8 @@ const Header = () => {
                 >
                   <ExportOutlined
                     style={{
-                      fontSize: '24px',
-                      color: '#fff',
+                      fontSize: width > 768 ? '24px' : '21px',
+                      color: offset > 0 ? '#fff' : '#000',
                     }}
                   />
                 </button>
