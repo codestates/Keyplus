@@ -21,15 +21,6 @@ function generateRandomCode(n) {
 }
 
 module.exports = {
-  // persist: async (req, res) => {
-  //   return res
-  //     .status(200)
-  //     .cookie('persist', generateRandomCode(10), {
-  //       // sameSite: 'None',
-  //       maxAge: 60 * 1000,
-  //     })
-  //     .json({ message: 'persist' });
-  // },
   login: async (req, res) => {
     // 1. email과 password 를 클라이언트에서 받아온다.
     const { email, password } = req.body;
@@ -66,14 +57,7 @@ module.exports = {
         isAdmin,
         image,
       });
-      return res
-        .status(200)
-        .cookie('jwt', token)
-        .cookie('persist', generateRandomCode(10), {
-          // sameSite: 'None',
-          maxAge: 60 * 1000,
-        })
-        .json({ data: loginUserInfo });
+      return res.status(200).cookie('jwt', token).json({ data: loginUserInfo });
     } catch (err) {
       console.log(err);
       return res.status(500).json({ message: 'Server Error' });
@@ -83,7 +67,6 @@ module.exports = {
     // 1. clearCookie
     try {
       res.clearCookie('jwt');
-      res.clearCookie('persist');
       return res.sendStatus(200);
     } catch (err) {
       console.log(err);
@@ -175,16 +158,12 @@ module.exports = {
       });
       console.log('====================token', token);
 
-      res
-        .cookie('jwt', token, {
-          sameSite: 'None',
-          httpOnly: true,
-          secure: true,
-        })
-        .cookie('persist', generateRandomCode(10), {
-          // sameSite: 'None',
-          maxAge: 60 * 1000,
-        });
+      res.cookie('jwt', token, {
+        sameSite: 'None',
+        httpOnly: true,
+        secure: true,
+      });
+
       res.redirect(`${process.env.CLIENT_URI}/temp`);
     } catch (error) {
       res.sendStatus(500);
@@ -239,16 +218,11 @@ module.exports = {
         image: user[0].dataValues.image,
       });
 
-      res
-        .cookie('jwt', token, {
-          sameSite: 'None',
-          httpOnly: true,
-          secure: true,
-        })
-        .cookie('persist', generateRandomCode(10), {
-          // sameSite: 'None',
-          maxAge: 60 * 1000,
-        });
+      res.cookie('jwt', token, {
+        sameSite: 'None',
+        httpOnly: true,
+        secure: true,
+      });
 
       res.redirect(`${process.env.CLIENT_URI}/temp`);
     } catch (error) {
@@ -306,16 +280,11 @@ module.exports = {
         image: user[0].dataValues.image,
       });
 
-      res
-        .cookie('jwt', token, {
-          sameSite: 'None',
-          httpOnly: true,
-          secure: true,
-        })
-        .cookie('persist', generateRandomCode(10), {
-          // sameSite: 'None',
-          maxAge: 60 * 1000,
-        });
+      res.cookie('jwt', token, {
+        sameSite: 'None',
+        httpOnly: true,
+        secure: true,
+      });
 
       res.redirect(`${process.env.CLIENT_URI}/temp`);
     } catch (error) {

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { Redirect, Route, Switch } from 'react-router';
-import { useSelector } from 'react-redux';
+import { Route, Switch } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
@@ -18,14 +18,29 @@ import ReviewCreate from './pages/ReviewCreate';
 import Spinner from './components/Spinner';
 import PrivateRoute from './utils/PrivateRoute';
 import PublicRoute from './utils/PublicRoute';
+import { logOutForce } from './reducers/userSlice';
+import { logOutMyLikes } from './reducers/likesSlice';
+import { logOutMyReviews } from './reducers/reviewsSlice';
+import { setExpireDate } from './reducers/expireDateReducer';
 
 import './App.less';
 
 function App() {
+  const dispatch = useDispatch();
   const loading = useSelector((state) => state.loading);
+  const expireDate = useSelector((state) => state.expireDate);
 
   useEffect(async () => {
     AOS.init();
+    if (expireDate) {
+      const currentDate = Date.now();
+      if (currentDate - expireDate >= 1000 * 60) {
+        dispatch(logOutForce());
+        dispatch(logOutMyLikes());
+        dispatch(logOutMyReviews());
+        dispatch(setExpireDate(null));
+      }
+    }
   }, []);
 
   return (
