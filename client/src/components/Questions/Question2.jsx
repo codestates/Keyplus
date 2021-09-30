@@ -1,15 +1,11 @@
 import React from 'react';
 
-const Question2 = ({ onClickNoise }) => {
+const Question2 = ({ onClickColor }) => {
   return (
     <>
-      <div>
-        키보드의 시끄러움 정도를 골라주세요! 사용하시는 장소에 따라 보통
-        결정됩니다.
-      </div>
-      <button onClick={() => onClickNoise('조용')}>조용</button>
-      <button onClick={() => onClickNoise('보통')}>보통</button>
-      <button onClick={() => onClickNoise('시끄러움')}>시끄러움</button>
+      <div>선호하는 색상을 골라주세요.</div>
+      <button onClick={() => onClickColor(1)}>유채색</button>
+      <button onClick={() => onClickColor(0)}>무채색</button>
     </>
   );
 };

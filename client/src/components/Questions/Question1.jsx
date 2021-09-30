@@ -1,12 +1,13 @@
 import React from 'react';
 
-const Question1 = ({ onClickGaming }) => {
+const Question1 = ({ onClickSound }) => {
   return (
     <>
-      <div>어떤 용도로 사용하실 계획인가요?</div>
-      <button onClick={() => onClickGaming(1)}>게임</button>
-      <button onClick={() => onClickGaming(0)}>개발</button>
-      <button onClick={() => onClickGaming(0)}>사무</button>
+      <div>가장 마음에 드는 소리를 골라주세요.</div>
+      <button onClick={() => onClickSound(1)}>보글보글</button>
+      <button onClick={() => onClickSound(2)}>도각도각</button>
+      <button onClick={() => onClickSound(3)}>서걱서걱 </button>
+      <button onClick={() => onClickSound(4)}>찰칵찰칵</button>
     </>
   );
 };
