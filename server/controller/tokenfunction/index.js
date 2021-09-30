@@ -4,7 +4,7 @@ const { sign } = require('jsonwebtoken');
 module.exports = {
   generateAccessToken: (data) => {
     const token = sign(data, 'jwt', {
-      expiresIn: '2d',
+      expiresIn: '60s',
     });
     return token;
   },
