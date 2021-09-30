@@ -9,6 +9,7 @@ const development = {
   port: env.DATABASE_PORT,
   dialect: 'mysql',
   timezone: '+09:00',
+  dialectOptions: { dateStrings: true, typeCast: true },
 };
 
 const production = {
@@ -19,6 +20,7 @@ const production = {
   port: env.DATABASE_PORT,
   dialect: 'mysql',
   timezone: '+09:00',
+  dialectOptions: { dateStrings: true, typeCast: true },
 };
 
 const test = {
@@ -29,6 +31,7 @@ const test = {
   port: env.DATABASE_PORT,
   dialect: 'mysql',
   timezone: '+09:00',
+  dialectOptions: { dateStrings: true, typeCast: true },
 };
 
 module.exports = { development, production, test };
