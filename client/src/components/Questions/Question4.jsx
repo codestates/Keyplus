@@ -1,13 +1,13 @@
 import React from 'react';
 
-const Question4 = ({ onClickSound }) => {
+const Question4 = ({ onClickTenkey }) => {
   return (
     <>
-      <div>키보드를 누를때 어떤 소리를 더 선호하시나요?</div>
-      <button onClick={() => onClickSound('도각')}>도각</button>
-      <button onClick={() => onClickSound('서걱')}>서걱</button>
-      <button onClick={() => onClickSound('보글')}>보글</button>
-      <button onClick={() => onClickSound('찰칵')}>찰칵</button>
+      <div>숫자 키패드 유무를 골라주세요.</div>
+      <button onClick={() => onClickTenkey(1)}>숫자 키패드 있는 키보드</button>
+      <button onClick={() => onClickTenkey(0)}>
+        숫자 키패드 없는 키보드(텐키리스)
+      </button>
     </>
   );
 };

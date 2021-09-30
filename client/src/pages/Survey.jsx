@@ -1,40 +1,73 @@
 import React, { useEffect, useRef, useState } from 'react';
+import ProgressBar from '@ramonak/react-progress-bar';
+
 import Question1 from '../components/Questions/Question1';
 import Question2 from '../components/Questions/Question2';
 import Question3 from '../components/Questions/Question3';
 import Question4 from '../components/Questions/Question4';
+import Question5 from '../components/Questions/Question5';
+import Question6 from '../components/Questions/Question6';
 
+// [설문조사 필터링]
+
+// 1. switch
+//     - 저소음적축 true 또는 적축 true 1
+//     - 갈축 true 2
+//     - 흑축 true 3
+//     - 청축 true 4
+// 2. color
+//     - 다채 1
+//     - 무채 0
+// 3. backlight
+// 4. tenkey
+// 5. bluetooth
+// 6. price (보내진 값 이하로)
+
+//     <back으로 보내는 데이터 형식>
+
+//     { switch: 1, color: 1, backlight: 1, tenkey: 1, bluetooth: 2, price: 100000}
+
+//     <Front>
+
+//     1. 인풋 - 최대 금액 직접 입력
+//     2. 버튼 - 최대 예산 5만원 / 10만원 / 15만원 / 20만원
 const Survey = () => {
-  //TODO: API 하나 더 만들어달라고 요청해야함
-  //FIXME: 게이밍, 노이즈, 사운드 등등 useState로 만듬
-  //클릭핸들러 함수
-
   const [isLoading, setIsLoading] = useState(false);
-
   const [isStarted, setIsStarted] = useState(false);
-  const [gaming, setGaming] = useState(null);
-  const [noise, setNoise] = useState(null);
-  const [weight, setWeight] = useState(null);
+
   const [sound, setSound] = useState(null);
+  const [color, setColor] = useState(null);
+  const [backlight, setBacklight] = useState(null);
+  const [tenkey, setTenkey] = useState(null);
+  const [bluetooth, setBluetooth] = useState(null);
+  const [price, setPrice] = useState(null);
 
   const onClickStartBtn = () => {
     setIsStarted(true);
   };
 
-  const onClickGaming = (res) => {
-    setGaming(res);
-  };
-
-  const onClickNoise = (res) => {
-    setNoise(res);
-  };
-
-  const onClickWeight = (res) => {
-    setWeight(res);
-  };
-
   const onClickSound = (res) => {
     setSound(res);
+  };
+
+  const onClickColor = (res) => {
+    setColor(res);
+  };
+
+  const onClickBacklight = (res) => {
+    setBacklight(res);
+  };
+
+  const onClickTenkey = (res) => {
+    setTenkey(res);
+  };
+
+  const onClickBluetooth = (res) => {
+    setBluetooth(res);
+  };
+
+  const onClickPrice = (res) => {
+    setPrice(res);
   };
 
   const mounted = useRef(false);
@@ -63,7 +96,7 @@ const Survey = () => {
         setIsLoading(false);
       }
     }
-  }, [sound]);
+  }, [price]);
 
   if (!isStarted) {
     return (
@@ -72,28 +105,50 @@ const Survey = () => {
       </>
     );
   } else {
-    if (gaming === null) {
+    if (sound === null) {
       return (
         <>
-          <Question1 onClickGaming={onClickGaming} />
+          <ProgressBar completed={16} bgColor="#647C90" baseBgColor="#dfdfdf" />
+          <Question1 onClickSound={onClickSound} />
         </>
       );
-    } else if (noise === null) {
+    } else if (color === null) {
       return (
         <>
-          <Question2 onClickNoise={onClickNoise} />
+          <ProgressBar completed={32} bgColor="#647C90" baseBgColor="#dfdfdf" />
+          <Question2 onClickColor={onClickColor} />
         </>
       );
-    } else if (weight === null) {
+    } else if (backlight === null) {
       return (
         <>
-          <Question3 onClickWeight={onClickWeight} />
+          <ProgressBar completed={48} bgColor="#647C90" baseBgColor="#dfdfdf" />
+          <Question3 onClickBacklight={onClickBacklight} />
         </>
       );
-    } else if (sound === null) {
+    } else if (tenkey === null) {
       return (
         <>
-          <Question4 onClickSound={onClickSound} />
+          <ProgressBar completed={64} bgColor="#647C90" baseBgColor="#dfdfdf" />
+          <Question4 onClickTenkey={onClickTenkey} />
+        </>
+      );
+    } else if (bluetooth === null) {
+      return (
+        <>
+          <ProgressBar completed={80} bgColor="#647C90" baseBgColor="#dfdfdf" />
+          <Question5 onClickBluetooth={onClickBluetooth} />
+        </>
+      );
+    } else if (price === null) {
+      return (
+        <>
+          <ProgressBar
+            completed={100}
+            bgColor="#647C90"
+            baseBgColor="#dfdfdf"
+          />
+          <Question6 onClickPrice={onClickPrice} />
         </>
       );
     } else {
