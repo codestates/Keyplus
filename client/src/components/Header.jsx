@@ -45,8 +45,10 @@ const Header = () => {
   };
 
   const onClickMypage = () => {
-    history.push('/mypage');
-    window.location.reload();
+    if (userState) {
+      return history.push('/mypage');
+    }
+    window.location.replace('/login');
   };
 
   return (
