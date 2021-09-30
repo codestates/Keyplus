@@ -60,7 +60,7 @@ const Keyboard = () => {
   const [backlight, setBacklight] = useState(false);
 
   // ! 화면 크기
-  const width = useWidthSize();
+  const width = useWidthSize(768);
 
   useEffect(async () => {
     try {

@@ -31,7 +31,6 @@ export const logIn = createAsyncThunk(
         dispatch(getLikes()).unwrap(),
         dispatch(getReviews()).unwrap(),
       ]);
-      await exceptionAxios.get('/auth/persist');
       return user.data.data;
     } catch (err) {
       return rejectWithValue(err);
