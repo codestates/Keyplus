@@ -1,10 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useHistory } from 'react-router';
-<<<<<<< Updated upstream
-import { useDispatch } from 'react-redux';
-=======
 import { useDispatch, useSelector } from 'react-redux';
->>>>>>> Stashed changes
 
 import { addReviews, updateReviews } from '../reducers/api/reviewsAPI';
 import Button from '../components/Button';
@@ -13,10 +9,7 @@ import './styles/ReviewCreate.scss';
 
 import { Rate, Input, message } from 'antd';
 const { TextArea } = Input;
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
 import { IoCloseOutline } from 'react-icons/io5';
 import { RiImageAddFill, RiVideoAddFill } from 'react-icons/ri';
 
