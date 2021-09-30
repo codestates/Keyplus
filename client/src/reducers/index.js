@@ -8,6 +8,7 @@ import likesReducer from './likesSlice';
 import reviewsReducer from './reviewsSlice';
 import loadingReducer from './loadingReducer';
 import errorReducer from './errorReducer';
+import expireDateReducer from './expireDateReducer';
 
 const persistConfig = {
   key: 'root',
@@ -26,5 +27,6 @@ export const persistedReducer = persistReducer(
     user: userReducer,
     likes: likesReducer,
     reviews: reviewsReducer,
+    expireDate: expireDateReducer,
   })
 );
