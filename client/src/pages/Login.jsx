@@ -1,12 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import {
-  logIn,
-  googleLogIn,
-  kakaoLogIn,
-  naverLogIn,
-} from '../reducers/api/userAPI';
+import { logIn } from '../reducers/api/userAPI';
 import { isError } from '../reducers/errorReducer';
 import './styles/Login.scss';
 import { Link } from 'react-router-dom';
