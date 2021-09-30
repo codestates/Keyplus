@@ -34,7 +34,7 @@ function App() {
     AOS.init();
     if (expireDate) {
       const currentDate = Date.now();
-      if (currentDate - expireDate >= 1000 * 60) {
+      if (currentDate - expireDate >= 1000 * 60 * 60 * 24 * 2) {
         dispatch(logOutForce());
         dispatch(logOutMyLikes());
         dispatch(logOutMyReviews());
