@@ -91,7 +91,10 @@ const Header = () => {
                 <Link
                   to="/survey"
                   className="nav-links"
-                  onClick={isOpenSidebar ? onClickToggleBtn : null}
+                  onClick={() => [
+                    isOpenSidebar ? onClickToggleBtn : null,
+                    window.location.replace('/survey'),
+                  ]}
                 >
                   설문조사
                 </Link>
@@ -100,7 +103,10 @@ const Header = () => {
                 <Link
                   to="/keyboards"
                   className="nav-links"
-                  onClick={isOpenSidebar ? onClickToggleBtn : null}
+                  onClick={() => [
+                    isOpenSidebar ? onClickToggleBtn : null,
+                    window.location.replace('/keyboards'),
+                  ]}
                 >
                   키보드
                 </Link>
@@ -109,7 +115,10 @@ const Header = () => {
                 <Link
                   to="/map"
                   className="nav-links"
-                  onClick={isOpenSidebar ? onClickToggleBtn : null}
+                  onClick={() => [
+                    isOpenSidebar ? onClickToggleBtn : null,
+                    window.location.replace('/map'),
+                  ]}
                 >
                   타건샵
                 </Link>
