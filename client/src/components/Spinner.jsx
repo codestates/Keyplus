@@ -7,10 +7,12 @@ const style = {
   display: 'flex',
   justifyContent: ' center',
   alignItems: 'center',
+  width: '100vw',
   height: '100vh',
 };
-const loading = <LoadingOutlined style={style} spin />;
 
-const Spinner = () => <Spin indicator={loading} />;
+const loadingIcon = <LoadingOutlined style={style} spin />;
+
+const Spinner = () => <Spin indicator={loadingIcon} />;
 
 export default Spinner;

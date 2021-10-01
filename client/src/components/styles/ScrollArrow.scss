@@ -1,0 +1,36 @@
+@use '../../styles/constants' as *;
+
+.scrollTop {
+  position: fixed;
+  right: 25px;
+  bottom: 25px;
+  justify-content: flex-end;
+  align-items: center;
+  z-index: 1000;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  animation: fadeIn 0.3s;
+  transition: opacity 0.4s;
+  opacity: 0.5;
+
+  @media screen and (max-width: $md-breakpoint) {
+    right: 10px;
+    bottom: 10px;
+    width: 40px;
+    height: 40px;
+  }
+}
+
+.scrollTop:hover {
+  opacity: 1;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0.5;
+  }
+}

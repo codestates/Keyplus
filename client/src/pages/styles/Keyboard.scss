@@ -37,6 +37,8 @@
   & > *:nth-child(odd) {
     background-color: #262626;
     color: #fff;
+    // color: #000;
+    border-bottom: 1px solid #858585;
     font-weight: 500;
   }
   & > *:nth-child(even) {
@@ -108,7 +110,8 @@
     .selected-category {
       display: inline-block;
       padding: 2px 10px;
-      background-color: #808080;
+      // background-color: #808080;
+      background-color: #262626;
       border-radius: 20px;
       color: #fff;
       font-size: 12px;
