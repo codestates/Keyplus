@@ -163,6 +163,7 @@ module.exports = {
         httpOnly: true,
         secure: true,
       });
+
       res.redirect(`${process.env.CLIENT_URI}/temp`);
     } catch (error) {
       res.sendStatus(500);

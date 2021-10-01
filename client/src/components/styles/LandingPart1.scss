@@ -117,7 +117,7 @@
       white-space: nowrap;
 
       .part1-text {
-        font-size: calc(100vw / 20);
+        font-size: max(calc(100vw / 20), 20px);
       }
     }
 
@@ -126,7 +126,7 @@
       transform: translate(-50%, 30%);
 
       .part1-button {
-        font-size: calc(100vw / 40);
+        font-size: max(calc(100vw / 40), 16px);
         padding: 10px 50px;
       }
     }

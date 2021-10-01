@@ -45,8 +45,10 @@
     }
 
     .part2-text-wrapper {
+      bottom: 10%;
+      transform: translate(5%, 10%);
       .part2-text {
-        font-size: calc(100vw / 20);
+        font-size: max(calc(100vw / 20), 20px);
       }
     }
   }

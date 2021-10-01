@@ -5,22 +5,9 @@ import { getReviews } from './reviewsAPI';
 import { logOutMyLikes } from '../likesSlice';
 import { logOutMyReviews } from '../reviewsSlice';
 import exceptionAxios from 'axios';
+import { setExpireDate } from '../expireDateReducer';
 
 // 회원가입, 로그인, 로그아웃, 유저정보조회, 회원정보변경, 회원탈퇴, 소셜로그인(구글,카카오,네이버)
-
-// export const signUp = createAsyncThunk(
-//   'user/signUp',
-//   async ({ state, formData }, { rejectWithValue }) => {
-//     console.log('🌱🌱🌱🌱🌱', state, formData);
-//     try {
-//       await axios.post('/auth/signup', formData); //서버로 보내기. 서버에 보내면 돌아오는 데이터는 없음
-//       // dispatch(logIn(state)).unwrap(); //로그인 디스패치 보내기
-//       // return state; //리덕스에 저장
-//     } catch (err) {
-//       return rejectWithValue(err);
-//     }
-//   }
-// );
 
 export const logIn = createAsyncThunk(
   'user/logIn',
@@ -31,19 +18,13 @@ export const logIn = createAsyncThunk(
         dispatch(getLikes()).unwrap(),
         dispatch(getReviews()).unwrap(),
       ]);
+      dispatch(setExpireDate(Date.now()));
       return user.data.data;
     } catch (err) {
       return rejectWithValue(err);
     }
   }
 );
-
-// export const signUp = async ({ state, formData }) => {
-//   console.log('🌱🌱🌱🌱🌱', state, formData);
-
-//   await axios.post('/auth/signup', formData);
-//   // await dispatch(logIn(state)); //로그인 디스패치 보내기
-// };
 
 export const signUp = createAsyncThunk(
   'user/signUp',
@@ -67,6 +48,7 @@ export const logOut = createAsyncThunk(
       await axios.post('/auth/logout');
       dispatch(logOutMyLikes());
       dispatch(logOutMyReviews());
+      dispatch(setExpireDate(null));
       history.replace('/');
     } catch (err) {
       return rejectWithValue(err);
@@ -96,6 +78,7 @@ export const deleteUser = createAsyncThunk(
       //unwrap 안하는 이유는 동기 액션이기 때문에 딱히 에러날 일이 없다.
       dispatch(logOutMyLikes());
       dispatch(logOutMyReviews());
+      dispatch(setExpireDate(null));
       history.replace('/');
     } catch (err) {
       return rejectWithValue(err);
@@ -112,6 +95,7 @@ export const socialLogIn = createAsyncThunk(
         dispatch(getLikes()).unwrap(),
         dispatch(getReviews()).unwrap(),
       ]);
+      dispatch(setExpireDate(Date.now()));
       return user.data.data;
     } catch (err) {
       return rejectWithValue(err);

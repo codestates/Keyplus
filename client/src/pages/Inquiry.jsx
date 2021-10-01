@@ -87,6 +87,7 @@ const Inquiry = () => {
               <input
                 type="email"
                 name="email"
+                placeholder="example@example.com"
                 value={email}
                 onChange={onChangeUpdateState}
               />
@@ -97,6 +98,7 @@ const Inquiry = () => {
               <input
                 type="text"
                 name="name"
+                placeholder="name"
                 value={name}
                 onChange={onChangeUpdateState}
               />
@@ -107,6 +109,7 @@ const Inquiry = () => {
               <input
                 type="text"
                 name="title"
+                placeholder="title"
                 value={title}
                 onChange={onChangeUpdateState}
               />
@@ -118,6 +121,7 @@ const Inquiry = () => {
               <textarea
                 name="contents"
                 id="contents"
+                placeholder="contents"
                 cols="80"
                 rows="10"
                 value={contents}

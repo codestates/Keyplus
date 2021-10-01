@@ -209,7 +209,7 @@ const Mypage = () => {
               </div>
               <div className="mypage-delete-btn">
                 <TextModal
-                  modalText="정말로 탈퇴하시겠습니까?"
+                  modalText="탈퇴하시겠습니까?"
                   loadingText="탈퇴 진행중입니다."
                   buttonText="회원 탈퇴"
                   action={deleteUser}
