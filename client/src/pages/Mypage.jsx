@@ -91,7 +91,7 @@ const Mypage = () => {
     } catch (err) {
       if (!err.response) throw err;
       dispatch(isError(err.response));
-      message.warning('처리도중 문제가 발생했습니다');
+      message.warning('처리 도중 문제가 발생했습니다');
     }
   };
 
