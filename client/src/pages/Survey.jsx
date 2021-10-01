@@ -116,7 +116,22 @@ const Survey = () => {
       <>
         <Header />
         <main className="survey">
-          <button onClick={() => onClickStartBtn()}>START</button>
+          <div className="survey-main">
+            <h2>
+              맘에 쏙 드는 기계식 키보드, 찾기 어려우셨나요?
+              <br />
+              쉽고 간단한 테스트로 <br />
+              나에게 맞는 키보드를 알아보세요.
+            </h2>
+            <div className="survey-button-wrapper">
+              <button
+                className="survey-button"
+                onClick={() => onClickStartBtn()}
+              >
+                START
+              </button>
+            </div>
+          </div>
         </main>
         {/* <Footer /> */}
       </>

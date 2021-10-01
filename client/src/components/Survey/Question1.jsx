@@ -36,7 +36,7 @@ const Question1 = ({ onClickSound }) => {
         </div>
         <div className="card" onClick={() => onClickSound(4)}>
           <div className="image-wrapper">
-            <img src="/no-image.png" alt="" />
+            <img src="/gaming.png" alt="" />
           </div>
           <div className="text-wrapper">
             <div className="description">PC방 키보드 소리</div>
