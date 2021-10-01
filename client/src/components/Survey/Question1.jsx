@@ -3,6 +3,19 @@ import React from 'react';
 import '../styles/QuestionCard.scss';
 
 const Question1 = ({ onClickSound }) => {
+  // const audio1 = new Audio('/click.mp3');
+  // const audio2 = new Audio('/click.mp3');
+  // const audio3 = new Audio('/click.mp3');
+  const audio4 = new Audio('/click.mp3');
+
+  const playAudio = () => {
+    audio4.play();
+  };
+
+  const stopAudio = () => {
+    audio4.pause();
+  };
+
   return (
     <>
       <h2 className="question-title">가장 마음에 드는 소리를 알려주세요.</h2>
@@ -34,7 +47,12 @@ const Question1 = ({ onClickSound }) => {
             <div className="title">서걱서걱 </div>
           </div>
         </div>
-        <div className="card" onClick={() => onClickSound(4)}>
+        <div
+          className="card"
+          onClick={() => onClickSound(4)}
+          onMouseEnter={() => playAudio()}
+          onMouseLeave={() => stopAudio()}
+        >
           <div className="image-wrapper">
             <img src="/gaming.png" alt="" />
           </div>
