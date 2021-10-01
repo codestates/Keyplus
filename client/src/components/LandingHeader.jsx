@@ -92,7 +92,7 @@ const LandingHeader = () => {
             >
               <li className="landing-nav-item">
                 <Link
-                  to="/"
+                  to="/survey"
                   className="landing-nav-links"
                   onClick={onClickToggleBtn}
                 >
