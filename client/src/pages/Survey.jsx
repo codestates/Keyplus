@@ -42,6 +42,10 @@ const Survey = () => {
     //     - 청축 true 4
   };
 
+  // const start = (whichAudio) => {
+  //   whichAudio.play();
+  // };
+
   const onClickColor = (res) => {
     setColor(res);
     // 2. color
