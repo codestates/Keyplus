@@ -150,6 +150,7 @@ const Survey = () => {
           <main className="survey">
             <div className="progress-bar-wrapper">
               <ProgressBar
+                labelSize="12px"
                 completed={16}
                 bgColor="#647C90"
                 baseBgColor="#dfdfdf"

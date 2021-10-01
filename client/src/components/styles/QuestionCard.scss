@@ -41,6 +41,13 @@
     flex-direction: column;
   }
 
+  &.question1 {
+    @media screen and (min-width: $md-breakpoint+1) and (max-width: 1000px) {
+      display: grid;
+      grid-template-columns: repeat(2, 200px);
+    }
+  }
+
   .card {
     cursor: pointer;
 
