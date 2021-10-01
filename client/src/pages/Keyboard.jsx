@@ -20,7 +20,9 @@ import ScrollArrow from '../components/ScrollArrow';
 
 const Keyboard = () => {
   const dispatch = useDispatch();
-  const loading = useSelector((state) => state.loading);
+  // const loading = useSelector((state) => state.loading);
+
+  const [firstLoading, setFirstLoading] = useState(true);
 
   // ! state
   const [keyboards, setKeyboards] = useState([]);
@@ -65,6 +67,7 @@ const Keyboard = () => {
         response.data.data.sort((a, b) => b.likeCount - a.likeCount)
       );
       setSortingNumber('1');
+      setFirstLoading(false);
     } catch (err) {
       console.log(err);
       dispatch(isError(err.response));
@@ -462,7 +465,7 @@ const Keyboard = () => {
     <>
       <ScrollArrow />
       <div className="keyboard">
-        {!loading && (
+        {!firstLoading && (
           <>
             <div className="keyboard-category">
               <div>브랜드</div>
