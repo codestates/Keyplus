@@ -5,9 +5,11 @@ import '../styles/QuestionCard.scss';
 const Question3 = ({ onClickBacklight }) => {
   return (
     <>
-      <h2 className="question-title">
-        키보드 LED 백라이트 여부를 선택해주세요.
-      </h2>
+      <div className="question-header">
+        <h2 className="question-title">
+          키보드 LED 백라이트 여부를 선택해주세요.
+        </h2>
+      </div>
       <div className="card-container">
         <div className="card" onClick={() => onClickBacklight(1)}>
           <div className="image-wrapper">

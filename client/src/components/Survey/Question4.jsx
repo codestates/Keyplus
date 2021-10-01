@@ -5,7 +5,9 @@ import '../styles/QuestionCard.scss';
 const Question4 = ({ onClickTenkey }) => {
   return (
     <>
-      <h2 className="question-title">숫자 키패드 유무를 골라주세요.</h2>
+      <div className="question-header">
+        <h2 className="question-title">숫자 키패드 유무를 골라주세요.</h2>
+      </div>
       <div className="card-container">
         <div className="card" onClick={() => onClickTenkey(1)}>
           <div className="image-wrapper">
