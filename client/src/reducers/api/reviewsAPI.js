@@ -19,8 +19,11 @@ export const addReviews = createAsyncThunk(
   'reviews/addReviews',
   async ({ formData, data }, { rejectWithValue }) => {
     try {
-      await axios.post(`/reviews/${data.keyboardId}`, formData);
-      return data;
+      const response = await axios.post(
+        `/reviews/${data.keyboardId}`,
+        formData
+      );
+      return response.data.data;
     } catch (err) {
       return rejectWithValue(err);
     }
@@ -32,8 +35,11 @@ export const updateReviews = createAsyncThunk(
   'reviews/updateReviews',
   async ({ formData, data }, { rejectWithValue }) => {
     try {
-      await axios.patch(`/reviews/${data.keyboardId}`, formData);
-      return data;
+      const response = await axios.patch(
+        `/reviews/${data.keyboardId}`,
+        formData
+      );
+      return response.data.data;
     } catch (err) {
       return rejectWithValue(err);
     }

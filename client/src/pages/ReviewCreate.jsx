@@ -3,7 +3,6 @@ import { useHistory } from 'react-router';
 
 import { useDispatch, useSelector } from 'react-redux';
 
-
 import { addReviews, updateReviews } from '../reducers/api/reviewsAPI';
 import Button from '../components/Button';
 

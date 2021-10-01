@@ -56,16 +56,16 @@ const Mypage = () => {
     try {
       //! 닉네임이 바뀌지 않았을 경우
       if (prevNickname === nickname) {
-        return message.success('사용 가능한 닉네임 입니다');
+        return message.success('사용 가능한 닉네임입니다');
       }
       await validateNickname({ nickname });
       setValidNickname(true);
-      message.success('사용 가능한 닉네임 입니다');
+      message.success('사용 가능한 닉네임입니다');
     } catch (err) {
       console.log(err.response);
       // dispatch(isError(err.response));
       setValidNickname(false);
-      message.warning('사용 불가한 닉네임 입니다');
+      message.warning('사용 불가능한 닉네임입니다');
     }
   };
 
@@ -210,7 +210,7 @@ const Mypage = () => {
               <div className="mypage-delete-btn">
                 <TextModal
                   modalText="탈퇴하시겠습니까?"
-                  loadingText="탈퇴 진행중입니다."
+                  loadingText="탈퇴 진행 중입니다"
                   buttonText="회원 탈퇴"
                   action={deleteUser}
                 />
