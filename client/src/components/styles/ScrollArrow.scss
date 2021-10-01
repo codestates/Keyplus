@@ -2,21 +2,21 @@
 
 .scrollTop {
   position: fixed;
-  right: 25px;
-  bottom: 25px;
+  right: 30px;
+  bottom: 30px;
   justify-content: flex-end;
   align-items: center;
   z-index: 1000;
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   cursor: pointer;
   animation: fadeIn 0.3s;
   transition: opacity 0.4s;
   opacity: 0.5;
 
   @media screen and (max-width: $md-breakpoint) {
-    right: 10px;
-    bottom: 10px;
+    right: 20px;
+    bottom: 20px;
     width: 40px;
     height: 40px;
   }
