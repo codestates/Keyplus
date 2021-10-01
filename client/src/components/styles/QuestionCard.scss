@@ -1,14 +1,30 @@
 @use '../../styles/constants' as *;
 @use '../../styles/mixins' as *;
 
-.question-title {
-  display: flex;
-  justify-content: center;
-  margin: 70px 0 60px;
-  font-size: 16px;
-  font-weight: 500;
-}
+.question-header {
+  margin-bottom: 60px;
 
+  @media screen and (max-width: $md-breakpoint) {
+    margin-bottom: 40px;
+  }
+
+  .question-title {
+    display: flex;
+    justify-content: center;
+    margin-top: 70px;
+    font-size: 16px;
+    font-weight: 500;
+
+    @media screen and (max-width: $md-breakpoint) {
+      margin-top: 45px;
+    }
+  }
+  .question-description {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+}
 .card-container {
   @include flexbox(center, flex-start);
   column-gap: 40px;
@@ -23,6 +39,13 @@
   @media screen and (max-width: $md-breakpoint) {
     @include flexbox();
     flex-direction: column;
+  }
+
+  &.question1 {
+    @media screen and (min-width: $md-breakpoint+1) and (max-width: 1000px) {
+      display: grid;
+      grid-template-columns: repeat(2, 200px);
+    }
   }
 
   .card {
@@ -56,6 +79,12 @@
       .title {
         font-size: 15px;
         font-weight: 700;
+      }
+
+      .mp3-icon {
+        // 아무거나
+        display: inline-block;
+        font-size: 14px;
       }
     }
   }

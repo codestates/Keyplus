@@ -5,7 +5,9 @@ import '../styles/QuestionCard.scss';
 const Question6 = ({ onClickPrice }) => {
   return (
     <>
-      <h2 className="question-title">원하시는 가격대를 알려주세요.</h2>
+      <div className="question-header">
+        <h2 className="question-title">원하시는 가격대를 알려주세요.</h2>
+      </div>
       <div className="card-container vertical">
         <div className="card" onClick={() => onClickPrice(50000)}>
           <div className="text-wrapper only-text">

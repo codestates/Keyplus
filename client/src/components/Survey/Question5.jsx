@@ -5,7 +5,9 @@ import '../styles/QuestionCard.scss';
 const Question5 = ({ onClickBluetooth }) => {
   return (
     <>
-      <h2 className="question-title">무선 지원 여부를 선택해주세요.</h2>
+      <div className="question-header">
+        <h2 className="question-title">무선 지원 여부를 선택해주세요.</h2>
+      </div>
       <div className="card-container">
         <div className="card" onClick={() => onClickBluetooth(1)}>
           <div className="image-wrapper">

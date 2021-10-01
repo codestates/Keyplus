@@ -14,11 +14,13 @@ import './styles/Survey.scss';
 import axios from '../utils/customAxios';
 
 import { AiFillLeftSquare, AiFillRightSquare } from 'react-icons/ai';
+import useWidthSize from '../hooks/useWidthSize';
 
 // [설문조사 필터링]
 
 const Survey = () => {
   // const [isLoading, setIsLoading] = useState(false);
+
   const [isStarted, setIsStarted] = useState(false);
   const [keyboards, setKeyboards] = useState(null);
 
@@ -148,6 +150,7 @@ const Survey = () => {
           <main className="survey">
             <div className="progress-bar-wrapper">
               <ProgressBar
+                labelSize="12px"
                 completed={16}
                 bgColor="#647C90"
                 baseBgColor="#dfdfdf"
@@ -175,6 +178,7 @@ const Survey = () => {
           <main className="survey">
             <div className="progress-bar-wrapper">
               <ProgressBar
+                labelSize="12px"
                 completed={32}
                 bgColor="#647C90"
                 baseBgColor="#dfdfdf"
@@ -192,6 +196,7 @@ const Survey = () => {
           <main className="survey">
             <div className="progress-bar-wrapper">
               <ProgressBar
+                labelSize="12px"
                 completed={48}
                 bgColor="#647C90"
                 baseBgColor="#dfdfdf"
@@ -209,6 +214,7 @@ const Survey = () => {
           <main className="survey">
             <div className="progress-bar-wrapper">
               <ProgressBar
+                labelSize="12px"
                 completed={64}
                 bgColor="#647C90"
                 baseBgColor="#dfdfdf"
@@ -226,6 +232,7 @@ const Survey = () => {
           <main className="survey">
             <div className="progress-bar-wrapper">
               <ProgressBar
+                labelSize="12px"
                 completed={80}
                 bgColor="#647C90"
                 baseBgColor="#dfdfdf"
@@ -243,6 +250,7 @@ const Survey = () => {
           <main className="survey">
             <div className="progress-bar-wrapper">
               <ProgressBar
+                labelSize="12px"
                 completed={100}
                 bgColor="#647C90"
                 baseBgColor="#dfdfdf"
