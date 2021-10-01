@@ -94,10 +94,7 @@ const LandingHeader = () => {
                 <Link
                   to="/survey"
                   className="landing-nav-links"
-                  onClick={() => [
-                    onClickToggleBtn(),
-                    window.location.replace('/survey'),
-                  ]}
+                  onClick={onClickToggleBtn}
                 >
                   설문조사
                 </Link>
@@ -106,10 +103,7 @@ const LandingHeader = () => {
                 <Link
                   to="/keyboards"
                   className="landing-nav-links"
-                  onClick={[
-                    () => onClickToggleBtn(),
-                    window.location.replace('/keyboards'),
-                  ]}
+                  onClick={onClickToggleBtn}
                 >
                   키보드
                 </Link>
@@ -118,10 +112,7 @@ const LandingHeader = () => {
                 <Link
                   to="/map"
                   className="landing-nav-links"
-                  onClick={[
-                    () => onClickToggleBtn(),
-                    window.location.replace('/map'),
-                  ]}
+                  onClick={onClickToggleBtn}
                 >
                   타건샵
                 </Link>
