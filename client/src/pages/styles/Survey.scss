@@ -1,0 +1,61 @@
+@use '../../styles/constants' as *;
+@use '../../styles/mixins' as *;
+
+main.survey {
+  max-width: 70%;
+  margin: 0 auto;
+
+  padding: 0 0 70px;
+  min-height: calc(100vh - 170px);
+  margin-top: 170px;
+  word-break: break-all;
+
+  @media screen and (max-width: $md-breakpoint) {
+    max-width: unset;
+
+    padding: 0 30px 30px;
+    min-height: calc(100vh - 100px);
+    margin-top: 100px;
+  }
+
+  .progress-bar-wrapper {
+    max-width: 300px;
+    margin: 0 auto;
+  }
+
+  .question-button {
+    @include flexbox(space-between);
+    margin-top: 100px;
+
+    @media screen and (max-width: $md-breakpoint) {
+      margin-top: 50px;
+      padding: 0 30px;
+    }
+
+    .previous-question-button {
+      .icon {
+        font-size: 20px;
+        vertical-align: middle;
+        margin-right: 5px;
+      }
+      .text {
+        vertical-align: middle;
+        color: rgba(0, 0, 0, 0.7);
+        font-weight: 700;
+      }
+    }
+
+    .next-question-button {
+      .icon {
+        font-size: 20px;
+        vertical-align: middle;
+        margin-left: 5px;
+      }
+      .text {
+        vertical-align: middle;
+        color: rgba(0, 0, 0, 0.7);
+        font-weight: 700;
+      }
+    }
+  }
+}
