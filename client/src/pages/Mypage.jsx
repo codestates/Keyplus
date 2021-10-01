@@ -18,10 +18,8 @@ import { Tabs } from 'antd';
 import KeyboardCard from './KeyboardCard';
 import Review from '../components/Review';
 // import '../components/styles/Review.scss';
-import { useHistory } from 'react-router';
 
 const Mypage = () => {
-  const history = useHistory();
   const dispatch = useDispatch();
   const userState = useSelector((state) => state.user);
 
@@ -218,7 +216,7 @@ const Mypage = () => {
                 />
               </div>
             </form>
-            {/* FIXME: 관심키보드 / 내 리뷰 */}{' '}
+            {/* FIXME: 관심키보드 / 내 리뷰 */}
             <div className="mypage-tabs">
               <Tabs defaultActiveKey="1" onChange={callback}>
                 <TabPane tab="관심 키보드" key="관심 키보드">
@@ -238,9 +236,6 @@ const Mypage = () => {
                   {/* <div className="mypage-tabs"> */}
                   {reviewsState.map((review, idx) => (
                     <div
-                      onClick={() =>
-                        history.push(`/keyboards/${review.keyboardId}`)
-                      }
                       key={`${review}_${idx}`}
                       className="mypage-tab-item mypage-review"
                     >
