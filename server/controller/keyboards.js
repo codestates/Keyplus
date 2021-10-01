@@ -30,7 +30,6 @@ module.exports = {
   },
   getFilteredKeyboards: async (req, res) => {
     try {
-      console.log(req.body);
       const { color, backlight, tenkey, bluetooth, price } = req.body;
       const keys = { 저소음적축: 1, 갈축: 2, 흑축: 3, 적축: 3, 청축: 4 };
       let getSwitch = {};
@@ -46,14 +45,10 @@ module.exports = {
           switch: {
             [Op.or]: getSwitch,
           },
-          color: color,
-          // ? color
-          // : {
-          //     [Op.or]: [{ color: 0 }, { color: 1 }],
-          //   }
-          backlight: backlight,
-          tenkey: tenkey,
-          bluetooth: bluetooth,
+          color: color !== 2 ? color : { [Op.or]: [0, 1] },
+          backlight: backlight !== 2 ? backlight : { [Op.or]: [0, 1] },
+          tenkey: tenkey !== 2 ? tenkey : { [Op.or]: [0, 1] },
+          bluetooth: bluetooth !== 2 ? bluetooth : { [Op.or]: [0, 1] },
           price: {
             [Op.lte]: price,
           },
