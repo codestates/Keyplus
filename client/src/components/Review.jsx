@@ -9,6 +9,7 @@ import './styles/Review.scss';
 
 import { Avatar, Carousel, Rate } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
+import { useSelector } from 'react-redux';
 
 const LeftArrow = ({ currentSlide, slideCount, children, ...props }) => {
   return <div {...props}>{children}</div>;
@@ -19,7 +20,8 @@ const RightArrow = ({ currentSlide, slideCount, children, ...props }) => {
 };
 
 const Review = ({ review, userId }) => {
-  console.log(review.createdAt);
+  const userNickname = useSelector((state) => state.user?.nickname);
+
   return (
     <>
       {(review.image1 || review.image2 || review.image3 || review.video) && (
@@ -89,8 +91,8 @@ const Review = ({ review, userId }) => {
           <div>
             <Rate disabled defaultValue={review.rating} />
             <div className="name-date">
-              <span className="name">{review.nickname}</span>
-              <span className="date">{review.createdAt.split('T')[0]}</span>
+              <span className="name">{review.nickname ?? userNickname}</span>
+              <span className="date">{review.createdAt?.split(' ')[0]}</span>
             </div>
           </div>
         </div>
