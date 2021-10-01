@@ -21,6 +21,7 @@ const RightArrow = ({ currentSlide, slideCount, children, ...props }) => {
 
 const Review = ({ review, userId }) => {
   const userNickname = useSelector((state) => state.user?.nickname);
+  const userImage = useSelector((state) => state.user?.image);
 
   return (
     <>
@@ -82,8 +83,8 @@ const Review = ({ review, userId }) => {
       <div className="review-info">
         <div className="review-profile">
           <div className="review-profile-image">
-            {review.userImage ? (
-              <Avatar src={review.userImage} />
+            {review.userImage || userImage ? (
+              <Avatar src={review.userImage ?? userImage} />
             ) : (
               <Avatar icon={<UserOutlined />} />
             )}

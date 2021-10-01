@@ -18,8 +18,10 @@ import { Tabs } from 'antd';
 import KeyboardCard from './KeyboardCard';
 import Review from '../components/Review';
 // import '../components/styles/Review.scss';
+import { useHistory } from 'react-router';
 
 const Mypage = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const userState = useSelector((state) => state.user);
 
@@ -235,7 +237,13 @@ const Mypage = () => {
                 <TabPane tab="내 리뷰" key="내 리뷰">
                   {/* <div className="mypage-tabs"> */}
                   {reviewsState.map((review, idx) => (
-                    <div key={`${review}_${idx}`} className="mypage-tab-item">
+                    <div
+                      onClick={() =>
+                        history.push(`/keyboards/${review.keyboardId}`)
+                      }
+                      key={`${review}_${idx}`}
+                      className="mypage-tab-item mypage-review"
+                    >
                       <Review review={review} userId={userId} />
                     </div>
                   ))}
