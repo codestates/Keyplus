@@ -150,12 +150,13 @@
 
 .mypage-tab-item {
   margin-bottom: 30px;
-  &:after {
+  &:not(:last-child) {
     content: '';
     display: block;
     border-bottom: 1px solid rgb(138, 138, 138);
     width: 100%;
     position: relative;
     bottom: -5px; /* 내 패딩 + border-width */
+    // top: 10px;
   }
 }
