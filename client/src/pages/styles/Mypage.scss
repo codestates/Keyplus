@@ -149,14 +149,23 @@
 }
 
 .mypage-tab-item {
-  margin-bottom: 30px;
-  &:not(:last-child) {
+  margin-bottom: 40px;
+  transition: all 0.3s;
+}
+
+.mypage-review {
+  &:not(:last-child):after {
     content: '';
     display: block;
-    border-bottom: 1px solid rgb(138, 138, 138);
+    border-bottom: 1px solid rgb(220, 220, 220);
     width: 100%;
     position: relative;
     bottom: -5px; /* 내 패딩 + border-width */
-    // top: 10px;
+  }
+
+  &:hover {
+    opacity: 0.7;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+      rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
   }
 }
