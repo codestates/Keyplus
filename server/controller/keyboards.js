@@ -2,6 +2,7 @@ const db = require('../models');
 const { User, Keyboard, Review } = require('../models');
 const { Op } = require('sequelize');
 const { clearConfigCache } = require('prettier');
+const { condition } = require('sequelize');
 
 module.exports = {
   getAllKeyboards: async (req, res) => {
@@ -29,6 +30,7 @@ module.exports = {
   },
   getFilteredKeyboards: async (req, res) => {
     try {
+      console.log(req.body);
       const { color, backlight, tenkey, bluetooth, price } = req.body;
       const keys = { 저소음적축: 1, 갈축: 2, 흑축: 3, 적축: 3, 청축: 4 };
       let getSwitch = {};
@@ -45,6 +47,10 @@ module.exports = {
             [Op.or]: getSwitch,
           },
           color: color,
+          // ? color
+          // : {
+          //     [Op.or]: [{ color: 0 }, { color: 1 }],
+          //   }
           backlight: backlight,
           tenkey: tenkey,
           bluetooth: bluetooth,
