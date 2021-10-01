@@ -34,12 +34,12 @@ module.exports = {
       let getSwitch = {};
       for (let key in keys) {
         // 반복문을 돌려 req.body.switch를 getKeys에 넣는다.
-        if (keys[key] === req.body.switch) {
+        if (keys[key] === req.body.sound) {
           getSwitch[key] = true;
         }
       }
 
-      const fliteredKeyboards = await Keyboard.findAll({
+      const filteredKeyboards = await Keyboard.findAll({
         where: {
           switch: {
             [Op.or]: getSwitch,
@@ -54,7 +54,7 @@ module.exports = {
         },
         raw: true,
       });
-      return res.status(200).json({ data: fliteredKeyboards });
+      return res.status(200).json({ data: filteredKeyboards });
     } catch (error) {
       console.log(error);
       return res.sendStatus(500);
