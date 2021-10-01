@@ -27,10 +27,12 @@ const Question1 = ({ onClickSound }) => {
           <div>가장 마음에 드는 소리를 알려주세요.</div>
         </h2>
         {width > 768 ? (
-          <div className="question-description">이미지에 손을 올려주세요.</div>
+          <div className="question-description">
+            이미지에 마우스를 올리면 소리가 재생됩니다.
+          </div>
         ) : null}
       </div>
-      <div className="card-container">
+      <div className="card-container question1">
         <div className="card" onClick={() => onClickSound(1)}>
           <div className="image-wrapper">
             <img src="/no-image.png" alt="" />
