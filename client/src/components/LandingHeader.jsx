@@ -66,14 +66,14 @@ const LandingHeader = () => {
             {isOpenSidebar ? (
               <CloseOutlined
                 style={{
-                  fontSize: width > 782 ? '24px' : '21px',
+                  fontSize: width > 782 ? '24px' : '19px',
                   color: '#fff',
                 }}
               />
             ) : (
               <MenuOutlined
                 style={{
-                  fontSize: width > 782 ? '24px' : '21px',
+                  fontSize: width > 782 ? '24px' : '19px',
                   color: '#fff',
                 }}
               />
@@ -129,7 +129,7 @@ const LandingHeader = () => {
               <button onClick={onClickMypage} className="landing-button-links">
                 <UserOutlined
                   style={{
-                    fontSize: width > 782 ? '24px' : '21px',
+                    fontSize: width > 782 ? '24px' : '19px',
                     color: '#fff',
                   }}
                 />
@@ -143,7 +143,7 @@ const LandingHeader = () => {
                 >
                   <ExportOutlined
                     style={{
-                      fontSize: width > 782 ? '24px' : '21px',
+                      fontSize: width > 782 ? '24px' : '19px',
                       color: '#fff',
                     }}
                   />
