@@ -57,7 +57,7 @@
 
     .part3-text-wrapper {
       .part3-text {
-        font-size: calc(100vw / 25);
+        font-size: max(calc(100vw / 25), 18px);
       }
     }
   }

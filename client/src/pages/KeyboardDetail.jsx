@@ -111,6 +111,7 @@ const KeyboardDetail = (props) => {
 
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.user?.id);
+
   const likes = useSelector((state) => state.likes);
 
   const keyboardId = props.match.params?.id;

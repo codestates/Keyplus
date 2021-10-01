@@ -10,7 +10,7 @@ const LandingPart4 = () => {
       <div className="part4-background">
         <div className="part4-text-wrapper">
           <div
-            data-aos="fade-up"
+            data-aos="fade-down"
             data-aos-delay="50"
             data-aos-duration="1300"
             data-aos-easing="ease-out"
