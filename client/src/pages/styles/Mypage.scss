@@ -17,12 +17,19 @@
 }
 
 .mypage-main {
-  @include flexbox();
+  // @include flexbox(); //! 선아
+
+  @include flexbox(flex-start); //! 선아
+  padding-top: 50px; //! 선아
+
   flex-direction: column;
   height: 100%;
+  min-height: 100vh;
 
   @media screen and (max-width: $md-breakpoint) {
-    justify-content: flex-start;
+    // justify-content: flex-start; //! 선아
+
+    padding-top: 0; //! 선아
   }
 
   .title {

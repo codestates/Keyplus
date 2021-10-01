@@ -83,7 +83,7 @@ const Review = ({ review, userId }) => {
       <div className="review-info">
         <div className="review-profile">
           <div className="review-profile-image">
-            {review.userImage ? (
+            {review.userImage !== '' ? (
               <Avatar src={review.userImage} />
             ) : review.nickname === userNickname ? (
               userImage !== '' ? (
@@ -98,7 +98,7 @@ const Review = ({ review, userId }) => {
           <div>
             <Rate disabled defaultValue={review.rating} />
             <div className="name-date">
-              <span className="name">{review.nickname ?? userNickname}</span>
+              <span className="name">{review.nickname}</span>
               <span className="date">
                 {
                   new Date(review.createdAt)
