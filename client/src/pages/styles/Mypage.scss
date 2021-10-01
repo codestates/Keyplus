@@ -149,18 +149,19 @@
 }
 
 .mypage-tab-item {
-  margin-bottom: 40px;
+  padding-top: 20px;
+  margin-bottom: 25px;
   transition: all 0.3s;
 }
 
 .mypage-review {
-  &:not(:last-child):after {
-    content: '';
-    display: block;
+  margin-bottom: 20px;
+  padding-top: 20px;
+  &:not(:last-child) {
     border-bottom: 1px solid rgb(220, 220, 220);
-    width: 100%;
-    position: relative;
-    bottom: -5px; /* 내 패딩 + border-width */
+  }
+  &:last-child {
+    padding-bottom: 1px;
   }
 
   &:hover {

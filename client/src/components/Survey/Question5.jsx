@@ -9,7 +9,7 @@ const Question5 = ({ onClickBluetooth }) => {
       <div className="card-container">
         <div className="card" onClick={() => onClickBluetooth(1)}>
           <div className="image-wrapper">
-            <img src="/no-image.png" alt="" />
+            <img src="/bluetooth.png" alt="" />
           </div>
           <div className="text-wrapper">
             <div className="description">무선으로 사용할 수 있는</div>
@@ -30,7 +30,7 @@ const Question5 = ({ onClickBluetooth }) => {
         </div> */}
         <div className="card" onClick={() => onClickBluetooth(2)}>
           <div className="image-wrapper">
-            <img src="/no-image.png" alt="" />
+            <img src="/wired-keyboard.png" alt="" />
           </div>
           <div className="text-wrapper">
             <div className="description">무선, 유선 둘 다 괜찮다</div>
