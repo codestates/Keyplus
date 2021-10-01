@@ -46,7 +46,13 @@ function App() {
   return (
     <>
       <Switch>
-        <Route exact path="/" component={Landing} />
+        <PublicRoute exact path="/" component={Landing} />
+        <PublicRoute
+          restricted={false}
+          path="/survey"
+          component={Survey}
+          exact
+        />
         <AppLayout>
           {loading && <Spinner />}
           <Route path="/temp" component={Temp} />
@@ -60,12 +66,6 @@ function App() {
             restricted={false}
             path="/keyboards/:id"
             component={KeyboardDetail}
-            exact
-          />
-          <PublicRoute
-            restricted={false}
-            path="/survey"
-            component={Survey}
             exact
           />
           <PublicRoute
