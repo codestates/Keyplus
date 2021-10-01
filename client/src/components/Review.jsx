@@ -3,11 +3,13 @@ import { Link } from 'react-router-dom';
 
 import { deleteReviews } from '../reducers/api/reviewsAPI';
 import ButtonModal from './ButtonModal';
+import Button from './Button';
 
 import './styles/Review.scss';
 
-import { Avatar, Button, Carousel, Rate } from 'antd';
+import { Avatar, Carousel, Rate } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
+import { useSelector } from 'react-redux';
 
 const LeftArrow = ({ currentSlide, slideCount, children, ...props }) => {
   return <div {...props}>{children}</div>;
@@ -18,6 +20,9 @@ const RightArrow = ({ currentSlide, slideCount, children, ...props }) => {
 };
 
 const Review = ({ review, userId }) => {
+  const userNickname = useSelector((state) => state.user?.nickname);
+  const userImage = useSelector((state) => state.user?.image);
+
   return (
     <>
       {(review.image1 || review.image2 || review.image3 || review.video) && (
@@ -36,7 +41,7 @@ const Review = ({ review, userId }) => {
                 className="review-video"
                 controls
                 preload="metadata"
-                playsinline
+                playsInline
                 poster={`${review.video}#t=0.5`}
               >
                 <source src={`${review.video}#t=0.5`} type="video/mp4" />
@@ -80,6 +85,12 @@ const Review = ({ review, userId }) => {
           <div className="review-profile-image">
             {review.userImage ? (
               <Avatar src={review.userImage} />
+            ) : review.nickname === userNickname ? (
+              userImage !== '' ? (
+                <Avatar src={userImage} />
+              ) : (
+                <Avatar icon={<UserOutlined />} />
+              )
             ) : (
               <Avatar icon={<UserOutlined />} />
             )}
@@ -87,8 +98,16 @@ const Review = ({ review, userId }) => {
           <div>
             <Rate disabled defaultValue={review.rating} />
             <div className="name-date">
-              <span className="name">{review.nickname}</span>
-              <span className="date">{review.createdAt.split('T')[0]}</span>
+              <span className="name">{review.nickname ?? userNickname}</span>
+              <span className="date">
+                {
+                  new Date(review.createdAt)
+                    .toLocaleString('ko-KR', {
+                      timeZone: 'Asia/Seoul',
+                    })
+                    .split('오')[0]
+                }
+              </span>
             </div>
           </div>
         </div>
@@ -113,7 +132,7 @@ const Review = ({ review, userId }) => {
           </Button>
           <ButtonModal
             modalText="정말로 삭제하시겠습니까?"
-            loadingText="삭제 진행중입니다."
+            loadingText="삭제 진행 중입니다"
             buttonText="삭제"
             action={deleteReviews}
             keyboardId={review.keyboardId}

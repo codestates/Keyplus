@@ -1,20 +1,6 @@
 @use '../../styles/constants' as *;
 
-// .card-wrapper {
-// }
-
-// .card {
-// }
-
-// .img-wrapper {
-//   // width: 500px;
-// }
-
 .keyboard-img {
-  // width: 500px;
-  // height: 300px;
-  // object-fit: cover;
-
   .hover-overlay {
     position: absolute;
     width: 100%;
@@ -24,6 +10,9 @@
     top: 0;
     visibility: hidden;
     opacity: 0;
+
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 
     display: flex;
     flex-direction: column;

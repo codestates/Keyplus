@@ -1,15 +1,18 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 import Header from './Header';
 import Footer from './Footer';
+import Spinner from '../components/Spinner';
+
 import './styles/Main.scss';
 
 const AppLayout = ({ children }) => {
+  const loading = useSelector((state) => state.loading);
   return (
     <>
+      {loading && <Spinner />}
       <Header />
-      {/* <Main>{children}</Main> */}
-      {/* 100뷰포트에서 70px을 뺀 하이트 이게 컨텐츠의 최소값이다. */}
       <main>{children}</main>
       <Footer />
     </>

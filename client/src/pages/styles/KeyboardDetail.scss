@@ -45,6 +45,7 @@
 
     .keyboard-like {
       font-size: 16px;
+      cursor: pointer;
 
       .like-count {
       }
@@ -60,11 +61,6 @@
       @include flexbox(space-between);
       font-size: 18px;
     }
-  }
-
-  #rc-tabs-1-tab-1,
-  #rc-tabs-1-tab-2 {
-    // font-size: 16px;
   }
 
   .review:not(:last-child) {

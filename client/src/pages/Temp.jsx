@@ -13,7 +13,7 @@ const Temp = ({ history }) => {
       console.log(err);
       dispatch(isError(err.response));
     }
-    history.push('/landing');
+    history.push('/keyboards');
   }, []);
   return <></>;
 };

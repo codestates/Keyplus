@@ -17,6 +17,13 @@ module.exports = {
           keyboardId: keyboard,
         },
       });
+      const getNickname = await User.findOne({
+        attributes: ['nickname'],
+        where: {
+          id: user,
+        },
+        raw: true,
+      });
       if (!hasReview) {
         if (Object.keys(req.files).length !== 0) {
           let review = await Review.create({
@@ -29,6 +36,7 @@ module.exports = {
             userId: user,
             keyboardId: keyboard,
           });
+          Object.assign(review.dataValues, getNickname);
           return res.status(200).json({ data: review });
         } else {
           let review = await Review.create({
@@ -37,6 +45,7 @@ module.exports = {
             userId: user,
             keyboardId: keyboard,
           });
+          Object.assign(review.dataValues, getNickname);
           return res.status(200).json({ data: review });
         }
       } else {
@@ -60,6 +69,14 @@ module.exports = {
       where: {
         userId: user,
         keyboardId: keyboard,
+      },
+      raw: true,
+    });
+
+    const getNickname = await User.findOne({
+      attributes: ['nickname'],
+      where: {
+        id: user,
       },
       raw: true,
     });
@@ -109,6 +126,7 @@ module.exports = {
         where: { userId: req.userId, keyboardId: req.params.id },
         raw: true,
       });
+      Object.assign(updatedReview, getNickname);
       return res.status(200).json({ data: updatedReview });
     } catch (error) {
       console.log(error);

@@ -5,10 +5,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addLikes, deleteLikes } from '../reducers/api/likesAPI';
 import axios from '../utils/customAxios';
 import Review from '../components/Review';
+import Button from '../components/Button';
 
 import './styles/KeyboardDetail.scss';
 
-import { Carousel, Button, message, Tabs, List, Card } from 'antd';
+import { Carousel, message, Tabs, List, Card } from 'antd';
 const { TabPane } = Tabs;
 import {
   HeartOutlined,
@@ -110,6 +111,7 @@ const KeyboardDetail = (props) => {
 
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.user?.id);
+
   const likes = useSelector((state) => state.likes);
 
   const keyboardId = props.match.params?.id;
@@ -226,18 +228,12 @@ const KeyboardDetail = (props) => {
                 {keyboard.brand} {keyboard.name}
               </div>
 
-              <div className="keyboard-like">
+              <div className="keyboard-like" onClick={onClickHeart}>
                 <span className="like-heart">
                   {liked ? (
-                    <HeartFilled
-                      style={{ color: '#ff0000' }}
-                      onClick={onClickHeart}
-                    />
+                    <HeartFilled style={{ color: '#ff0000' }} />
                   ) : (
-                    <HeartOutlined
-                      style={{ color: '#ff0000' }}
-                      onClick={onClickHeart}
-                    />
+                    <HeartOutlined style={{ color: '#ff0000' }} />
                   )}
                 </span>
                 <span className="like-count">{likeCount}</span>
@@ -247,6 +243,22 @@ const KeyboardDetail = (props) => {
             <Tabs defaultActiveKey="1" centered>
               <TabPane tab="상세정보" key="1">
                 <List grid>
+                  <List.Item>
+                    <Card title="Switch">
+                      {Object.keys(keyboard.switch).map((keySwitch, idx) => (
+                        <span key={`${keySwitch}_${idx}`}>
+                          {keyboard.switch[keySwitch] && (
+                            <>{keySwitchComponent[keySwitch]}</>
+                          )}
+                        </span>
+                      ))}
+                    </Card>
+                  </List.Item>
+                  <List.Item>
+                    <Card title="Price">
+                      {keyboard.price.toLocaleString()}원
+                    </Card>
+                  </List.Item>
                   <List.Item>
                     <Card title="Color">
                       {keyboard.color ? '다채색' : '무채색'}
@@ -267,30 +279,16 @@ const KeyboardDetail = (props) => {
                       {keyboard.bluetooth ? '지원' : '미지원'}
                     </Card>
                   </List.Item>
-                  <List.Item>
-                    <Card title="Price">
-                      {keyboard.price.toLocaleString()}원
-                    </Card>
-                  </List.Item>
-                  <List.Item>
-                    <Card title="Switch">
-                      {Object.keys(keyboard.switch).map((keySwitch, idx) => (
-                        <span key={`${keySwitch}_${idx}`}>
-                          {keyboard.switch[keySwitch] && (
-                            <>{keySwitchComponent[keySwitch]}</>
-                          )}
-                        </span>
-                      ))}
-                    </Card>
-                  </List.Item>
                 </List>
               </TabPane>
               <TabPane tab="리뷰" key="2">
                 {reviews.length ? (
                   <>
                     <div className="review-create-button-wrapper">
-                      <Button onClick={onClickCreateReviewBtn}>
-                        리뷰 작성하기
+                      <Button>
+                        <button onClick={onClickCreateReviewBtn}>
+                          리뷰 작성하기
+                        </button>
                       </Button>
                     </div>
                     <div className="reviews-info">
@@ -352,8 +350,10 @@ const KeyboardDetail = (props) => {
                     <div style={{ marginBottom: '20px' }}>
                       작성된 리뷰가 없습니다!
                     </div>
-                    <Button type="primary" onClick={onClickCreateReviewBtn}>
-                      리뷰 작성하기
+                    <Button>
+                      <button onClick={onClickCreateReviewBtn}>
+                        리뷰 작성하기
+                      </button>
                     </Button>
                   </div>
                 )}

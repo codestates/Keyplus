@@ -33,9 +33,9 @@ const Signup = () => {
 
   //FIXME: 이메일 중복확인 함수
   //이미 사용중인 이메일입니다 v
-  //올바르지 않은 이메일 형식 입니다 v
+  //올바르지 않은 이메일 형식입니다 v
   //이메일을 확인해 주세요
-  //사용 가능한 이메일 입니다 v
+  //사용 가능한 이메일입니다 v
   const isEmail = (email) => {
     const reg =
       /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
@@ -73,7 +73,7 @@ const Signup = () => {
       console.log(err);
       // dispatch(isError(err.response));
       setValidEmail(false);
-      message.warning('이미 사용중인 이메일 입니다');
+      message.warning('이미 사용 중인 이메일입니다');
     }
   };
 
@@ -85,12 +85,12 @@ const Signup = () => {
       if (nickname === '') return message.warning('닉네임을 입력해주세요');
       await validateNickname({ nickname });
       setValidNickname(true);
-      message.success('사용 가능한 닉네임 입니다');
+      message.success('사용 가능한 닉네임입니다');
     } catch (err) {
       console.log(err.response);
       // dispatch(isError(err.response));
       setValidNickname(false);
-      message.warning('사용 불가한 닉네임 입니다');
+      message.warning('사용 불가능한 닉네임입니다');
     }
   };
 
@@ -176,7 +176,7 @@ const Signup = () => {
             <h2 className="title">Signup</h2>
 
             <form className="signup-form" onSubmit={onClickSignup}>
-              <div className="uploadbox">
+              <div className="upload-box">
                 <input
                   type="file"
                   id="img"
@@ -188,11 +188,11 @@ const Signup = () => {
                 />
 
                 {profileImg ? (
-                  <div className="upload-icon" onClick={handleImgRef}>
+                  <div className="upload-image" onClick={handleImgRef}>
                     <Avatar src={profileImg} size={80} />
                   </div>
                 ) : (
-                  <div className="upload-icon" onClick={handleImgRef}>
+                  <div className="upload-image" onClick={handleImgRef}>
                     <Avatar icon={<UserOutlined />} size={80} />
                   </div>
                 )}
@@ -201,7 +201,7 @@ const Signup = () => {
                 <p className="text profile">프로필 사진을 업로드 해주세요</p>
               </div>
 
-              <div className="inputbox">
+              <div className="input-box">
                 <label htmlFor="email">이메일</label>
                 <div className="input-wrapper">
                   <input
@@ -216,11 +216,11 @@ const Signup = () => {
                     전송
                   </button>
                 </div>
-                <p className="text">이메일 확인 후 인증번호를 입력해 주세요</p>
+                <p className="text">이메일 확인 후 인증번호를 입력해주세요</p>
               </div>
               {isClicked && (
                 <>
-                  <div className="inputbox">
+                  <div className="input-box">
                     <p>인증번호</p>
                     <div className="input-wrapper">
                       <input
@@ -239,7 +239,7 @@ const Signup = () => {
                   </div>
                 </>
               )}
-              <div className="inputbox">
+              <div className="input-box">
                 <label htmlFor="nickname">닉네임</label>
                 <div className="input-wrapper">
                   <input
@@ -257,7 +257,7 @@ const Signup = () => {
                 </div>
               </div>
 
-              <div className="inputbox">
+              <div className="input-box">
                 <label htmlFor="password">비밀번호</label>
                 <input
                   type="password"
@@ -268,7 +268,7 @@ const Signup = () => {
                   value={password || ''}
                 />
               </div>
-              <div className="inputbox">
+              <div className="input-box">
                 <label htmlFor="repassword">비밀번호 확인</label>
                 <input
                   type="password"
@@ -279,7 +279,7 @@ const Signup = () => {
                   value={repassword || ''}
                 />
               </div>
-              <button type="submit" className="signupbtn">
+              <button type="submit" className="signup-btn">
                 회원가입
               </button>
             </form>

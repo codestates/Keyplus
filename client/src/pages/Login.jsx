@@ -1,18 +1,11 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-
-import {
-  logIn,
-  googleLogIn,
-  kakaoLogIn,
-  naverLogIn,
-} from '../reducers/api/userAPI';
+import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logIn } from '../reducers/api/userAPI';
 import { isError } from '../reducers/errorReducer';
 import './styles/Login.scss';
-import { Link } from 'react-router-dom';
 
 const Login = (props) => {
-  // const { data, loading, error } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   const [errMessage, setErrMessage] = useState('');
@@ -55,7 +48,7 @@ const Login = (props) => {
         props.history.push('/keyboards');
       }
     } catch (err) {
-      setErrMessage('잘못된 이메일이나 비밀번호 입니다');
+      setErrMessage('잘못된 이메일이나 비밀번호입니다');
       dispatch(isError(err.response));
     }
   };

@@ -6,10 +6,7 @@
   display: block;
   width: 100%;
   max-width: 100%;
-  // height: auto !important;
   height: 200px;
-  // min-height: 200px;
-  // max-height: 200px;
   object-fit: contain;
   background-color: #000;
 }
@@ -67,4 +64,11 @@
     margin-top: 5px;
     flex-grow: 1;
   }
+}
+
+.review-button {
+  @include flexbox(flex-end);
+  flex-direction: row;
+  column-gap: 10px;
+  margin-bottom: 25px;
 }

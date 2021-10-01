@@ -1,26 +1,22 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
 import axios from '../utils/customAxios';
 import exceptionAxios from 'axios';
+
 import KeyboardCard from './KeyboardCard';
+import { isError } from '../reducers/errorReducer';
+
+import useWidthSize from '../hooks/useWidthSize';
 
 import './styles/Keyboard.scss';
-import { isError } from '../reducers/errorReducer';
-import 'antd/dist/antd.css';
-import {
-  Select,
-  Space,
-  Typography,
-  Divider,
-  Checkbox,
-  Radio,
-  Button,
-} from 'antd';
-const { Option } = Select;
 
-import { FaCheck } from 'react-icons/fa';
+import 'antd/dist/antd.css';
+import { Select, Space, Typography, Divider, Checkbox, Radio } from 'antd';
+const { Option } = Select;
+import { FaCheck, FaArrowCircleUp } from 'react-icons/fa';
 import { FiRotateCw } from 'react-icons/fi';
-import useWidthSize from '../hooks/useWidthSize';
+import ScrollArrow from '../components/ScrollArrow';
 
 const Keyboard = () => {
   const dispatch = useDispatch();
@@ -57,7 +53,7 @@ const Keyboard = () => {
   const [backlight, setBacklight] = useState(false);
 
   // ! 화면 크기
-  const width = useWidthSize();
+  const width = useWidthSize(768);
 
   useEffect(async () => {
     try {
@@ -68,7 +64,7 @@ const Keyboard = () => {
       setAllKeyboards(
         response.data.data.sort((a, b) => b.likeCount - a.likeCount)
       );
-      setSortingNumber(1);
+      setSortingNumber('1');
     } catch (err) {
       console.log(err);
       dispatch(isError(err.response));
@@ -446,179 +442,233 @@ const Keyboard = () => {
     setBacklight(false);
   };
 
+  const [showScroll, setShowScroll] = useState(false);
+
+  const checkScrollTop = () => {
+    if (!showScroll && window.pageYOffset > 400) {
+      setShowScroll(true);
+    } else if (showScroll && window.pageYOffset <= 400) {
+      setShowScroll(false);
+    }
+  };
+
+  const scrollTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  window.addEventListener('scroll', checkScrollTop);
+
   return (
-    <div className="keyboard">
-      {!loading && (
-        <>
-          <div className="keyboard-category">
-            <div>브랜드</div>
-            <div className="horizontal-scroll">
-              <Checkbox
-                checked={brandLogitech}
-                onChange={onChangeBrandLogitech}
+    <>
+      <ScrollArrow />
+      <div className="keyboard">
+        {!loading && (
+          <>
+            <div className="keyboard-category">
+              <div>브랜드</div>
+              <div className="category-list horizontal-scroll">
+                <Checkbox
+                  checked={brandLogitech}
+                  onChange={onChangeBrandLogitech}
+                >
+                  로지텍
+                </Checkbox>
+                <Checkbox
+                  checked={brandKeychron}
+                  onChange={onChangeBrandKeychron}
+                >
+                  키크론
+                </Checkbox>
+                <Checkbox checked={brandAbko} onChange={onChangeBrandAbko}>
+                  앱코
+                </Checkbox>
+                <Checkbox
+                  checked={brandLeopold}
+                  onChange={onChangeBrandLeopold}
+                >
+                  레오폴드
+                </Checkbox>
+                <Checkbox
+                  checked={brandVarmilo}
+                  onChange={onChangeBrandVarmilo}
+                >
+                  바밀로
+                </Checkbox>
+              </div>
+              <div>키 스위치</div>
+              <div className="category-list horizontal-scroll">
+                <Checkbox checked={switchBrown} onChange={onChangeSwitchBrown}>
+                  갈축
+                </Checkbox>
+                <Checkbox checked={switchRed} onChange={onChangeSwitchRed}>
+                  적축
+                </Checkbox>
+                <Checkbox checked={switchBlue} onChange={onChangeSwitchBlue}>
+                  청축
+                </Checkbox>
+                <Checkbox checked={switchBlack} onChange={onChangeSwitchBlack}>
+                  흑축
+                </Checkbox>
+                <Checkbox
+                  checked={switchSilentRed}
+                  onChange={onChangeSwitchSilentRed}
+                >
+                  저소음적축
+                </Checkbox>
+              </div>
+              <div>가격</div>
+              <Radio.Group
+                onChange={onChangePriceRadio}
+                value={priceRadio}
+                className="category-list horizontal-scroll radio-group"
               >
-                로지텍
-              </Checkbox>
-              <Checkbox
-                checked={brandKeychron}
-                onChange={onChangeBrandKeychron}
-              >
-                키크론
-              </Checkbox>
-              <Checkbox checked={brandAbko} onChange={onChangeBrandAbko}>
-                앱코
-              </Checkbox>
-              <Checkbox checked={brandLeopold} onChange={onChangeBrandLeopold}>
-                레오폴드
-              </Checkbox>
-              <Checkbox checked={brandVarmilo} onChange={onChangeBrandVarmilo}>
-                바밀로
-              </Checkbox>
+                <Radio value={'5만원 이하'} onClick={onClickPriceRadio}>
+                  5만원 이하
+                </Radio>
+                <Radio value={'10만원 이하'} onClick={onClickPriceRadio}>
+                  10만원 이하
+                </Radio>
+                <Radio value={'15만원 이하'} onClick={onClickPriceRadio}>
+                  15만원 이하
+                </Radio>
+                <Radio value={'20만원 이하'} onClick={onClickPriceRadio}>
+                  20만원 이하
+                </Radio>
+                <Radio value={'30만원 이하'} onClick={onClickPriceRadio}>
+                  30만원 이하
+                </Radio>
+              </Radio.Group>
+              <div>기타</div>
+              <div className="category-list horizontal-scroll">
+                <Checkbox checked={tenkeyLess} onChange={onChangeTenkeyLess}>
+                  텐키리스
+                </Checkbox>
+                <Checkbox checked={bluetooth} onChange={onChangeBluetooth}>
+                  블루투스
+                </Checkbox>
+                <Checkbox checked={backlight} onChange={onChangeBacklight}>
+                  LED백라이트
+                </Checkbox>
+              </div>
+              {allCategory.length !== 0 && (
+                <>
+                  <div className="clear-button-wrapper">
+                    <button onClick={onClickResetBtn}>
+                      <FiRotateCw />
+                      <span>전체 해제</span>
+                    </button>
+                  </div>
+                  <div className="selected-category-wrapper">
+                    {allCategory.map((category) => (
+                      <div key={category} className="selected-category">
+                        <span>{category}</span>
+                      </div>
+                    ))}
+                  </div>
+                </>
+              )}
             </div>
-            <div>키 스위치</div>
-            <div className="horizontal-scroll">
-              <Checkbox checked={switchBrown} onChange={onChangeSwitchBrown}>
-                갈축
-              </Checkbox>
-              <Checkbox checked={switchRed} onChange={onChangeSwitchRed}>
-                적축
-              </Checkbox>
-              <Checkbox checked={switchBlue} onChange={onChangeSwitchBlue}>
-                청축
-              </Checkbox>
-              <Checkbox checked={switchBlack} onChange={onChangeSwitchBlack}>
-                흑축
-              </Checkbox>
-              <Checkbox
-                checked={switchSilentRed}
-                onChange={onChangeSwitchSilentRed}
-              >
-                저소음적축
-              </Checkbox>
+
+            {/* ! 정렬  */}
+            <div className="keyboard-sorting-count-area">
+              {width > 768 ? (
+                <Space
+                  split={<Divider type="vertical" />}
+                  style={{ columnGap: '6px !important' }}
+                  className="horizontal-scroll"
+                >
+                  <Typography.Link
+                    className={`sorting-tab ${
+                      sortingNumber === '1' && 'selected'
+                    }`}
+                    onClick={onClickHeartDescendingBtn}
+                  >
+                    <span style={{ marginRight: '5px' }}>
+                      {sortingNumber === '1' && <FaCheck />}
+                    </span>
+                    좋아요 많은순
+                  </Typography.Link>
+                  <Typography.Link
+                    className={`sorting-tab ${
+                      sortingNumber === '2' && 'selected'
+                    }`}
+                    onClick={onClickHeartAscendingBtn}
+                  >
+                    <span style={{ marginRight: '5px' }}>
+                      {sortingNumber === '2' && <FaCheck />}
+                    </span>
+                    좋아요 적은순
+                  </Typography.Link>
+                  <Typography.Link
+                    className={`sorting-tab ${
+                      sortingNumber === '3' && 'selected'
+                    }`}
+                    onClick={onClickReviewDescendingBtn}
+                  >
+                    <span style={{ marginRight: '5px' }}>
+                      {sortingNumber === '3' && <FaCheck />}
+                    </span>
+                    리뷰 많은순
+                  </Typography.Link>
+                  <Typography.Link
+                    className={`sorting-tab ${
+                      sortingNumber === '4' && 'selected'
+                    }`}
+                    onClick={onClickReviewAscendingBtn}
+                  >
+                    <span style={{ marginRight: '5px' }}>
+                      {sortingNumber === '4' && <FaCheck />}
+                    </span>
+                    리뷰 적은순
+                  </Typography.Link>
+                  <Typography.Link
+                    className={`sorting-tab ${
+                      sortingNumber === '5' && 'selected'
+                    }`}
+                    onClick={onClickPriceAscendingBtn}
+                  >
+                    <span style={{ marginRight: '5px' }}>
+                      {sortingNumber === '5' && <FaCheck />}
+                    </span>
+                    가격 낮은순
+                  </Typography.Link>
+                  <Typography.Link
+                    className={`sorting-tab ${
+                      sortingNumber === '6' && 'selected'
+                    }`}
+                    onClick={onClickPriceDescendingBtn}
+                  >
+                    <span style={{ marginRight: '5px' }}>
+                      {sortingNumber === '6' && <FaCheck />}
+                    </span>
+                    가격 높은순
+                  </Typography.Link>
+                </Space>
+              ) : (
+                <Select defaultValue={sortingNumber} onChange={handleChange}>
+                  <Option value="1">좋아요 많은순</Option>
+                  <Option value="2">좋아요 적은순</Option>
+                  <Option value="3">리뷰 많은순</Option>
+                  <Option value="4">리뷰 적은순</Option>
+                  <Option value="5">가격 낮은순</Option>
+                  <Option value="6">가격 높은순</Option>
+                </Select>
+              )}
+
+              <div className="keyboard-count">총 {keyboards.length}개</div>
             </div>
-            <div>가격</div>
-            <Radio.Group
-              onChange={onChangePriceRadio}
-              value={priceRadio}
-              className="horizontal-scroll radio-group"
-            >
-              <Radio value={'5만원 이하'} onClick={onClickPriceRadio}>
-                5만원 이하
-              </Radio>
-              <Radio value={'10만원 이하'} onClick={onClickPriceRadio}>
-                10만원 이하
-              </Radio>
-              <Radio value={'15만원 이하'} onClick={onClickPriceRadio}>
-                15만원 이하
-              </Radio>
-              <Radio value={'20만원 이하'} onClick={onClickPriceRadio}>
-                20만원 이하
-              </Radio>
-              <Radio value={'30만원 이하'} onClick={onClickPriceRadio}>
-                30만원 이하
-              </Radio>
-            </Radio.Group>
-            <div>기타</div>
-            <div className="horizontal-scroll">
-              <Checkbox checked={tenkeyLess} onChange={onChangeTenkeyLess}>
-                텐키리스
-              </Checkbox>
-              <Checkbox checked={bluetooth} onChange={onChangeBluetooth}>
-                블루투스
-              </Checkbox>
-              <Checkbox checked={backlight} onChange={onChangeBacklight}>
-                LED백라이트
-              </Checkbox>
-            </div>
-            {allCategory.length !== 0 && (
-              <>
-                <div className="clear-button-wrapper">
-                  <button onClick={onClickResetBtn}>
-                    <FiRotateCw />
-                    <span>전체 해제</span>
-                  </button>
-                </div>
-                <div className="selected-category-wrapper">
-                  {allCategory.map((category) => (
-                    <div key={category} className="selected-category">
-                      <span>{category}</span>
-                    </div>
-                  ))}
-                </div>
-              </>
-            )}
-          </div>
-
-          {/* ! 정렬  */}
-          <div className="keyboard-order-count-area">
-            {width > 768 ? (
-              <Space
-                split={<Divider type="vertical" />}
-                style={{ columnGap: '6px !important' }}
-                className="horizontal-scroll"
-              >
-                <Typography.Link onClick={onClickHeartDescendingBtn}>
-                  <span style={{ marginRight: '5px' }}>
-                    {sortingNumber === '1' && <FaCheck />}
-                  </span>
-                  좋아요 많은순
-                </Typography.Link>
-                <Typography.Link onClick={onClickHeartAscendingBtn}>
-                  <span style={{ marginRight: '5px' }}>
-                    {sortingNumber === '2' && <FaCheck />}
-                  </span>
-                  좋아요 적은순
-                </Typography.Link>
-                <Typography.Link onClick={onClickReviewDescendingBtn}>
-                  <span style={{ marginRight: '5px' }}>
-                    {sortingNumber === '3' && <FaCheck />}
-                  </span>
-                  리뷰 많은순
-                </Typography.Link>
-                <Typography.Link onClick={onClickReviewAscendingBtn}>
-                  <span style={{ marginRight: '5px' }}>
-                    {sortingNumber === '4' && <FaCheck />}
-                  </span>
-                  리뷰 적은순
-                </Typography.Link>
-                <Typography.Link onClick={onClickPriceAscendingBtn}>
-                  <span style={{ marginRight: '5px' }}>
-                    {sortingNumber === '5' && <FaCheck />}
-                  </span>
-                  가격 낮은순
-                </Typography.Link>
-                <Typography.Link onClick={onClickPriceDescendingBtn}>
-                  <span style={{ marginRight: '5px' }}>
-                    {sortingNumber === '6' && <FaCheck />}
-                  </span>
-                  가격 높은순
-                </Typography.Link>
-              </Space>
-            ) : (
-              <Select defaultValue={sortingNumber} onChange={handleChange}>
-                <Option value="1">좋아요 많은순</Option>
-                <Option value="2">좋아요 적은순</Option>
-                <Option value="3">리뷰 많은순</Option>
-                <Option value="4">리뷰 적은순</Option>
-                <Option value="5">가격 낮은순</Option>
-                <Option value="6">가격 높은순</Option>
-              </Select>
-            )}
-
-            <div className="keyboard-count">총 {keyboards.length}개</div>
-          </div>
-        </>
-      )}
-
-      <section className="card-section">
-        {keyboards.map((keyboard) => (
-          <KeyboardCard
-            key={`${keyboard.id}_${keyboard.name}`}
-            keyboard={keyboard}
-          />
-        ))}
-      </section>
-    </div>
+          </>
+        )}
+        <section className="card-section">
+          {keyboards.map((keyboard) => (
+            <KeyboardCard
+              key={`${keyboard.id}_${keyboard.name}`}
+              keyboard={keyboard}
+            />
+          ))}
+        </section>
+      </div>
+    </>
   );
 };
 

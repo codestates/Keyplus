@@ -59,12 +59,7 @@
     letter-spacing: 1px;
   }
 
-  .uploadbox {
-    width: 100%;
-    padding: 10px 20px;
-  }
-
-  .inputbox {
+  .input-box {
     margin-bottom: 20px;
     max-width: 267px;
     position: relative;
@@ -104,15 +99,13 @@
       cursor: pointer;
       padding: 0;
     }
-    // .verifybtn {
-    //   top: 45px;
-    // }
+
     .inputlong {
       padding-right: 78px;
     }
   }
 
-  .signupbtn {
+  .signup-btn {
     width: 100%;
     padding: 10px 20px;
     outline: none;
@@ -145,16 +138,18 @@
   }
 }
 
-.uploadbox {
-  width: 80px;
-  height: 80px;
+.upload-box {
+  // width: 80px;
+  // height: 80px;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-bottom: 24px;
+  width: 100%;
+  padding: 10px 20px;
 }
 
-.upload-icon {
+.upload-image {
   border: 1px solid rgb(138, 138, 138);
   cursor: pointer;
   border-radius: 50%;
