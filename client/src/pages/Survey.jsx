@@ -14,11 +14,13 @@ import './styles/Survey.scss';
 import axios from '../utils/customAxios';
 
 import { AiFillLeftSquare, AiFillRightSquare } from 'react-icons/ai';
+import useWidthSize from '../hooks/useWidthSize';
 
 // [설문조사 필터링]
 
 const Survey = () => {
   // const [isLoading, setIsLoading] = useState(false);
+
   const [isStarted, setIsStarted] = useState(false);
   const [keyboards, setKeyboards] = useState(null);
 

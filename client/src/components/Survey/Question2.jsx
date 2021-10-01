@@ -5,7 +5,9 @@ import '../styles/QuestionCard.scss';
 const Question2 = ({ onClickColor }) => {
   return (
     <>
-      <h2 className="question-title">선호하는 색상을 골라주세요.</h2>
+      <div className="question-header">
+        <h2 className="question-title">선호하는 색상을 골라주세요.</h2>
+      </div>
       <div className="card-container">
         <div className="card" onClick={() => onClickColor(1)}>
           <div className="image-wrapper">

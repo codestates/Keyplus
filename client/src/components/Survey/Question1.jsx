@@ -1,4 +1,5 @@
 import React from 'react';
+import useWidthSize from '../../hooks/useWidthSize';
 
 import '../styles/QuestionCard.scss';
 
@@ -6,6 +7,9 @@ const Question1 = ({ onClickSound }) => {
   // const audio1 = new Audio('/click.mp3');
   // const audio2 = new Audio('/click.mp3');
   // const audio3 = new Audio('/click.mp3');
+
+  const width = useWidthSize(768);
+
   const audio4 = new Audio('/click.mp3');
 
   const playAudio = () => {
@@ -18,7 +22,14 @@ const Question1 = ({ onClickSound }) => {
 
   return (
     <>
-      <h2 className="question-title">가장 마음에 드는 소리를 알려주세요.</h2>
+      <div className="question-header">
+        <h2 className="question-title">
+          <div>가장 마음에 드는 소리를 알려주세요.</div>
+        </h2>
+        {width > 768 ? (
+          <div className="question-description">이미지에 손을 올려주세요.</div>
+        ) : null}
+      </div>
       <div className="card-container">
         <div className="card" onClick={() => onClickSound(1)}>
           <div className="image-wrapper">
@@ -35,7 +46,10 @@ const Question1 = ({ onClickSound }) => {
           </div>
           <div className="text-wrapper">
             <div className="description">초콜릿 부러뜨리는 소리</div>
-            <div className="title">도각도각</div>
+            <div className="title">
+              도각도각
+              <div className="mp3-icon">{width > 768 ? null : '띡'}</div>
+            </div>
           </div>
         </div>
         <div className="card" onClick={() => onClickSound(3)}>
