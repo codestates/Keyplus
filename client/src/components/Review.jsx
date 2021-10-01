@@ -83,8 +83,14 @@ const Review = ({ review, userId }) => {
       <div className="review-info">
         <div className="review-profile">
           <div className="review-profile-image">
-            {review.userImage || userImage ? (
-              <Avatar src={review.userImage ?? userImage} />
+            {review.userImage ? (
+              <Avatar src={review.userImage} />
+            ) : review.nickname === userNickname ? (
+              userImage !== '' ? (
+                <Avatar src={userImage} />
+              ) : (
+                <Avatar icon={<UserOutlined />} />
+              )
             ) : (
               <Avatar icon={<UserOutlined />} />
             )}
@@ -93,7 +99,15 @@ const Review = ({ review, userId }) => {
             <Rate disabled defaultValue={review.rating} />
             <div className="name-date">
               <span className="name">{review.nickname ?? userNickname}</span>
-              <span className="date">{review.createdAt?.split(' ')[0]}</span>
+              <span className="date">
+                {
+                  new Date(review.createdAt)
+                    .toLocaleString('ko-KR', {
+                      timeZone: 'Asia/Seoul',
+                    })
+                    .split('오')[0]
+                }
+              </span>
             </div>
           </div>
         </div>
@@ -118,7 +132,7 @@ const Review = ({ review, userId }) => {
           </Button>
           <ButtonModal
             modalText="정말로 삭제하시겠습니까?"
-            loadingText="삭제 진행중입니다."
+            loadingText="삭제 진행 중입니다"
             buttonText="삭제"
             action={deleteReviews}
             keyboardId={review.keyboardId}

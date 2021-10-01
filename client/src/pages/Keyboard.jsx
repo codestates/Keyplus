@@ -12,15 +12,7 @@ import useWidthSize from '../hooks/useWidthSize';
 import './styles/Keyboard.scss';
 
 import 'antd/dist/antd.css';
-import {
-  Select,
-  Space,
-  Typography,
-  Divider,
-  Checkbox,
-  Radio,
-  Button,
-} from 'antd';
+import { Select, Space, Typography, Divider, Checkbox, Radio } from 'antd';
 const { Option } = Select;
 import { FaCheck } from 'react-icons/fa';
 import { FiRotateCw } from 'react-icons/fi';
@@ -449,13 +441,17 @@ const Keyboard = () => {
     setBacklight(false);
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="keyboard">
       {!loading && (
         <>
           <div className="keyboard-category">
             <div>브랜드</div>
-            <div className="horizontal-scroll">
+            <div className="category-list horizontal-scroll">
               <Checkbox
                 checked={brandLogitech}
                 onChange={onChangeBrandLogitech}
@@ -479,7 +475,7 @@ const Keyboard = () => {
               </Checkbox>
             </div>
             <div>키 스위치</div>
-            <div className="horizontal-scroll">
+            <div className="category-list horizontal-scroll">
               <Checkbox checked={switchBrown} onChange={onChangeSwitchBrown}>
                 갈축
               </Checkbox>
@@ -503,7 +499,7 @@ const Keyboard = () => {
             <Radio.Group
               onChange={onChangePriceRadio}
               value={priceRadio}
-              className="horizontal-scroll radio-group"
+              className="category-list horizontal-scroll radio-group"
             >
               <Radio value={'5만원 이하'} onClick={onClickPriceRadio}>
                 5만원 이하
@@ -522,7 +518,7 @@ const Keyboard = () => {
               </Radio>
             </Radio.Group>
             <div>기타</div>
-            <div className="horizontal-scroll">
+            <div className="category-list horizontal-scroll">
               <Checkbox checked={tenkeyLess} onChange={onChangeTenkeyLess}>
                 텐키리스
               </Checkbox>
@@ -553,44 +549,74 @@ const Keyboard = () => {
           </div>
 
           {/* ! 정렬  */}
-          <div className="keyboard-order-count-area">
+          <div className="keyboard-sorting-count-area">
             {width > 768 ? (
               <Space
                 split={<Divider type="vertical" />}
                 style={{ columnGap: '6px !important' }}
                 className="horizontal-scroll"
               >
-                <Typography.Link onClick={onClickHeartDescendingBtn}>
+                <Typography.Link
+                  className={`sorting-tab ${
+                    sortingNumber === '1' && 'selected'
+                  }`}
+                  onClick={onClickHeartDescendingBtn}
+                >
                   <span style={{ marginRight: '5px' }}>
                     {sortingNumber === '1' && <FaCheck />}
                   </span>
                   좋아요 많은순
                 </Typography.Link>
-                <Typography.Link onClick={onClickHeartAscendingBtn}>
+                <Typography.Link
+                  className={`sorting-tab ${
+                    sortingNumber === '2' && 'selected'
+                  }`}
+                  onClick={onClickHeartAscendingBtn}
+                >
                   <span style={{ marginRight: '5px' }}>
                     {sortingNumber === '2' && <FaCheck />}
                   </span>
                   좋아요 적은순
                 </Typography.Link>
-                <Typography.Link onClick={onClickReviewDescendingBtn}>
+                <Typography.Link
+                  className={`sorting-tab ${
+                    sortingNumber === '3' && 'selected'
+                  }`}
+                  onClick={onClickReviewDescendingBtn}
+                >
                   <span style={{ marginRight: '5px' }}>
                     {sortingNumber === '3' && <FaCheck />}
                   </span>
                   리뷰 많은순
                 </Typography.Link>
-                <Typography.Link onClick={onClickReviewAscendingBtn}>
+                <Typography.Link
+                  className={`sorting-tab ${
+                    sortingNumber === '4' && 'selected'
+                  }`}
+                  onClick={onClickReviewAscendingBtn}
+                >
                   <span style={{ marginRight: '5px' }}>
                     {sortingNumber === '4' && <FaCheck />}
                   </span>
                   리뷰 적은순
                 </Typography.Link>
-                <Typography.Link onClick={onClickPriceAscendingBtn}>
+                <Typography.Link
+                  className={`sorting-tab ${
+                    sortingNumber === '5' && 'selected'
+                  }`}
+                  onClick={onClickPriceAscendingBtn}
+                >
                   <span style={{ marginRight: '5px' }}>
                     {sortingNumber === '5' && <FaCheck />}
                   </span>
                   가격 낮은순
                 </Typography.Link>
-                <Typography.Link onClick={onClickPriceDescendingBtn}>
+                <Typography.Link
+                  className={`sorting-tab ${
+                    sortingNumber === '6' && 'selected'
+                  }`}
+                  onClick={onClickPriceDescendingBtn}
+                >
                   <span style={{ marginRight: '5px' }}>
                     {sortingNumber === '6' && <FaCheck />}
                   </span>

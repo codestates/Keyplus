@@ -177,7 +177,7 @@ const KeyboardCard = memo(({ keyboard }) => {
           >
             <span>{`${keyboard.brand} ${keyboard.name}`}</span>
 
-            <div>
+            <div style={{ cursor: 'pointer' }} onClick={onClickHeart}>
               {liked ? (
                 <HeartFilled
                   style={{
@@ -185,7 +185,6 @@ const KeyboardCard = memo(({ keyboard }) => {
                     color: '#ff0000',
                     marginRight: '3px',
                   }}
-                  onClick={onClickHeart}
                 />
               ) : (
                 <HeartOutlined
@@ -194,7 +193,6 @@ const KeyboardCard = memo(({ keyboard }) => {
                     color: '#ff0000',
                     marginRight: '3px',
                   }}
-                  onClick={onClickHeart}
                 />
               )}
               {likeCount}

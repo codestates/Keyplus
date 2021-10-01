@@ -17,7 +17,7 @@ axiosConfig();
 const persistor = persistStore(store);
 
 ReactDOM.render(
-  <React.StrictMode>
+  <>
     <BrowserRouter>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
@@ -25,6 +25,6 @@ ReactDOM.render(
         </PersistGate>
       </Provider>
     </BrowserRouter>
-  </React.StrictMode>,
+  </>,
   document.getElementById('root')
 );

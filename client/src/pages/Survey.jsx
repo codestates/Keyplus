@@ -90,6 +90,10 @@ const Survey = () => {
   //   });
   // };
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   useEffect(async () => {
     if (!mounted.current) {
       mounted.current = true;

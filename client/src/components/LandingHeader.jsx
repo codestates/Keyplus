@@ -94,7 +94,7 @@ const LandingHeader = () => {
                 <Link
                   to="/survey"
                   className="landing-nav-links"
-                  onClick={onClickToggleBtn}
+                  onClick={isOpenSidebar ? onClickToggleBtn : null}
                 >
                   설문조사
                 </Link>
@@ -103,7 +103,7 @@ const LandingHeader = () => {
                 <Link
                   to="/keyboards"
                   className="landing-nav-links"
-                  onClick={onClickToggleBtn}
+                  onClick={isOpenSidebar ? onClickToggleBtn : null}
                 >
                   키보드
                 </Link>
@@ -112,7 +112,7 @@ const LandingHeader = () => {
                 <Link
                   to="/map"
                   className="landing-nav-links"
-                  onClick={onClickToggleBtn}
+                  onClick={isOpenSidebar ? onClickToggleBtn : null}
                 >
                   타건샵
                 </Link>
