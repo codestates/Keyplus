@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { useHistory } from 'react-router';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { addReviews, updateReviews } from '../reducers/api/reviewsAPI';
 import Button from '../components/Button';
@@ -43,10 +43,6 @@ const ReviewCreate = ({ location, ...props }) => {
   const img2Ref = useRef(null);
   const img3Ref = useRef(null);
   const videoRef = useRef(null);
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
 
   //* onChange
   const onChangeImage = (e, num) => {
