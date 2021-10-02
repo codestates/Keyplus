@@ -35,6 +35,11 @@ const Survey = () => {
     setIsStarted(true);
   };
 
+  const audio1 = new Audio('/boggle.mp3');
+  const audio2 = new Audio('/nonclick.mp3');
+  const audio3 = new Audio('/linear.mp3');
+  const audio4 = new Audio('/click.mp3');
+
   const onClickSound = (res) => {
     setSound(res);
     // 1. switch
@@ -42,11 +47,23 @@ const Survey = () => {
     //     - 갈축 true 2
     //     - 흑축 true 또는 적축 true 3
     //     - 청축 true 4
+    switch (res) {
+      case 1:
+        audio1.pause();
+        break;
+      case 2:
+        audio2.pause();
+        break;
+      case 3:
+        audio3.pause();
+        break;
+      case 4:
+        audio4.pause();
+        break;
+      default:
+        break;
+    }
   };
-
-  // const start = (whichAudio) => {
-  //   whichAudio.play();
-  // };
 
   const onClickColor = (res) => {
     setColor(res);
@@ -122,14 +139,19 @@ const Survey = () => {
       <>
         <Header />
         <main className="survey">
-          <div className="survey-main">
-            <h2>
-              맘에 쏙 드는 기계식 키보드, 찾기 어려우셨나요?
-              <br />
-              쉽고 간단한 테스트로 <br />
-              나에게 맞는 키보드를 알아보세요.
-            </h2>
-            <div className="survey-button-wrapper">
+          <div
+            className="survey-background"
+            style={{
+              backgroundImage: "url('/survey-background.png')",
+            }}
+          >
+            <div className="survey-main">
+              <h2>
+                맘에 쏙 드는 기계식 키보드, 찾기 어려우셨나요?
+                <br />
+                쉽고 간단한 테스트로 <br />
+                나에게 맞는 키보드를 알아보세요.
+              </h2>
               <button
                 className="survey-button"
                 onClick={() => onClickStartBtn()}
@@ -156,7 +178,14 @@ const Survey = () => {
                 baseBgColor="#dfdfdf"
               />
             </div>
-            <Question1 onClickSound={onClickSound} />
+            <Question1
+              onClickSound={onClickSound}
+              audio1={audio1}
+              audio2={audio2}
+              audio3={audio3}
+              audio4={audio4}
+            />
+            {/* <Question1 /> */}
             {/* <div className="question-button">
               <button className="previous-question-button">
                 <AiFillLeftSquare className="icon" />
