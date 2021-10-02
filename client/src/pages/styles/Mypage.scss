@@ -18,18 +18,16 @@
 
 .mypage-main {
   // @include flexbox(); //! 선아
-
   @include flexbox(flex-start); //! 선아
-  padding-top: 50px; //! 선아
-
+  padding-top: 50px;
   flex-direction: column;
   height: 100%;
-  min-height: 100vh;
+  min-height: calc(100vh - 120px);
 
   @media screen and (max-width: $md-breakpoint) {
     // justify-content: flex-start; //! 선아
-
-    padding-top: 0; //! 선아
+    padding-top: 0;
+    min-height: calc(100vh - 50px);
   }
 
   .title {
