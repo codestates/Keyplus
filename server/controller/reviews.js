@@ -3,7 +3,6 @@ const { Review, User, Keyboard, sequelize } = require('../models');
 
 module.exports = {
   addReview: async (req, res) => {
-    console.log(req.files);
     // 1. params 로 키보드 아이디를 받아온다.
     const keyboard = req.params.id;
     const user = req.userId;
@@ -17,13 +16,16 @@ module.exports = {
           keyboardId: keyboard,
         },
       });
-      const getNickname = await User.findOne({
-        attributes: ['nickname'],
+      const getUserInfo = await User.findOne({
+        attributes: ['nickname', 'image'],
         where: {
           id: user,
         },
         raw: true,
       });
+      getUserInfo['userImage'] = getUserInfo['image'];
+      delete getUserInfo['image'];
+
       if (!hasReview) {
         if (Object.keys(req.files).length !== 0) {
           let review = await Review.create({
@@ -34,9 +36,9 @@ module.exports = {
             image3: req.files.img3 ? req.files.img3[0].location : null,
             video: req.files.video ? req.files.video[0].location : null,
             userId: user,
-            keyboardId: keyboard,
+            keyboardId: Number(keyboard),
           });
-          Object.assign(review.dataValues, getNickname);
+          Object.assign(review.dataValues, getUserInfo);
           return res.status(200).json({ data: review });
         } else {
           let review = await Review.create({
@@ -45,7 +47,7 @@ module.exports = {
             userId: user,
             keyboardId: keyboard,
           });
-          Object.assign(review.dataValues, getNickname);
+          Object.assign(review.dataValues, getUserInfo);
           return res.status(200).json({ data: review });
         }
       } else {
@@ -73,13 +75,15 @@ module.exports = {
       raw: true,
     });
 
-    const getNickname = await User.findOne({
-      attributes: ['nickname'],
+    const getUserInfo = await User.findOne({
+      attributes: ['nickname', 'image'],
       where: {
         id: user,
       },
       raw: true,
     });
+    getUserInfo['userImage'] = getUserInfo['image'];
+    delete getUserInfo['image'];
 
     if (req.files && req.files.img1) {
       review.image1 = req.files.img1[0].location;
@@ -126,7 +130,7 @@ module.exports = {
         where: { userId: req.userId, keyboardId: req.params.id },
         raw: true,
       });
-      Object.assign(updatedReview, getNickname);
+      Object.assign(updatedReview, getUserInfo);
       return res.status(200).json({ data: updatedReview });
     } catch (error) {
       console.log(error);
@@ -154,12 +158,27 @@ module.exports = {
     // 1. Cookie 를 이용해서 특정 유저가 작성한 리뷰 목록을 조회한다.
     // 2. 조회한 리뷰 목록을 클라이언트로 보내준다.
     try {
+      const getUserInfo = await User.findOne({
+        attributes: ['nickname', 'image'],
+        where: {
+          id: req.userId,
+        },
+        raw: true,
+      });
+      getUserInfo['userImage'] = getUserInfo['image'];
+      delete getUserInfo['image'];
+
       const reviews = await Review.findAll({
         where: {
           userId: req.userId,
         },
         raw: true,
       });
+
+      reviews.map((el) => {
+        Object.assign(el, getUserInfo);
+      });
+
       return res.status(200).json({ data: reviews });
     } catch (error) {
       console.log(error);
