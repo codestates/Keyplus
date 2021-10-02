@@ -117,6 +117,15 @@ const LandingHeader = () => {
                   타건샵
                 </Link>
               </li>
+              <li className="landing-nav-item">
+                <Link
+                  to="/mechanical-keyboard"
+                  className="landing-nav-links"
+                  onClick={isOpenSidebar ? onClickToggleBtn : null}
+                >
+                  기계식 키보드란?
+                </Link>
+              </li>
             </div>
           </ul>
         </nav>

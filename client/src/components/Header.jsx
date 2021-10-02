@@ -114,6 +114,15 @@ const Header = () => {
                   타건샵
                 </Link>
               </li>
+              <li className="nav-item">
+                <Link
+                  to="/mechanical-keyboard"
+                  className="nav-links"
+                  onClick={isOpenSidebar ? onClickToggleBtn : null}
+                >
+                  기계식 키보드란?
+                </Link>
+              </li>
             </div>
           </ul>
         </nav>
