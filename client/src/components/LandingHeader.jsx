@@ -23,7 +23,7 @@ import {
 
 const LandingHeader = () => {
   const offset = usePageYOffset();
-  const width = useWidthSize(782);
+  const width = useWidthSize(768);
   const [isOpenSidebar, setIsOpenSidebar] = useState(false);
 
   const dispatch = useDispatch();
@@ -66,14 +66,14 @@ const LandingHeader = () => {
             {isOpenSidebar ? (
               <CloseOutlined
                 style={{
-                  fontSize: width > 782 ? '24px' : '19px',
+                  fontSize: width > 768 ? '24px' : '19px',
                   color: '#fff',
                 }}
               />
             ) : (
               <MenuOutlined
                 style={{
-                  fontSize: width > 782 ? '24px' : '19px',
+                  fontSize: width > 768 ? '24px' : '19px',
                   color: '#fff',
                 }}
               />
@@ -121,7 +121,7 @@ const LandingHeader = () => {
           </ul>
         </nav>
         <Link to="/" className="landing-header-logo">
-          {width > 782 ? <KEYPLUS_WHITE_36 /> : <KEYPLUS_WHITE_24 />}
+          {width > 768 ? <KEYPLUS_WHITE_36 /> : <KEYPLUS_WHITE_24 />}
         </Link>
         <nav className="landing-buttons">
           <ul className="landing-button-menu">
@@ -129,7 +129,7 @@ const LandingHeader = () => {
               <button onClick={onClickMypage} className="landing-button-links">
                 <UserOutlined
                   style={{
-                    fontSize: width > 782 ? '24px' : '19px',
+                    fontSize: width > 768 ? '24px' : '19px',
                     color: '#fff',
                   }}
                 />
@@ -143,7 +143,7 @@ const LandingHeader = () => {
                 >
                   <ExportOutlined
                     style={{
-                      fontSize: width > 782 ? '24px' : '19px',
+                      fontSize: width > 768 ? '24px' : '19px',
                       color: '#fff',
                     }}
                   />
