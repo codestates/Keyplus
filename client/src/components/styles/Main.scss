@@ -1,6 +1,6 @@
 @use '../../styles/constants' as *;
 
-main {
+main#main {
   padding: 0 80px 70px;
   word-break: break-all;
   // min-height: calc(100vh - 443px); //! 선아
@@ -9,7 +9,7 @@ main {
 }
 
 @media screen and (max-width: $md-breakpoint) {
-  main {
+  main#main {
     padding: 0 0 30px;
 
     // min-height: calc(100vh - 718px); //! 선아

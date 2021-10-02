@@ -123,7 +123,7 @@ const LandingHeader = () => {
                   className="landing-nav-links"
                   onClick={isOpenSidebar ? onClickToggleBtn : null}
                 >
-                  기계식 키보드란?
+                  입문
                 </Link>
               </li>
             </div>

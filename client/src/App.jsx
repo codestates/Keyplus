@@ -93,6 +93,7 @@ function App() {
             component={Inquiry}
             exact
           />
+          <PublicRoute restricted={false} path="/map" component={Map} exact />
 
           <PrivateRoute path="/mypage" component={Mypage} exact />
           <PrivateRoute path="/review/:id" component={ReviewCreate} />

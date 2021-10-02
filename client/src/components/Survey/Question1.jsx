@@ -129,7 +129,7 @@ const Question1 = ({ onClickSound, audio1, audio2, audio3, audio4 }) => {
             />
           </div>
           <div className="text-wrapper">
-            <div className="description">만년필로 글씨쓰는 소리</div>
+            <div className="description">만년필로 글씨 쓰는 소리</div>
             <div className="title">
               서걱서걱
               <div
