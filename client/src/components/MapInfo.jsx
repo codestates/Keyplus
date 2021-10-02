@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './styles/MapInfo.scss';
+
 const MapInfo = ({ mapInfo }) => {
   return (
     <div className="info-container">
