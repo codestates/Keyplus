@@ -139,14 +139,19 @@ const Survey = () => {
       <>
         <Header />
         <main className="survey">
-          <div className="survey-main">
-            <h2>
-              맘에 쏙 드는 기계식 키보드, 찾기 어려우셨나요?
-              <br />
-              쉽고 간단한 테스트로 <br />
-              나에게 맞는 키보드를 알아보세요.
-            </h2>
-            <div className="survey-button-wrapper">
+          <div
+            className="survey-background"
+            style={{
+              backgroundImage: "url('/survey-background.png')",
+            }}
+          >
+            <div className="survey-main">
+              <h2>
+                맘에 쏙 드는 기계식 키보드, 찾기 어려우셨나요?
+                <br />
+                쉽고 간단한 테스트로 <br />
+                나에게 맞는 키보드를 알아보세요.
+              </h2>
               <button
                 className="survey-button"
                 onClick={() => onClickStartBtn()}

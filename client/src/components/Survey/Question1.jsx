@@ -77,7 +77,7 @@ const Question1 = ({ onClickSound, audio1, audio2, audio3, audio4 }) => {
                   audio(1);
                 }}
               >
-                {width < 768 && <FiPlayCircle />}
+                {width <= 768 && <FiPlayCircle />}
               </div>
             </div>
           </div>
@@ -108,7 +108,7 @@ const Question1 = ({ onClickSound, audio1, audio2, audio3, audio4 }) => {
                   audio(2);
                 }}
               >
-                {width < 768 && <FiPlayCircle />}
+                {width <= 768 && <FiPlayCircle />}
               </div>
             </div>
           </div>
@@ -139,7 +139,7 @@ const Question1 = ({ onClickSound, audio1, audio2, audio3, audio4 }) => {
                   audio(3);
                 }}
               >
-                {width < 768 && <FiPlayCircle />}
+                {width <= 768 && <FiPlayCircle />}
               </div>
             </div>
           </div>
@@ -170,7 +170,7 @@ const Question1 = ({ onClickSound, audio1, audio2, audio3, audio4 }) => {
                   audio(4);
                 }}
               >
-                {width < 768 && <FiPlayCircle />}
+                {width <= 768 && <FiPlayCircle />}
               </div>
             </div>
           </div>
