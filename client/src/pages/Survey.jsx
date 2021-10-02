@@ -202,6 +202,7 @@ const Survey = () => {
           <main className="survey">
             <div className="progress-bar-wrapper">
               <ProgressBar
+                labelSize="12px"
                 completed={32}
                 bgColor="#647C90"
                 baseBgColor="#dfdfdf"
@@ -219,6 +220,7 @@ const Survey = () => {
           <main className="survey">
             <div className="progress-bar-wrapper">
               <ProgressBar
+                labelSize="12px"
                 completed={48}
                 bgColor="#647C90"
                 baseBgColor="#dfdfdf"
@@ -236,6 +238,7 @@ const Survey = () => {
           <main className="survey">
             <div className="progress-bar-wrapper">
               <ProgressBar
+                labelSize="12px"
                 completed={64}
                 bgColor="#647C90"
                 baseBgColor="#dfdfdf"
@@ -253,6 +256,7 @@ const Survey = () => {
           <main className="survey">
             <div className="progress-bar-wrapper">
               <ProgressBar
+                labelSize="12px"
                 completed={80}
                 bgColor="#647C90"
                 baseBgColor="#dfdfdf"
@@ -270,6 +274,7 @@ const Survey = () => {
           <main className="survey">
             <div className="progress-bar-wrapper">
               <ProgressBar
+                labelSize="12px"
                 completed={100}
                 bgColor="#647C90"
                 baseBgColor="#dfdfdf"

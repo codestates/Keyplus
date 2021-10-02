@@ -28,7 +28,13 @@ const ButtonModal = (props) => {
         setVisible(false);
         setConfirmLoading(false);
       }, 2000);
-      await dispatch(props.action({ history, keyboardId: props.keyboardId }));
+      await dispatch(
+        props.action({
+          history,
+          keyboardId: props.keyboardId,
+          reviewId: props.reviewId,
+        })
+      );
     } catch (err) {
       dispatch(isError(err.response));
     }
