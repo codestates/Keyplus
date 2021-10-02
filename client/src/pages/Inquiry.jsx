@@ -51,7 +51,7 @@ const Inquiry = () => {
       await exceptionAxios.post('/inquiries', {
         data: { ...updateState, category: updateOption },
       });
-      message.success('이메일 전송이 완료되었습니다.');
+      message.success('이메일 전송이 완료되었습니다');
       setUpdateState(initialState);
     } catch (err) {
       console.log(err);
@@ -59,10 +59,6 @@ const Inquiry = () => {
       throw err;
     }
   };
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
 
   return (
     <>

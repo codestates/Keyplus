@@ -33,9 +33,9 @@ const Signup = () => {
 
   //FIXME: 이메일 중복확인 함수
   //이미 사용중인 이메일입니다 v
-  //올바르지 않은 이메일 형식 입니다 v
+  //올바르지 않은 이메일 형식입니다 v
   //이메일을 확인해 주세요
-  //사용 가능한 이메일 입니다 v
+  //사용 가능한 이메일입니다 v
   const isEmail = (email) => {
     const reg =
       /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
@@ -73,7 +73,7 @@ const Signup = () => {
       console.log(err);
       // dispatch(isError(err.response));
       setValidEmail(false);
-      message.warning('이미 사용중인 이메일 입니다');
+      message.warning('이미 사용 중인 이메일입니다');
     }
   };
 
@@ -85,12 +85,12 @@ const Signup = () => {
       if (nickname === '') return message.warning('닉네임을 입력해주세요');
       await validateNickname({ nickname });
       setValidNickname(true);
-      message.success('사용 가능한 닉네임 입니다');
+      message.success('사용 가능한 닉네임입니다');
     } catch (err) {
       console.log(err.response);
       // dispatch(isError(err.response));
       setValidNickname(false);
-      message.warning('사용 불가한 닉네임 입니다');
+      message.warning('사용 불가능한 닉네임입니다');
     }
   };
 
@@ -128,7 +128,7 @@ const Signup = () => {
     e.preventDefault();
     try {
       if (!validEmail) {
-        return message.warning('이메일 중복검사를 해주세요');
+        return message.warning('이메일 인증을 해주세요');
       }
       if (!validNickname) {
         return message.warning('닉네임 중복검사를 해주세요');
@@ -141,7 +141,7 @@ const Signup = () => {
       }
       if (!passwordValidate(password)) {
         return message.warning(
-          '최소 6 자, 최소 하나의 문자, 하나의 숫자 및 하나의 특수 문자의 비밀번호가 필요합니다'
+          '최소 6자, 최소 하나의 문자, 하나의 숫자 및 하나의 특수 문자의 비밀번호가 필요합니다'
         );
       }
 
@@ -216,7 +216,7 @@ const Signup = () => {
                     전송
                   </button>
                 </div>
-                <p className="text">이메일 확인 후 인증번호를 입력해 주세요</p>
+                <p className="text">이메일 인증 후 인증번호를 입력해주세요</p>
               </div>
               {isClicked && (
                 <>

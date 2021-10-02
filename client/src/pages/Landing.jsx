@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import LandingHeader from '../components/LandingHeader';
 import LandingPart1 from '../components/Landing/LandingPart1';
@@ -7,16 +7,14 @@ import LandingPart3 from '../components/Landing/LandingPart3';
 import LandingPart4 from '../components/Landing/LandingPart4';
 import LandingPart5 from '../components/Landing/LandingPart5';
 import Footer from '../components/Footer';
+import ScrollArrow from '../components/ScrollArrow';
 
 import './styles/Landing.scss';
 
 const Landing = () => {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   return (
     <>
+      <ScrollArrow landing={true} />
       <div className="landing-main">
         <LandingHeader />
         <LandingPart1 />

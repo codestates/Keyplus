@@ -228,18 +228,12 @@ const KeyboardDetail = (props) => {
                 {keyboard.brand} {keyboard.name}
               </div>
 
-              <div className="keyboard-like">
+              <div className="keyboard-like" onClick={onClickHeart}>
                 <span className="like-heart">
                   {liked ? (
-                    <HeartFilled
-                      style={{ color: '#ff0000' }}
-                      onClick={onClickHeart}
-                    />
+                    <HeartFilled style={{ color: '#ff0000' }} />
                   ) : (
-                    <HeartOutlined
-                      style={{ color: '#ff0000' }}
-                      onClick={onClickHeart}
-                    />
+                    <HeartOutlined style={{ color: '#ff0000' }} />
                   )}
                 </span>
                 <span className="like-count">{likeCount}</span>

@@ -12,38 +12,80 @@
 
 .keyboard-category {
   display: grid;
-  grid-template-columns: 140px 1fr;
+  grid-template-columns: 160px 1fr;
   grid-template-rows: 1fr;
   margin-bottom: 30px;
-  border: 1px solid #d4d4d4;
   letter-spacing: -0.05em;
 
+  overflow: hidden;
+
+  border: 1px solid #eeeeee;
+  border-radius: 6px;
+
+  // border: 1px solid #262626;
+  // background-color: #262626;
   @media screen and (max-width: $md-breakpoint) {
     grid-template-columns: 100px 1fr;
+    margin-top: 70px;
   }
 
   & > * {
     padding: 10px;
+    align-items: center;
   }
 
   & > *:nth-child(odd) {
-    background-color: #dfdfdf;
+    background-color: #262626;
+    color: #fff;
+    // color: #000;
+    border-bottom: 1px solid #858585;
     font-weight: 500;
+  }
+  & > *:nth-child(even) {
+    padding-left: 20px;
+
+    @media screen and (max-width: $md-breakpoint) {
+      // padding: 10px;
+      padding-left: 10px;
+    }
   }
 
   & > *:not(:nth-last-child(2), :nth-last-child(1)) {
-    border-bottom: 1px solid #d4d4d4;
+    // border-bottom: 1px solid #d4d4d4;
+    // border-bottom: 1px solid #262626;
+  }
+
+  .category-list {
+    background-color: #fff;
+    overflow: hidden;
+
+    &:nth-child(4n-2) {
+      background-color: #eeeeee;
+    }
+
+    // background-color: #000000;
+    // background: linear-gradient(90deg, tomato, purple);
   }
 
   .radio-group {
-    align-items: center;
-    padding: 10px;
+    // align-items: center;
+    // padding: 20px;
+    // padding-left: 30px;
+
+    @media screen and (max-width: $md-breakpoint) {
+      // padding: 10px;
+      // padding-left: 10px;
+    }
   }
 
   .clear-button-wrapper {
     @include flexbox();
-    background-color: unset;
-    border-right: 1px solid #d4d4d4;
+    // color: #000;
+    // background-color: unset;
+    background-color: #262626;
+    // background-color: #eeeeee;
+    // background-color: #fff;
+    border-right: 1px solid #262626;
 
     & > button {
       padding: 0;
@@ -63,11 +105,13 @@
     flex-wrap: wrap;
     row-gap: 3px;
     column-gap: 3px;
+    background-color: #eeeeee;
 
     .selected-category {
       display: inline-block;
       padding: 2px 10px;
-      background-color: #808080;
+      // background-color: #808080;
+      background-color: #262626;
       border-radius: 20px;
       color: #fff;
       font-size: 12px;
@@ -79,9 +123,17 @@
   }
 }
 
-.keyboard-order-count-area {
+.keyboard-sorting-count-area {
   @include flexbox(space-between);
   margin-bottom: 30px;
+
+  .sorting-tab:not(.selected):hover {
+    color: rgb(138, 138, 138);
+  }
+
+  .sorting-tab.selected {
+    font-weight: 500;
+  }
 
   .keyboard-count {
     font-weight: 500;

@@ -59,14 +59,14 @@ const Header = () => {
             {isOpenSidebar ? (
               <CloseOutlined
                 style={{
-                  fontSize: width > 768 ? '24px' : '21px',
+                  fontSize: width > 768 ? '24px' : '19px',
                   color: offset > 0 ? '#fff' : '#000',
                 }}
               />
             ) : (
               <MenuOutlined
                 style={{
-                  fontSize: width > 768 ? '24px' : '21px',
+                  fontSize: width > 768 ? '24px' : '19px',
                   color: offset > 0 ? '#fff' : '#000',
                 }}
               />
@@ -91,7 +91,7 @@ const Header = () => {
                 <Link
                   to="/survey"
                   className="nav-links"
-                  onClick={isOpenSidebar && onClickToggleBtn}
+                  onClick={isOpenSidebar ? onClickToggleBtn : null}
                 >
                   설문조사
                 </Link>
@@ -100,7 +100,7 @@ const Header = () => {
                 <Link
                   to="/keyboards"
                   className="nav-links"
-                  onClick={isOpenSidebar && onClickToggleBtn}
+                  onClick={isOpenSidebar ? onClickToggleBtn : null}
                 >
                   키보드
                 </Link>
@@ -109,7 +109,7 @@ const Header = () => {
                 <Link
                   to="/map"
                   className="nav-links"
-                  onClick={isOpenSidebar && onClickToggleBtn}
+                  onClick={isOpenSidebar ? onClickToggleBtn : null}
                 >
                   타건샵
                 </Link>
@@ -136,7 +136,7 @@ const Header = () => {
               <button onClick={onClickMypage} className="button-links">
                 <UserOutlined
                   style={{
-                    fontSize: width > 768 ? '24px' : '21px',
+                    fontSize: width > 768 ? '24px' : '19px',
                     color: offset > 0 ? '#fff' : '#000',
                   }}
                 />
@@ -150,7 +150,7 @@ const Header = () => {
                 >
                   <ExportOutlined
                     style={{
-                      fontSize: width > 768 ? '24px' : '21px',
+                      fontSize: width > 768 ? '24px' : '19px',
                       color: offset > 0 ? '#fff' : '#000',
                     }}
                   />

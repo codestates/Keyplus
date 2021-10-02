@@ -56,16 +56,16 @@ const Mypage = () => {
     try {
       //! 닉네임이 바뀌지 않았을 경우
       if (prevNickname === nickname) {
-        return message.success('사용 가능한 닉네임 입니다');
+        return message.success('사용 가능한 닉네임입니다');
       }
       await validateNickname({ nickname });
       setValidNickname(true);
-      message.success('사용 가능한 닉네임 입니다');
+      message.success('사용 가능한 닉네임입니다');
     } catch (err) {
       console.log(err.response);
       // dispatch(isError(err.response));
       setValidNickname(false);
-      message.warning('사용 불가한 닉네임 입니다');
+      message.warning('사용 불가능한 닉네임입니다');
     }
   };
 
@@ -91,7 +91,7 @@ const Mypage = () => {
     } catch (err) {
       if (!err.response) throw err;
       dispatch(isError(err.response));
-      message.warning('처리도중 문제가 발생했습니다');
+      message.warning('처리 도중 문제가 발생했습니다');
     }
   };
 
@@ -210,13 +210,13 @@ const Mypage = () => {
               <div className="mypage-delete-btn">
                 <TextModal
                   modalText="탈퇴하시겠습니까?"
-                  loadingText="탈퇴 진행중입니다."
+                  loadingText="탈퇴 진행 중입니다"
                   buttonText="회원 탈퇴"
                   action={deleteUser}
                 />
               </div>
             </form>
-            {/* FIXME: 관심키보드 / 내 리뷰 */}{' '}
+            {/* FIXME: 관심키보드 / 내 리뷰 */}
             <div className="mypage-tabs">
               <Tabs defaultActiveKey="1" onChange={callback}>
                 <TabPane tab="관심 키보드" key="관심 키보드">
@@ -235,7 +235,10 @@ const Mypage = () => {
                 <TabPane tab="내 리뷰" key="내 리뷰">
                   {/* <div className="mypage-tabs"> */}
                   {reviewsState.map((review, idx) => (
-                    <div key={`${review}_${idx}`} className="mypage-tab-item">
+                    <div
+                      key={`${review}_${idx}`}
+                      className="mypage-tab-item mypage-review"
+                    >
                       <Review review={review} userId={userId} />
                     </div>
                   ))}
