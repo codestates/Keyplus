@@ -9,7 +9,6 @@ import './styles/Review.scss';
 
 import { Avatar, Carousel, Rate } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import { useSelector } from 'react-redux';
 
 const LeftArrow = ({ currentSlide, slideCount, children, ...props }) => {
   return <div {...props}>{children}</div>;
@@ -20,9 +19,6 @@ const RightArrow = ({ currentSlide, slideCount, children, ...props }) => {
 };
 
 const Review = ({ review, userId }) => {
-  const userNickname = useSelector((state) => state.user?.nickname);
-  const userImage = useSelector((state) => state.user?.image);
-
   return (
     <>
       {(review.image1 || review.image2 || review.image3 || review.video) && (
@@ -83,14 +79,8 @@ const Review = ({ review, userId }) => {
       <div className="review-info">
         <div className="review-profile">
           <div className="review-profile-image">
-            {review.userImage !== '' ? (
+            {review.userImage ? (
               <Avatar src={review.userImage} />
-            ) : review.nickname === userNickname ? (
-              userImage !== '' ? (
-                <Avatar src={userImage} />
-              ) : (
-                <Avatar icon={<UserOutlined />} />
-              )
             ) : (
               <Avatar icon={<UserOutlined />} />
             )}
@@ -136,6 +126,7 @@ const Review = ({ review, userId }) => {
             buttonText="삭제"
             action={deleteReviews}
             keyboardId={review.keyboardId}
+            reviewId={review.id}
           />
         </div>
       )}

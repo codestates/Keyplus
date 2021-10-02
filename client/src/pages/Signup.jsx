@@ -128,7 +128,7 @@ const Signup = () => {
     e.preventDefault();
     try {
       if (!validEmail) {
-        return message.warning('이메일 중복검사를 해주세요');
+        return message.warning('이메일 인증을 해주세요');
       }
       if (!validNickname) {
         return message.warning('닉네임 중복검사를 해주세요');
@@ -141,7 +141,7 @@ const Signup = () => {
       }
       if (!passwordValidate(password)) {
         return message.warning(
-          '최소 6 자, 최소 하나의 문자, 하나의 숫자 및 하나의 특수 문자의 비밀번호가 필요합니다'
+          '최소 6자, 최소 하나의 문자, 하나의 숫자 및 하나의 특수 문자의 비밀번호가 필요합니다'
         );
       }
 
@@ -216,7 +216,7 @@ const Signup = () => {
                     전송
                   </button>
                 </div>
-                <p className="text">이메일 확인 후 인증번호를 입력해주세요</p>
+                <p className="text">이메일 인증 후 인증번호를 입력해주세요</p>
               </div>
               {isClicked && (
                 <>
