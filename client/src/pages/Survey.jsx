@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
-import ProgressBar from '@ramonak/react-progress-bar';
+import { useHistory } from 'react-router';
 import { useSelector } from 'react-redux';
+import ProgressBar from '@ramonak/react-progress-bar';
 
 import exceptionAxios from 'axios';
 
@@ -17,13 +18,15 @@ import KeyboardCard from './KeyboardCard';
 
 import './styles/Survey.scss';
 
-import { Spin } from 'antd';
+import { message, Spin } from 'antd';
 import { AiFillLeftSquare, AiFillRightSquare } from 'react-icons/ai';
+import { RiEmotionSadLine } from 'react-icons/ri';
 
 // [설문조사 필터링]
 
 const Survey = () => {
   const userNickname = useSelector((state) => state.user?.nickname);
+  const history = useHistory();
 
   const [isLoading, setIsLoading] = useState(false);
   const [isStarted, setIsStarted] = useState(false);
@@ -36,19 +39,21 @@ const Survey = () => {
   const [bluetooth, setBluetooth] = useState(null);
   const [price, setPrice] = useState(null);
 
+  const [audio1, setAudio1] = useState(new Audio('/boggle.mp3'));
+  const [audio2, setAudio2] = useState(new Audio('/nonclick.mp3'));
+  const [audio3, setAudio3] = useState(new Audio('/linear.mp3'));
+  const [audio4, setAudio4] = useState(new Audio('/click.mp3'));
+
   const width = useWidthSize(768);
 
   const onClickStartBtn = () => {
     setIsStarted(true);
   };
 
-  const audio1 = new Audio('/boggle.mp3');
-  const audio2 = new Audio('/nonclick.mp3');
-  const audio3 = new Audio('/linear.mp3');
-  const audio4 = new Audio('/click.mp3');
-
   useEffect(() => {
+    console.log('여기냐?');
     return () => {
+      console.log('여기도냐?');
       audio1.pause();
       audio1.currentTime = 0;
       audio2.pause();
@@ -62,26 +67,18 @@ const Survey = () => {
 
   const onClickSound = (res) => {
     setSound(res);
-    switch (res) {
-      case 1:
-        audio1.pause();
-        audio1.currentTime = 0;
-        break;
-      case 2:
-        audio2.pause();
-        audio2.currentTime = 0;
-        break;
-      case 3:
-        audio3.pause();
-        audio3.currentTime = 0;
-        break;
-      case 4:
-        audio4.pause();
-        audio4.currentTime = 0;
-        break;
-      default:
-        break;
-    }
+
+    audio1.pause();
+    audio1.currentTime = 0;
+
+    audio2.pause();
+    audio2.currentTime = 0;
+
+    audio3.pause();
+    audio3.currentTime = 0;
+
+    audio4.pause();
+    audio4.currentTime = 0;
   };
 
   const convertSoundToText = (sound) => {
@@ -111,7 +108,7 @@ const Survey = () => {
     if (color === 1) {
       return '유채색의, ';
     } else if (color === 2) {
-      return '모든 색의,';
+      return '모든 색의, ';
     }
     return '무채색의, ';
   };
@@ -184,6 +181,10 @@ const Survey = () => {
         resolve('2초가 지났습니다!');
       }, 2000);
     });
+  };
+
+  const onClickShareBtn = () => {
+    message.info('기능 준비 중입니다.');
   };
 
   useEffect(async () => {
@@ -371,72 +372,107 @@ const Survey = () => {
       return (
         <>
           <Header />
-          <main className="survey">
-            {/* //! 결과가 0개일 때 어떻게 보여줄지  */}
-            {isLoading ? (
-              <>
-                <span>취향 분석 중</span>
-                <Spin />
-              </>
-            ) : (
-              <>
-                {keyboards && (
-                  <div className="survey-result-main">
-                    <p>
-                      {userNickname ? userNickname : '비회원'}님은
-                      {`${convertSoundToText(sound)} ${convertColorToText(
-                        color
-                      )} ${convertBacklightToText(
-                        backlight
-                      )} ${convertTenkeyToText(
-                        tenkey
-                      )} ${convertBluetoothToText(
+
+          {/* //! 결과가 0개일 때 어떻게 보여줄지  */}
+          {isLoading ? (
+            <main className="survey loading">
+              <div className="survey-loading-area">
+                <span className="survey-loading-text">취향 분석 중</span>
+                <Spin size="small" style={{ color: '#000' }} />
+              </div>
+            </main>
+          ) : (
+            <main className="survey finish">
+              {keyboards && (
+                <div className="survey-result-main">
+                  <p className="survey-result-header">
+                    <span>{userNickname ? userNickname : '비회원'}님은</span>
+                    <br />
+                    <span className="survey-result-strong">{`${convertSoundToText(
+                      sound
+                    )}`}</span>
+                    <br />
+                    <span className="survey-result-strong">{`${convertColorToText(
+                      color
+                    )}`}</span>
+                    <span className="survey-result-strong">{`${convertBacklightToText(
+                      backlight
+                    )}`}</span>
+                    {width > 768 ? ` ` : <br />}
+                    <span className="survey-result-strong">
+                      {`${convertTenkeyToText(tenkey)} ${convertBluetoothToText(
                         bluetooth
-                      )} ${convertPriceToText(
-                        price
-                      )} 키보드 취향을 가지셨네요.`}
-                    </p>
-                    {keyboards.length !== 0 ? (
-                      <>
-                        <p>
-                          {userNickname ? userNickname : '비회원'}님에게 딱 맞는
-                          {width > 768 ? ` ` : <br />} {keyboards.length}개의
-                          키보드를 찾았습니다!
-                        </p>
-                        <p>보다 더 많은 키보드 구경하러 가기</p>
-                        <div className="survey-result-list">
-                          {keyboards.map((keyboard) => (
-                            <KeyboardCard
-                              keyboard={keyboard}
-                              key={`${keyboard.id}_${keyboard.name}`}
-                            />
-                          ))}
+                      )}`}
+                    </span>
+                    <br />
+                    <span className="survey-result-strong">
+                      {`${convertPriceToText(price)}`}
+                    </span>{' '}
+                    <span>키보드 취향을 가지셨네요.</span>
+                  </p>
+                  {keyboards.length !== 0 ? (
+                    <>
+                      <p>
+                        {userNickname ? userNickname : '비회원'}님에게 딱 맞는
+                        {width > 768 ? ` ` : <br />}
+                        <span className="survey-result-strong">
+                          {keyboards.length}개
+                        </span>
+                        의 키보드를 찾았습니다!
+                      </p>
+
+                      <div className="share-area">
+                        <div className="share-text" onClick={onClickShareBtn}>
+                          키보드 취향 공유하기
                         </div>
-                      </>
-                    ) : (
-                      <>
-                        <p>
-                          아쉽게도 당신에게 어울리는
-                          {width > 768 ? ` ` : <br />}
-                          키보드를 찾지 못했습니다.
-                        </p>
-                        <p>하지만 실망하지 마세요!</p>
-                        <p>
-                          Keyplus에서 많은 키보드를 직접 둘러 보실 수 있습니다.
-                        </p>
                         <button
-                          className="survey-start-button"
-                          onClick={onClickStartBtn}
-                        >
-                          더 많은 키보드 구경하러 가기
-                        </button>
-                      </>
-                    )}
-                  </div>
-                )}
-              </>
-            )}
-          </main>
+                          className="share-button"
+                          onClick={onClickShareBtn}
+                          style={{
+                            backgroundImage: `url(${'kakao.png'})`,
+                          }}
+                        ></button>
+                      </div>
+
+                      <div className="survey-result-list">
+                        {keyboards.map((keyboard) => (
+                          <KeyboardCard
+                            keyboard={keyboard}
+                            key={`${keyboard.id}_${keyboard.name}`}
+                          />
+                        ))}
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <p className="survey-result-italic">
+                        아쉽게도 {userNickname ? userNickname : '비회원'}
+                        님에게 어울리는
+                        {width > 768 ? ` ` : <br />}
+                        키보드를 찾지 못했습니다.{' '}
+                        <RiEmotionSadLine style={{ fontSize: '20px' }} />
+                      </p>
+                      <p className="survey-result-worry">
+                        하지만 실망하지 마세요!
+                      </p>
+                      <p className="survey-result-inspire">
+                        <span className="survey-result-strong">Keyplus</span>
+                        에서 많은 키보드를{width > 768 ? ` ` : <br />}
+                        직접 둘러 보실 수 있습니다.
+                      </p>
+                      <button
+                        className="survey-result-button"
+                        onClick={() => history.push('/keyboards')}
+                      >
+                        더 많은 키보드 구경하러 가기
+                      </button>
+                    </>
+                  )}
+                </div>
+              )}
+            </main>
+          )}
+
           {/* <Footer /> */}
         </>
       );
