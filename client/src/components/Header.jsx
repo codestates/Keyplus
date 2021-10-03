@@ -116,7 +116,7 @@ const Header = () => {
               </li>
               <li className="nav-item">
                 <Link
-                  to="/mechanical-keyboard"
+                  to="/introduction"
                   className="nav-links"
                   onClick={isOpenSidebar ? onClickToggleBtn : null}
                 >

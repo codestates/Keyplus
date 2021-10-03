@@ -14,7 +14,7 @@ import Signup from './pages/Signup';
 import Mypage from './pages/Mypage';
 import Inquiry from './pages/Inquiry';
 import Map from './pages/Map';
-import MechanicalKeyboard from './pages/MechanicalKeyboard';
+import Introduction from './pages/Introduction';
 import Temp from './pages/Temp';
 import ReviewCreate from './pages/ReviewCreate';
 import Spinner from './components/Spinner';
@@ -73,8 +73,8 @@ function App() {
           />
           <PublicRoute
             restricted={false}
-            path="/mechanical-keyboard"
-            component={MechanicalKeyboard}
+            path="/introduction"
+            component={Introduction}
             exact
           />
           <PublicRoute
