@@ -16,7 +16,8 @@ const ButtonModal = (props) => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const showModal = () => {
+  const showModal = (e) => {
+    e.preventDefault();
     setVisible(true);
   };
 
