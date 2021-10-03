@@ -49,10 +49,9 @@ function App() {
     <>
       <Switch>
         <PublicRoute exact path="/" component={Landing} />
-        <PublicRoute
-          restricted={false}
+        <Route
           path="/survey"
-          component={Survey}
+          render={(props) => <Survey {...props} key={Date.now()} />}
           exact
         />
         <PublicRoute
