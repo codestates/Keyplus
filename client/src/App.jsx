@@ -13,6 +13,8 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Mypage from './pages/Mypage';
 import Inquiry from './pages/Inquiry';
+import Map from './pages/Map';
+import MechanicalKeyboard from './pages/MechanicalKeyboard';
 import Temp from './pages/Temp';
 import ReviewCreate from './pages/ReviewCreate';
 import Spinner from './components/Spinner';
@@ -53,6 +55,7 @@ function App() {
           component={Survey}
           exact
         />
+        <PublicRoute restricted={false} path="/map" component={Map} exact />
         <AppLayout>
           {loading && <Spinner />}
           <Route path="/temp" component={Temp} />
@@ -66,6 +69,12 @@ function App() {
             restricted={false}
             path="/keyboards/:id"
             component={KeyboardDetail}
+            exact
+          />
+          <PublicRoute
+            restricted={false}
+            path="/mechanical-keyboard"
+            component={MechanicalKeyboard}
             exact
           />
           <PublicRoute

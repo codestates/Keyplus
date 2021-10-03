@@ -1,6 +1,6 @@
 import React from 'react';
 
-import '../styles/QuestionCard.scss';
+import '../styles/Question.scss';
 
 const Question4 = ({ onClickTenkey }) => {
   return (
