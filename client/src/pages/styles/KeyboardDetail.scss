@@ -56,6 +56,10 @@
     }
   }
 
+  .keyboard-detail-switch {
+    margin-right: 10px;
+  }
+
   .keyboard-detail-info-text {
     & > * {
       @include flexbox(space-between);

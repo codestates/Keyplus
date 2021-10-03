@@ -20,9 +20,9 @@ import {
 import { BiWon } from 'react-icons/bi';
 import { AiFillBulb, AiOutlineBulb } from 'react-icons/ai';
 
-const keySwitchComponent = {
+export const keySwitchComponent = {
   저소음적축: (
-    <div style={{ display: 'inline-block', marginRight: '5px' }}>
+    <span style={{ display: 'inline-block', marginRight: '5px' }}>
       <span
         style={{
           display: 'inline-block',
@@ -31,13 +31,14 @@ const keySwitchComponent = {
           borderRadius: '50%',
           verticalAlign: 'middle',
           backgroundColor: '#ff656c',
+          marginRight: '1px',
         }}
       ></span>
       <span style={{ verticalAlign: 'middle', fontSize: '12px' }}>저적</span>
-    </div>
+    </span>
   ),
   적축: (
-    <div style={{ display: 'inline-block', marginRight: '5px' }}>
+    <span style={{ display: 'inline-block', marginRight: '5px' }}>
       <span
         style={{
           display: 'inline-block',
@@ -46,13 +47,14 @@ const keySwitchComponent = {
           borderRadius: '50%',
           verticalAlign: 'middle',
           backgroundColor: '#ff1A48',
+          marginRight: '1px',
         }}
       ></span>
       <span style={{ verticalAlign: 'middle', fontSize: '12px' }}>적축</span>
-    </div>
+    </span>
   ),
   청축: (
-    <div style={{ display: 'inline-block', marginRight: '5px' }}>
+    <span style={{ display: 'inline-block', marginRight: '5px' }}>
       <span
         style={{
           display: 'inline-block',
@@ -61,13 +63,14 @@ const keySwitchComponent = {
           borderRadius: '50%',
           verticalAlign: 'middle',
           backgroundColor: '#00b4f9',
+          marginRight: '1px',
         }}
       ></span>
       <span style={{ verticalAlign: 'middle', fontSize: '12px' }}>청축</span>
-    </div>
+    </span>
   ),
   갈축: (
-    <div style={{ display: 'inline-block', marginRight: '5px' }}>
+    <span style={{ display: 'inline-block', marginRight: '5px' }}>
       <span
         style={{
           display: 'inline-block',
@@ -76,13 +79,14 @@ const keySwitchComponent = {
           borderRadius: '50%',
           verticalAlign: 'middle',
           backgroundColor: '#B8792A',
+          marginRight: '1px',
         }}
       ></span>
       <span style={{ verticalAlign: 'middle', fontSize: '12px' }}>갈축</span>
-    </div>
+    </span>
   ),
   흑축: (
-    <div style={{ display: 'inline-block', marginRight: '5px' }}>
+    <span style={{ display: 'inline-block', marginRight: '5px' }}>
       <span
         style={{
           display: 'inline-block',
@@ -91,10 +95,11 @@ const keySwitchComponent = {
           borderRadius: '50%',
           verticalAlign: 'middle',
           backgroundColor: '#0d0d0d',
+          marginRight: '1px',
         }}
       ></span>
       <span style={{ verticalAlign: 'middle', fontSize: '12px' }}>흑축</span>
-    </div>
+    </span>
   ),
 };
 
