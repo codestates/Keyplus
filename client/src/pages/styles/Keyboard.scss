@@ -16,11 +16,10 @@
   grid-template-rows: 1fr;
   margin-bottom: 30px;
   letter-spacing: -0.05em;
-
-  overflow: hidden;
-
   border: 1px solid #eeeeee;
   border-radius: 6px;
+  border-top: 5px solid #262626;
+  overflow: hidden;
 
   // border: 1px solid #262626;
   // background-color: #262626;
@@ -38,9 +37,13 @@
     background-color: #262626;
     color: #fff;
     // color: #000;
-    border-bottom: 1px solid #858585;
     font-weight: 500;
+
+    // &:not(:nth-last-child(2)) {
+    //   border-bottom: 1px solid #858585;
+    // }
   }
+
   & > *:nth-child(even) {
     padding-left: 20px;
 
