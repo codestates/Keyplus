@@ -1,38 +1,124 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import useWidthSize from '../../hooks/useWidthSize';
-import { FiPlayCircle } from 'react-icons/fi';
+import { FiPlayCircle, FiStopCircle } from 'react-icons/fi';
 
-import '../styles/QuestionCard.scss';
+import '../styles/Question.scss';
 
 const Question1 = ({ onClickSound, audio1, audio2, audio3, audio4 }) => {
   const width = useWidthSize(768);
 
-  const [audioOne, setAudioOne] = useState(false);
+  const [audioPlaying1, setAudioPlaying1] = useState(false);
+  const [audioPlaying2, setAudioPlaying2] = useState(false);
+  const [audioPlaying3, setAudioPlaying3] = useState(false);
+  const [audioPlaying4, setAudioPlaying4] = useState(false);
 
-  const audio = (num) => {
-    if (audioOne) {
-      if (num === 1) {
+  const mounted1 = useRef(false);
+  useEffect(() => {
+    if (!mounted1.current) {
+      mounted1.current = true;
+    } else {
+      if (audioPlaying1) {
+        console.log('1번 재생');
         audio1.play();
-      } else if (num === 2) {
-        audio2.play();
-      } else if (num === 3) {
-        audio3.play();
-      } else if (num === 4) {
-        audio4.play();
-      }
-    } else if (!audioOne) {
-      if (num === 1) {
-        audio1.pause();
-      } else if (num === 2) {
         audio2.pause();
-      } else if (num === 3) {
+        audio2.currentTime = 0;
         audio3.pause();
-      } else if (num === 4) {
+        audio3.currentTime = 0;
         audio4.pause();
+        audio4.currentTime = 0;
+        setAudioPlaying1(true);
+        setAudioPlaying2(false);
+        setAudioPlaying3(false);
+        setAudioPlaying4(false);
+      } else {
+        console.log('1번 멈춰');
+        audio1.pause();
+        audio1.currentTime = 0;
+        setAudioPlaying1(false);
       }
     }
-  };
-  console.log(audioOne);
+  }, [audioPlaying1]);
+
+  const mounted2 = useRef(false);
+  useEffect(() => {
+    if (!mounted2.current) {
+      mounted2.current = true;
+    } else {
+      if (audioPlaying2) {
+        console.log('2번 재생');
+        audio1.pause();
+        audio1.currentTime = 0;
+        audio2.play();
+        audio3.pause();
+        audio3.currentTime = 0;
+        audio4.pause();
+        audio4.currentTime = 0;
+        setAudioPlaying1(false);
+        setAudioPlaying2(true);
+        setAudioPlaying3(false);
+        setAudioPlaying4(false);
+      } else {
+        console.log('2번 멈춰');
+        audio2.pause();
+        audio2.currentTime = 0;
+        setAudioPlaying2(false);
+      }
+    }
+  }, [audioPlaying2]);
+
+  const mounted3 = useRef(false);
+  useEffect(() => {
+    if (!mounted3.current) {
+      mounted3.current = true;
+    } else {
+      if (audioPlaying3) {
+        console.log('3번 재생');
+        audio1.pause();
+        audio1.currentTime = 0;
+        audio2.pause();
+        audio2.currentTime = 0;
+        audio3.play();
+        audio4.pause();
+        audio4.currentTime = 0;
+        setAudioPlaying1(false);
+        setAudioPlaying2(false);
+        setAudioPlaying3(true);
+        setAudioPlaying4(false);
+      } else {
+        console.log('3번 멈춰');
+        audio3.pause();
+        audio3.currentTime = 0;
+        setAudioPlaying3(false);
+      }
+    }
+  }, [audioPlaying3]);
+
+  const mounted4 = useRef(false);
+  useEffect(() => {
+    if (!mounted4.current) {
+      mounted4.current = true;
+    } else {
+      if (audioPlaying4) {
+        console.log('4번 재생');
+        audio1.pause();
+        audio1.currentTime = 0;
+        audio2.pause();
+        audio2.currentTime = 0;
+        audio3.pause();
+        audio3.currentTime = 0;
+        audio4.play();
+        setAudioPlaying1(false);
+        setAudioPlaying2(false);
+        setAudioPlaying3(false);
+        setAudioPlaying4(true);
+      } else {
+        console.log('4번 멈춰');
+        audio4.pause();
+        audio4.currentTime = 0;
+        setAudioPlaying4(false);
+      }
+    }
+  }, [audioPlaying4]);
 
   return (
     <>
@@ -46,7 +132,7 @@ const Question1 = ({ onClickSound, audio1, audio2, audio3, audio4 }) => {
           </div>
         ) : (
           <div className="question-description">
-            버튼 클릭 시 소리가 재생됩니다.
+            재생 버튼을 누르면 소리가 재생됩니다.
           </div>
         )}
       </div>
@@ -57,12 +143,10 @@ const Question1 = ({ onClickSound, audio1, audio2, audio3, audio4 }) => {
               src="/soup.png"
               onClick={() => onClickSound(1)}
               onMouseEnter={() => {
-                setAudioOne(false);
-                audio(1);
+                setAudioPlaying1(true);
               }}
               onMouseLeave={() => {
-                setAudioOne(true);
-                audio(1);
+                setAudioPlaying1(false);
               }}
             />
           </div>
@@ -70,15 +154,15 @@ const Question1 = ({ onClickSound, audio1, audio2, audio3, audio4 }) => {
             <div className="description">찌개 끓는 소리</div>
             <div className="title">
               보글보글
-              <div
-                className="mp3-icon"
-                onClick={() => {
-                  setAudioOne((audioOne) => !audioOne);
-                  audio(1);
-                }}
-              >
-                {width <= 768 && <FiPlayCircle />}
-              </div>
+              {width <= 768 && (
+                <div className="mp3-icon">
+                  {audioPlaying1 ? (
+                    <FiStopCircle onClick={() => setAudioPlaying1(false)} />
+                  ) : (
+                    <FiPlayCircle onClick={() => setAudioPlaying1(true)} />
+                  )}
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -88,12 +172,10 @@ const Question1 = ({ onClickSound, audio1, audio2, audio3, audio4 }) => {
               src="/chocolate.png"
               onClick={() => onClickSound(2)}
               onMouseEnter={() => {
-                setAudioOne(false);
-                audio(2);
+                setAudioPlaying2(true);
               }}
               onMouseLeave={() => {
-                setAudioOne(true);
-                audio(2);
+                setAudioPlaying2(false);
               }}
             />
           </div>
@@ -101,15 +183,15 @@ const Question1 = ({ onClickSound, audio1, audio2, audio3, audio4 }) => {
             <div className="description">초콜릿 부러뜨리는 소리</div>
             <div className="title">
               도각도각
-              <div
-                className="mp3-icon"
-                onClick={() => {
-                  setAudioOne((audioOne) => !audioOne);
-                  audio(2);
-                }}
-              >
-                {width <= 768 && <FiPlayCircle />}
-              </div>
+              {width <= 768 && (
+                <div className="mp3-icon">
+                  {audioPlaying2 ? (
+                    <FiStopCircle onClick={() => setAudioPlaying2(false)} />
+                  ) : (
+                    <FiPlayCircle onClick={() => setAudioPlaying2(true)} />
+                  )}
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -119,28 +201,26 @@ const Question1 = ({ onClickSound, audio1, audio2, audio3, audio4 }) => {
               src="/pen.png"
               onClick={() => onClickSound(3)}
               onMouseEnter={() => {
-                setAudioOne(false);
-                audio(3);
+                setAudioPlaying3(true);
               }}
               onMouseLeave={() => {
-                setAudioOne(true);
-                audio(3);
+                setAudioPlaying3(false);
               }}
             />
           </div>
           <div className="text-wrapper">
-            <div className="description">만년필로 글씨쓰는 소리</div>
+            <div className="description">만년필로 글씨 쓰는 소리</div>
             <div className="title">
               서걱서걱
-              <div
-                className="mp3-icon"
-                onClick={() => {
-                  setAudioOne((audioOne) => !audioOne);
-                  audio(3);
-                }}
-              >
-                {width <= 768 && <FiPlayCircle />}
-              </div>
+              {width <= 768 && (
+                <div className="mp3-icon">
+                  {audioPlaying3 ? (
+                    <FiStopCircle onClick={() => setAudioPlaying3(false)} />
+                  ) : (
+                    <FiPlayCircle onClick={() => setAudioPlaying3(true)} />
+                  )}
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -150,12 +230,10 @@ const Question1 = ({ onClickSound, audio1, audio2, audio3, audio4 }) => {
               src="/gaming.png"
               onClick={() => onClickSound(4)}
               onMouseEnter={() => {
-                setAudioOne(false);
-                audio(4);
+                setAudioPlaying4(true);
               }}
               onMouseLeave={() => {
-                setAudioOne(true);
-                audio(4);
+                setAudioPlaying4(false);
               }}
             />
           </div>
@@ -163,15 +241,15 @@ const Question1 = ({ onClickSound, audio1, audio2, audio3, audio4 }) => {
             <div className="description">PC방 키보드 소리</div>
             <div className="title">
               찰칵찰칵
-              <div
-                className="mp3-icon"
-                onClick={() => {
-                  setAudioOne((audioOne) => !audioOne);
-                  audio(4);
-                }}
-              >
-                {width <= 768 && <FiPlayCircle />}
-              </div>
+              {width <= 768 && (
+                <div className="mp3-icon">
+                  {audioPlaying4 ? (
+                    <FiStopCircle onClick={() => setAudioPlaying4(false)} />
+                  ) : (
+                    <FiPlayCircle onClick={() => setAudioPlaying4(true)} />
+                  )}
+                </div>
+              )}
             </div>
           </div>
         </div>

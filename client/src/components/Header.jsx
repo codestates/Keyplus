@@ -114,6 +114,15 @@ const Header = () => {
                   타건샵
                 </Link>
               </li>
+              <li className="nav-item">
+                <Link
+                  to="/introduction"
+                  className="nav-links"
+                  onClick={isOpenSidebar ? onClickToggleBtn : null}
+                >
+                  입문
+                </Link>
+              </li>
             </div>
           </ul>
         </nav>
