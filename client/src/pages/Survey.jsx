@@ -217,7 +217,7 @@ const Survey = () => {
   };
 
   const onCopy = () => {
-    message.success('복사 완료!');
+    message.success('링크 복사 완료');
   };
 
   // const onClickShareBtn = () => {

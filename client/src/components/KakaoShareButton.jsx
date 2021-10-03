@@ -9,20 +9,22 @@ const KakaoShareButton = ({ url }) => {
   const shareKakao = () => {
     Kakao.Link.sendDefault({
       objectType: 'feed',
+
       content: {
         title: 'Keyplus',
         description: '기계식 키보드 취향 공유',
         imageUrl:
           'https://media.discordapp.net/attachments/880163201872961636/894314709032009758/keyplus.png',
         link: {
+          webUrl: url,
           mobileWebUrl: url,
-          androidExecParams: 'Keyplus',
         },
       },
       buttons: [
         {
-          title: 'Keyplus',
+          title: '취향 확인하기',
           link: {
+            webUrl: url,
             mobileWebUrl: url,
           },
         },
