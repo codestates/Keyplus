@@ -2,12 +2,12 @@ import React from 'react';
 
 import './styles/MapInfo.scss';
 
-const MapInfo = ({ mapInfo }) => {
+const MapInfo = ({ shopInfo }) => {
   return (
     <div className="info-container">
-      <div>{mapInfo.name}</div>
-      <div>{mapInfo.content}</div>
-      <div>{mapInfo.address}</div>
+      <div>{shopInfo.name}</div>
+      <div>{shopInfo.content}</div>
+      <div>{shopInfo.address}</div>
     </div>
   );
 };

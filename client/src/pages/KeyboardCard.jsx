@@ -204,11 +204,14 @@ const KeyboardCard = memo(({ keyboard }) => {
             </div>
           </div>
         }
-        description={Object.keys(keyboard.switch).map((keySwitch, idx) => (
-          <span key={`${keySwitch}_${idx}`}>
-            {keyboard.switch[keySwitch] && <>{keySwitchComponent[keySwitch]}</>}
-          </span>
-        ))}
+        description={Object.keys(keyboard.switch).map(
+          (keySwitch, idx) =>
+            keyboard.switch[keySwitch] && (
+              <span key={`${keySwitch}_${idx}`}>
+                <>{keySwitchComponent[keySwitch]}</>
+              </span>
+            )
+        )}
       />
       <div style={{ height: '10px' }}></div>
 

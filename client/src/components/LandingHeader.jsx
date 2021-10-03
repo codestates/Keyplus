@@ -110,7 +110,7 @@ const LandingHeader = () => {
               </li>
               <li className="landing-nav-item">
                 <Link
-                  to="/map"
+                  to="/typing-shop"
                   className="landing-nav-links"
                   onClick={isOpenSidebar ? onClickToggleBtn : null}
                 >

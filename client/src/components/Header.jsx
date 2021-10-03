@@ -107,7 +107,7 @@ const Header = () => {
               </li>
               <li className="nav-item">
                 <Link
-                  to="/map"
+                  to="/typing-shop"
                   className="nav-links"
                   onClick={isOpenSidebar ? onClickToggleBtn : null}
                 >

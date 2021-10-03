@@ -13,31 +13,59 @@ import Question3 from '../components/Survey/Question3';
 import Question4 from '../components/Survey/Question4';
 import Question5 from '../components/Survey/Question5';
 import Question6 from '../components/Survey/Question6';
+import KakaoShareButton from '../components/KakaoShareButton';
 import useWidthSize from '../hooks/useWidthSize';
 import KeyboardCard from './KeyboardCard';
 
 import './styles/Survey.scss';
 
 import { message, Spin } from 'antd';
-import { AiFillLeftSquare, AiFillRightSquare } from 'react-icons/ai';
 import { RiEmotionSadLine } from 'react-icons/ri';
 
 // [설문조사 필터링]
 
 const Survey = () => {
-  const userNickname = useSelector((state) => state.user?.nickname);
+  const urlSearchParams = useRef(new URLSearchParams(window.location.search));
+  const userNickname =
+    urlSearchParams.current.get('nickname') ??
+    useSelector((state) => state.user?.nickname);
+
   const history = useHistory();
 
   const [isLoading, setIsLoading] = useState(false);
   const [isStarted, setIsStarted] = useState(false);
   const [keyboards, setKeyboards] = useState(null);
 
-  const [sound, setSound] = useState(null);
-  const [color, setColor] = useState(null);
-  const [backlight, setBacklight] = useState(null);
-  const [tenkey, setTenkey] = useState(null);
-  const [bluetooth, setBluetooth] = useState(null);
-  const [price, setPrice] = useState(null);
+  const [sound, setSound] = useState(
+    urlSearchParams.current.get('sound')
+      ? Number(urlSearchParams.current.get('sound'))
+      : null
+  );
+  const [color, setColor] = useState(
+    urlSearchParams.current.get('sound')
+      ? Number(urlSearchParams.current.get('color'))
+      : null
+  );
+  const [backlight, setBacklight] = useState(
+    urlSearchParams.current.get('sound')
+      ? Number(urlSearchParams.current.get('backlight'))
+      : null
+  );
+  const [tenkey, setTenkey] = useState(
+    urlSearchParams.current.get('sound')
+      ? Number(urlSearchParams.current.get('tenkey'))
+      : null
+  );
+  const [bluetooth, setBluetooth] = useState(
+    urlSearchParams.current.get('sound')
+      ? Number(urlSearchParams.current.get('bluetooth'))
+      : null
+  );
+  const [price, setPrice] = useState(
+    urlSearchParams.current.get('sound')
+      ? Number(urlSearchParams.current.get('price'))
+      : null
+  );
 
   const [audio1, setAudio1] = useState(new Audio('/boggle.mp3'));
   const [audio2, setAudio2] = useState(new Audio('/nonclick.mp3'));
@@ -49,6 +77,12 @@ const Survey = () => {
   const onClickStartBtn = () => {
     setIsStarted(true);
   };
+
+  useEffect(() => {
+    if (sound) {
+      setIsStarted(true);
+    }
+  });
 
   useEffect(() => {
     console.log('여기냐?');
@@ -183,36 +217,32 @@ const Survey = () => {
     });
   };
 
-  const onClickShareBtn = () => {
-    message.info('기능 준비 중입니다.');
-  };
+  // const onClickShareBtn = () => {
+  //   message.info('기능 준비 중입니다.');
+  // };
 
   useEffect(async () => {
-    if (!mounted.current) {
-      mounted.current = true;
-    } else {
-      try {
-        setIsLoading(true);
-        const [response] = await Promise.all([
-          exceptionAxios.post('/keyboards/filter', {
-            sound,
-            color,
-            backlight,
-            tenkey,
-            bluetooth,
-            price,
-          }),
-          delay(),
-        ]);
-        const filteredKeyboards = response.data.data;
-        setKeyboards(filteredKeyboards);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        setIsLoading(false);
-      }
+    try {
+      setIsLoading(true);
+      const [response] = await Promise.all([
+        exceptionAxios.post('/keyboards/filter', {
+          sound,
+          color,
+          backlight,
+          tenkey,
+          bluetooth,
+          price,
+        }),
+        delay(),
+      ]);
+      const filteredKeyboards = response.data.data;
+      setKeyboards(filteredKeyboards);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setIsLoading(false);
     }
-  }, [price]);
+  }, [price !== null]);
 
   if (!isStarted) {
     return (
@@ -422,16 +452,11 @@ const Survey = () => {
                       </p>
 
                       <div className="share-area">
-                        <div className="share-text" onClick={onClickShareBtn}>
-                          키보드 취향 공유하기
-                        </div>
-                        <button
-                          className="share-button"
-                          onClick={onClickShareBtn}
-                          style={{
-                            backgroundImage: `url(${'kakao.png'})`,
-                          }}
-                        ></button>
+                        <KakaoShareButton
+                          url={`https://keyplus.kr/survey?nickname=${
+                            userNickname ? userNickname : '비회원'
+                          }&sound=${sound}&color=${color}&backlight=${backlight}&tenkey=${tenkey}&bluetooth=${bluetooth}&price=${price}`}
+                        />
                       </div>
 
                       <div className="survey-result-list">
