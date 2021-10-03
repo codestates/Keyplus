@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
@@ -133,9 +134,9 @@ const Mypage = () => {
     }
   };
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  const onClickReview = (e) => {
+    e.preventDefault();
+  };
 
   return (
     <>
@@ -245,12 +246,14 @@ const Mypage = () => {
                 <TabPane tab="내 리뷰" key="내 리뷰">
                   {/* <div className="mypage-tabs"> */}
                   {reviewsState.map((review, idx) => (
-                    <div
+                    <Link
                       key={`${review}_${idx}`}
-                      className="mypage-tab-item mypage-review"
+                      to={`/keyboards/${review.keyboardId}`}
                     >
-                      <Review review={review} userId={userId} />
-                    </div>
+                      <div className="mypage-tab-item mypage-review">
+                        <Review review={review} userId={userId} />
+                      </div>
+                    </Link>
                   ))}
                   {/* </div> */}
                 </TabPane>
