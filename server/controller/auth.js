@@ -319,7 +319,7 @@ module.exports = {
         from: `noreply from @keyplus.kr ${process.env.MAILID}`,
         to: req.body.email,
         subject: '[Keyplus] 이메일 인증번호를 입력해주세요.',
-        html: `<h2>이메일 인증을 완료하실려면 <b>인증번호</b>를 입력해주세요.</h2><p>인증번호를 입력하셔야만 이메일 인증이 완료됩니다.</p> <div>Keyplus 인증번호 : ${verificationCode}</div>`,
+        html: `<h2>이메일 인증을 완료하시려면 <b>인증번호</b>를 입력해주세요.</h2><p>인증번호를 입력하셔야만 이메일 인증이 완료됩니다.</p> <div>Keyplus 인증번호 : ${verificationCode}</div>`,
       };
       transporter.sendMail(mailOptions, function (err, info) {
         if (err) {

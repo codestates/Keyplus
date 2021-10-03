@@ -190,7 +190,7 @@ const Mypage = () => {
               {userState.socialType === 'local' && (
                 <>
                   <div className="input-box">
-                    <label htmlFor="password">패스워드</label>
+                    <label htmlFor="password">비밀번호</label>
                     <input
                       type="password"
                       onChange={onChangeUpdateState}

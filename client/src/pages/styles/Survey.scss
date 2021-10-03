@@ -113,7 +113,7 @@ main.survey {
     font-weight: 700;
     text-align: center;
     border: 1px solid #000;
-    padding: 3px 70px;
+    padding: 5px 70px;
     transition: all 0.4s ease;
     color: #000;
 
@@ -121,5 +121,26 @@ main.survey {
       color: #fff;
       background-color: #000;
     }
+  }
+}
+
+.survey-result-main {
+  .survey-result-header {
+    text-align: center;
+    // font-weight: 700;
+    font-size: 24px;
+    margin-top: -30px;
+    margin-bottom: 50px;
+
+    @media screen and (max-width: $md-breakpoint) {
+      margin-bottom: 30px;
+    }
+  }
+  .survey-result-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-gap: 2rem;
+    justify-content: space-around;
+    justify-items: center;
   }
 }

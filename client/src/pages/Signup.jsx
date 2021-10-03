@@ -137,7 +137,7 @@ const Signup = () => {
         return message.warning('모든 칸을 입력해주세요');
       }
       if (password !== repassword) {
-        return message.warning('패스워드를 다시 확인해주세요');
+        return message.warning('비밀번호를 다시 확인해주세요');
       }
       if (!passwordValidate(password)) {
         return message.warning(
@@ -216,7 +216,7 @@ const Signup = () => {
                     전송
                   </button>
                 </div>
-                <p className="text">이메일 인증 후 인증번호를 입력해주세요</p>
+                <p className="text">이메일 인증을 해주세요</p>
               </div>
               {isClicked && (
                 <>
