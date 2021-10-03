@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router';
 import { useSelector } from 'react-redux';
 import ProgressBar from '@ramonak/react-progress-bar';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 import exceptionAxios from 'axios';
 
@@ -207,14 +208,16 @@ const Survey = () => {
     }
   };
 
-  const mounted = useRef(false);
-
   const delay = () => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         resolve('2초가 지났습니다!');
       }, 2000);
     });
+  };
+
+  const onCopy = () => {
+    message.success('복사 완료!');
   };
 
   // const onClickShareBtn = () => {
@@ -457,6 +460,17 @@ const Survey = () => {
                             userNickname ? userNickname : '비회원'
                           }&sound=${sound}&color=${color}&backlight=${backlight}&tenkey=${tenkey}&bluetooth=${bluetooth}&price=${price}`}
                         />
+                      </div>
+
+                      <div className="link-area">
+                        <CopyToClipboard
+                          onCopy={onCopy}
+                          text={`https://keyplus.kr/survey?nickname=${
+                            userNickname ? userNickname : '비회원'
+                          }&sound=${sound}&color=${color}&backlight=${backlight}&tenkey=${tenkey}&bluetooth=${bluetooth}&price=${price}`}
+                        >
+                          <button>링크 복사</button>
+                        </CopyToClipboard>
                       </div>
 
                       <div className="survey-result-list">

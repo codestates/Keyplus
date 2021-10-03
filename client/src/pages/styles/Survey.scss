@@ -231,7 +231,7 @@ main.survey {
 
     transition: transform 0.5s;
     margin-top: 25px;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
 
     .share-text {
       cursor: pointer;
@@ -256,6 +256,26 @@ main.survey {
       background-size: cover;
       background-position: center;
       overflow: hidden;
+    }
+  }
+
+  .link-area {
+    margin-bottom: 50px;
+
+    button {
+      padding: 10px 30px;
+      color: #fff;
+      font-weight: 700;
+      background-color: #000;
+      border-radius: 5px;
+      border: 1px solid #000;
+      transition: all 0.2s ease-in-out;
+
+      &:hover {
+        color: #000;
+        background-color: #fff;
+        // border: 1px solid #000;
+      }
     }
   }
 
