@@ -200,7 +200,8 @@ const Survey = () => {
 
       case 200000:
         return '20만원 이하';
-      case 30000:
+
+      case 300000:
         return '30만원 이하';
 
       default:
