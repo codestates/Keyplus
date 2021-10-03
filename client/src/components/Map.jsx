@@ -1,22 +1,26 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import exceptionAxios from 'axios';
 
-import './styles/KakaoMap.scss';
+import './styles/Map.scss';
 
 import { FaRegKeyboard } from 'react-icons/fa';
 
-const KakaoMap = ({ setMapInfo, allMaps }) => {
-  const [coordinate, setCoordinate] = useState([]); // db의 정보들.(name, content, latitude, longitude)
+const Map = ({ allShops, selectedShopId, setSelectedShopId }) => {
   const [check, setCheck] = useState({}); // aside에 필요한 객체 {0: false, 1: false ...}
   const [map, setMap] = useState();
   const containerRef = useRef();
 
   const { kakao } = window;
 
-  const handleClick = (e, index) => {
-    console.log('클릭함');
-    setCheck((check) => ({ ...check, [index]: !check[index] }));
-  };
+  // const handleClick = (e, index) => {
+  //   console.log('클릭함');
+  //   setCheck((check) => ({ ...check, [index]: !check[index] }));
+  // };
+
+  const handleClick = useCallback((idx) => {
+    console.log('클릭 됐다', idx);
+    setSelectedShopId(idx + 1);
+  }, []);
 
   useEffect(async () => {
     try {
@@ -29,15 +33,11 @@ const KakaoMap = ({ setMapInfo, allMaps }) => {
         center: latLng,
         level: 4,
       };
-      let map = new kakao.maps.Map(containerRef.current, options);
+      const map = new kakao.maps.Map(containerRef.current, options);
       setMap(map);
 
-      let zoomControl = new kakao.maps.ZoomControl();
+      const zoomControl = new kakao.maps.ZoomControl();
       map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
-
-      //! API Call
-      const result = await exceptionAxios.get('/shops');
-      setCoordinate(result.data.data);
     } catch (err) {
       console.log(err);
     }
@@ -46,7 +46,7 @@ const KakaoMap = ({ setMapInfo, allMaps }) => {
   useEffect(() => {
     //! 지도에 marker생성.
     const obj = {}; // {0: false, 1: false ...} marker클릭시 true로 바뀜.
-    coordinate.forEach((el, index) => {
+    allShops.forEach((el, index) => {
       obj[index] = false;
 
       const latLng = new kakao.maps.LatLng(el.latitude, el.longitude);
@@ -84,9 +84,18 @@ const KakaoMap = ({ setMapInfo, allMaps }) => {
 
       closeButton.className = 'map-info-content-close';
       closeButton.textContent = '✕';
-      closeButton.onclick = function () {
+
+      const closeOverlay = () => {
+        // x클릭시 content 삭제.
+        obj[index] = false;
+        overlay.setMap(null);
+        // setShopInfo('');
+      };
+
+      closeButton.onclick = () => {
         closeOverlay();
-        handleClick(el, index);
+        // handleClick(el, index);
+        handleClick(index);
       };
 
       const overlay = new kakao.maps.CustomOverlay({
@@ -95,66 +104,43 @@ const KakaoMap = ({ setMapInfo, allMaps }) => {
         position: latLng,
       });
 
-      function closeOverlay() {
-        // x클릭시 content 삭제.
-        obj[index] = false;
-        overlay.setMap(null);
-        setMapInfo('');
-      }
-
-      kakao.maps.event.addListener(marker, 'click', function () {
+      kakao.maps.event.addListener(marker, 'click', () => {
         // 클릭이벤트.
         if (obj[index]) {
           // 해당하는 인덱스를 true, false로 content 생성, 삭제.
           closeOverlay();
-          handleClick(el, index);
+          // handleClick(el, index);
         } else {
           obj[index] = true;
           overlay.setMap(map); // 해당 마커의 content 생성.
-          handleClick(el, index); // 해당 aside 생성.
-          setMapInfo(el);
+          handleClick(index); // 해당 aside 생성.
+          // setShopInfo(el);
         }
       });
 
-      // kakao.maps.event.addListener(marker, 'mouseover', function () {
-      //   // 마우스 이벤트.
-      //   if (obj[index]) {
-      //     return;
-      //   }
-      //   overlay.setMap(map);
-      // });
+      kakao.maps.event.addListener(marker, 'mouseover', () => {
+        // 마우스 이벤트.
+        if (obj[index]) {
+          return;
+        }
+        overlay.setMap(map);
+      });
 
-      // kakao.maps.event.addListener(marker, 'mouseout', function () {
-      //   // 마우스 이벤트.
-      //   if (obj[index]) {
-      //     return;
-      //   }
-      //   overlay.setMap(null);
-      // });
+      kakao.maps.event.addListener(marker, 'mouseout', () => {
+        // 마우스 이벤트.
+        if (obj[index]) {
+          return;
+        }
+        overlay.setMap(null);
+      });
     });
-  }, [map, coordinate]);
+  }, [map, allShops]);
 
   return (
     <>
-      <div className="map-container">
-        <div className="map-area" ref={containerRef}></div>
-        <div className="map-aside">
-          <div className="map-header">
-            {/* <FaRegKeyboard style={{ fontSize: '30px', color: '#fff' }} /> */}
-            <h1>타건샵 리스트</h1>
-          </div>
-          <div className="map-list">
-            {allMaps.map((info, idx) => (
-              <div key={`${info.name}_${idx}`}>
-                <div>{info.name}</div>
-                <div>{info.address}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+      <main className="map-area" ref={containerRef}></main>
     </>
   );
 };
 
-export default KakaoMap;
+export default Map;

@@ -13,7 +13,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Mypage from './pages/Mypage';
 import Inquiry from './pages/Inquiry';
-import Map from './pages/Map';
+import TypingShop from './pages/TypingShop';
 import Introduction from './pages/Introduction';
 import Temp from './pages/Temp';
 import ReviewCreate from './pages/ReviewCreate';
@@ -55,7 +55,12 @@ function App() {
           component={Survey}
           exact
         />
-        <PublicRoute restricted={false} path="/map" component={Map} exact />
+        <PublicRoute
+          restricted={false}
+          path="/typing-shop"
+          component={TypingShop}
+          exact
+        />
         <AppLayout>
           {loading && <Spinner />}
           <Route path="/temp" component={Temp} />

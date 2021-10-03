@@ -250,16 +250,17 @@ const KeyboardDetail = (props) => {
                 <List grid>
                   <List.Item>
                     <Card title="Switch">
-                      {Object.keys(keyboard.switch).map((keySwitch, idx) => (
-                        <span
-                          key={`${keySwitch}_${idx}`}
-                          className="keyboard-detail-switch"
-                        >
-                          {keyboard.switch[keySwitch] && (
-                            <>{keySwitchComponent[keySwitch]}</>
-                          )}
-                        </span>
-                      ))}
+                      {Object.keys(keyboard.switch).map(
+                        (keySwitch, idx) =>
+                          keyboard.switch[keySwitch] && (
+                            <span
+                              key={`${keySwitch}_${idx}`}
+                              className="keyboard-detail-switch"
+                            >
+                              <>{keySwitchComponent[keySwitch]}</>
+                            </span>
+                          )
+                      )}
                     </Card>
                   </List.Item>
                   <List.Item>
