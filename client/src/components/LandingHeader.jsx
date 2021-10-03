@@ -119,7 +119,7 @@ const LandingHeader = () => {
               </li>
               <li className="landing-nav-item">
                 <Link
-                  to="/mechanical-keyboard"
+                  to="/introduction"
                   className="landing-nav-links"
                   onClick={isOpenSidebar ? onClickToggleBtn : null}
                 >
