@@ -22,7 +22,7 @@ import { AiFillBulb, AiOutlineBulb } from 'react-icons/ai';
 
 export const keySwitchComponent = {
   저소음적축: (
-    <div style={{ display: 'inline-block', marginRight: '5px' }}>
+    <span style={{ display: 'inline-block', marginRight: '5px' }}>
       <span
         style={{
           display: 'inline-block',
@@ -35,10 +35,10 @@ export const keySwitchComponent = {
         }}
       ></span>
       <span style={{ verticalAlign: 'middle', fontSize: '12px' }}>저적</span>
-    </div>
+    </span>
   ),
   적축: (
-    <div style={{ display: 'inline-block', marginRight: '5px' }}>
+    <span style={{ display: 'inline-block', marginRight: '5px' }}>
       <span
         style={{
           display: 'inline-block',
@@ -51,10 +51,10 @@ export const keySwitchComponent = {
         }}
       ></span>
       <span style={{ verticalAlign: 'middle', fontSize: '12px' }}>적축</span>
-    </div>
+    </span>
   ),
   청축: (
-    <div style={{ display: 'inline-block', marginRight: '5px' }}>
+    <span style={{ display: 'inline-block', marginRight: '5px' }}>
       <span
         style={{
           display: 'inline-block',
@@ -67,10 +67,10 @@ export const keySwitchComponent = {
         }}
       ></span>
       <span style={{ verticalAlign: 'middle', fontSize: '12px' }}>청축</span>
-    </div>
+    </span>
   ),
   갈축: (
-    <div style={{ display: 'inline-block', marginRight: '5px' }}>
+    <span style={{ display: 'inline-block', marginRight: '5px' }}>
       <span
         style={{
           display: 'inline-block',
@@ -83,10 +83,10 @@ export const keySwitchComponent = {
         }}
       ></span>
       <span style={{ verticalAlign: 'middle', fontSize: '12px' }}>갈축</span>
-    </div>
+    </span>
   ),
   흑축: (
-    <div style={{ display: 'inline-block', marginRight: '5px' }}>
+    <span style={{ display: 'inline-block', marginRight: '5px' }}>
       <span
         style={{
           display: 'inline-block',
@@ -99,7 +99,7 @@ export const keySwitchComponent = {
         }}
       ></span>
       <span style={{ verticalAlign: 'middle', fontSize: '12px' }}>흑축</span>
-    </div>
+    </span>
   ),
 };
 
