@@ -105,7 +105,7 @@ const Review = ({ review, userId }) => {
       </div>
       {review.userId === userId && (
         <div className="review-button">
-          <Button>
+          <Button onClick={(e) => e.stopPropagation()}>
             <Link
               to={{
                 pathname: `/review/${review.keyboardId}`,
