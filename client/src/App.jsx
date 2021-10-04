@@ -13,7 +13,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Mypage from './pages/Mypage';
 import Inquiry from './pages/Inquiry';
-import Map from './pages/Map';
+import TypingShop from './pages/TypingShop';
 import Introduction from './pages/Introduction';
 import Temp from './pages/Temp';
 import ReviewCreate from './pages/ReviewCreate';
@@ -26,6 +26,7 @@ import { logOutMyReviews } from './reducers/reviewsSlice';
 import { setExpireDate } from './reducers/expireDateReducer';
 
 import './App.less';
+import { fakeLogIn } from './reducers/api/userAPI';
 
 function App() {
   const dispatch = useDispatch();
@@ -42,6 +43,18 @@ function App() {
         dispatch(logOutMyReviews());
         dispatch(setExpireDate(null));
       }
+      ///TODO: 서로 다른 기기나 브라우저에서 로그인을 해서 무언가 작업했다면, 다른 기기에서는 쿠키가 만료되지 않았어도 redux에 들고 있는 정보는 다르기 때문에 오류가 날 수밖에 없다. 해결하자!
+      //! 토큰(쿠키)이 유효하다면
+      else {
+        //? 아이디 비밀번호 없이 쿠키에 있는 정보만으로 유저 정보 보내주는 api
+        //? 리뷰, 라이크 받아오기
+        try {
+          await dispatch(fakeLogIn()).unwrap();
+        } catch (err) {
+          console.log(err);
+          // dispatch(isError(err.response));
+        }
+      }
     }
   }, []);
 
@@ -49,13 +62,17 @@ function App() {
     <>
       <Switch>
         <PublicRoute exact path="/" component={Landing} />
-        <PublicRoute
-          restricted={false}
+        <Route
           path="/survey"
-          component={Survey}
+          render={(props) => <Survey {...props} key={Date.now()} />}
           exact
         />
-        <PublicRoute restricted={false} path="/map" component={Map} exact />
+        <PublicRoute
+          restricted={false}
+          path="/typing-shop"
+          component={TypingShop}
+          exact
+        />
         <AppLayout>
           {loading && <Spinner />}
           <Route path="/temp" component={Temp} />

@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import Button from './Button';
 import { useHistory } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-
 import { isError } from '../reducers/errorReducer';
-import Button from './Button';
-
 import { Modal } from 'antd';
 
 const ButtonModal = (props) => {
@@ -16,11 +14,15 @@ const ButtonModal = (props) => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const showModal = () => {
+  const showModal = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
     setVisible(true);
   };
 
-  const onClickDelete = async () => {
+  const onClickDelete = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
     try {
       setModalText(props.loadingText);
       setConfirmLoading(true);
@@ -40,7 +42,9 @@ const ButtonModal = (props) => {
     }
   };
 
-  const onClickCancel = () => {
+  const onClickCancel = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
     setVisible(false);
   };
 

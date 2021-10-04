@@ -1,14 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-
-import { deleteReviews } from '../reducers/api/reviewsAPI';
 import ButtonModal from './ButtonModal';
 import Button from './Button';
-
-import './styles/Review.scss';
-
+import { Link } from 'react-router-dom';
+import { deleteReviews } from '../reducers/api/reviewsAPI';
 import { Avatar, Carousel, Rate } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
+import './styles/Review.scss';
 
 const LeftArrow = ({ currentSlide, slideCount, children, ...props }) => {
   return <div {...props}>{children}</div>;
@@ -105,7 +102,7 @@ const Review = ({ review, userId }) => {
       </div>
       {review.userId === userId && (
         <div className="review-button">
-          <Button>
+          <Button onClick={(e) => e.stopPropagation()}>
             <Link
               to={{
                 pathname: `/review/${review.keyboardId}`,

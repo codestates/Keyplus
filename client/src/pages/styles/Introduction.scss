@@ -1,3 +1,6 @@
+@use '../../styles/constants' as *;
+@use '../../styles/mixins' as *;
+
 .intro-container {
   display: flex;
   justify-content: center;
@@ -9,7 +12,6 @@
   width: 80%;
   margin: 0 auto;
   // transform: translateX(12.5%);
-  min-width: 320px;
   // max-width: 80%;
   font-size: 1rem;
 
@@ -21,6 +23,13 @@
     border-bottom: 4px solid rgb(99, 99, 99);
     letter-spacing: 1px;
   }
+  @media screen and (max-width: $md-breakpoint) {
+    width: unset;
+    .intro-title-s {
+      margin-top: 50px;
+    }
+  }
+  @include mobile-margin();
 }
 
 .intro-contentsBx {
@@ -36,7 +45,7 @@
     // max-height: 400px;
   }
   .intro-p1 {
-    display: inline-block;
+    text-align: center;
   }
   p {
     text-align: justify;
@@ -45,10 +54,9 @@
   }
 }
 
-// .intro-big-title,
 .intro-title-s {
   text-align: center;
-  margin-top: 30px;
+  margin-top: 100px;
   font-weight: 600;
 }
 
@@ -61,6 +69,9 @@
 
   img {
     width: 100%;
+  }
+  @media (max-width: 1000px) {
+    grid-template-columns: 1fr;
   }
 }
 

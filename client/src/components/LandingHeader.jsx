@@ -66,14 +66,14 @@ const LandingHeader = () => {
             {isOpenSidebar ? (
               <CloseOutlined
                 style={{
-                  fontSize: width > 768 ? '24px' : '19px',
+                  fontSize: width > 768 ? '24px' : '22px',
                   color: '#fff',
                 }}
               />
             ) : (
               <MenuOutlined
                 style={{
-                  fontSize: width > 768 ? '24px' : '19px',
+                  fontSize: width > 768 ? '24px' : '22px',
                   color: '#fff',
                 }}
               />
@@ -110,7 +110,7 @@ const LandingHeader = () => {
               </li>
               <li className="landing-nav-item">
                 <Link
-                  to="/map"
+                  to="/typing-shop"
                   className="landing-nav-links"
                   onClick={isOpenSidebar ? onClickToggleBtn : null}
                 >
@@ -138,7 +138,7 @@ const LandingHeader = () => {
               <button onClick={onClickMypage} className="landing-button-links">
                 <UserOutlined
                   style={{
-                    fontSize: width > 768 ? '24px' : '19px',
+                    fontSize: width > 768 ? '24px' : '22px',
                     color: '#fff',
                   }}
                 />
@@ -152,7 +152,7 @@ const LandingHeader = () => {
                 >
                   <ExportOutlined
                     style={{
-                      fontSize: width > 768 ? '24px' : '19px',
+                      fontSize: width > 768 ? '24px' : '22px',
                       color: '#fff',
                     }}
                   />
