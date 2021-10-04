@@ -4,7 +4,7 @@ import { FiPlayCircle, FiStopCircle } from 'react-icons/fi';
 
 import '../styles/Question.scss';
 
-const Question1 = ({ onClickSound, audio1, audio2, audio3, audio4 }) => {
+const Question1 = ({ audio1, audio2, audio3, audio4 }) => {
   const width = useWidthSize(768);
 
   const [audioPlaying1, setAudioPlaying1] = useState(false);
@@ -141,7 +141,6 @@ const Question1 = ({ onClickSound, audio1, audio2, audio3, audio4 }) => {
           <div className="image-wrapper">
             <img
               src="/soup.png"
-              onClick={() => onClickSound(1)}
               onMouseEnter={() => {
                 setAudioPlaying1(true);
               }}
@@ -170,7 +169,6 @@ const Question1 = ({ onClickSound, audio1, audio2, audio3, audio4 }) => {
           <div className="image-wrapper">
             <img
               src="/chocolate.png"
-              onClick={() => onClickSound(2)}
               onMouseEnter={() => {
                 setAudioPlaying2(true);
               }}
@@ -199,7 +197,6 @@ const Question1 = ({ onClickSound, audio1, audio2, audio3, audio4 }) => {
           <div className="image-wrapper">
             <img
               src="/pen.png"
-              onClick={() => onClickSound(3)}
               onMouseEnter={() => {
                 setAudioPlaying3(true);
               }}
@@ -228,7 +225,6 @@ const Question1 = ({ onClickSound, audio1, audio2, audio3, audio4 }) => {
           <div className="image-wrapper">
             <img
               src="/gaming.png"
-              onClick={() => onClickSound(4)}
               onMouseEnter={() => {
                 setAudioPlaying4(true);
               }}
