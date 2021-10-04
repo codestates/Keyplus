@@ -484,23 +484,19 @@ const Survey = () => {
           {/* <Footer /> */}
         </>
       );
-    } else {
+    } else if (price) {
       return (
         <>
           <Header />
-
-          {/* //! 결과가 0개일 때 어떻게 보여줄지  */}
-          {/* {isLoading ? ( */}
-          <main className="survey loading">
-            <div className="survey-loading-area">
-              <div>
+          {isLoading ? (
+            <main className="survey loading">
+              <div className="survey-loading-area">
                 <span className="survey-loading-text">취향 분석 중</span>
                 <Spin size="small" style={{ color: '#000' }} />
               </div>
-            </div>
-          </main>
-          {/* ) : ( */}
-          {/* <main className="survey finish">
+            </main>
+          ) : (
+            <main className="survey finish">
               {keyboards && (
                 <div className="survey-result-main">
                   <p className="survey-result-header">
@@ -594,10 +590,19 @@ const Survey = () => {
                   )}
                 </div>
               )}
-            </main> */}
-          {/* )} */}
+            </main>
+          )}
 
           {/* <Footer /> */}
+        </>
+      );
+    } else {
+      return (
+        <>
+          <Header />
+          <main className="survey start">
+            <div className="survey-start-main"></div>
+          </main>
         </>
       );
     }
