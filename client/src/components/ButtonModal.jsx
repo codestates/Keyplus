@@ -16,11 +16,15 @@ const ButtonModal = (props) => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const showModal = () => {
+  const showModal = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
     setVisible(true);
   };
 
-  const onClickDelete = async () => {
+  const onClickDelete = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
     try {
       setModalText(props.loadingText);
       setConfirmLoading(true);
@@ -40,7 +44,9 @@ const ButtonModal = (props) => {
     }
   };
 
-  const onClickCancel = () => {
+  const onClickCancel = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
     setVisible(false);
   };
 
