@@ -38,12 +38,12 @@ function App() {
   const loading = useSelector((state) => state.loading);
   const expireDate = useSelector((state) => state.expireDate);
 
-  useEffect(() => {
-    AOS.init();
-  }, []);
+  // useEffect(() => {
+  //   AOS.init();
+  // }, []);
 
   useEffect(async () => {
-    // AOS.init();
+    AOS.init();
     if (expireDate) {
       const currentDate = Date.now();
       if (currentDate - expireDate >= 1000 * 60 * 60 * 24 * 2) {
@@ -52,24 +52,25 @@ function App() {
         dispatch(logOutMyReviews());
         dispatch(setExpireDate(null));
       }
-      ///TODO: 서로 다른 기기나 브라우저에서 로그인을 해서 무언가 작업했다면, 다른 기기에서는 쿠키가 만료되지 않았어도 redux에 들고 있는 정보는 다르기 때문에 오류가 날 수밖에 없다. 해결하자!
-      //! 토큰(쿠키)이 유효하다면
-      else {
-        //? 아이디 비밀번호 없이 쿠키에 있는 정보만으로 유저 정보 보내주는 api
-        //? 리뷰, 라이크 받아오기
-        try {
-          await dispatch(fakeLogIn()).unwrap();
-        } catch (err) {
-          console.log(err);
-          dispatch(logOutForce());
-          dispatch(logOutMyLikes());
-          dispatch(logOutMyReviews());
-          dispatch(setExpireDate(null));
-          message.warning('오류가 발생하여 로그아웃됩니다.');
-        }
-      }
+      // ///TODO: 서로 다른 기기나 브라우저에서 로그인을 해서 무언가 작업했다면, 다른 기기에서는 쿠키가 만료되지 않았어도 redux에 들고 있는 정보는 다르기 때문에 오류가 날 수밖에 없다. 해결하자!
+      // //! 토큰(쿠키)이 유효하다면
+      // else {
+      //   //? 아이디 비밀번호 없이 쿠키에 있는 정보만으로 유저 정보 보내주는 api
+      //   //? 리뷰, 라이크 받아오기
+      //   try {
+      //     await dispatch(fakeLogIn()).unwrap();
+      //   } catch (err) {
+      //     console.log(err);
+      //     dispatch(logOutForce());
+      //     dispatch(logOutMyLikes());
+      //     dispatch(logOutMyReviews());
+      //     dispatch(setExpireDate(null));
+      //     message.warning('오류가 발생하여 로그아웃됩니다.');
+      //   }
+      // }
     }
-  }, [window.location.href]);
+  }, []);
+  // window.location.href
 
   return (
     <>
