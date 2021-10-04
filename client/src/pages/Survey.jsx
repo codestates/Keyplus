@@ -83,7 +83,10 @@ const Survey = () => {
     if (sound) {
       setIsStarted(true);
     }
-  });
+    return () => {
+      setIsStarted(false);
+    };
+  }, [sound]);
 
   useEffect(() => {
     console.log('여기냐?');
@@ -241,11 +244,15 @@ const Survey = () => {
       ]);
       const filteredKeyboards = response.data.data;
       setKeyboards(filteredKeyboards);
+      setIsLoading(false);
     } catch (err) {
       console.log(err);
-    } finally {
       setIsLoading(false);
     }
+
+    return () => {
+      setIsLoading(false);
+    };
   }, [price !== null]);
 
   if (!isStarted) {

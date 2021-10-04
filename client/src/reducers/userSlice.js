@@ -6,8 +6,7 @@ import {
   signUp,
   socialLogIn,
   updateUserInfo,
-  validateNickname,
-  validateEmail,
+  fakeLogIn,
 } from './api/userAPI';
 
 // 회원가입, 로그인, 로그아웃, 유저정보조회(로그인하면 받아오기 때문에 필요 없다), 회원정보변경, 회원탈퇴, 소셜로그인(구글,카카오,네이버)
@@ -31,6 +30,10 @@ const userSlice = createSlice({
         state = action.payload;
         return state;
       })
+      .addCase(fakeLogIn.fulfilled, (state, action) => {
+        state = action.payload;
+        return state;
+      })
       .addCase(socialLogIn.fulfilled, (state, action) => {
         state = action.payload;
         return state;
@@ -47,16 +50,6 @@ const userSlice = createSlice({
         state = null;
         return state;
       })
-      // .addCase(validateNickname.fulfilled, (state, action) => {
-      //   state = action.payload;
-      //   console.log('내가 스테이트', state);
-      //   return state;
-      // })
-      // .addCase(validateEmail.fulfilled, (state, action) => {
-      //   state = action.payload;
-      //   console.log('내가 스테이트', state);
-      //   return state;
-      // })
       .addDefaultCase((state) => {
         return state;
       });
