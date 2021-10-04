@@ -19,21 +19,21 @@ const Question1 = ({ onClickSound, audio1, audio2, audio3, audio4 }) => {
     } else {
       if (audioPlaying1) {
         console.log('1번 재생');
-        audio1.play();
-        audio2.pause();
-        audio2.currentTime = 0;
-        audio3.pause();
-        audio3.currentTime = 0;
-        audio4.pause();
-        audio4.currentTime = 0;
+        audio1.current.play();
+        audio2.current.pause();
+        audio2.current.currentTime = 0;
+        audio3.current.pause();
+        audio3.current.currentTime = 0;
+        audio4.current.pause();
+        audio4.current.currentTime = 0;
         setAudioPlaying1(true);
         setAudioPlaying2(false);
         setAudioPlaying3(false);
         setAudioPlaying4(false);
       } else {
         console.log('1번 멈춰');
-        audio1.pause();
-        audio1.currentTime = 0;
+        audio1.current.pause();
+        audio1.current.currentTime = 0;
         setAudioPlaying1(false);
       }
     }
@@ -46,21 +46,21 @@ const Question1 = ({ onClickSound, audio1, audio2, audio3, audio4 }) => {
     } else {
       if (audioPlaying2) {
         console.log('2번 재생');
-        audio1.pause();
-        audio1.currentTime = 0;
-        audio2.play();
-        audio3.pause();
-        audio3.currentTime = 0;
-        audio4.pause();
-        audio4.currentTime = 0;
+        audio1.current.pause();
+        audio1.current.currentTime = 0;
+        audio2.current.play();
+        audio3.current.pause();
+        audio3.current.currentTime = 0;
+        audio4.current.pause();
+        audio4.current.currentTime = 0;
         setAudioPlaying1(false);
         setAudioPlaying2(true);
         setAudioPlaying3(false);
         setAudioPlaying4(false);
       } else {
         console.log('2번 멈춰');
-        audio2.pause();
-        audio2.currentTime = 0;
+        audio2.current.pause();
+        audio2.current.currentTime = 0;
         setAudioPlaying2(false);
       }
     }
@@ -73,21 +73,21 @@ const Question1 = ({ onClickSound, audio1, audio2, audio3, audio4 }) => {
     } else {
       if (audioPlaying3) {
         console.log('3번 재생');
-        audio1.pause();
-        audio1.currentTime = 0;
-        audio2.pause();
-        audio2.currentTime = 0;
-        audio3.play();
-        audio4.pause();
-        audio4.currentTime = 0;
+        audio1.current.pause();
+        audio1.current.currentTime = 0;
+        audio2.current.pause();
+        audio2.current.currentTime = 0;
+        audio3.current.play();
+        audio4.current.pause();
+        audio4.current.currentTime = 0;
         setAudioPlaying1(false);
         setAudioPlaying2(false);
         setAudioPlaying3(true);
         setAudioPlaying4(false);
       } else {
         console.log('3번 멈춰');
-        audio3.pause();
-        audio3.currentTime = 0;
+        audio3.current.pause();
+        audio3.current.currentTime = 0;
         setAudioPlaying3(false);
       }
     }
@@ -100,21 +100,21 @@ const Question1 = ({ onClickSound, audio1, audio2, audio3, audio4 }) => {
     } else {
       if (audioPlaying4) {
         console.log('4번 재생');
-        audio1.pause();
-        audio1.currentTime = 0;
-        audio2.pause();
-        audio2.currentTime = 0;
-        audio3.pause();
-        audio3.currentTime = 0;
-        audio4.play();
+        audio1.current.pause();
+        audio1.current.currentTime = 0;
+        audio2.current.pause();
+        audio2.current.currentTime = 0;
+        audio3.current.pause();
+        audio3.current.currentTime = 0;
+        audio4.current.play();
         setAudioPlaying1(false);
         setAudioPlaying2(false);
         setAudioPlaying3(false);
         setAudioPlaying4(true);
       } else {
         console.log('4번 멈춰');
-        audio4.pause();
-        audio4.currentTime = 0;
+        audio4.current.pause();
+        audio4.current.currentTime = 0;
         setAudioPlaying4(false);
       }
     }
