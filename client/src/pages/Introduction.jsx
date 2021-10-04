@@ -254,7 +254,7 @@ const Introduction = () => {
 
               <strong>
                 <div className="intro-link">
-                  <Link to="/map">
+                  <Link to="/typing-shop">
                     지금 바로 찾으러 가기
                     <AiOutlineArrowRight
                       style={{ marginLeft: '2px', marginBottom: '-2px' }}
