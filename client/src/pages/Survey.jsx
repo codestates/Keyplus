@@ -490,15 +490,17 @@ const Survey = () => {
           <Header />
 
           {/* //! 결과가 0개일 때 어떻게 보여줄지  */}
-          {isLoading ? (
-            <main className="survey loading">
-              <div className="survey-loading-area">
+          {/* {isLoading ? ( */}
+          <main className="survey loading">
+            <div className="survey-loading-area">
+              <div>
                 <span className="survey-loading-text">취향 분석 중</span>
                 <Spin size="small" style={{ color: '#000' }} />
               </div>
-            </main>
-          ) : (
-            <main className="survey finish">
+            </div>
+          </main>
+          {/* ) : ( */}
+          {/* <main className="survey finish">
               {keyboards && (
                 <div className="survey-result-main">
                   <p className="survey-result-header">
@@ -592,8 +594,8 @@ const Survey = () => {
                   )}
                 </div>
               )}
-            </main>
-          )}
+            </main> */}
+          {/* )} */}
 
           {/* <Footer /> */}
         </>
