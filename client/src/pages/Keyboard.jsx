@@ -270,6 +270,9 @@ const Keyboard = () => {
         }
       }
     }
+    return () => {
+      mountedAllCategory.current = false;
+    };
   }, [allKeyboards, allCategory, sortingNumber]);
 
   // ! 브랜드
