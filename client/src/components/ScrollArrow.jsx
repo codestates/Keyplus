@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { FaArrowCircleUp } from 'react-icons/fa';
+import { HiOutlineChevronDoubleUp } from 'react-icons/hi';
+import smoothscroll from 'smoothscroll-polyfill';
 import './styles/ScrollArrow.scss';
 
 const ScrollArrow = ({ landing }) => {
@@ -14,13 +15,14 @@ const ScrollArrow = ({ landing }) => {
   };
 
   const scrollTop = () => {
+    smoothscroll.polyfill();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   window.addEventListener('scroll', checkScrollTop);
 
   return (
-    <FaArrowCircleUp
+    <HiOutlineChevronDoubleUp
       className="scrollTop"
       onClick={scrollTop}
       style={{

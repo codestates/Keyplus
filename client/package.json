@@ -32,7 +32,8 @@
     "react-scripts": "4.0.3",
     "redux-logger": "^3.0.6",
     "redux-persist": "^6.0.0",
-    "sass": "^1.39.2"
+    "sass": "^1.39.2",
+    "smoothscroll-polyfill": "^0.4.4"
   },
   "scripts": {
     "start": "craco start",
