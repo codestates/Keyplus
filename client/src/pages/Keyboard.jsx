@@ -8,6 +8,7 @@ import KeyboardCard from './KeyboardCard';
 import { isError } from '../reducers/errorReducer';
 
 import useWidthSize from '../hooks/useWidthSize';
+import useIsMount from '../hooks/useIsMount';
 
 import './styles/Keyboard.scss';
 
@@ -19,6 +20,13 @@ import { FiRotateCw } from 'react-icons/fi';
 import ScrollArrow from '../components/ScrollArrow';
 
 const Keyboard = () => {
+  useEffect(() => {
+    console.log('Keyboard 컴포넌트가 화면에 나타남');
+    return () => {
+      console.log('Keyboard 컴포넌트가 화면에서 사라짐');
+    };
+  }, []);
+
   const dispatch = useDispatch();
   // const loading = useSelector((state) => state.loading);
 
@@ -56,18 +64,22 @@ const Keyboard = () => {
 
   // ! 화면 크기
   const width = useWidthSize(768);
+  const isMount = useIsMount();
 
   useEffect(async () => {
     try {
       const response = await axios.get('/keyboards');
-      setKeyboards(
-        response.data.data.sort((a, b) => b.likeCount - a.likeCount)
-      );
-      setAllKeyboards(
-        response.data.data.sort((a, b) => b.likeCount - a.likeCount)
-      );
-      setSortingNumber('1');
-      setFirstLoading(false);
+
+      if (isMount.current) {
+        setKeyboards(
+          response.data.data.sort((a, b) => b.likeCount - a.likeCount)
+        );
+        setAllKeyboards(
+          response.data.data.sort((a, b) => b.likeCount - a.likeCount)
+        );
+        setSortingNumber('1');
+        setFirstLoading(false);
+      }
     } catch (err) {
       console.log(err);
       dispatch(isError(err.response));

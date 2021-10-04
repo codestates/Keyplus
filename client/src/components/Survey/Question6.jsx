@@ -1,5 +1,4 @@
 import React from 'react';
-
 import '../styles/Question.scss';
 
 const Question6 = ({ onClickPrice }) => {

@@ -1,5 +1,4 @@
 import React from 'react';
-
 import '../styles/Question.scss';
 
 const Question5 = ({ onClickBluetooth }) => {
@@ -18,18 +17,6 @@ const Question5 = ({ onClickBluetooth }) => {
             <div className="title">블루투스 키보드</div>
           </div>
         </div>
-        {/* <div className="card" onClick={() => onClickBluetooth(0)}>
-          <div className="image-wrapper">
-            <img src="/no-image.png" alt="" />
-          </div>
-          <div className="text-wrapper">
-            <div className="description">
-              선을 연결하여 <br />
-              끊김 없이 사용할 수 있는
-            </div>
-            <div className="title">유선 키보드</div>
-          </div>
-        </div> */}
         <div className="card" onClick={() => onClickBluetooth(2)}>
           <div className="image-wrapper">
             <img src="/wired-keyboard.png" alt="" />

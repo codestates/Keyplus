@@ -25,6 +25,9 @@
   }
   @media screen and (max-width: $md-breakpoint) {
     width: unset;
+    .intro-title-s {
+      margin-top: 50px;
+    }
   }
   @include mobile-margin();
 }
@@ -53,7 +56,7 @@
 
 .intro-title-s {
   text-align: center;
-  margin-top: 30px;
+  margin-top: 100px;
   font-weight: 600;
 }
 

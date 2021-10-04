@@ -1,15 +1,11 @@
 import React from 'react';
 import { ReactComponent as KEYPLUS } from '../assets/images/KEYPLUS_footer_36.svg';
-import './styles/Footer.scss';
 import { Link } from 'react-router-dom';
+import './styles/Footer.scss';
 
 const Footer = () => {
   return (
     <>
-      {/* 왼쪽: 로고 회색깔로 넣기 */}
-      {/* 오른쪽: 문의: 1:1문의 */}
-      {/* 오른쪽: 서비스 소개: REPOSITORY & WIKI*/}
-      {/* 오른쪽: Team Members: 정선아, 김민성, 백승문, 박준호 */}
       <footer className="footer">
         <div className="footer-container">
           <div className="footer-row">
@@ -24,12 +20,20 @@ const Footer = () => {
               <h4>서비스 소개</h4>
               <ul>
                 <li>
-                  <a href="#" target="_blank" rel="noreferrer">
+                  <a
+                    href="https://github.com/codestates/Keyplus"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     Repository
                   </a>
                 </li>
                 <li>
-                  <a href="#" target="_blank" rel="noreferrer">
+                  <a
+                    href="https://github.com/codestates/Keyplus/wiki"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     WIKI
                   </a>
                 </li>
@@ -39,22 +43,38 @@ const Footer = () => {
               <h4>Team Members</h4>
               <ul>
                 <li>
-                  <a href="#" target="_blank" rel="noreferrer">
+                  <a
+                    href="https://github.com/seona-jung"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     정선아
                   </a>
                 </li>
                 <li>
-                  <a href="#" target="_blank" rel="noreferrer">
+                  <a
+                    href="https://github.com/chloemk"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     김민성
                   </a>
                 </li>
                 <li>
-                  <a href="#" target="_blank" rel="noreferrer">
+                  <a
+                    href="https://github.com/do8972"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     박준호
                   </a>
                 </li>
                 <li>
-                  <a href="#" target="_blank" rel="noreferrer">
+                  <a
+                    href="https://github.com/goodbsm2421"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     백승문
                   </a>
                 </li>

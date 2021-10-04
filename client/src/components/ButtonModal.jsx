@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import Button from './Button';
 import { useHistory } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-
 import { isError } from '../reducers/errorReducer';
-import Button from './Button';
-
 import { Modal } from 'antd';
 
 const ButtonModal = (props) => {
