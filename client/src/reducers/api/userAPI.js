@@ -1,11 +1,17 @@
-import axios from '../../utils/customAxios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { getLikes } from './likesAPI';
-import { getReviews } from './reviewsAPI';
+
+import { logOutForce } from '../userSlice';
 import { logOutMyLikes } from '../likesSlice';
 import { logOutMyReviews } from '../reviewsSlice';
-import exceptionAxios from 'axios';
 import { setExpireDate } from '../expireDateReducer';
+
+import { getLikes } from './likesAPI';
+import { getReviews } from './reviewsAPI';
+
+import axios from '../../utils/customAxios';
+import exceptionAxios from 'axios';
+
+import { message } from 'antd';
 
 // 회원가입, 로그인, 로그아웃, 유저정보조회, 회원정보변경, 회원탈퇴, 소셜로그인(구글,카카오,네이버)
 
@@ -37,6 +43,11 @@ export const fakeLogIn = createAsyncThunk(
       ]);
       return user.data.data;
     } catch (err) {
+      // dispatch(logOutForce());
+      // dispatch(logOutMyLikes());
+      // dispatch(logOutMyReviews());
+      // dispatch(setExpireDate(null));
+      // message.warning('오류가 발생하여 로그아웃됩니다.');
       return rejectWithValue(err);
     }
   }
@@ -67,6 +78,11 @@ export const logOut = createAsyncThunk(
       dispatch(setExpireDate(null));
       history.replace('/');
     } catch (err) {
+      // dispatch(logOutForce());
+      // dispatch(logOutMyLikes());
+      // dispatch(logOutMyReviews());
+      // dispatch(setExpireDate(null));
+      // message.warning('오류가 발생하여 로그아웃됩니다.');
       return rejectWithValue(err);
     }
   }
@@ -81,6 +97,11 @@ export const updateUserInfo = createAsyncThunk(
       console.log('여기는 응답 받아온거', user);
       return user.data.data;
     } catch (err) {
+      // dispatch(logOutForce());
+      // dispatch(logOutMyLikes());
+      // dispatch(logOutMyReviews());
+      // dispatch(setExpireDate(null));
+      // message.warning('오류가 발생하여 로그아웃됩니다.');
       return rejectWithValue(err);
     }
   }
@@ -97,6 +118,11 @@ export const deleteUser = createAsyncThunk(
       dispatch(setExpireDate(null));
       history.replace('/');
     } catch (err) {
+      // dispatch(logOutForce());
+      // dispatch(logOutMyLikes());
+      // dispatch(logOutMyReviews());
+      // dispatch(setExpireDate(null));
+      // message.warning('오류가 발생하여 로그아웃됩니다.');
       return rejectWithValue(err);
     }
   }
