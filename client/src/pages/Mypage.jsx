@@ -232,11 +232,11 @@ const Mypage = () => {
                 <TabPane tab="관심 키보드" key="관심 키보드">
                   {/* <div className="mypage-tabs"> */}
                   {likesState.map((keyboard) => (
-                    <div key={keyboard} className="mypage-tab-item">
-                      <KeyboardCard
-                        key={`${keyboard.id}_${keyboard.name}`}
-                        keyboard={keyboard}
-                      />
+                    <div
+                      key={`${keyboard.id}_${keyboard.name}`}
+                      className="mypage-tab-item"
+                    >
+                      <KeyboardCard keyboard={keyboard} />
                     </div>
                   ))}
                   {/* </div> */}
@@ -246,7 +246,7 @@ const Mypage = () => {
                   {/* <div className="mypage-tabs"> */}
                   {reviewsState.map((review, idx) => (
                     <div
-                      key={`${review}_${idx}`}
+                      key={`${review.nickname}_${idx}`}
                       className="mypage-tab-item mypage-review"
                     >
                       <Review review={review} userId={userId} />
