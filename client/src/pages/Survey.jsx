@@ -8,7 +8,6 @@ import exceptionAxios from 'axios';
 
 import useWidthSize from '../hooks/useWidthSize';
 import useIsMount from '../hooks/useIsMount';
-import useAudio from '../hooks/useAudio';
 
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -33,11 +32,6 @@ const delay = () => {
     }, 2000);
   });
 };
-
-const audio1 = new Audio('/boggle.mp3');
-const audio2 = new Audio('/nonclick.mp3');
-const audio3 = new Audio('/linear.mp3');
-const audio4 = new Audio('/click.mp3');
 
 const Survey = () => {
   const history = useHistory();
@@ -85,6 +79,11 @@ const Survey = () => {
       : null
   );
 
+  const [audio1, setAudio1] = useState(new Audio('/boggle.mp3'));
+  const [audio2, setAudio2] = useState(new Audio('/nonclick.mp3'));
+  const [audio3, setAudio3] = useState(new Audio('/linear.mp3'));
+  const [audio4, setAudio4] = useState(new Audio('/click.mp3'));
+
   //! useEffect
   useEffect(() => {
     console.log('Survey 컴포넌트가 화면에 나타남');
@@ -98,25 +97,10 @@ const Survey = () => {
       audio3.currentTime = 0;
       audio4.pause();
       audio4.currentTime = 0;
-      console.log('Audio를 꺼라.');
       console.log('Survey 컴포넌트가 화면에서 사라짐');
       console.log('started', isStarted);
     };
   }, []);
-
-  // useEffect(() => {
-  //   return () => {
-  //     audio1.current.pause();
-  //     audio1.current.currentTime = 0;
-  //     audio2.current.pause();
-  //     audio2.current.currentTime = 0;
-  //     audio3.current.pause();
-  //     audio3.current.currentTime = 0;
-  //     audio4.current.pause();
-  //     audio4.current.currentTime = 0;
-  //     console.log('Audio를 꺼라.');
-  //   };
-  // }, [audio1.current, audio2.current, audio3.current, audio4.current]);
 
   const mountedSound = useRef(false);
   useEffect(() => {
@@ -130,15 +114,9 @@ const Survey = () => {
       return;
     }
     return () => {
-      audio1.pause();
-      audio1.currentTime = 0;
-      audio2.pause();
-      audio2.currentTime = 0;
-      audio3.pause();
-      audio3.currentTime = 0;
-      audio4.pause();
-      audio4.currentTime = 0;
-      console.log('Audio를 꺼라.');
+      console.log('여긴 sound 반응, 97');
+      console.log(sound);
+      console.log('started', isStarted);
     };
   }, [sound]);
 
@@ -220,20 +198,36 @@ const Survey = () => {
   //     return;
   //   } else {
   //     return () => {
-  //       console.log('여긴 audio1.current,2,3,4 반응, 100');
-  //       console.log(audio1.current, audio2.current, audio3.current, audio4.current);
+  //       console.log('여긴 audio1,2,3,4 반응, 100');
+  //       console.log(audio1, audio2, audio3, audio4);
 
-  //       audio1.current.pause();
-  //       audio1.current.currentTime = 0;
-  //       audio2.current.pause();
-  //       audio2.current.currentTime = 0;
-  //       audio3.current.pause();
-  //       audio3.current.currentTime = 0;
-  //       audio4.current.pause();
-  //       audio4.current.currentTime = 0;
+  //       audio1.pause();
+  //       audio1.currentTime = 0;
+  //       audio2.pause();
+  //       audio2.currentTime = 0;
+  //       audio3.pause();
+  //       audio3.currentTime = 0;
+  //       audio4.pause();
+  //       audio4.currentTime = 0;
   //     };
   //   }
-  // }, [audio1.current, audio2.current, audio3.current, audio4.current]);
+  // }, [audio1, audio2, audio3, audio4]);
+
+  const onClickSound = useCallback((res) => {
+    setSound(res);
+
+    audio1.pause();
+    audio1.currentTime = 0;
+
+    audio2.pause();
+    audio2.currentTime = 0;
+
+    audio3.pause();
+    audio3.currentTime = 0;
+
+    audio4.pause();
+    audio4.currentTime = 0;
+  }, []);
 
   const convertSoundToText = useCallback((sound) => {
     switch (sound) {
@@ -380,6 +374,7 @@ const Survey = () => {
               />
             </div>
             <Question1
+              onClickSound={onClickSound}
               audio1={audio1}
               audio2={audio2}
               audio3={audio3}
