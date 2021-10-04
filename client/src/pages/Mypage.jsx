@@ -81,7 +81,7 @@ const Mypage = () => {
     e.preventDefault();
     // if (!validNickname) return message.warning('닉네임 중복검사를 해주세요');
     try {
-      if (!passwordValidate(password)) {
+      if (password && !passwordValidate(password)) {
         return message.warning(
           '최소 6자, 최소 하나의 문자, 하나의 숫자 및 하나의 특수 문자의 비밀번호가 필요합니다'
         );
@@ -132,10 +132,6 @@ const Mypage = () => {
       };
       reader.readAsDataURL(newFile);
     }
-  };
-
-  const onClickReview = (e) => {
-    e.preventDefault();
   };
 
   return (
@@ -227,11 +223,9 @@ const Mypage = () => {
                 />
               </div>
             </form>
-            {/* FIXME: 관심키보드 / 내 리뷰 */}
             <div className="mypage-tabs">
               <Tabs defaultActiveKey="1" onChange={callback}>
                 <TabPane tab="관심 키보드" key="관심 키보드">
-                  {/* <div className="mypage-tabs"> */}
                   {likesState.map((keyboard) => (
                     <div
                       key={`${keyboard.id}_${keyboard.name}`}
@@ -244,7 +238,6 @@ const Mypage = () => {
                 </TabPane>
 
                 <TabPane tab="내 리뷰" key="내 리뷰">
-                  {/* <div className="mypage-tabs"> */}
                   {reviewsState.map((review, idx) => (
                     <Link
                       key={`${review}_${idx}`}
@@ -255,7 +248,6 @@ const Mypage = () => {
                       </div>
                     </Link>
                   ))}
-                  {/* </div> */}
                 </TabPane>
               </Tabs>
             </div>
