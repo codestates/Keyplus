@@ -46,6 +46,15 @@
   .inquiry-select {
     margin-bottom: 20px;
     text-align: center;
+    border: 1px solid rgb(138, 138, 138);
+    padding: 2px 30px 2px 15px;
+    border-radius: 10px;
+    appearance: none;
+    cursor: pointer;
+    background-image: url('../../assets/images/select-arrow.png');
+    background-repeat: no-repeat;
+    background-size: 15px;
+    background-position: 115px 5px;
   }
 
   .inquiry-input-box {

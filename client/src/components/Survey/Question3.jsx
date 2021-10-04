@@ -1,5 +1,4 @@
 import React from 'react';
-
 import '../styles/Question.scss';
 
 const Question3 = ({ onClickBacklight }) => {
@@ -20,15 +19,6 @@ const Question3 = ({ onClickBacklight }) => {
             <div className="title"> 조명이 있는 키보드</div>
           </div>
         </div>
-        {/* <div className="card" onClick={() => onClickBacklight(0)}>
-          <div className="image-wrapper">
-            <img src="/no-image.png" alt="" />
-          </div>
-          <div className="text-wrapper">
-            <div className="description">여기는 설명이다</div>
-            <div className="title">조명이 없는 차분한 키보드</div>
-          </div>
-        </div> */}
         <div className="card" onClick={() => onClickBacklight(2)}>
           <div className="image-wrapper">
             <img src="/question.png" alt="" />

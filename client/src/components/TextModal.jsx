@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Modal, Button } from 'antd';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
-// import { deleteUser } from '../reducers/api/userAPI';
 import { isError } from '../reducers/errorReducer';
 import { withRouter } from 'react-router-dom';
 
