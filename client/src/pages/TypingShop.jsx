@@ -113,7 +113,7 @@ const TypingShop = () => {
         }
       });
     },
-    [customOverlays.length === 5]
+    [customOverlays.length === 10]
   );
 
   const mounted = useRef(false);
@@ -129,7 +129,7 @@ const TypingShop = () => {
         });
       });
     }
-  }, [customOverlays.length === 5]);
+  }, [customOverlays.length === 10]);
 
   return (
     <>
