@@ -89,6 +89,13 @@ const Survey = () => {
     console.log('Survey 컴포넌트가 화면에 나타남');
     console.log('started', isStarted);
     return () => {
+      console.log('Survey 컴포넌트가 화면에서 사라짐');
+      console.log('started', isStarted);
+    };
+  }, []);
+
+  useEffect(() => {
+    return () => {
       audio1.pause();
       audio1.currentTime = 0;
       audio2.pause();
@@ -97,10 +104,9 @@ const Survey = () => {
       audio3.currentTime = 0;
       audio4.pause();
       audio4.currentTime = 0;
-      console.log('Survey 컴포넌트가 화면에서 사라짐');
-      console.log('started', isStarted);
+      console.log('Audio를 꺼라.');
     };
-  }, []);
+  }, [audio1, audio2, audio3, audio4]);
 
   const mountedSound = useRef(false);
   useEffect(() => {
