@@ -33,6 +33,10 @@ function App() {
   const loading = useSelector((state) => state.loading);
   const expireDate = useSelector((state) => state.expireDate);
 
+  useEffect(() => {
+    AOS.init();
+  }, []);
+
   useEffect(async () => {
     AOS.init();
     if (expireDate) {
@@ -56,7 +60,7 @@ function App() {
         }
       }
     }
-  }, []);
+  }, [window.location.href]);
 
   return (
     <>
