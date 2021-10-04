@@ -87,6 +87,12 @@ function App() {
           component={TypingShop}
           exact
         />
+        <PublicRoute
+          restricted={false}
+          path="/introduction"
+          component={Introduction}
+          exact
+        />
         <AppLayout>
           {loading && <Spinner />}
           <Route path="/temp" component={Temp} />
@@ -102,12 +108,7 @@ function App() {
             component={KeyboardDetail}
             exact
           />
-          <PublicRoute
-            restricted={false}
-            path="/introduction"
-            component={Introduction}
-            exact
-          />
+
           <PublicRoute
             restricted={true}
             path="/login"
