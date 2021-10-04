@@ -26,6 +26,22 @@ export const logIn = createAsyncThunk(
   }
 );
 
+export const fakeLogIn = createAsyncThunk(
+  'user/fakeLogIn',
+  async (_, { dispatch, rejectWithValue }) => {
+    try {
+      const user = await axios.get('/users');
+      await Promise.all([
+        dispatch(getLikes()).unwrap(),
+        dispatch(getReviews()).unwrap(),
+      ]);
+      return user.data.data;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  }
+);
+
 export const signUp = createAsyncThunk(
   'user/signUp',
   async ({ state, formData, history }, { dispatch, rejectWithValue }) => {
@@ -103,21 +119,6 @@ export const socialLogIn = createAsyncThunk(
   }
 );
 
-// export const validateNickname = createAsyncThunk(
-//   '/user/validateNickname',
-//   async (data, { rejectWithValue }) => {
-//     console.log('변경할 닉네임 받아온 거', data);
-//     try {
-//       await exceptionAxios.post('/auth/nickname', data);
-//       // console.log('새로운 닉네임 응답 받아온 거', nickname);
-//       // return nickname;
-//       // return nickname.data.data;
-//     } catch (err) {
-//       return rejectWithValue(err);
-//     }
-//   }
-// );
-
 export const validateNickname = async (data) => {
   console.log('변경할 닉네임 받아온 거', data);
   const response = await exceptionAxios.post('/auth/nickname', data);
@@ -130,17 +131,3 @@ export const validateEmail = async (data) => {
   console.log('새로운 이메일 응답 받아온 거', response);
   return response;
 };
-
-// export const validateEmail = createAsyncThunk(
-//   '/user/validateEmail',
-//   async (data, { rejectWithValue }) => {
-//     console.log('변경할 이메일 받아온 거', data);
-//     try {
-//       const response = await exceptionAxios.post('/auth/email', data);
-//       console.log('새로운 이메일 응답 받아온 거', response);
-//       return response;
-//     } catch (err) {
-//       return rejectWithValue(err);
-//     }
-//   }
-// );
