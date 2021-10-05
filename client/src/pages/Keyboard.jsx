@@ -331,7 +331,9 @@ const Keyboard = () => {
     if (e.target.checked) {
       setAllCategory((prev) => [...prev, '엠스톤']);
     } else {
-      setAllCategory((prev) => prev.filter((category) => category !== '한성'));
+      setAllCategory((prev) =>
+        prev.filter((category) => category !== '엠스톤')
+      );
     }
   };
   const onChangeBrandCherry = (e) => {
