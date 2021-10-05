@@ -28,12 +28,12 @@ const delay = () => {
   });
 };
 
+const audio1 = new Audio('/boggle.mp3');
+const audio2 = new Audio('/nonclick.mp3');
+const audio3 = new Audio('/linear.mp3');
+const audio4 = new Audio('/click.mp3');
+
 const Survey = () => {
-  if (window.performance) {
-    if (performance.navigation.type == 1) {
-      window.location.href = '/survey';
-    }
-  }
   const history = useHistory();
   const width = useWidthSize(768);
   const isMount = useIsMount();
