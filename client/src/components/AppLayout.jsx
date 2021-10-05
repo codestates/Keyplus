@@ -1,10 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-
 import Header from './Header';
 import Footer from './Footer';
 import Spinner from '../components/Spinner';
-
 import './styles/Main.scss';
 
 const AppLayout = ({ children }) => {

@@ -1,16 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import ReactPlayer from 'react-player/lazy';
-
 import Header from '../components/Header';
-
 import useWidthSize from '../hooks/useWidthSize';
-
-import './styles/Introduction.scss';
-
 import { AiOutlineArrowRight } from 'react-icons/ai';
 import { FaExclamation } from 'react-icons/fa';
 import useIsMount from '../hooks/useIsMount';
+import './styles/Introduction.scss';
 
 const delay = () => {
   return new Promise((resolve, reject) => {
@@ -73,49 +69,10 @@ const Introduction = () => {
                   아래 설명을 보면서 마음에 드는 스위치를 찾아보세요!
                 </div>
               </div>
-              {/* <article>
-                <h2 className="intro-title-s">멤브레인 키보드</h2>
-                <div className="p-grid">
-                  <p>
-                    기계식 키보드를 접해보지 않은 사람이 있을 수는 있어도
-                    멤브레인 키보드를 사용해보지 않은 사람은 없을 정도로 가장
-                    대중적인 키보드입니다. 대부분의 사람이 사용하는 키보드는
-                    멤브레인 키보드라고 보시면 됩니다.
-                    <br />
-                    멤브레인 키보드의 작동 원리는 기계식 키보드와 달리 버튼마다
-                    개별적인 스위치가 달려 있지 않고, 키캡을 누르면
-                    멤브레인(러버돔)이라 불리는 하얀 고무 부분을 눌러서 해당
-                    키의 신호가 입력되는 방식입니다. 또한 멤브레인(러버돔)이 한
-                    장으로 통으로 연결되어 있어 키보드 제작비가 기계식 키보드에
-                    비해 저렴합니다. 키보드 반발력이 낮아 장시간 사용 시
-                    피로도가 낮은 것도 멤브레인 키보드의 장점입니다.
-                    <br />
-                    하지만 이런 멤브레인 키보드에도 단점이 존재합니다.
-                    상대적으로 낮은 내구성과 동시입력 수가 낮아 게임용으로는
-                    부적절합니다. 멤브레인 키보드는 장시간 사용 시 피로도가 낮은
-                    키보드를 원하고, 저렴한 가격대와 소음이 적은 키보드를
-                    원하시는 사용자에게 추천되는 키보드입니다.
-                  </p>
-                  <img src="/info2.png" />
-                </div>
-              </article> */}
-              {/* <article>
-                <h2 className="intro-title-s">기계식 키보드</h2>
-                <p>
-                  기계식 키보드는 각각의 버튼에 축이라고 불리는 스위치가 개별로
-                  들어갑니다. 이로 인해 멤브레인 키보드에 비해 높은 가격대로
-                  형성되어 있습니다. 하지만 이 개별 스위치 덕분에 멤브레인
-                  키보드보다 입력 속도가 빠른 편입니다. 스위치마다 스프링이
-                  내장되어 있어 스프링의 반발력으로 인해 색다른 키감을 느낄 수
-                  있으며 무한동시입력 또한 가능합니다.
-                  <br />
-                  기계식 키보드는 방식에 따라 크게 3가지의 타입으로 구분됩니다.
-                </p>
-              </article> */}
               <article>
                 <h2 className="intro-title-s">Click(청축)</h2>
                 <div className="p-grid">
-                  <img src="/info3.png" />
+                  <img src="/info/info3.png" />
                   <div>
                     <p>
                       클릭 타입은 타건감이 강하고, 찰칵찰칵 소리가 큰 것이
@@ -129,8 +86,6 @@ const Introduction = () => {
                       소리의 기계식 키보드를 원하거나, 게임용으로 사용을 원하는
                       경우라면 적합한 스위치입니다.
                     </p>
-                    {/* <br />
-                    <strong>스위치 압력 : 50g(+-15g)</strong> */}
                   </div>
                 </div>
               </article>
@@ -149,16 +104,14 @@ const Introduction = () => {
                       <strong>클리어축</strong>이 있습니다. 걸림은 있지만 소음이
                       적은 기계식 키보드를 원하는 경우에 적합한 스위치입니다.
                     </p>
-                    {/* <br />
-                      <strong>스위치 압력 : 45g(+-20g)</strong> */}
                   </div>
-                  <img src="/info4.png" />
+                  <img src="/info/info4.png" />
                 </div>
               </article>
               <article>
                 <h2 className="intro-title-s">Linear(적축)</h2>
                 <div className="p-grid">
-                  <img src="/info5.png" />
+                  <img src="/info/info5.png" />
                   <div>
                     <p>
                       리니어는 구조상 소음이 가장 적습니다. 기계적인 느낌이 가장
@@ -175,8 +128,6 @@ const Introduction = () => {
                       적은 키보드를 원하는 경우, 사무용 키보드를 찾는 경우
                       적합한 스위치입니다.
                     </p>
-                    {/* <br />
-                    <strong>스위치 압력 : 45g(+-20g)</strong> */}
                   </div>
                 </div>
               </article>
@@ -189,31 +140,14 @@ const Introduction = () => {
                       적축보다 키압이 높습니다. 소음은 적지만 적축보다는 더
                       탄성이 있는 느낌을 원하는 경우 적합한 스위치입니다.
                     </p>
-                    {/* <br />
-                    <strong>스위치 압력 : 60g(+-20g)</strong> */}
                   </div>
-                  <img src="/info6.png" />
+                  <img src="/info/info6.png" />
                 </div>
               </article>
-              {/* <article>
-                <h2 className="intro-title-s">펜타그래프</h2>
-                <div className="p-grid">
-                  <img src="/info7.png" />
-                  <p>
-                    펜타그래프 키보드는 일반 노트북 키보드를 생각하시면 됩니다.
-                    대표적인 키보드로는 애플 매직키보드, mxkeys 등이 존재합니다.
-                    낮은 키감, 적은 힘으로도 타이핑이 가능하며 슬림형 타입으로
-                    제작이 가능합니다. 작동 원리는 멤브레인 키보드와 비슷하지만
-                    내부 구조에 차이가 있습니다. 장시간 사용해도 피로도가 낮은
-                    키보드를 원하는 경우, 슬림한 타입의 키보드를 원하는 경우
-                    적합합니다.
-                  </p>
-                </div>
-              </article> */}
               <article>
                 <h2 className="intro-title-s">색다른 즐거움</h2>
                 <div className="p-grid">
-                  <img src="/info1.png" />
+                  <img src="/info/info1.png" />
                   <div>
                     <p>
                       기계식 키보드에는 타건감 이외에도 또 다른 재미를 주는 것이

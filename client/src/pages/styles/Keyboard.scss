@@ -21,8 +21,6 @@
   border-top: 5px solid #262626;
   overflow: hidden;
 
-  // border: 1px solid #262626;
-  // background-color: #262626;
   @media screen and (max-width: $md-breakpoint) {
     grid-template-columns: 100px 1fr;
     margin-top: 70px;
@@ -36,58 +34,28 @@
   & > *:nth-child(odd) {
     background-color: #262626;
     color: #fff;
-    // color: #000;
     font-weight: 500;
-
-    // &:not(:nth-last-child(2)) {
-    //   border-bottom: 1px solid #858585;
-    // }
   }
 
   & > *:nth-child(even) {
     padding-left: 20px;
 
     @media screen and (max-width: $md-breakpoint) {
-      // padding: 10px;
       padding-left: 10px;
     }
   }
 
-  & > *:not(:nth-last-child(2), :nth-last-child(1)) {
-    // border-bottom: 1px solid #d4d4d4;
-    // border-bottom: 1px solid #262626;
-  }
-
   .category-list {
     background-color: #fff;
-    // overflow: hidden;
 
     &:nth-child(4n-2) {
       background-color: #eeeeee;
-    }
-
-    // background-color: #000000;
-    // background: linear-gradient(90deg, tomato, purple);
-  }
-
-  .radio-group {
-    // align-items: center;
-    // padding: 20px;
-    // padding-left: 30px;
-
-    @media screen and (max-width: $md-breakpoint) {
-      // padding: 10px;
-      // padding-left: 10px;
     }
   }
 
   .clear-button-wrapper {
     @include flexbox();
-    // color: #000;
-    // background-color: unset;
     background-color: #262626;
-    // background-color: #eeeeee;
-    // background-color: #fff;
     border-right: 1px solid #262626;
 
     & > button {
@@ -113,7 +81,6 @@
     .selected-category {
       display: inline-block;
       padding: 2px 10px;
-      // background-color: #808080;
       background-color: #262626;
       border-radius: 20px;
       color: #fff;
@@ -161,11 +128,6 @@
 }
 
 .card-section {
-  // display: flex;
-  // flex-wrap: wrap;
-  // justify-content: center;
-  // column-gap: 30px;
-  // row-gap: 30px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   grid-gap: 2rem;

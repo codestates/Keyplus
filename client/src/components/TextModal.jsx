@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, Button } from 'antd';
+import { Modal } from 'antd';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
-import { isError } from '../reducers/errorReducer';
 import { withRouter } from 'react-router-dom';
 
 const DeleteModal = (props) => {
@@ -26,7 +25,7 @@ const DeleteModal = (props) => {
       }, 2000);
       await dispatch(props.action({ history }));
     } catch (err) {
-      dispatch(isError(err.response));
+      throw err;
     }
   };
 

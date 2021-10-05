@@ -10,7 +10,7 @@ const Question2 = ({ onClickColor }) => {
       <div className="card-container">
         <div className="card" onClick={() => onClickColor(1)}>
           <div className="image-wrapper">
-            <img src="/color.png" alt="" />
+            <img src="/survey/color.png" alt="" />
           </div>
           <div className="text-wrapper">
             <div className="description">화려한 색감의</div>
@@ -19,7 +19,7 @@ const Question2 = ({ onClickColor }) => {
         </div>
         <div className="card" onClick={() => onClickColor(0)}>
           <div className="image-wrapper">
-            <img src="/colorless.png" alt="" />
+            <img src="/survey/colorless.png" alt="" />
           </div>
           <div className="text-wrapper">
             <div className="description">차분한 색감의</div>
@@ -28,7 +28,7 @@ const Question2 = ({ onClickColor }) => {
         </div>
         <div className="card" onClick={() => onClickColor(2)}>
           <div className="image-wrapper">
-            <img src="/question.png" alt="" />
+            <img src="/survey/question.png" alt="" />
           </div>
           <div className="text-wrapper">
             <div className="description">색깔은 중요하지 않다</div>

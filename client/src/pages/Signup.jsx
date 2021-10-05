@@ -1,7 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { message } from 'antd';
 import { Avatar } from 'antd';
-import { isError } from '../reducers/errorReducer';
 import { useDispatch } from 'react-redux';
 import {
   signUp,
@@ -11,41 +10,30 @@ import {
 import { UserOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
+import { EmailValidation, PasswordValidation } from '../utils/validation';
 import './styles/Signup.scss';
 
 const Signup = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-
+  const [validEmail, setValidEmail] = useState(false);
+  const [isClicked, setIsClicked] = useState(false);
+  const [code, setCode] = useState('');
+  const [input, setInput] = useState('');
+  const [profileImg, setProfileImg] = useState('');
+  const [validNickname, setValidNickname] = useState(false);
   const [userState, setUserState] = useState({
     email: '',
     nickname: '',
     password: '',
     repassword: '',
   });
-  //FIXME: state 업데이트
+
   const onChangeUpdateState = (e) => {
     const { name, value } = e.target;
     setUserState({ ...userState, [name]: value });
   };
-  console.log(`새로운 인풋밸류`, userState);
   const { email, nickname, password, repassword } = userState;
-
-  //FIXME: 이메일 중복확인 함수
-  //이미 사용중인 이메일입니다 v
-  //올바르지 않은 이메일 형식입니다 v
-  //이메일을 확인해 주세요
-  //사용 가능한 이메일입니다 v
-  const isEmail = (email) => {
-    const reg =
-      /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
-    return reg.test(email) ? true : false;
-  };
-
-  const [validEmail, setValidEmail] = useState(false);
-  const [isClicked, setIsClicked] = useState(false);
-  const [code, setCode] = useState('');
-  const [input, setInput] = useState('');
 
   const emailVerify = () => {
     if (input == code) {
@@ -58,27 +46,20 @@ const Signup = () => {
   const emailValidate = async (e) => {
     e.preventDefault();
     try {
-      //이메일 형식 regex가 false라면
-      if (!isEmail(email)) {
+      if (!EmailValidation(email)) {
         setValidEmail(false);
         return message.warning('올바르지 않은 이메일 형식입니다');
       } else {
-        //올바른 이메일 형식이라면
         const response = await validateEmail({ email });
-        console.log('🌱', response);
         setIsClicked(true);
         setCode(response.data.data.verificationCode);
       }
     } catch (err) {
-      console.log(err);
-      // dispatch(isError(err.response));
       setValidEmail(false);
       message.warning('이미 사용 중인 이메일입니다');
     }
   };
 
-  //FIXME: 닉네임 중복확인 함수
-  const [validNickname, setValidNickname] = useState(false);
   const nicknameValidate = async (e) => {
     e.preventDefault();
     try {
@@ -87,22 +68,18 @@ const Signup = () => {
       setValidNickname(true);
       message.success('사용 가능한 닉네임입니다');
     } catch (err) {
-      console.log(err.response);
-      // dispatch(isError(err.response));
       setValidNickname(false);
       message.warning('사용 불가능한 닉네임입니다');
     }
   };
 
-  //FIXME: 프로필 이미지 미리보기
   const imgref = useRef(null);
   const handleImgRef = () => {
     imgref.current.click();
   };
 
-  const [profileImg, setProfileImg] = useState('');
   const onChangeImage = (e) => {
-    //FIXME: file state 업데이트 시키기
+    //! file state 업데이트
     const newFile = e.target.files[0];
     if (newFile) {
       const reader = new FileReader();
@@ -114,16 +91,9 @@ const Signup = () => {
     }
   };
 
-  //FIXME: 패스워드 일치 함수와 정규표현식
-  const passwordValidate = (password) => {
-    const reg = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
-    return reg.test(password) ? true : false;
-  };
-
   const isEmpty =
     email === '' || nickname === '' || password === '' || repassword === '';
 
-  //FIXME: 회원가입 함수
   const onClickSignup = async (e) => {
     e.preventDefault();
     try {
@@ -139,18 +109,18 @@ const Signup = () => {
       if (password !== repassword) {
         return message.warning('비밀번호를 다시 확인해주세요');
       }
-      if (!passwordValidate(password)) {
+      if (!PasswordValidation(password)) {
         return message.warning(
           '최소 6자, 최소 하나의 문자, 하나의 숫자 및 하나의 특수 문자의 비밀번호가 필요합니다'
         );
       }
 
       const formData = new FormData();
-      formData.append('img', e.target.img.files[0]); //e.target.img.files[0]
+      formData.append('img', e.target.img.files[0]);
       formData.append('email', email);
       formData.append('nickname', nickname);
       formData.append('password', password);
-      //여기 프로필 이미지엔 이미지 url이 담겨있음
+      //! profileImg에 이미지 url이 있다
       await dispatch(
         signUp({
           state: { ...userState, image: profileImg },
@@ -163,7 +133,6 @@ const Signup = () => {
       setValidEmail(false);
     } catch (err) {
       if (!err.response) throw err;
-      dispatch(isError(err.response));
       message.warning('회원가입에 실패했습니다');
     }
   };
@@ -174,7 +143,6 @@ const Signup = () => {
         <div className="signup-flexbox">
           <div className="signup-main">
             <h2 className="title">Signup</h2>
-
             <form className="signup-form" onSubmit={onClickSignup}>
               <div className="upload-box">
                 <input
@@ -186,7 +154,6 @@ const Signup = () => {
                   ref={imgref}
                   hidden
                 />
-
                 {profileImg ? (
                   <div className="upload-image" onClick={handleImgRef}>
                     <Avatar src={profileImg} size={80} />
@@ -200,7 +167,6 @@ const Signup = () => {
               <div>
                 <p className="text profile">프로필 사진을 업로드 해주세요</p>
               </div>
-
               <div className="input-box">
                 <label htmlFor="email">이메일</label>
                 <div className="input-wrapper">
@@ -248,7 +214,6 @@ const Signup = () => {
                     onChange={onChangeUpdateState}
                     name="nickname"
                     placeholder="nickname"
-                    // required
                     value={nickname || ''}
                   />
                   <button type="button" onClick={nicknameValidate}>
@@ -256,7 +221,6 @@ const Signup = () => {
                   </button>
                 </div>
               </div>
-
               <div className="input-box">
                 <label htmlFor="password">비밀번호</label>
                 <input
@@ -264,7 +228,6 @@ const Signup = () => {
                   onChange={onChangeUpdateState}
                   placeholder="password"
                   name="password"
-                  // required
                   value={password || ''}
                 />
               </div>
@@ -275,7 +238,6 @@ const Signup = () => {
                   onChange={onChangeUpdateState}
                   placeholder="confirm password"
                   name="repassword"
-                  // required
                   value={repassword || ''}
                 />
               </div>
@@ -283,14 +245,12 @@ const Signup = () => {
                 회원가입
               </button>
             </form>
-
             <div className="login-path">
               <Link to="/login">로그인 하러가기</Link>
             </div>
           </div>
-
           <aside className="signup-aside">
-            <img src="signup.jpg" />
+            <img src="/others/signup.jpg" />
           </aside>
         </div>
       </section>
