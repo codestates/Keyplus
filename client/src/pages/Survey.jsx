@@ -34,6 +34,11 @@ const delay = () => {
 };
 
 const Survey = () => {
+  if (window.performance) {
+    if (performance.navigation.type == 1) {
+      window.location.href = '/survey';
+    }
+  }
   const history = useHistory();
 
   const width = useWidthSize(768);
