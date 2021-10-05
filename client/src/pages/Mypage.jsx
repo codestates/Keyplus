@@ -75,8 +75,7 @@ const Mypage = () => {
         return message.warning('닉네임 중복검사를 해주세요');
       }
     } catch (err) {
-      if (!err.response) throw err;
-      message.warning('처리 도중 문제가 발생했습니다');
+      return message.warning('오류가 발생하여 로그아웃됩니다.');
     }
   };
 

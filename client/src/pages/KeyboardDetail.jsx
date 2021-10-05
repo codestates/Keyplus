@@ -149,7 +149,7 @@ const KeyboardDetail = (props) => {
       }
       setLiked((prevLiked) => !prevLiked);
     } catch (err) {
-      return message.warning('서버 에러가 발생했습니다.');
+      return message.warning('오류가 발생하여 로그아웃됩니다.');
     }
   }, [userId, keyboardId, liked]);
 
