@@ -128,6 +128,10 @@ const KeyboardCard = memo(({ keyboard }) => {
         } else {
           console.log(err);
         }
+        dispatch(logOutForce());
+        dispatch(logOutMyLikes());
+        dispatch(logOutMyReviews());
+        dispatch(setExpireDate(null));
         return message.warning('오류가 발생하여 로그아웃됩니다.');
       }
     },

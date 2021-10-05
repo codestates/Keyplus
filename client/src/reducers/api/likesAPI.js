@@ -21,34 +21,15 @@ export const getLikes = createAsyncThunk(
   }
 );
 
-export const addLikes = createAsyncThunk(
-  'likes/addLikes',
-  async (data, { rejectWithValue }) => {
-    try {
-      const likedKeyboard = await exceptionAxios.post(`/likes/${data}`);
-      return likedKeyboard.data.data;
-    } catch (err) {
-      dispatch(logOutForce());
-      dispatch(logOutMyLikes());
-      dispatch(logOutMyReviews());
-      dispatch(setExpireDate(null));
-      return rejectWithValue(err);
-    }
-  }
-);
+export const addLikes = createAsyncThunk('likes/addLikes', async (data) => {
+  const likedKeyboard = await exceptionAxios.post(`/likes/${data}`);
+  return likedKeyboard.data.data;
+});
 
 export const deleteLikes = createAsyncThunk(
   'likes/deleteLikes',
-  async (data, { rejectWithValue }) => {
-    try {
-      await exceptionAxios.delete(`/likes/${data}`);
-      return data;
-    } catch (err) {
-      dispatch(logOutForce());
-      dispatch(logOutMyLikes());
-      dispatch(logOutMyReviews());
-      dispatch(setExpireDate(null));
-      return rejectWithValue(err);
-    }
+  async (data) => {
+    await exceptionAxios.delete(`/likes/${data}`);
+    return data;
   }
 );
