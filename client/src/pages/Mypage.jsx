@@ -11,7 +11,7 @@ import { message } from 'antd';
 import { Avatar } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { Tabs } from 'antd';
-import KeyboardCard from './KeyboardCard';
+import KeyboardCard from '../components/KeyboardCard';
 import Review from '../components/Review';
 import { PasswordValidation } from '../utils/validation';
 import './styles/Mypage.scss';

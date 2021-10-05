@@ -14,7 +14,7 @@ import Question4 from '../components/Survey/Question4';
 import Question5 from '../components/Survey/Question5';
 import Question6 from '../components/Survey/Question6';
 import KakaoShareButton from '../components/KakaoShareButton';
-import KeyboardCard from './KeyboardCard';
+import KeyboardCard from '../components/KeyboardCard';
 import { message, Spin } from 'antd';
 import { RiEmotionSadLine } from 'react-icons/ri';
 import './styles/Survey.scss';
