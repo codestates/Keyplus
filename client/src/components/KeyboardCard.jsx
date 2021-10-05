@@ -14,6 +14,10 @@ import {
 import { BiWon } from 'react-icons/bi';
 import { AiFillBulb, AiOutlineBulb } from 'react-icons/ai';
 import './styles/KeyboardCard.scss';
+import { logOutForce } from '../reducers/userSlice';
+import { logOutMyLikes } from '../reducers/likesSlice';
+import { logOutMyReviews } from '../reducers/reviewsSlice';
+import { setExpireDate } from '../reducers/expireDateReducer';
 const { Meta } = Card;
 
 export const keySwitchComponent = {

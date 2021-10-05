@@ -7,7 +7,7 @@ import exceptionAxios from 'axios';
 
 export const getLikes = createAsyncThunk(
   'likes/getLikes',
-  async (_, { rejectWithValue }) => {
+  async (_, { dispatch, rejectWithValue }) => {
     try {
       const likes = await exceptionAxios.get('/likes');
       return likes.data.data;
@@ -23,7 +23,7 @@ export const getLikes = createAsyncThunk(
 
 export const addLikes = createAsyncThunk(
   'likes/addLikes',
-  async (data, { rejectWithValue }) => {
+  async (data, { dispatch, rejectWithValue }) => {
     try {
       const likedKeyboard = await exceptionAxios.post(`/likes/${data}`);
       return likedKeyboard.data.data;
@@ -39,7 +39,7 @@ export const addLikes = createAsyncThunk(
 
 export const deleteLikes = createAsyncThunk(
   'likes/deleteLikes',
-  async (data, { rejectWithValue }) => {
+  async (data, { dispatch, rejectWithValue }) => {
     try {
       await exceptionAxios.delete(`/likes/${data}`);
       return data;

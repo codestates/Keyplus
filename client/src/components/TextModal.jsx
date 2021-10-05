@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Modal } from 'antd';
+import { Modal, message } from 'antd';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 import { withRouter } from 'react-router-dom';
@@ -23,7 +23,7 @@ const DeleteModal = (props) => {
         setVisible(false);
         setConfirmLoading(false);
       }, 2000);
-      await dispatch(props.action({ history }));
+      await dispatch(props.action({ history })).unwrap();
     } catch (err) {
       return message.warning('오류가 발생하여 로그아웃됩니다.');
     }

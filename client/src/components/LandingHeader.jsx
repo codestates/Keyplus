@@ -8,6 +8,7 @@ import usePageYOffset from '../hooks/usePageYOffset';
 import './styles/LandingHeader.scss';
 import { ReactComponent as KEYPLUS_WHITE_36 } from '../assets/images/KEYPLUS_white_36.svg';
 import { ReactComponent as KEYPLUS_WHITE_24 } from '../assets/images/KEYPLUS_white_24.svg';
+import { message } from 'antd';
 import {
   UserOutlined,
   CloseOutlined,

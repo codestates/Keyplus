@@ -8,7 +8,7 @@ import exceptionAxios from 'axios';
 
 export const getReviews = createAsyncThunk(
   'reviews/getReviews',
-  async (_, { rejectWithValue }) => {
+  async (_, { dispatch, rejectWithValue }) => {
     try {
       const reviews = await exceptionAxios.get('/reviews');
       return reviews.data.data;
@@ -24,7 +24,7 @@ export const getReviews = createAsyncThunk(
 
 export const addReviews = createAsyncThunk(
   'reviews/addReviews',
-  async ({ formData, data }, { rejectWithValue }) => {
+  async ({ formData, data }, { dispatch, rejectWithValue }) => {
     try {
       const response = await axios.post(
         `/reviews/${data.keyboardId}`,
@@ -43,7 +43,7 @@ export const addReviews = createAsyncThunk(
 
 export const updateReviews = createAsyncThunk(
   'reviews/updateReviews',
-  async ({ formData, data }, { rejectWithValue }) => {
+  async ({ formData, data }, { dispatch, rejectWithValue }) => {
     try {
       const response = await axios.patch(
         `/reviews/${data.keyboardId}`,
@@ -62,7 +62,7 @@ export const updateReviews = createAsyncThunk(
 
 export const deleteReviews = createAsyncThunk(
   'reviews/deleteReviews',
-  async ({ history, keyboardId, reviewId }, { rejectWithValue }) => {
+  async ({ history, keyboardId, reviewId }, { dispatch, rejectWithValue }) => {
     try {
       await axios.delete(`/reviews/${keyboardId}`);
       history.replace(`/keyboards`);

@@ -3,7 +3,7 @@ import Button from './Button';
 import { useHistory } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { Modal } from 'antd';
+import { Modal, message } from 'antd';
 
 const ButtonModal = (props) => {
   const [visible, setVisible] = useState(false);
@@ -34,7 +34,7 @@ const ButtonModal = (props) => {
           keyboardId: props.keyboardId,
           reviewId: props.reviewId,
         })
-      );
+      ).unwrap();
     } catch (err) {
       return message.warning('오류가 발생하여 로그아웃됩니다.');
     }
