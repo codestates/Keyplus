@@ -1,14 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { logOutForce } from '../userSlice';
-import { logOutMyLikes } from '../likesSlice';
-import { logOutMyReviews } from '../reviewsSlice';
-import { setExpireDate } from '../expireDateReducer';
+// import { logOutForce } from '../userSlice';
+// import { logOutMyLikes } from '../likesSlice';
+// import { logOutMyReviews } from '../reviewsSlice';
+// import { setExpireDate } from '../expireDateReducer';
 
 import axios from '../../utils/customAxios';
 import exceptionAxios from 'axios';
-
-import { message } from 'antd';
 
 export const getReviews = createAsyncThunk(
   'reviews/getReviews',
@@ -27,7 +25,6 @@ export const getReviews = createAsyncThunk(
   }
 );
 
-//TODO: 공부 후 작성
 export const addReviews = createAsyncThunk(
   'reviews/addReviews',
   async ({ formData, data }, { rejectWithValue }) => {
@@ -48,7 +45,6 @@ export const addReviews = createAsyncThunk(
   }
 );
 
-//TODO: 공부 후 작성
 export const updateReviews = createAsyncThunk(
   'reviews/updateReviews',
   async ({ formData, data }, { rejectWithValue }) => {

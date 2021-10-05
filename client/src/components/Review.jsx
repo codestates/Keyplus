@@ -10,7 +10,6 @@ import './styles/Review.scss';
 const LeftArrow = ({ currentSlide, slideCount, children, ...props }) => {
   return <div {...props}>{children}</div>;
 };
-
 const RightArrow = ({ currentSlide, slideCount, children, ...props }) => {
   return <div {...props}>{children}</div>;
 };
@@ -41,7 +40,6 @@ const Review = ({ review, userId }) => {
               </video>
             </>
           )}
-
           {review.image1 && (
             <>
               <img
@@ -51,7 +49,6 @@ const Review = ({ review, userId }) => {
               />
             </>
           )}
-
           {review.image2 && (
             <>
               <img
@@ -61,7 +58,6 @@ const Review = ({ review, userId }) => {
               />
             </>
           )}
-
           {review.image3 && (
             <>
               <img

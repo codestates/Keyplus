@@ -1,46 +1,26 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-
+import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import axios from '../utils/customAxios';
 import exceptionAxios from 'axios';
-
 import KeyboardCard from './KeyboardCard';
-import { isError } from '../reducers/errorReducer';
-
 import useWidthSize from '../hooks/useWidthSize';
 import useIsMount from '../hooks/useIsMount';
-
-import './styles/Keyboard.scss';
-
 import 'antd/dist/antd.css';
 import { Select, Space, Typography, Divider, Checkbox, Radio } from 'antd';
-const { Option } = Select;
-import { FaCheck, FaArrowCircleUp } from 'react-icons/fa';
+import { FaCheck } from 'react-icons/fa';
 import { FiRotateCw } from 'react-icons/fi';
 import ScrollArrow from '../components/ScrollArrow';
+import './styles/Keyboard.scss';
+const { Option } = Select;
 
 const Keyboard = () => {
-  useEffect(() => {
-    console.log('Keyboard 컴포넌트가 화면에 나타남');
-    return () => {
-      console.log('Keyboard 컴포넌트가 화면에서 사라짐');
-    };
-  }, []);
-
   const dispatch = useDispatch();
-  // const loading = useSelector((state) => state.loading);
-
   const [firstLoading, setFirstLoading] = useState(true);
-
-  // ! state
   const [keyboards, setKeyboards] = useState([]);
   const [allKeyboards, setAllKeyboards] = useState([]);
   const [sortingNumber, setSortingNumber] = useState('1');
-
-  // ! 모든 카테고리
   const [allCategory, setAllCategory] = useState([]);
 
-  // ! 브랜드
   const [brandLogitech, setBrandLogitech] = useState(false);
   const [brandKeychron, setBrandKeychron] = useState(false);
   const [brandAbko, setBrandAbko] = useState(false);
@@ -52,29 +32,24 @@ const Keyboard = () => {
   const [brandCherry, setBrandCherry] = useState(false);
   const [brandCorsair, setBrandCorsair] = useState(false);
 
-  // ! 스위치
   const [switchBrown, setSwitchBrown] = useState(false);
   const [switchRed, setSwitchRed] = useState(false);
   const [switchBlue, setSwitchBlue] = useState(false);
   const [switchBlack, setSwitchBlack] = useState(false);
   const [switchSilentRed, setSwitchSilentRed] = useState(false);
 
-  // ! 가격
   const [priceRadio, setPriceRadio] = useState(null);
 
-  // ! 기타(텐키, 블루투스, 백라이트)
   const [tenkeyLess, setTenkeyLess] = useState(false);
   const [bluetooth, setBluetooth] = useState(false);
   const [backlight, setBacklight] = useState(false);
 
-  // ! 화면 크기
   const width = useWidthSize(768);
   const isMount = useIsMount();
 
   useEffect(async () => {
     try {
       const response = await axios.get('/keyboards');
-
       if (isMount.current) {
         setKeyboards(
           response.data.data.sort((a, b) => b.likeCount - a.likeCount)
@@ -86,8 +61,7 @@ const Keyboard = () => {
         setFirstLoading(false);
       }
     } catch (err) {
-      console.log(err);
-      dispatch(isError(err.response));
+      throw err;
     }
   }, []);
 
@@ -100,8 +74,7 @@ const Keyboard = () => {
         response.data.data.sort((a, b) => b.likeCount - a.likeCount)
       );
     } catch (err) {
-      console.log(err);
-      dispatch(isError(err.response));
+      throw err;
     }
   };
   const onClickHeartAscendingBtn = async () => {
@@ -112,8 +85,7 @@ const Keyboard = () => {
         response.data.data.sort((a, b) => a.likeCount - b.likeCount)
       );
     } catch (err) {
-      console.log(err);
-      dispatch(isError(err.response));
+      throw err;
     }
   };
 
@@ -129,7 +101,6 @@ const Keyboard = () => {
       [...keyboards].sort((a, b) => a.reviewCount - b.reviewCount)
     );
   };
-
   const onClickPriceAscendingBtn = async () => {
     setSortingNumber('5');
     setAllKeyboards((keyboards) =>
@@ -142,7 +113,6 @@ const Keyboard = () => {
       [...keyboards].sort((a, b) => b.price - a.price)
     );
   };
-
   async function handleChange(value) {
     switch (value) {
       case '1':
@@ -153,8 +123,7 @@ const Keyboard = () => {
             response.data.data.sort((a, b) => b.likeCount - a.likeCount)
           );
         } catch (err) {
-          console.log(err);
-          dispatch(isError(err.response));
+          throw err;
         }
         break;
       case '2':
@@ -165,8 +134,7 @@ const Keyboard = () => {
             response.data.data.sort((a, b) => a.likeCount - b.likeCount)
           );
         } catch (err) {
-          console.log(err);
-          dispatch(isError(err.response));
+          throw err;
         }
         break;
       case '3':
@@ -193,7 +161,6 @@ const Keyboard = () => {
           [...keyboards].sort((a, b) => b.price - a.price)
         );
         break;
-
       default:
         break;
     }
@@ -278,15 +245,12 @@ const Keyboard = () => {
               break;
           }
         }
-
         if (tenkeyLess) {
           setKeyboards((prev) => prev.filter((keyboard) => !keyboard.tenkey));
         }
-
         if (bluetooth) {
           setKeyboards((prev) => prev.filter((keyboard) => keyboard.bluetooth));
         }
-
         if (backlight) {
           setKeyboards((prev) => prev.filter((keyboard) => keyboard.backlight));
         }
@@ -512,22 +476,6 @@ const Keyboard = () => {
     setBacklight(false);
   };
 
-  const [showScroll, setShowScroll] = useState(false);
-
-  const checkScrollTop = () => {
-    if (!showScroll && window.pageYOffset > 400) {
-      setShowScroll(true);
-    } else if (showScroll && window.pageYOffset <= 400) {
-      setShowScroll(false);
-    }
-  };
-
-  const scrollTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  window.addEventListener('scroll', checkScrollTop);
-
   return (
     <>
       <ScrollArrow />
@@ -745,7 +693,6 @@ const Keyboard = () => {
                   <Option value="6">가격 높은순</Option>
                 </Select>
               )}
-
               <div className="keyboard-count">총 {keyboards.length}개</div>
             </div>
           </>

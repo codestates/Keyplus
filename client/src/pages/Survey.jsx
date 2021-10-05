@@ -3,14 +3,10 @@ import { useHistory } from 'react-router';
 import { useSelector } from 'react-redux';
 import ProgressBar from '@ramonak/react-progress-bar';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-
 import exceptionAxios from 'axios';
-
 import useWidthSize from '../hooks/useWidthSize';
 import useIsMount from '../hooks/useIsMount';
-
 import Header from '../components/Header';
-import Footer from '../components/Footer';
 import Question1 from '../components/Survey/Question1';
 import Question2 from '../components/Survey/Question2';
 import Question3 from '../components/Survey/Question3';
@@ -19,35 +15,30 @@ import Question5 from '../components/Survey/Question5';
 import Question6 from '../components/Survey/Question6';
 import KakaoShareButton from '../components/KakaoShareButton';
 import KeyboardCard from './KeyboardCard';
-
-import './styles/Survey.scss';
-
 import { message, Spin } from 'antd';
 import { RiEmotionSadLine } from 'react-icons/ri';
+import './styles/Survey.scss';
 
+//! 취향분석중 강제 로딩
 const delay = () => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      resolve('2초가 지났습니다!');
+      resolve();
     }, 2000);
   });
 };
 
 const Survey = () => {
   const history = useHistory();
-
   const width = useWidthSize(768);
   const isMount = useIsMount();
-
   const urlSearchParams = useRef(new URLSearchParams(window.location.search));
   const userNickname =
     urlSearchParams.current.get('nickname') ??
     useSelector((state) => state.user?.nickname);
-
   const [isStarted, setIsStarted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [keyboards, setKeyboards] = useState(null);
-
   const [sound, setSound] = useState(
     urlSearchParams.current.get('sound')
       ? Number(urlSearchParams.current.get('sound'))
@@ -79,15 +70,12 @@ const Survey = () => {
       : null
   );
 
-  const [audio1, setAudio1] = useState(new Audio('/boggle.mp3'));
-  const [audio2, setAudio2] = useState(new Audio('/nonclick.mp3'));
-  const [audio3, setAudio3] = useState(new Audio('/linear.mp3'));
-  const [audio4, setAudio4] = useState(new Audio('/click.mp3'));
+  const [audio1] = useState(new Audio('/boggle.mp3'));
+  const [audio2] = useState(new Audio('/nonclick.mp3'));
+  const [audio3] = useState(new Audio('/linear.mp3'));
+  const [audio4] = useState(new Audio('/click.mp3'));
 
-  //! useEffect
   useEffect(() => {
-    console.log('Survey 컴포넌트가 화면에 나타남');
-    console.log('started', isStarted);
     return () => {
       audio1.pause();
       audio1.currentTime = 0;
@@ -97,8 +85,6 @@ const Survey = () => {
       audio3.currentTime = 0;
       audio4.pause();
       audio4.currentTime = 0;
-      console.log('Survey 컴포넌트가 화면에서 사라짐');
-      console.log('started', isStarted);
     };
   }, []);
 
@@ -106,28 +92,18 @@ const Survey = () => {
   useEffect(() => {
     if (!mountedSound.current) {
       mountedSound.current = true;
-
       if (sound) {
         setIsStarted(true);
-        console.log('여긴 sound 설정, 94');
       }
-      return;
     }
-    return () => {
-      console.log('여긴 sound 반응, 97');
-      console.log(sound);
-      console.log('started', isStarted);
-    };
   }, [sound]);
 
   const mountedPrice = useRef(false);
   useEffect(async () => {
     if (!mountedPrice.current) {
       mountedPrice.current = true;
-
       if (price) {
         try {
-          console.log('axios 통신을 합니다.');
           setIsLoading(true);
           const [response] = await Promise.all([
             exceptionAxios.post('/keyboards/filter', {
@@ -141,13 +117,11 @@ const Survey = () => {
             delay(),
           ]);
           const filteredKeyboards = response.data.data;
-
           if (isMount.current) {
             setKeyboards(filteredKeyboards);
             setIsLoading(false);
           }
         } catch (err) {
-          console.log(err);
           if (isMount.current) {
             setIsLoading(false);
           }
@@ -156,7 +130,6 @@ const Survey = () => {
       return;
     } else {
       try {
-        console.log('axios 통신을 합니다.');
         setIsLoading(true);
         const [response] = await Promise.all([
           exceptionAxios.post('/keyboards/filter', {
@@ -175,56 +148,25 @@ const Survey = () => {
           setIsLoading(false);
         }
       } catch (err) {
-        console.log(err);
         if (isMount.current) {
           setIsLoading(false);
         }
       }
     }
-    console.log('일단 여기 반응?');
-    return () => {
-      console.log('여긴 price 반응, 262');
-    };
   }, [price, isMount]);
 
   const onClickStartBtn = useCallback(() => {
     setIsStarted(true);
   }, []);
 
-  // const mountedAudio = useRef(false);
-  // useEffect(() => {
-  //   if (!mountedAudio.current) {
-  //     mountedAudio.current = true;
-  //     return;
-  //   } else {
-  //     return () => {
-  //       console.log('여긴 audio1,2,3,4 반응, 100');
-  //       console.log(audio1, audio2, audio3, audio4);
-
-  //       audio1.pause();
-  //       audio1.currentTime = 0;
-  //       audio2.pause();
-  //       audio2.currentTime = 0;
-  //       audio3.pause();
-  //       audio3.currentTime = 0;
-  //       audio4.pause();
-  //       audio4.currentTime = 0;
-  //     };
-  //   }
-  // }, [audio1, audio2, audio3, audio4]);
-
   const onClickSound = useCallback((res) => {
     setSound(res);
-
     audio1.pause();
     audio1.currentTime = 0;
-
     audio2.pause();
     audio2.currentTime = 0;
-
     audio3.pause();
     audio3.currentTime = 0;
-
     audio4.pause();
     audio4.currentTime = 0;
   }, []);
@@ -233,16 +175,12 @@ const Survey = () => {
     switch (sound) {
       case 1:
         return '보글보글 소리가 나는 저소음 적축, ';
-
       case 2:
         return '도각도각 소리가 나는 갈축, ';
-
       case 3:
         return '서걱서걱 소리가 나는 적축과 흑축, ';
-
       case 4:
         return '찰칵찰칵 소리가 나는 청축, ';
-
       default:
         return;
     }
@@ -268,7 +206,7 @@ const Survey = () => {
   const convertBacklightToText = useCallback((backlight) => {
     if (backlight === 1) {
       return '백라이트가 있는, ';
-    } // 2
+    }
     return '백라이트가 상관없는, ';
   }, []);
 
@@ -292,7 +230,7 @@ const Survey = () => {
   const convertBluetoothToText = useCallback((blutetooth) => {
     if (blutetooth === 1) {
       return '블루투스를 지원하는, ';
-    } // 2
+    }
     return '블루투스가 상관없는, ';
   }, []);
 
@@ -304,19 +242,14 @@ const Survey = () => {
     switch (price) {
       case 50000:
         return '5만원 이하';
-
       case 100000:
         return '10만원 이하';
-
       case 150000:
         return '15만원 이하';
-
       case 200000:
         return '20만원 이하';
-
       case 300000:
         return '30만원 이하';
-
       default:
         return '가격대가 상관없는';
     }
@@ -325,10 +258,6 @@ const Survey = () => {
   const onCopy = useCallback(() => {
     message.success('링크 복사 완료');
   }, []);
-
-  // const onClickShareBtn = () => {
-  //   message.info('기능 준비 중입니다.');
-  // };
 
   if (!isStarted) {
     return (
@@ -356,7 +285,6 @@ const Survey = () => {
             </button>
           </div>
         </main>
-        {/* <Footer /> */}
       </>
     );
   } else {
@@ -380,18 +308,7 @@ const Survey = () => {
               audio3={audio3}
               audio4={audio4}
             />
-            {/* <div className="question-button">
-              <button className="previous-question-button">
-                <AiFillLeftSquare className="icon" />
-                <span className="text">이전 질문</span>
-              </button>
-              <button className="next-question-button">
-                <span className="text">다음 질문</span>
-                <AiFillRightSquare className="icon" />
-              </button>
-            </div> */}
           </main>
-          {/* <Footer /> */}
         </>
       );
     } else if (color === null) {
@@ -409,7 +326,6 @@ const Survey = () => {
             </div>
             <Question2 onClickColor={onClickColor} />
           </main>
-          {/* <Footer /> */}
         </>
       );
     } else if (backlight === null) {
@@ -427,7 +343,6 @@ const Survey = () => {
             </div>
             <Question3 onClickBacklight={onClickBacklight} />
           </main>
-          {/* <Footer /> */}
         </>
       );
     } else if (tenkey === null) {
@@ -445,7 +360,6 @@ const Survey = () => {
             </div>
             <Question4 onClickTenkey={onClickTenkey} />
           </main>
-          {/* <Footer /> */}
         </>
       );
     } else if (bluetooth === null) {
@@ -463,7 +377,6 @@ const Survey = () => {
             </div>
             <Question5 onClickBluetooth={onClickBluetooth} />
           </main>
-          {/* <Footer /> */}
         </>
       );
     } else if (price === null) {
@@ -481,7 +394,6 @@ const Survey = () => {
             </div>
             <Question6 onClickPrice={onClickPrice} />
           </main>
-          {/* <Footer /> */}
         </>
       );
     } else if (price) {
@@ -534,7 +446,6 @@ const Survey = () => {
                         </span>
                         의 키보드를 찾았습니다!
                       </p>
-
                       <div className="share-area">
                         <KakaoShareButton
                           url={`https://keyplus.kr/survey?nickname=${
@@ -542,7 +453,6 @@ const Survey = () => {
                           }&sound=${sound}&color=${color}&backlight=${backlight}&tenkey=${tenkey}&bluetooth=${bluetooth}&price=${price}`}
                         />
                       </div>
-
                       <div className="link-area">
                         <CopyToClipboard
                           onCopy={onCopy}
@@ -553,7 +463,6 @@ const Survey = () => {
                           <button>링크 복사</button>
                         </CopyToClipboard>
                       </div>
-
                       <div className="survey-result-list">
                         {keyboards.map((keyboard) => (
                           <KeyboardCard
@@ -592,8 +501,6 @@ const Survey = () => {
               )}
             </main>
           )}
-
-          {/* <Footer /> */}
         </>
       );
     } else {

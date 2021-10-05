@@ -11,7 +11,6 @@ const KakaoShareButton = ({ url }) => {
   const shareKakao = () => {
     Kakao.Link.sendDefault({
       objectType: 'feed',
-
       content: {
         title: 'Keyplus',
         description: '기계식 키보드 취향 공유',

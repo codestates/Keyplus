@@ -1,18 +1,13 @@
 import React, { useState, useRef } from 'react';
 import { useHistory } from 'react-router';
-
 import { useDispatch } from 'react-redux';
-
 import { addReviews, updateReviews } from '../reducers/api/reviewsAPI';
 import Button from '../components/Button';
-
-import './styles/ReviewCreate.scss';
-
 import { Rate, Input, message } from 'antd';
-const { TextArea } = Input;
-
 import { IoCloseOutline } from 'react-icons/io5';
 import { RiImageAddFill, RiVideoAddFill } from 'react-icons/ri';
+import './styles/ReviewCreate.scss';
+const { TextArea } = Input;
 
 const ReviewCreate = ({ location, ...props }) => {
   const dispatch = useDispatch();
@@ -30,21 +25,17 @@ const ReviewCreate = ({ location, ...props }) => {
   const [previewVideo, setPreviewVideo] = useState(
     location.state?.video ?? null
   );
-
   const [content, setContent] = useState(location.state?.content ?? '');
   const [rating, setRating] = useState(location.state?.rating ?? 0);
-
   const [deleteImg1, setDeleteImg1] = useState(0);
   const [deleteImg2, setDeleteImg2] = useState(0);
   const [deleteImg3, setDeleteImg3] = useState(0);
   const [deleteVideo, setDeleteVideo] = useState(0);
-
   const img1Ref = useRef(null);
   const img2Ref = useRef(null);
   const img3Ref = useRef(null);
   const videoRef = useRef(null);
 
-  //* onChange
   const onChangeImage = (e, num) => {
     const file = e.target.files[0];
     if (file) {
@@ -81,7 +72,6 @@ const ReviewCreate = ({ location, ...props }) => {
     }
   };
 
-  //* handleRef
   const handleImgRef = (num) => {
     switch (num) {
       case 1:
@@ -102,7 +92,6 @@ const ReviewCreate = ({ location, ...props }) => {
     videoRef.current.click();
   };
 
-  //* onClickDeleteBtn
   const onClickDeleteImgBtn = (num) => {
     switch (num) {
       case 1:
@@ -124,22 +113,17 @@ const ReviewCreate = ({ location, ...props }) => {
         break;
     }
   };
-
   const onClickDeleteVideoBtn = () => {
     setPreviewVideo(null);
     videoRef.current.value = null;
     setDeleteVideo(1);
   };
-
-  //* onChange
   const onChangeContent = (e) => {
     setContent(e.target.value);
   };
-
   const onChangeRating = (value) => {
     setRating(value);
   };
-
   const onClickSubmitBtn = async (e) => {
     e.preventDefault();
     if (content === '') {
@@ -152,40 +136,31 @@ const ReviewCreate = ({ location, ...props }) => {
     try {
       const formData = new FormData();
       const data = {};
-
       data['keyboardId'] = keyboardId;
-
       if (e.target.img1.files) {
         formData.append('img1', e.target.img1.files[0]);
       }
       data['image1'] = previewImage1;
-
       if (e.target.img2.files) {
         formData.append('img2', e.target.img2.files[0]);
       }
       data['image2'] = previewImage2;
-
       if (e.target.img3.files) {
         formData.append('img3', e.target.img3.files[0]);
       }
       data['image3'] = previewImage3;
-
       if (e.target.video.files) {
         formData.append('video', e.target.video.files[0]);
       }
       data['video'] = previewVideo;
-
       formData.append('content', content);
       data['content'] = content;
-
       formData.append('rating', rating);
       data['rating'] = rating;
-
       formData.append('deleteImg1', deleteImg1);
       formData.append('deleteImg2', deleteImg2);
       formData.append('deleteImg3', deleteImg3);
       formData.append('deleteVideo', deleteVideo);
-
       if (location.state) {
         await dispatch(updateReviews({ formData, data })).unwrap();
       } else {
@@ -200,7 +175,6 @@ const ReviewCreate = ({ location, ...props }) => {
       if (err.response.status === 409) {
         return message.warning('이미 리뷰를 남기셨습니다.');
       }
-      // dispatch(isError(err.response));
       message.warning('서버에서 에러가 발생했습니다.');
     }
   };
@@ -320,9 +294,6 @@ const ReviewCreate = ({ location, ...props }) => {
               </div>
             ) : (
               <div className="upload-icon" onClick={() => handleImgRef(3)}>
-                {/* 이미지
-                <br />
-                업로드 */}
                 <div style={{ display: 'flex' }}>
                   <RiImageAddFill style={{ fontSize: '40px' }} />
                 </div>
@@ -362,15 +333,11 @@ const ReviewCreate = ({ location, ...props }) => {
               </div>
             ) : (
               <div className="upload-icon" onClick={handleVideoRef}>
-                {/* 동영상
-                <br />
-                  업로드 */}
                 <RiVideoAddFill style={{ fontSize: '40px' }} />
               </div>
             )}
           </div>
         </div>
-
         <TextArea
           placeholder="리뷰를 500자까지 입력해주세요."
           showCount
@@ -380,7 +347,6 @@ const ReviewCreate = ({ location, ...props }) => {
           onChange={onChangeContent}
           className="review-create-content"
         />
-
         <div className="review-create-rating-wrapper">
           <p>별을 눌러 점수를 매겨주세요.</p>
           <Rate
@@ -389,7 +355,6 @@ const ReviewCreate = ({ location, ...props }) => {
             style={{ fontSize: '30px' }}
           />
         </div>
-
         <div className="review-create-button-wrapper">
           <Button>
             <button type="submit">리뷰 작성</button>

@@ -1,14 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { logOutForce } from '../userSlice';
-import { logOutMyLikes } from '../likesSlice';
-import { logOutMyReviews } from '../reviewsSlice';
-import { setExpireDate } from '../expireDateReducer';
+// import { logOutForce } from '../userSlice';
+// import { logOutMyLikes } from '../likesSlice';
+// import { logOutMyReviews } from '../reviewsSlice';
+// import { setExpireDate } from '../expireDateReducer';
 
-import axios from '../../utils/customAxios';
+// import axios from '../../utils/customAxios';
 import exceptionAxios from 'axios';
-
-import { message } from 'antd';
 
 export const getLikes = createAsyncThunk(
   'likes/getLikes',

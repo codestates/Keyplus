@@ -4,7 +4,6 @@
 .map-main {
   margin-top: 120px;
   min-height: calc(100vh - 120px);
-
   width: 100%;
   background-position: center;
   background-repeat: no-repeat;
@@ -20,12 +19,10 @@
     height: calc(100vh - 120px);
     display: grid;
     grid-template-columns: 1fr 350px;
-
     background-color: #f5f5f5;
 
     @media screen and (max-width: $md-breakpoint) {
       height: calc(100vh - 50px);
-      // display: block;
       grid-template-columns: unset;
       grid-template-rows: 1fr 350px;
     }
@@ -55,7 +52,7 @@
   overflow: hidden;
   background: #1ebfeb;
   background: #1ebfeb
-    url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png)
+    url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png')
     no-repeat right 14px center;
 }
 .custom-overlay .title {
