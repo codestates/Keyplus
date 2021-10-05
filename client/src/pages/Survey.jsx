@@ -33,12 +33,12 @@ const delay = () => {
   });
 };
 
+const audio1 = new Audio('/boggle.mp3');
+const audio2 = new Audio('/nonclick.mp3');
+const audio3 = new Audio('/linear.mp3');
+const audio4 = new Audio('/click.mp3');
+
 const Survey = () => {
-  if (window.performance) {
-    if (performance.navigation.type == 1) {
-      window.location.href = '/survey';
-    }
-  }
   const history = useHistory();
 
   const width = useWidthSize(768);
@@ -84,13 +84,18 @@ const Survey = () => {
       : null
   );
 
-  const [audio1, setAudio1] = useState(new Audio('/boggle.mp3'));
-  const [audio2, setAudio2] = useState(new Audio('/nonclick.mp3'));
-  const [audio3, setAudio3] = useState(new Audio('/linear.mp3'));
-  const [audio4, setAudio4] = useState(new Audio('/click.mp3'));
+  // const [audio1, setAudio1] = useState(new Audio('/boggle.mp3'));
+  // const [audio2, setAudio2] = useState(new Audio('/nonclick.mp3'));
+  // const [audio3, setAudio3] = useState(new Audio('/linear.mp3'));
+  // const [audio4, setAudio4] = useState(new Audio('/click.mp3'));
 
   //! useEffect
   useEffect(() => {
+    audio1.load();
+    audio2.load();
+    audio3.load();
+    audio4.load();
+
     console.log('Survey 컴포넌트가 화면에 나타남');
     console.log('started', isStarted);
     return () => {
