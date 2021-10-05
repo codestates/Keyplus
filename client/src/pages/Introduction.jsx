@@ -72,7 +72,7 @@ const Introduction = () => {
               <article>
                 <h2 className="intro-title-s">Click(청축)</h2>
                 <div className="p-grid">
-                  <img src="/info3.png" />
+                  <img src="/info/info3.png" />
                   <div>
                     <p>
                       클릭 타입은 타건감이 강하고, 찰칵찰칵 소리가 큰 것이
@@ -105,13 +105,13 @@ const Introduction = () => {
                       적은 기계식 키보드를 원하는 경우에 적합한 스위치입니다.
                     </p>
                   </div>
-                  <img src="/info4.png" />
+                  <img src="/info/info4.png" />
                 </div>
               </article>
               <article>
                 <h2 className="intro-title-s">Linear(적축)</h2>
                 <div className="p-grid">
-                  <img src="/info5.png" />
+                  <img src="/info/info5.png" />
                   <div>
                     <p>
                       리니어는 구조상 소음이 가장 적습니다. 기계적인 느낌이 가장
@@ -141,13 +141,13 @@ const Introduction = () => {
                       탄성이 있는 느낌을 원하는 경우 적합한 스위치입니다.
                     </p>
                   </div>
-                  <img src="/info6.png" />
+                  <img src="/info/info6.png" />
                 </div>
               </article>
               <article>
                 <h2 className="intro-title-s">색다른 즐거움</h2>
                 <div className="p-grid">
-                  <img src="/info1.png" />
+                  <img src="/info/info1.png" />
                   <div>
                     <p>
                       기계식 키보드에는 타건감 이외에도 또 다른 재미를 주는 것이

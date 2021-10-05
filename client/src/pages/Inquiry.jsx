@@ -47,7 +47,6 @@ const Inquiry = () => {
       message.success('이메일 전송이 완료되었습니다');
       setUpdateState(initialState);
     } catch (err) {
-      console.log(err);
       message.warning('이메일 전송에 실패했습니다. 다시 시도해주세요');
       throw err;
     }

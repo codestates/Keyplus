@@ -250,7 +250,7 @@ const Signup = () => {
             </div>
           </div>
           <aside className="signup-aside">
-            <img src="signup.jpg" />
+            <img src="/others/signup.jpg" />
           </aside>
         </div>
       </section>

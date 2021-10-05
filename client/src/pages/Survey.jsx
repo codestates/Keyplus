@@ -75,10 +75,10 @@ const Survey = () => {
       : null
   );
 
-  const [audio1] = useState(new Audio('/boggle.mp3'));
-  const [audio2] = useState(new Audio('/nonclick.mp3'));
-  const [audio3] = useState(new Audio('/linear.mp3'));
-  const [audio4] = useState(new Audio('/click.mp3'));
+  const [audio1] = useState(new Audio('/audio/boggle.mp3'));
+  const [audio2] = useState(new Audio('/audio/nonclick.mp3'));
+  const [audio3] = useState(new Audio('/audio/linear.mp3'));
+  const [audio4] = useState(new Audio('/audio/click.mp3'));
 
   useEffect(() => {
     return () => {
@@ -271,7 +271,7 @@ const Survey = () => {
         <main
           className="survey start"
           style={{
-            backgroundImage: "url('/survey-background.png')",
+            backgroundImage: "url('/survey/survey-background.png')",
           }}
         >
           <div className="survey-start-main">

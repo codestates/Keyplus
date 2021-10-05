@@ -52,7 +52,7 @@ const Login = (props) => {
       <section className="login-container">
         <div className="login-flexbox">
           <aside className="login-aside">
-            <img src="login.jpg" />
+            <img src="/others/login.jpg" />
           </aside>
           <div className="login-main">
             <h2 className="title">Login</h2>
@@ -87,21 +87,21 @@ const Login = (props) => {
               <button
                 className="oauthbtn"
                 style={{
-                  backgroundImage: `url(${'google.png'})`,
+                  backgroundImage: `url(${'/others/google.png'})`,
                 }}
                 onClick={onClickGoogle}
               ></button>
               <button
                 className="oauthbtn"
                 style={{
-                  backgroundImage: `url(${'kakao.png'})`,
+                  backgroundImage: `url(${'/others/kakao.png'})`,
                 }}
                 onClick={onClickKakao}
               ></button>
               <button
                 className="oauthbtn"
                 style={{
-                  backgroundImage: `url(${'naver.png'})`,
+                  backgroundImage: `url(${'/others/naver.png'})`,
                 }}
                 onClick={onClickNaver}
               ></button>

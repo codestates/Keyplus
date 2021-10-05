@@ -10,7 +10,7 @@ const LandingPart1 = () => {
       <div
         className="part1-background"
         style={{
-          backgroundImage: "url('/landing-part1.png')",
+          backgroundImage: "url('/landing/landing-part1.png')",
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}
