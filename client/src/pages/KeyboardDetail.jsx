@@ -335,7 +335,7 @@ const KeyboardDetail = (props) => {
                 ) : (
                   <div className="no-data-area">
                     <img
-                      src="/no-data.jpg"
+                      src="/others/no-data.jpg"
                       alt="no data"
                       style={{
                         maxWidth: '350px',

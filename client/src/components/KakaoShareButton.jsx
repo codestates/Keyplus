@@ -41,7 +41,7 @@ const KakaoShareButton = ({ url }) => {
         className="share-button"
         onClick={shareKakao}
         style={{
-          backgroundImage: `url(${'kakao.png'})`,
+          backgroundImage: `url(${'/others/kakao.png'})`,
         }}
       ></button>
     </>
