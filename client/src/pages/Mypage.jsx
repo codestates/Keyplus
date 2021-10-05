@@ -163,6 +163,7 @@ const Mypage = () => {
                       type="password"
                       onChange={onChangeUpdateState}
                       placeholder="password"
+                      required
                       name="password"
                       value={password || ''}
                     />
