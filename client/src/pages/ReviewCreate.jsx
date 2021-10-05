@@ -169,7 +169,10 @@ const ReviewCreate = ({ location, ...props }) => {
       message.success('리뷰 작성이 완료되었습니다.');
       history.push(`/keyboards/${keyboardId}`);
     } catch (err) {
-      return message.warning('오류가 발생하여 로그아웃됩니다.');
+      message.warning('오류가 발생하여 로그아웃됩니다.');
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
     }
   };
   return (
