@@ -115,10 +115,10 @@ const KeyboardCard = memo(({ keyboard }) => {
       }
       try {
         if (liked) {
-          await dispatch(deleteLikes(keyboard.id)).unwrap();
+          await dispatch(deleteLikes(keyboard.id));
           setLikeCount((prevLikeCount) => prevLikeCount - 1);
         } else {
-          await dispatch(addLikes(keyboard.id)).unwrap();
+          await dispatch(addLikes(keyboard.id));
           setLikeCount((prevLikeCount) => prevLikeCount + 1);
         }
         setLiked((prevLiked) => !prevLiked);
