@@ -12,7 +12,7 @@ const Question3 = ({ onClickBacklight }) => {
       <div className="card-container">
         <div className="card" onClick={() => onClickBacklight(1)}>
           <div className="image-wrapper">
-            <img src="/gaming.png" alt="" />
+            <img src="/survey/gaming.png" alt="" />
           </div>
           <div className="text-wrapper">
             <div className="description">키보드를 밝혀주는</div>
@@ -21,7 +21,7 @@ const Question3 = ({ onClickBacklight }) => {
         </div>
         <div className="card" onClick={() => onClickBacklight(2)}>
           <div className="image-wrapper">
-            <img src="/question.png" alt="" />
+            <img src="/survey/question.png" alt="" />
           </div>
           <div className="text-wrapper">
             <div className="description">조명이 있든 없든 상관없다</div>

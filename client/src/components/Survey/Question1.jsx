@@ -131,7 +131,7 @@ const Question1 = ({ onClickSound, audio1, audio2, audio3, audio4 }) => {
         <div className="card">
           <div className="image-wrapper">
             <img
-              src="/soup.png"
+              src="/survey/soup.png"
               onClick={() => onClickSound(1)}
               onMouseEnter={() => {
                 setAudioPlaying1(true);
@@ -160,7 +160,7 @@ const Question1 = ({ onClickSound, audio1, audio2, audio3, audio4 }) => {
         <div className="card">
           <div className="image-wrapper">
             <img
-              src="/chocolate.png"
+              src="/survey/chocolate.png"
               onClick={() => onClickSound(2)}
               onMouseEnter={() => {
                 setAudioPlaying2(true);
@@ -189,7 +189,7 @@ const Question1 = ({ onClickSound, audio1, audio2, audio3, audio4 }) => {
         <div className="card">
           <div className="image-wrapper">
             <img
-              src="/pen.png"
+              src="/survey/pen.png"
               onClick={() => onClickSound(3)}
               onMouseEnter={() => {
                 setAudioPlaying3(true);
@@ -218,7 +218,7 @@ const Question1 = ({ onClickSound, audio1, audio2, audio3, audio4 }) => {
         <div className="card">
           <div className="image-wrapper">
             <img
-              src="/gaming.png"
+              src="/survey/gaming.png"
               onClick={() => onClickSound(4)}
               onMouseEnter={() => {
                 setAudioPlaying4(true);

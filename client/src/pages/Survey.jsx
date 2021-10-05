@@ -271,7 +271,7 @@ const Survey = () => {
         <main
           className="survey start"
           style={{
-            backgroundImage: "url('/survey-background.png')",
+            backgroundImage: "url('/survey/survey-background.png')",
           }}
         >
           <div className="survey-start-main">
