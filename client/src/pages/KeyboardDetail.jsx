@@ -1,99 +1,121 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
-import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-
 import { addLikes, deleteLikes } from '../reducers/api/likesAPI';
-import { deleteReviews } from '../reducers/api/reviewsAPI';
 import axios from '../utils/customAxios';
-import DeleteModal from '../components/DeleteModal';
-
-import './styles/KeyboardDetail.scss';
-
-import {
-  Carousel,
-  Empty,
-  Rate,
-  Avatar,
-  Button,
-  message,
-  Tabs,
-  List,
-  Card,
-  Space,
-} from 'antd';
-const { TabPane } = Tabs;
+import Review from '../components/Review';
+import Button from '../components/Button';
+import { Carousel, message, Tabs, List, Card } from 'antd';
 import {
   HeartOutlined,
   HeartFilled,
   StarFilled,
-  UserOutlined,
   MessageFilled,
 } from '@ant-design/icons';
 import { yellow } from '@ant-design/colors';
 import Rating from 'react-rating';
-
+import './styles/KeyboardDetail.scss';
+const { TabPane } = Tabs;
 const LeftArrow = ({ currentSlide, slideCount, children, ...props }) => {
   return <div {...props}>{children}</div>;
 };
-
 const RightArrow = ({ currentSlide, slideCount, children, ...props }) => {
   return <div {...props}>{children}</div>;
 };
 
-const data = [
-  {
-    title: '색상',
-    content: '짧음',
-  },
-  {
-    title: '색상',
-    content: '짧음',
-  },
-  {
-    title: '색상',
-    content: '짧음',
-  },
-  {
-    title: '색상',
-    content: '짧음',
-  },
-];
-
-const listData = [];
-for (let i = 0; i < 23; i++) {
-  listData.push({
-    href: 'https://ant.design',
-    title: `ant design part ${i}`,
-    avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-    description:
-      'Ant Design, a design language for background applications, is refined by Ant UED Team.',
-    content:
-      'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
-  });
-}
-
-const IconText = ({ icon, text }) => (
-  <Space>
-    {React.createElement(icon)}
-    {text}
-  </Space>
-);
+const keySwitchComponent = {
+  저소음적축: (
+    <div style={{ display: 'inline-block', marginRight: '5px' }}>
+      <span
+        style={{
+          display: 'inline-block',
+          width: '15px',
+          height: '15px',
+          borderRadius: '50%',
+          verticalAlign: 'middle',
+          backgroundColor: '#ff656c',
+          marginRight: '2px',
+        }}
+      ></span>
+      <span style={{ verticalAlign: 'middle', fontSize: '14px' }}>저적</span>
+    </div>
+  ),
+  적축: (
+    <div style={{ display: 'inline-block', marginRight: '5px' }}>
+      <span
+        style={{
+          display: 'inline-block',
+          width: '15px',
+          height: '15px',
+          borderRadius: '50%',
+          verticalAlign: 'middle',
+          backgroundColor: '#ff1A48',
+          marginRight: '2px',
+        }}
+      ></span>
+      <span style={{ verticalAlign: 'middle', fontSize: '14px' }}>적축</span>
+    </div>
+  ),
+  청축: (
+    <div style={{ display: 'inline-block', marginRight: '5px' }}>
+      <span
+        style={{
+          display: 'inline-block',
+          width: '15px',
+          height: '15px',
+          borderRadius: '50%',
+          verticalAlign: 'middle',
+          backgroundColor: '#00b4f9',
+          marginRight: '2px',
+        }}
+      ></span>
+      <span style={{ verticalAlign: 'middle', fontSize: '14px' }}>청축</span>
+    </div>
+  ),
+  갈축: (
+    <div style={{ display: 'inline-block', marginRight: '5px' }}>
+      <span
+        style={{
+          display: 'inline-block',
+          width: '15px',
+          height: '15px',
+          borderRadius: '50%',
+          verticalAlign: 'middle',
+          backgroundColor: '#B8792A',
+          marginRight: '2px',
+        }}
+      ></span>
+      <span style={{ verticalAlign: 'middle', fontSize: '14px' }}>갈축</span>
+    </div>
+  ),
+  흑축: (
+    <div style={{ display: 'inline-block', marginRight: '5px' }}>
+      <span
+        style={{
+          display: 'inline-block',
+          width: '15px',
+          height: '15px',
+          borderRadius: '50%',
+          verticalAlign: 'middle',
+          backgroundColor: '#0d0d0d',
+          marginRight: '2px',
+        }}
+      ></span>
+      <span style={{ verticalAlign: 'middle', fontSize: '14px' }}>흑축</span>
+    </div>
+  ),
+};
 
 const KeyboardDetail = (props) => {
   const history = useHistory();
-
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.user?.id);
   const likes = useSelector((state) => state.likes);
-
   const keyboardId = props.match.params?.id;
   const [keyboard, setKeyboard] = useState(null);
-
   const checkLiked = (id) => likes.findIndex((like) => like.id == id) !== -1;
   const [liked, setLiked] = useState(checkLiked(keyboardId));
   const [likeCount, setLikeCount] = useState(0);
-
   const [reviews, setReviews] = useState([]);
   const [averageRating, setAverageRating] = useState(0);
 
@@ -104,7 +126,6 @@ const KeyboardDetail = (props) => {
       setKeyboard(keyboard);
       setLikeCount(keyboard.likeCount);
       setReviews(keyboard.reviews);
-
       setAverageRating(
         keyboard.reviews.reduce((acc, cur) => acc + cur.rating, 0) /
           keyboard.reviews.length
@@ -128,7 +149,10 @@ const KeyboardDetail = (props) => {
       }
       setLiked((prevLiked) => !prevLiked);
     } catch (err) {
-      return message.warning('서버 에러가 발생했습니다.');
+      message.warning('오류가 발생하여 로그아웃됩니다.');
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
     }
   }, [userId, keyboardId, liked]);
 
@@ -200,28 +224,40 @@ const KeyboardDetail = (props) => {
               <div className="keyboard-name">
                 {keyboard.brand} {keyboard.name}
               </div>
-
-              <div className="keyboard-like">
+              <div className="keyboard-like" onClick={onClickHeart}>
                 <span className="like-heart">
                   {liked ? (
-                    <HeartFilled
-                      style={{ color: '#ff0000' }}
-                      onClick={onClickHeart}
-                    />
+                    <HeartFilled style={{ color: '#ff0000' }} />
                   ) : (
-                    <HeartOutlined
-                      style={{ color: '#ff0000' }}
-                      onClick={onClickHeart}
-                    />
+                    <HeartOutlined style={{ color: '#ff0000' }} />
                   )}
                 </span>
                 <span className="like-count">{likeCount}</span>
               </div>
             </div>
-
             <Tabs defaultActiveKey="1" centered>
               <TabPane tab="상세정보" key="1">
                 <List grid>
+                  <List.Item>
+                    <Card title="Switch">
+                      {Object.keys(keyboard.switch).map(
+                        (keySwitch, idx) =>
+                          keyboard.switch[keySwitch] && (
+                            <span
+                              key={`${keySwitch}_${idx}`}
+                              className="keyboard-detail-switch"
+                            >
+                              <>{keySwitchComponent[keySwitch]}</>
+                            </span>
+                          )
+                      )}
+                    </Card>
+                  </List.Item>
+                  <List.Item>
+                    <Card title="Price">
+                      {keyboard.price.toLocaleString()}원
+                    </Card>
+                  </List.Item>
                   <List.Item>
                     <Card title="Color">
                       {keyboard.color ? '다채색' : '무채색'}
@@ -242,19 +278,16 @@ const KeyboardDetail = (props) => {
                       {keyboard.bluetooth ? '지원' : '미지원'}
                     </Card>
                   </List.Item>
-                  <List.Item>
-                    <Card title="Price">
-                      {keyboard.price.toLocaleString()}원
-                    </Card>
-                  </List.Item>
                 </List>
               </TabPane>
               <TabPane tab="리뷰" key="2">
                 {reviews.length ? (
                   <>
                     <div className="review-create-button-wrapper">
-                      <Button onClick={onClickCreateReviewBtn}>
-                        리뷰 작성하기
+                      <Button>
+                        <button onClick={onClickCreateReviewBtn}>
+                          리뷰 작성하기
+                        </button>
                       </Button>
                     </div>
                     <div className="reviews-info">
@@ -277,7 +310,6 @@ const KeyboardDetail = (props) => {
                               style={{
                                 fontSize: '30px',
                                 color: yellow[5],
-                                // marginRight: '8px',
                               }}
                             />
                           }
@@ -297,127 +329,31 @@ const KeyboardDetail = (props) => {
                         </div>
                       </div>
                     </div>
-
                     {reviews.map((review, idx) => (
                       <div key={`${review}_${idx}`} className="review">
-                        {(review.image1 ||
-                          review.image2 ||
-                          review.image3 ||
-                          review.video) && (
-                          <Carousel
-                            infinite={false}
-                            dots
-                            arrows
-                            draggable
-                            prevArrow={<LeftArrow />}
-                            nextArrow={<RightArrow />}
-                            className="review-carousel"
-                          >
-                            {review.video && (
-                              <>
-                                <video className="review-video" controls>
-                                  <source src={review.video} type="video/mp4" />
-                                </video>
-                              </>
-                            )}
-
-                            {review.image1 && (
-                              <>
-                                <img
-                                  src={review.image1}
-                                  alt={review.image1}
-                                  className="review-img"
-                                />
-                              </>
-                            )}
-
-                            {review.image2 && (
-                              <>
-                                <img
-                                  src={review.image2}
-                                  alt={review.image2}
-                                  className="review-img"
-                                />
-                              </>
-                            )}
-
-                            {review.image3 && (
-                              <>
-                                <img
-                                  src={review.image3}
-                                  alt={review.image3}
-                                  className="review-img"
-                                />
-                              </>
-                            )}
-                          </Carousel>
-                        )}
-                        <div className="review-info">
-                          <div className="review-profile">
-                            <div className="review-profile-image">
-                              {review.userImage ? (
-                                <Avatar src={review.userImage} />
-                              ) : (
-                                <Avatar icon={<UserOutlined />} />
-                              )}
-                            </div>
-                            <div>
-                              <Rate disabled defaultValue={review.rating} />
-                              <div className="name-date">
-                                <span className="name">{review.nickname}</span>
-                                <span className="date">
-                                  {review.createdAt.split('T')[0]}
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="review-text">{review.content}</div>
-                        </div>
-                        {review.userId === userId && (
-                          <div className="review-button">
-                            <Button>
-                              <Link
-                                to={{
-                                  pathname: `/review/${keyboardId}`,
-                                  state: {
-                                    content: review.content,
-                                    rating: review.rating,
-                                    images: [
-                                      review.image1,
-                                      review.image2,
-                                      review.image3,
-                                    ],
-                                    video: review.video,
-                                  },
-                                }}
-                              >
-                                수정
-                              </Link>
-                            </Button>
-                            <DeleteModal
-                              modalText="정말로 삭제하시겠습니까?"
-                              loadingText="삭제 진행중입니다."
-                              buttonText="삭제"
-                              action={deleteReviews}
-                              keyboardId={keyboardId}
-                            />
-                          </div>
-                        )}
+                        <Review review={review} userId={userId} />
                       </div>
                     ))}
                   </>
                 ) : (
-                  <Empty
-                    image={`/no-data.jpg`}
-                    imageStyle={{
-                      height: 300,
-                    }}
-                    description={<span>작성된 리뷰가 없습니다!</span>}
-                  >
-                    <Button type="primary" onClick={onClickCreateReviewBtn}>
-                      리뷰 작성하기
+                  <div className="no-data-area">
+                    <img
+                      src="/others/no-data.jpg"
+                      alt="no data"
+                      style={{
+                        maxWidth: '350px',
+                        objectFit: 'cover',
+                      }}
+                    />
+                    <div style={{ marginBottom: '20px' }}>
+                      작성된 리뷰가 없습니다!
+                    </div>
+                    <Button>
+                      <button onClick={onClickCreateReviewBtn}>
+                        리뷰 작성하기
+                      </button>
                     </Button>
-                  </Empty>
+                  </div>
                 )}
               </TabPane>
             </Tabs>

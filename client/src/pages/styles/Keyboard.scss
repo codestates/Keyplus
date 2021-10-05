@@ -2,6 +2,9 @@
 @use '../../styles/mixins' as *;
 
 .keyboard {
+  max-width: 1300px;
+  margin: 0 auto;
+
   & > * {
     @include mobile-margin();
   }
@@ -9,38 +12,51 @@
 
 .keyboard-category {
   display: grid;
-  grid-template-columns: 140px 1fr;
+  grid-template-columns: 160px 1fr;
   grid-template-rows: 1fr;
-  margin-bottom: 30px;
-  border: 1px solid #d4d4d4;
+  margin-bottom: 35px;
   letter-spacing: -0.05em;
+  border: 1px solid #eeeeee;
+  border-radius: 6px;
+  border-top: 5px solid #262626;
+  overflow: hidden;
 
   @media screen and (max-width: $md-breakpoint) {
     grid-template-columns: 100px 1fr;
+    margin-top: 70px;
   }
 
   & > * {
-    padding: 10px;
+    padding: 12px;
+    align-items: center;
   }
 
   & > *:nth-child(odd) {
-    background-color: #dfdfdf;
+    background-color: #262626;
+    color: #fff;
     font-weight: 500;
   }
 
-  & > *:not(:nth-last-child(2), :nth-last-child(1)) {
-    border-bottom: 1px solid #d4d4d4;
+  & > *:nth-child(even) {
+    padding-left: 20px;
+
+    @media screen and (max-width: $md-breakpoint) {
+      padding-left: 10px;
+    }
   }
 
-  .radio-group {
-    align-items: center;
-    padding: 10px;
+  .category-list {
+    background-color: #fff;
+
+    &:nth-child(4n-2) {
+      background-color: #eeeeee;
+    }
   }
 
   .clear-button-wrapper {
     @include flexbox();
-    background-color: unset;
-    border-right: 1px solid #d4d4d4;
+    background-color: #262626;
+    border-right: 1px solid #262626;
 
     & > button {
       padding: 0;
@@ -60,11 +76,12 @@
     flex-wrap: wrap;
     row-gap: 3px;
     column-gap: 3px;
+    background-color: #eeeeee;
 
     .selected-category {
       display: inline-block;
       padding: 2px 10px;
-      background-color: #808080;
+      background-color: #262626;
       border-radius: 20px;
       color: #fff;
       font-size: 12px;
@@ -76,9 +93,17 @@
   }
 }
 
-.keyboard-order-count-area {
+.keyboard-sorting-count-area {
   @include flexbox(space-between);
-  margin-bottom: 30px;
+  margin-bottom: 20px;
+
+  .sorting-tab:not(.selected):hover {
+    color: rgb(138, 138, 138);
+  }
+
+  .sorting-tab.selected {
+    font-weight: 500;
+  }
 
   .keyboard-count {
     font-weight: 500;
@@ -103,11 +128,6 @@
 }
 
 .card-section {
-  // display: flex;
-  // flex-wrap: wrap;
-  // justify-content: center;
-  // column-gap: 30px;
-  // row-gap: 30px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   grid-gap: 2rem;

@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
-import { Redirect, Route, Switch } from 'react-router';
-import { useSelector } from 'react-redux';
+import { Route, Switch } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-
 import AppLayout from './components/AppLayout';
 import Keyboard from './pages/Keyboard';
 import KeyboardDetail from './pages/KeyboardDetail';
@@ -13,29 +12,61 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Mypage from './pages/Mypage';
 import Inquiry from './pages/Inquiry';
+import TypingShop from './pages/TypingShop';
+import Introduction from './pages/Introduction';
 import Temp from './pages/Temp';
 import ReviewCreate from './pages/ReviewCreate';
 import Spinner from './components/Spinner';
 import PrivateRoute from './utils/PrivateRoute';
 import PublicRoute from './utils/PublicRoute';
+import { logOutForce } from './reducers/userSlice';
+import { logOutMyLikes } from './reducers/likesSlice';
+import { logOutMyReviews } from './reducers/reviewsSlice';
+import { setExpireDate } from './reducers/expireDateReducer';
 
 import './App.less';
 
 function App() {
+  const dispatch = useDispatch();
   const loading = useSelector((state) => state.loading);
+  const expireDate = useSelector((state) => state.expireDate);
 
-  useEffect(() => {
+  useEffect(async () => {
     AOS.init();
+    if (expireDate) {
+      const currentDate = Date.now();
+      if (currentDate - expireDate >= 1000 * 60 * 60 * 24 * 2) {
+        dispatch(logOutForce());
+        dispatch(logOutMyLikes());
+        dispatch(logOutMyReviews());
+        dispatch(setExpireDate(null));
+      }
+    }
   }, []);
 
   return (
     <>
       <Switch>
-        <Route path="/landing" component={Landing} />
+        <PublicRoute exact path="/" component={Landing} />
+        <Route
+          path="/survey"
+          render={(props) => <Survey {...props} key={Date.now()} />}
+          exact
+        />
+        <PublicRoute
+          restricted={false}
+          path="/typing-shop"
+          component={TypingShop}
+          exact
+        />
+        <PublicRoute
+          restricted={false}
+          path="/introduction"
+          component={Introduction}
+          exact
+        />
         <AppLayout>
           {loading && <Spinner />}
-          {/* <Redirect exact path="/" to="keyboard" /> */}
-
           <Route path="/temp" component={Temp} />
           <PublicRoute
             restricted={false}
@@ -49,12 +80,7 @@ function App() {
             component={KeyboardDetail}
             exact
           />
-          <PublicRoute
-            restricted={false}
-            path="/survey"
-            component={Survey}
-            exact
-          />
+
           <PublicRoute
             restricted={true}
             path="/login"

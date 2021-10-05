@@ -9,10 +9,11 @@
   margin: 0 auto;
   margin-bottom: -70px;
   position: relative;
-  min-height: 568px;
+  min-height: 500px;
 
   @media screen and (max-width: $md-breakpoint) {
     height: calc(100vh - 50px);
+    padding-top: 50px;
     margin-bottom: -30px;
   }
 
@@ -25,7 +26,6 @@
 
 .login-aside {
   flex: 1;
-  // box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   height: 100%;
   position: relative;
 
@@ -46,6 +46,10 @@
   flex-direction: column;
   height: 100%;
 
+  @media screen and (max-width: $md-breakpoint) {
+    justify-content: flex-start;
+  }
+
   .title {
     font-weight: 600;
     text-transform: uppercase;
@@ -56,6 +60,7 @@
 
   .inputbox {
     margin-bottom: 20px;
+
     label {
       font-size: 16px;
       margin-bottom: 5px;
@@ -64,6 +69,7 @@
       font-weight: 400;
       letter-spacing: 1px;
     }
+
     input {
       width: 100%;
       padding: 10px 20px;
@@ -75,13 +81,9 @@
       border-radius: 30px;
     }
   }
+
   .loginbtn {
-    // width: 50%;
-    // position: relative;
-    // left: 15%;
     width: 100%;
-    // margin: 0 auto;
-    // display: block;
     padding: 10px 20px;
     outline: none;
     border: 1px solid rgb(138, 138, 138);

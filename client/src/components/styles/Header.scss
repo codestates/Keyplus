@@ -1,18 +1,18 @@
 @use '../../styles/constants' as *;
 
 .header {
-  background-color: #000;
-  color: #fff;
-  width: 100%;
-  height: 120px;
-  display: flex;
-  justify-content: space-between;
   position: fixed;
   top: -1px;
-  z-index: 999;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 120px;
   padding: 50px 50px 0;
-  -webkit-transition: background-color 0.5s linear;
-  transition: background-color 0.5s linear;
+  z-index: 999;
+  background-color: #000;
+  color: #fff;
+  -webkit-transition: background-color 0.5s ease;
+  transition: background-color 0.5s ease;
 
   &.bgc-white {
     background-color: #fff;
@@ -30,14 +30,11 @@
   transform: translate(-50%, 0);
   text-decoration: none;
   cursor: pointer;
-  margin-top: 50px;
+  margin-top: 47px;
 
   & > * {
     vertical-align: middle;
   }
-}
-
-.navigation {
 }
 
 .nav-menu,
@@ -46,10 +43,6 @@
   column-gap: 30px;
   height: 100%;
 }
-
-// .nav-item,
-// .button-item {
-// }
 
 .nav-item-wrapper {
   display: flex;
@@ -63,10 +56,11 @@
   text-decoration: none;
   height: 100%;
   cursor: pointer;
-}
 
-// .buttons {
-// }
+  &:hover {
+    color: #bbbbbb;
+  }
+}
 
 .menu-icon {
   display: none;
@@ -75,11 +69,11 @@
 @media screen and (max-width: $md-breakpoint) {
   .header {
     height: 50px;
-    padding: 15px 10px 0;
+    padding: 15px 20px 0;
   }
 
   .header-logo {
-    margin-top: 15px;
+    margin-top: 13px;
   }
 
   .nav-menu {
@@ -91,21 +85,21 @@
     top: 50px;
     left: -100%;
     opacity: 1;
-    transition: all 0.5s ease;
+    transition: left 0.5s ease;
   }
   .buttons {
     margin-right: 0;
   }
 
   .button-menu {
-    column-gap: 10px;
+    column-gap: 25px;
   }
 
   .nav-menu.active {
     background-color: #000;
     left: 0;
     opacity: 1;
-    transition: all 0.5s ease;
+    // transition: all 0.5s ease;
 
     &.bgc-white {
       background-color: #fff;

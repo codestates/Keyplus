@@ -1,14 +1,16 @@
 import React from 'react';
-
+import { useHistory } from 'react-router';
 import '../styles/LandingPart5.scss';
 
 const LandingPart5 = () => {
+  const history = useHistory();
+
   return (
     <>
       <div
         className="part5-background"
         style={{
-          backgroundImage: "url('/landing-part5.png')",
+          backgroundImage: "url('/landing/landing-part5.png')",
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}
@@ -34,6 +36,7 @@ const LandingPart5 = () => {
             data-aos-duration="1300"
             data-aos-easing="ease-in-out"
             className="part5-button"
+            onClick={() => history.push('/survey')}
           >
             키보드 찾으러 가기
           </button>

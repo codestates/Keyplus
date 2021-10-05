@@ -1,5 +1,4 @@
 import React from 'react';
-
 import '../styles/LandingPart3.scss';
 
 const LandingPart3 = () => {
@@ -14,7 +13,7 @@ const LandingPart3 = () => {
             data-aos-easing="ease-out"
             className="part3-image"
           >
-            <img src="/landing-part3-1.png" alt="리뷰 첫 번째 사진" />
+            <img src="/landing/landing-part3-1.png" alt="리뷰 첫 번째 사진" />
           </div>
         </div>
         <div className="part3-image-wrapper">
@@ -25,7 +24,7 @@ const LandingPart3 = () => {
             data-aos-easing="ease-out"
             className="part3-image"
           >
-            <img src="/landing-part3-2.png" alt="리뷰 두 번째 사진" />
+            <img src="/landing/landing-part3-2.png" alt="리뷰 두 번째 사진" />
           </div>
         </div>
         <div className="part3-image-wrapper">
@@ -36,7 +35,7 @@ const LandingPart3 = () => {
             data-aos-easing="ease-out"
             className="part3-image"
           >
-            <img src="/landing-part3-3.png" alt="리뷰 세 번째 사진" />
+            <img src="/landing/landing-part3-3.png" alt="리뷰 세 번째 사진" />
           </div>
         </div>
         <div className="part3-text-wrapper">

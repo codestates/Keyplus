@@ -1,0 +1,127 @@
+@use '../../styles/constants' as *;
+@use '../../styles/mixins' as *;
+
+.intro-container {
+  @include flexbox(flex-start);
+  flex-direction: column;
+  max-width: 50%;
+  margin: 0 auto;
+  margin-top: 140px;
+  min-height: calc(100vh - 130px);
+  word-break: break-all;
+  letter-spacing: -0.1em;
+  color: #000;
+  @include mobile-margin();
+
+  @media screen and (min-width: $md-breakpoint + 1) and (max-width: 1000px) {
+    max-width: 70%;
+  }
+
+  @media screen and (max-width: $md-breakpoint) {
+    max-width: unset;
+    margin-top: 70px;
+    min-height: calc(100vh - 60px);
+  }
+
+  .intro-big-title {
+    font-size: 20px;
+    position: relative;
+
+    padding: 12px 6px;
+
+    line-height: 0.6;
+    background-image: linear-gradient(transparent 65%, #ffdf51 35%);
+    background-repeat: no-repeat;
+    background-size: 0% 100%;
+    transition: background-size 0.8s;
+
+    & > * {
+      vertical-align: middle;
+    }
+  }
+
+  .underline-yellow {
+    background-size: 100% 100%;
+  }
+
+  .intro-title-s {
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-align: center;
+    margin-top: 120px;
+
+    @media screen and (max-width: $md-breakpoint) {
+      margin-top: 50px;
+    }
+  }
+
+  .intro-contentsBx {
+    width: 100%;
+
+    article {
+      @media screen and (max-width: $md-breakpoint) {
+        img {
+          order: 1;
+        }
+        div {
+          order: 2;
+        }
+      }
+    }
+
+    .intro-p {
+      text-align: center;
+
+      &.strong {
+        padding: 40px 0 20px;
+        line-height: 1.7;
+      }
+
+      div {
+        padding-top: 5px;
+      }
+    }
+
+    .p-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-gap: 30px;
+      margin-top: 30px;
+      margin-bottom: 60px;
+
+      img {
+        width: 100%;
+      }
+
+      @media screen and (max-width: $md-breakpoint) {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .finish {
+      margin-top: 150px;
+
+      strong {
+        display: block;
+        margin: 80px 0;
+        font-size: 24px;
+        text-shadow: 20px 10px 0px #f0bcd6, -15px -6px 0px rgb(188, 202, 209);
+      }
+    }
+
+    .bgc-gray {
+      background-color: #eeeeee;
+    }
+
+    .intro-link {
+      font-size: 15px;
+      text-align: right;
+      margin: 70px 0;
+
+      @media screen and (max-width: $md-breakpoint) {
+        margin: 50px 0 40px;
+      }
+    }
+  }
+}

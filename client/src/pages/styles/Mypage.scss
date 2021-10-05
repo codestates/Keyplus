@@ -1,6 +1,173 @@
+@use '../../styles/constants' as *;
+@use '../../styles/mixins' as *;
+
 .mypage-container {
-  border: 2px solid #000;
-  display: flex;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  max-width: 800px;
+  min-width: 320px;
+  height: 100%;
+  margin: 0 auto;
+  margin-bottom: -70px;
+  position: relative;
+
+  @media screen and (max-width: $md-breakpoint) {
+    padding-top: 50px;
+    margin-bottom: -30px;
+  }
+}
+
+.mypage-main {
+  @include flexbox(flex-start);
+  padding-top: 50px;
   flex-direction: column;
+  height: 100%;
+  min-height: calc(100vh - 120px);
+
+  @media screen and (max-width: $md-breakpoint) {
+    padding-top: 0;
+    min-height: calc(100vh - 50px);
+  }
+
+  .title {
+    font-weight: 600;
+    text-transform: uppercase;
+    margin: 30px 0;
+    border-bottom: 4px solid rgb(138, 138, 138);
+    letter-spacing: 1px;
+  }
+
+  .input-box {
+    margin-bottom: 20px;
+    max-width: 267px;
+    position: relative;
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    label {
+      font-size: 14px;
+      margin-bottom: 5px;
+      display: inline-block;
+      color: rgb(138, 138, 138);
+      font-weight: 400;
+      letter-spacing: 1px;
+    }
+
+    .inputlong {
+      padding-right: 78px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px 20px;
+      outline: none;
+      font-weight: 400;
+      border: 1px solid rgb(138, 138, 138) !important;
+      font-size: 14px;
+      letter-spacing: 1px;
+      border-radius: 30px;
+    }
+
+    button {
+      position: absolute;
+      top: 50%;
+      right: 20px;
+      transform: translateY(-50%);
+      cursor: pointer;
+      padding: 0;
+      transition: all 0.3s ease-out;
+
+      &:hover {
+        color: #000;
+      }
+    }
+  }
+
+  .mypage-btn {
+    width: 100%;
+    padding: 10px 20px;
+    outline: none;
+    border: 1px solid rgb(138, 138, 138);
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 1px;
+    border-radius: 30px;
+    cursor: pointer;
+    margin-top: 15px;
+    margin-bottom: 30px;
+    color: #fff;
+    transition: all 0.3s ease-out;
+    background-color: rgb(165, 165, 165);
+
+    &:hover {
+      color: #fff;
+      background-color: rgb(138, 138, 138);
+    }
+  }
+}
+
+.upload-box {
+  display: flex;
   justify-content: center;
+  align-items: center;
+  margin-bottom: 14px;
+  width: 100%;
+  padding: 10px 20px;
+}
+
+.upload-image {
+  border: 1px solid rgb(138, 138, 138);
+  cursor: pointer;
+  border-radius: 50%;
+  transition: all 0.4 ease-out;
+
+  &:hover {
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+      rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  }
+}
+
+.mypage-tabs {
+  width: 65%;
+  margin-bottom: 30px;
+
+  @media screen and (max-width: $md-breakpoint) {
+    width: 85%;
+  }
+}
+
+.mypage-delete-btn {
+  text-align: center;
+  color: rgb(165, 165, 165);
+  transition: all 0.3s ease-out;
+  margin-bottom: 40px;
+
+  &:hover {
+    color: #000;
+  }
+}
+
+.mypage-tab-item {
+  padding-top: 20px;
+  margin-bottom: 25px;
+  transition: all 0.3s;
+}
+
+.mypage-review {
+  margin-bottom: 20px;
+  padding-top: 20px;
+  &:not(:last-child) {
+    border-bottom: 1px solid rgb(220, 220, 220);
+  }
+
+  &:last-child {
+    padding-bottom: 1px;
+  }
+
+  &:hover {
+    opacity: 0.7;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+      rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  }
 }

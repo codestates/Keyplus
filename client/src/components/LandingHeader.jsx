@@ -1,9 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { logOut } from '../reducers/api/userAPI';
+import useWidthSize from '../hooks/useWidthSize';
+import usePageYOffset from '../hooks/usePageYOffset';
+import './styles/LandingHeader.scss';
 import { ReactComponent as KEYPLUS_WHITE_36 } from '../assets/images/KEYPLUS_white_36.svg';
-import { ReactComponent as KEYPLUS_BLACK_36 } from '../assets/images/KEYPLUS_black_36.svg';
 import { ReactComponent as KEYPLUS_WHITE_24 } from '../assets/images/KEYPLUS_white_24.svg';
-import { ReactComponent as KEYPLUS_BLACK_24 } from '../assets/images/KEYPLUS_black_24.svg';
-
+import { message } from 'antd';
 import {
   UserOutlined,
   CloseOutlined,
@@ -11,18 +16,10 @@ import {
   ExportOutlined,
 } from '@ant-design/icons';
 
-import './styles/LandingHeader.scss';
-import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { logOut } from '../reducers/api/userAPI';
-import { isError } from '../reducers/errorReducer';
-import { useHistory } from 'react-router';
-
 const LandingHeader = () => {
+  const offset = usePageYOffset();
+  const width = useWidthSize(768);
   const [isOpenSidebar, setIsOpenSidebar] = useState(false);
-  const [offset, setOffset] = useState(0);
-  const [width, setWidth] = useState(window.innerWidth);
-
   const dispatch = useDispatch();
   const history = useHistory();
   const userState = useSelector((state) => state.user);
@@ -31,47 +28,26 @@ const LandingHeader = () => {
     setIsOpenSidebar((prev) => !prev);
   };
 
-  //FIXME: 로그아웃 함수
   const onClickLogout = async () => {
-    console.log('로그아웃 버튼 클릭됬어?');
-    console.log(`여기가 유저스테이트`, userState);
     try {
-      //유저정보가 있으면 (=로그인 되있으면) 로그아웃 시키고 랜딩페이지로 이동
       await dispatch(logOut(history)).unwrap();
+      message.success('로그아웃이 완료되었습니다');
     } catch (err) {
-      dispatch(isError(err.response));
+      return message.success('로그아웃이 완료되었습니다');
     }
   };
 
-  //FIXME: Mypage 함수
   const onClickMypage = async () => {
-    console.log('마이페이지 버튼 클릭됬어?');
     try {
       if (userState === null) {
-        //로그인 되지 않은 상태라면 로그인 페이지로 이동시킴
         history.push('/login');
       } else {
-        //유저정보가 있으면 (=로그인 되있으면) 마이페이지로 이동
         history.push('/mypage');
       }
     } catch (err) {
-      dispatch(isError(err.response));
+      throw err;
     }
   };
-
-  useEffect(() => {
-    window.onscroll = () => {
-      if (offset === 0 && window.pageYOffset > 0) setOffset(1);
-      else if (window.pageYOffset === 0) setOffset(0);
-    };
-  }, [offset]);
-
-  useEffect(() => {
-    window.onresize = () => {
-      if (width <= 768 && window.innerWidth > 768) setWidth(769);
-      else if (width > 768 && window.innerWidth <= 768) setWidth(768);
-    };
-  }, [width]);
 
   return (
     <>
@@ -85,14 +61,14 @@ const LandingHeader = () => {
             {isOpenSidebar ? (
               <CloseOutlined
                 style={{
-                  fontSize: '24px',
+                  fontSize: width > 768 ? '24px' : '22px',
                   color: '#fff',
                 }}
               />
             ) : (
               <MenuOutlined
                 style={{
-                  fontSize: '24px',
+                  fontSize: width > 768 ? '24px' : '22px',
                   color: '#fff',
                 }}
               />
@@ -100,13 +76,7 @@ const LandingHeader = () => {
           </div>
 
           <ul
-            className={
-              isOpenSidebar
-                ? offset > 0
-                  ? 'landing-nav-menu active'
-                  : 'landing-nav-menu active landing-bgc-white'
-                : 'nav-menu'
-            }
+            className={isOpenSidebar ? 'landing-nav-menu active' : 'nav-menu'}
           >
             <div
               className={
@@ -117,9 +87,9 @@ const LandingHeader = () => {
             >
               <li className="landing-nav-item">
                 <Link
-                  to="/"
+                  to="/survey"
                   className="landing-nav-links"
-                  onClick={onClickToggleBtn}
+                  onClick={isOpenSidebar ? onClickToggleBtn : null}
                 >
                   설문조사
                 </Link>
@@ -128,35 +98,34 @@ const LandingHeader = () => {
                 <Link
                   to="/keyboards"
                   className="landing-nav-links"
-                  onClick={onClickToggleBtn}
+                  onClick={isOpenSidebar ? onClickToggleBtn : null}
                 >
                   키보드
                 </Link>
               </li>
               <li className="landing-nav-item">
                 <Link
-                  to="/map"
+                  to="/typing-shop"
                   className="landing-nav-links"
-                  onClick={onClickToggleBtn}
+                  onClick={isOpenSidebar ? onClickToggleBtn : null}
                 >
                   타건샵
+                </Link>
+              </li>
+              <li className="landing-nav-item">
+                <Link
+                  to="/introduction"
+                  className="landing-nav-links"
+                  onClick={isOpenSidebar ? onClickToggleBtn : null}
+                >
+                  입문
                 </Link>
               </li>
             </div>
           </ul>
         </nav>
         <Link to="/" className="landing-header-logo">
-          {width > 768 ? (
-            offset > 0 ? (
-              <KEYPLUS_WHITE_36 />
-            ) : (
-              <KEYPLUS_WHITE_36 />
-            )
-          ) : offset > 0 ? (
-            <KEYPLUS_WHITE_24 />
-          ) : (
-            <KEYPLUS_WHITE_24 />
-          )}
+          {width > 768 ? <KEYPLUS_WHITE_36 /> : <KEYPLUS_WHITE_24 />}
         </Link>
         <nav className="landing-buttons">
           <ul className="landing-button-menu">
@@ -164,7 +133,7 @@ const LandingHeader = () => {
               <button onClick={onClickMypage} className="landing-button-links">
                 <UserOutlined
                   style={{
-                    fontSize: '24px',
+                    fontSize: width > 768 ? '24px' : '22px',
                     color: '#fff',
                   }}
                 />
@@ -178,7 +147,7 @@ const LandingHeader = () => {
                 >
                   <ExportOutlined
                     style={{
-                      fontSize: '24px',
+                      fontSize: width > 768 ? '24px' : '22px',
                       color: '#fff',
                     }}
                   />

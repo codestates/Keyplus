@@ -1,46 +1,13 @@
-import React, { useEffect, useState, useRef, useCallback } from 'react';
+import React, { useState, useRef } from 'react';
 import { useHistory } from 'react-router';
-import { useDispatch, useSelector } from 'react-redux';
-import { addLikes, deleteLikes } from '../reducers/api/likesAPI';
-import { isError } from '../reducers/errorReducer';
-import axios from '../utils/customAxios';
-
-import './styles/ReviewCreate.scss';
-
-import {
-  Carousel,
-  Card,
-  Empty,
-  Rate,
-  Avatar,
-  Button,
-  Upload,
-  Divider,
-  Input,
-  message,
-} from 'antd';
-
-const { TextArea } = Input;
-const { Meta } = Card;
-
-import {
-  HeartOutlined,
-  HeartFilled,
-  RightOutlined,
-  LeftOutlined,
-  StarFilled,
-  UserOutlined,
-  PlusOutlined,
-} from '@ant-design/icons';
-import { IoCloseOutline } from 'react-icons/io5';
-// import {
-//   AiOutlinePicture,
-//   AiOutlinePlayCircle,
-//   AiOutlineUpload,
-// } from 'react-icons/ai';
-import { RiImageAddFill, RiVideoAddFill } from 'react-icons/ri';
-
+import { useDispatch } from 'react-redux';
 import { addReviews, updateReviews } from '../reducers/api/reviewsAPI';
+import Button from '../components/Button';
+import { Rate, Input, message } from 'antd';
+import { IoCloseOutline } from 'react-icons/io5';
+import { RiImageAddFill, RiVideoAddFill } from 'react-icons/ri';
+import './styles/ReviewCreate.scss';
+const { TextArea } = Input;
 
 const ReviewCreate = ({ location, ...props }) => {
   const dispatch = useDispatch();
@@ -58,21 +25,17 @@ const ReviewCreate = ({ location, ...props }) => {
   const [previewVideo, setPreviewVideo] = useState(
     location.state?.video ?? null
   );
-
   const [content, setContent] = useState(location.state?.content ?? '');
   const [rating, setRating] = useState(location.state?.rating ?? 0);
-
   const [deleteImg1, setDeleteImg1] = useState(0);
   const [deleteImg2, setDeleteImg2] = useState(0);
   const [deleteImg3, setDeleteImg3] = useState(0);
   const [deleteVideo, setDeleteVideo] = useState(0);
-
   const img1Ref = useRef(null);
   const img2Ref = useRef(null);
   const img3Ref = useRef(null);
   const videoRef = useRef(null);
 
-  //* onChange
   const onChangeImage = (e, num) => {
     const file = e.target.files[0];
     if (file) {
@@ -109,7 +72,6 @@ const ReviewCreate = ({ location, ...props }) => {
     }
   };
 
-  //* handleRef
   const handleImgRef = (num) => {
     switch (num) {
       case 1:
@@ -130,7 +92,6 @@ const ReviewCreate = ({ location, ...props }) => {
     videoRef.current.click();
   };
 
-  //* onClickDeleteBtn
   const onClickDeleteImgBtn = (num) => {
     switch (num) {
       case 1:
@@ -152,22 +113,17 @@ const ReviewCreate = ({ location, ...props }) => {
         break;
     }
   };
-
   const onClickDeleteVideoBtn = () => {
     setPreviewVideo(null);
     videoRef.current.value = null;
     setDeleteVideo(1);
   };
-
-  //* onChange
   const onChangeContent = (e) => {
     setContent(e.target.value);
   };
-
   const onChangeRating = (value) => {
     setRating(value);
   };
-
   const onClickSubmitBtn = async (e) => {
     e.preventDefault();
     if (content === '') {
@@ -180,40 +136,31 @@ const ReviewCreate = ({ location, ...props }) => {
     try {
       const formData = new FormData();
       const data = {};
-
       data['keyboardId'] = keyboardId;
-
       if (e.target.img1.files) {
         formData.append('img1', e.target.img1.files[0]);
       }
       data['image1'] = previewImage1;
-
       if (e.target.img2.files) {
         formData.append('img2', e.target.img2.files[0]);
       }
       data['image2'] = previewImage2;
-
       if (e.target.img3.files) {
         formData.append('img3', e.target.img3.files[0]);
       }
       data['image3'] = previewImage3;
-
       if (e.target.video.files) {
         formData.append('video', e.target.video.files[0]);
       }
       data['video'] = previewVideo;
-
       formData.append('content', content);
       data['content'] = content;
-
       formData.append('rating', rating);
       data['rating'] = rating;
-
       formData.append('deleteImg1', deleteImg1);
       formData.append('deleteImg2', deleteImg2);
       formData.append('deleteImg3', deleteImg3);
       formData.append('deleteVideo', deleteVideo);
-
       if (location.state) {
         await dispatch(updateReviews({ formData, data })).unwrap();
       } else {
@@ -222,19 +169,17 @@ const ReviewCreate = ({ location, ...props }) => {
       message.success('리뷰 작성이 완료되었습니다.');
       history.push(`/keyboards/${keyboardId}`);
     } catch (err) {
-      if (!err.response) {
-        throw err;
-      }
-      if (err.response.status === 409) {
-        return message.warning('이미 리뷰를 남기셨습니다.');
-      }
-      // dispatch(isError(err.response));
-      message.warning('서버에서 에러가 발생했습니다.');
+      message.warning('오류가 발생하여 로그아웃됩니다.');
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
     }
   };
   return (
     <div className="review-create">
-      <h1 className="review-create-header">Review </h1>
+      <div className="review-create-header-wrapper">
+        <h1 className="review-create-header">Review</h1>
+      </div>
       <form
         name="review-form"
         onSubmit={onClickSubmitBtn}
@@ -243,12 +188,21 @@ const ReviewCreate = ({ location, ...props }) => {
       >
         <div className="input-files-area">
           <div className="input-file">
+            <input
+              type="file"
+              id="img1"
+              name="img1"
+              accept=".png, .jpg, jpeg"
+              onChange={(e) => onChangeImage(e, 1)}
+              ref={img1Ref}
+              hidden
+            />
             {previewImage1 ? (
               <div className="preview-image-wrapper">
                 <img
                   src={previewImage1}
                   alt="preview"
-                  className="keyboard-detail-img"
+                  className="preview-image"
                 />
                 <div
                   className="hover-overlay"
@@ -270,12 +224,21 @@ const ReviewCreate = ({ location, ...props }) => {
             )}
           </div>
           <div className="input-file">
+            <input
+              type="file"
+              id="img2"
+              name="img2"
+              accept=".png, .jpg, jpeg"
+              onChange={(e) => onChangeImage(e, 2)}
+              ref={img2Ref}
+              hidden
+            />
             {previewImage2 ? (
               <div className="preview-image-wrapper">
                 <img
                   src={previewImage2}
                   alt="preview"
-                  className="keyboard-detail-img"
+                  className="preview-image"
                 />
                 <div
                   className="hover-overlay"
@@ -297,12 +260,21 @@ const ReviewCreate = ({ location, ...props }) => {
             )}
           </div>
           <div className="input-file">
+            <input
+              type="file"
+              id="img3"
+              name="img3"
+              accept=".png, .jpg, jpeg"
+              onChange={(e) => onChangeImage(e, 3)}
+              ref={img3Ref}
+              hidden
+            />
             {previewImage3 ? (
               <div className="preview-image-wrapper">
                 <img
                   src={previewImage3}
                   alt="preview"
-                  className="keyboard-detail-img"
+                  className="preview-image"
                 />
                 <div
                   className="hover-overlay"
@@ -319,9 +291,6 @@ const ReviewCreate = ({ location, ...props }) => {
               </div>
             ) : (
               <div className="upload-icon" onClick={() => handleImgRef(3)}>
-                {/* 이미지
-                <br />
-                업로드 */}
                 <div style={{ display: 'flex' }}>
                   <RiImageAddFill style={{ fontSize: '40px' }} />
                 </div>
@@ -330,13 +299,25 @@ const ReviewCreate = ({ location, ...props }) => {
           </div>
 
           <div className="input-file">
+            <input
+              type="file"
+              id="video"
+              name="video"
+              accept=".mp4"
+              onChange={onChangeVideo}
+              ref={videoRef}
+              hidden
+            />
             {previewVideo ? (
               <div className="preview-image-wrapper">
                 <video
-                  type="video/mp4"
-                  src={previewVideo}
-                  className="keyboard-detail-img"
-                />
+                  playsInline
+                  preload="metadata"
+                  poster={`${previewVideo}`}
+                  className="preview-video"
+                >
+                  <source src={`${previewVideo}#t=0.5`} type="video/mp4" />
+                </video>
                 <div className="hover-overlay" onClick={onClickDeleteVideoBtn}>
                   <IoCloseOutline
                     style={{
@@ -349,52 +330,11 @@ const ReviewCreate = ({ location, ...props }) => {
               </div>
             ) : (
               <div className="upload-icon" onClick={handleVideoRef}>
-                {/* 동영상
-                <br />
-                  업로드 */}
                 <RiVideoAddFill style={{ fontSize: '40px' }} />
               </div>
             )}
           </div>
         </div>
-
-        <input
-          type="file"
-          id="img1"
-          name="img1"
-          accept=".png, .jpg, jpeg"
-          onChange={(e) => onChangeImage(e, 1)}
-          ref={img1Ref}
-          hidden
-        />
-        <input
-          type="file"
-          id="img2"
-          name="img2"
-          accept=".png, .jpg, jpeg"
-          onChange={(e) => onChangeImage(e, 2)}
-          ref={img2Ref}
-          hidden
-        />
-        <input
-          type="file"
-          id="img3"
-          name="img3"
-          accept=".png, .jpg, jpeg"
-          onChange={(e) => onChangeImage(e, 3)}
-          ref={img3Ref}
-          hidden
-        />
-        <input
-          type="file"
-          id="video"
-          name="video"
-          accept=".mp4"
-          onChange={onChangeVideo}
-          ref={videoRef}
-          hidden
-        />
-
         <TextArea
           placeholder="리뷰를 500자까지 입력해주세요."
           showCount
@@ -404,7 +344,6 @@ const ReviewCreate = ({ location, ...props }) => {
           onChange={onChangeContent}
           className="review-create-content"
         />
-
         <div className="review-create-rating-wrapper">
           <p>별을 눌러 점수를 매겨주세요.</p>
           <Rate
@@ -413,10 +352,9 @@ const ReviewCreate = ({ location, ...props }) => {
             style={{ fontSize: '30px' }}
           />
         </div>
-
         <div className="review-create-button-wrapper">
-          <Button type="primary">
-            <input type="submit" value="리뷰 작성" />
+          <Button>
+            <button type="submit">리뷰 작성</button>
           </Button>
         </div>
       </form>

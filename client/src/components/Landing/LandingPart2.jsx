@@ -1,7 +1,6 @@
 import React from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import styles from 'react-responsive-carousel/lib/styles/carousel.min.css';
-
 import '../styles/LandingPart2.scss';
 
 const LandingPart2 = () => {
@@ -17,27 +16,27 @@ const LandingPart2 = () => {
         >
           <img
             className="part2-carousel-image"
-            src="/landing-part2-1.png"
+            src="/landing/landing-part2-1.png"
             alt=""
           />
           <img
             className="part2-carousel-image"
-            src="/landing-part2-2.png"
+            src="/landing/landing-part2-2.png"
             alt=""
           />
           <img
             className="part2-carousel-image"
-            src="/landing-part2-3.png"
+            src="/landing/landing-part2-3.png"
             alt=""
           />
           <img
             className="part2-carousel-image"
-            src="/landing-part2-4.png"
+            src="/landing/landing-part2-4.png"
             alt=""
           />
           <img
             className="part2-carousel-image"
-            src="/landing-part2-5.png"
+            src="/landing/landing-part2-5.png"
             alt=""
           />
         </Carousel>
