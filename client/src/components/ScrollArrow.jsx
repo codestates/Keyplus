@@ -18,7 +18,6 @@ const ScrollArrow = ({ landing }) => {
     smoothscroll.polyfill();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
-
   window.addEventListener('scroll', checkScrollTop);
 
   return (

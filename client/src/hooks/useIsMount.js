@@ -5,7 +5,6 @@ export default function useIsMount() {
 
   useEffect(() => {
     isMount.current = true;
-
     return () => {
       isMount.current = false;
     };

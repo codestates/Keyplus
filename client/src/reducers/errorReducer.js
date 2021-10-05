@@ -1,10 +1,7 @@
 import { createAction, createReducer } from '@reduxjs/toolkit';
-
 export const isError = createAction('error/isError');
 export const isNotError = createAction('error/isNotError');
-
 const initialState = null;
-
 const errorReducer = createReducer(initialState, (builder) => {
   builder
     .addCase(isError, (state, action) => {

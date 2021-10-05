@@ -1,5 +1,4 @@
 import React from 'react';
-
 import '../styles/LandingPart3.scss';
 
 const LandingPart3 = () => {

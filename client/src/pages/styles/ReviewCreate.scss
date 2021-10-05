@@ -52,10 +52,6 @@
       }
 
       .input-file {
-        // display: flex;
-        // width: 100px;
-        // height: 100px;
-
         .preview-image-wrapper {
           position: relative;
           width: inherit;
@@ -68,10 +64,6 @@
             height: inherit;
             object-fit: cover;
           }
-
-          // .preview-video {
-          //   object-fit: fill;
-          // }
 
           .hover-overlay {
             position: absolute;

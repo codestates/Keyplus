@@ -1,6 +1,6 @@
 import React from 'react';
-import '../styles/LandingPart4.scss';
 import { useHistory } from 'react-router';
+import '../styles/LandingPart4.scss';
 
 const LandingPart4 = () => {
   const history = useHistory();

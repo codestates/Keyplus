@@ -3,14 +3,12 @@ import Button from './Button';
 import { useHistory } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { isError } from '../reducers/errorReducer';
 import { Modal } from 'antd';
 
 const ButtonModal = (props) => {
   const [visible, setVisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [modalText, setModalText] = useState(props.modalText);
-
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -38,7 +36,7 @@ const ButtonModal = (props) => {
         })
       );
     } catch (err) {
-      dispatch(isError(err.response));
+      throw err;
     }
   };
 
