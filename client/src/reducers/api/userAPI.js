@@ -35,11 +35,10 @@ export const fakeLogIn = createAsyncThunk(
       ]);
       return user.data.data;
     } catch (err) {
-      // dispatch(logOutForce());
-      // dispatch(logOutMyLikes());
-      // dispatch(logOutMyReviews());
-      // dispatch(setExpireDate(null));
-      // message.warning('오류가 발생하여 로그아웃됩니다.');
+      dispatch(logOutForce());
+      dispatch(logOutMyLikes());
+      dispatch(logOutMyReviews());
+      dispatch(setExpireDate(null));
       return rejectWithValue(err);
     }
   }
@@ -69,11 +68,10 @@ export const logOut = createAsyncThunk(
       dispatch(setExpireDate(null));
       history.replace('/');
     } catch (err) {
-      // dispatch(logOutForce());
-      // dispatch(logOutMyLikes());
-      // dispatch(logOutMyReviews());
-      // dispatch(setExpireDate(null));
-      // message.warning('오류가 발생하여 로그아웃됩니다.');
+      dispatch(logOutForce());
+      dispatch(logOutMyLikes());
+      dispatch(logOutMyReviews());
+      dispatch(setExpireDate(null));
       return rejectWithValue(err);
     }
   }
@@ -86,11 +84,10 @@ export const updateUserInfo = createAsyncThunk(
       const user = await exceptionAxios.patch('/users', formData);
       return user.data.data;
     } catch (err) {
-      // dispatch(logOutForce());
-      // dispatch(logOutMyLikes());
-      // dispatch(logOutMyReviews());
-      // dispatch(setExpireDate(null));
-      // message.warning('오류가 발생하여 로그아웃됩니다.');
+      dispatch(logOutForce());
+      dispatch(logOutMyLikes());
+      dispatch(logOutMyReviews());
+      dispatch(setExpireDate(null));
       return rejectWithValue(err);
     }
   }
@@ -106,11 +103,10 @@ export const deleteUser = createAsyncThunk(
       dispatch(setExpireDate(null));
       history.replace('/');
     } catch (err) {
-      // dispatch(logOutForce());
-      // dispatch(logOutMyLikes());
-      // dispatch(logOutMyReviews());
-      // dispatch(setExpireDate(null));
-      // message.warning('오류가 발생하여 로그아웃됩니다.');
+      dispatch(logOutForce());
+      dispatch(logOutMyLikes());
+      dispatch(logOutMyReviews());
+      dispatch(setExpireDate(null));
       return rejectWithValue(err);
     }
   }

@@ -32,8 +32,9 @@ const Header = () => {
   const onClickLogout = async () => {
     try {
       await dispatch(logOut(history)).unwrap();
+      message.success('로그아웃이 완료되었습니다');
     } catch (err) {
-      throw err;
+      return message.success('로그아웃이 완료되었습니다');
     }
   };
 
