@@ -35,7 +35,10 @@ const Header = () => {
       await dispatch(logOut(history)).unwrap();
       message.success('로그아웃이 완료되었습니다');
     } catch (err) {
-      return message.success('로그아웃이 완료되었습니다');
+      message.success('로그아웃이 완료되었습니다');
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
     }
   };
 

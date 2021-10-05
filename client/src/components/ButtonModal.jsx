@@ -36,7 +36,10 @@ const ButtonModal = (props) => {
         })
       ).unwrap();
     } catch (err) {
-      return message.warning('오류가 발생하여 로그아웃됩니다.');
+      message.warning('오류가 발생하여 로그아웃됩니다.');
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
     }
   };
 
