@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import axios from '../utils/customAxios';
 import exceptionAxios from 'axios';
-import KeyboardCard from './KeyboardCard';
+import KeyboardCard from '../components/KeyboardCard';
 import useWidthSize from '../hooks/useWidthSize';
 import useIsMount from '../hooks/useIsMount';
 import 'antd/dist/antd.css';
