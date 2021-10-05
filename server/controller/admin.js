@@ -9,7 +9,6 @@ module.exports = {
     });
     const keyboardImg = req.files.keyboardImg;
     const imgName = [];
-    console.log(admin);
     try {
       if (!admin) {
         return res.status(401).json({ message: 'Unauthorized Request' });
@@ -17,7 +16,6 @@ module.exports = {
       for (let i = 0; i < keyboardImg.length; i++) {
         imgName.push(keyboardImg[i].originalname);
       }
-      console.log(imgName);
 
       await Keyboard.create({
         name,
