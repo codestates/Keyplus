@@ -36,7 +36,7 @@ const ButtonModal = (props) => {
         })
       );
     } catch (err) {
-      throw err;
+      return message.warning('오류가 발생하여 로그아웃됩니다.');
     }
   };
 

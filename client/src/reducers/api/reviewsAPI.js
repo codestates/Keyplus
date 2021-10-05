@@ -1,10 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-
-// import { logOutForce } from '../userSlice';
-// import { logOutMyLikes } from '../likesSlice';
-// import { logOutMyReviews } from '../reviewsSlice';
-// import { setExpireDate } from '../expireDateReducer';
-
+import { logOutForce } from '../userSlice';
+import { logOutMyLikes } from '../likesSlice';
+import { logOutMyReviews } from '../reviewsSlice';
+import { setExpireDate } from '../expireDateReducer';
 import axios from '../../utils/customAxios';
 import exceptionAxios from 'axios';
 
@@ -15,11 +13,10 @@ export const getReviews = createAsyncThunk(
       const reviews = await exceptionAxios.get('/reviews');
       return reviews.data.data;
     } catch (err) {
-      // dispatch(logOutForce());
-      // dispatch(logOutMyLikes());
-      // dispatch(logOutMyReviews());
-      // dispatch(setExpireDate(null));
-      // message.warning('오류가 발생하여 로그아웃됩니다.');
+      dispatch(logOutForce());
+      dispatch(logOutMyLikes());
+      dispatch(logOutMyReviews());
+      dispatch(setExpireDate(null));
       return rejectWithValue(err);
     }
   }
@@ -35,11 +32,10 @@ export const addReviews = createAsyncThunk(
       );
       return response.data.data;
     } catch (err) {
-      // dispatch(logOutForce());
-      // dispatch(logOutMyLikes());
-      // dispatch(logOutMyReviews());
-      // dispatch(setExpireDate(null));
-      // message.warning('오류가 발생하여 로그아웃됩니다.');
+      dispatch(logOutForce());
+      dispatch(logOutMyLikes());
+      dispatch(logOutMyReviews());
+      dispatch(setExpireDate(null));
       return rejectWithValue(err);
     }
   }
@@ -55,11 +51,10 @@ export const updateReviews = createAsyncThunk(
       );
       return response.data.data;
     } catch (err) {
-      // dispatch(logOutForce());
-      // dispatch(logOutMyLikes());
-      // dispatch(logOutMyReviews());
-      // dispatch(setExpireDate(null));
-      // message.warning('오류가 발생하여 로그아웃됩니다.');
+      dispatch(logOutForce());
+      dispatch(logOutMyLikes());
+      dispatch(logOutMyReviews());
+      dispatch(setExpireDate(null));
       return rejectWithValue(err);
     }
   }
@@ -73,11 +68,10 @@ export const deleteReviews = createAsyncThunk(
       history.replace(`/keyboards`);
       return reviewId;
     } catch (err) {
-      // dispatch(logOutForce());
-      // dispatch(logOutMyLikes());
-      // dispatch(logOutMyReviews());
-      // dispatch(setExpireDate(null));
-      // message.warning('오류가 발생하여 로그아웃됩니다.');
+      dispatch(logOutForce());
+      dispatch(logOutMyLikes());
+      dispatch(logOutMyReviews());
+      dispatch(setExpireDate(null));
       return rejectWithValue(err);
     }
   }

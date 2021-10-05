@@ -1,11 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-
-// import { logOutForce } from '../userSlice';
-// import { logOutMyLikes } from '../likesSlice';
-// import { logOutMyReviews } from '../reviewsSlice';
-// import { setExpireDate } from '../expireDateReducer';
-
-// import axios from '../../utils/customAxios';
+import { logOutForce } from '../userSlice';
+import { logOutMyLikes } from '../likesSlice';
+import { logOutMyReviews } from '../reviewsSlice';
+import { setExpireDate } from '../expireDateReducer';
 import exceptionAxios from 'axios';
 
 export const getLikes = createAsyncThunk(
@@ -15,11 +12,10 @@ export const getLikes = createAsyncThunk(
       const likes = await exceptionAxios.get('/likes');
       return likes.data.data;
     } catch (err) {
-      // dispatch(logOutForce());
-      // dispatch(logOutMyLikes());
-      // dispatch(logOutMyReviews());
-      // dispatch(setExpireDate(null));
-      // message.warning('오류가 발생하여 로그아웃됩니다.');
+      dispatch(logOutForce());
+      dispatch(logOutMyLikes());
+      dispatch(logOutMyReviews());
+      dispatch(setExpireDate(null));
       return rejectWithValue(err);
     }
   }
@@ -32,11 +28,10 @@ export const addLikes = createAsyncThunk(
       const likedKeyboard = await exceptionAxios.post(`/likes/${data}`);
       return likedKeyboard.data.data;
     } catch (err) {
-      // dispatch(logOutForce());
-      // dispatch(logOutMyLikes());
-      // dispatch(logOutMyReviews());
-      // dispatch(setExpireDate(null));
-      // message.warning('오류가 발생하여 로그아웃됩니다.');
+      dispatch(logOutForce());
+      dispatch(logOutMyLikes());
+      dispatch(logOutMyReviews());
+      dispatch(setExpireDate(null));
       return rejectWithValue(err);
     }
   }
@@ -49,11 +44,10 @@ export const deleteLikes = createAsyncThunk(
       await exceptionAxios.delete(`/likes/${data}`);
       return data;
     } catch (err) {
-      // dispatch(logOutForce());
-      // dispatch(logOutMyLikes());
-      // dispatch(logOutMyReviews());
-      // dispatch(setExpireDate(null));
-      // message.warning('오류가 발생하여 로그아웃됩니다.');
+      dispatch(logOutForce());
+      dispatch(logOutMyLikes());
+      dispatch(logOutMyReviews());
+      dispatch(setExpireDate(null));
       return rejectWithValue(err);
     }
   }
