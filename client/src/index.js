@@ -5,9 +5,7 @@ import { Provider } from 'react-redux';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 import ScrollToTop from './utils/ScrollToTop';
-
 import store from './store';
-
 import App from './App';
 import './assets/fonts/font.css';
 import './styles/_reset.scss';

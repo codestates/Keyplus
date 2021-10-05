@@ -5,13 +5,7 @@ import {
   updateReviews,
   deleteReviews,
 } from './api/reviewsAPI';
-
 const initialState = [];
-
-// const isPendingAction = (prefix) => (action) =>
-//   action.type.startsWith(prefix) && action.type.endsWith('/pending');
-// const isRejectedAction = (prefix) => (action) =>
-//   action.type.startsWith(prefix) && action.type.endsWith('/rejected');
 
 const reviewsSlice = createSlice({
   name: 'reviews',
@@ -32,14 +26,9 @@ const reviewsSlice = createSlice({
         state.push(action.payload);
       })
       .addCase(updateReviews.fulfilled, (state, action) => {
-        //인덱스를 찾아서 덮어씌운다
-        console.log('나 스테이트 ', state);
-        console.log('나 페이로드 ', action.payload);
-        console.log(action.payload.keyboardId);
         const idx = state.findIndex(
           (cur) => cur.keyboardId == action.payload.keyboardId
         );
-        console.log('idx', idx);
         if (action.payload.image1) {
           state[idx].image1 = action.payload.image1;
         }

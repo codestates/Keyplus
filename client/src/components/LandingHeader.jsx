@@ -2,18 +2,12 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-
 import { logOut } from '../reducers/api/userAPI';
-import { isError } from '../reducers/errorReducer';
-
 import useWidthSize from '../hooks/useWidthSize';
 import usePageYOffset from '../hooks/usePageYOffset';
-
 import './styles/LandingHeader.scss';
-
 import { ReactComponent as KEYPLUS_WHITE_36 } from '../assets/images/KEYPLUS_white_36.svg';
 import { ReactComponent as KEYPLUS_WHITE_24 } from '../assets/images/KEYPLUS_white_24.svg';
-
 import {
   UserOutlined,
   CloseOutlined,
@@ -25,7 +19,6 @@ const LandingHeader = () => {
   const offset = usePageYOffset();
   const width = useWidthSize(768);
   const [isOpenSidebar, setIsOpenSidebar] = useState(false);
-
   const dispatch = useDispatch();
   const history = useHistory();
   const userState = useSelector((state) => state.user);
@@ -38,7 +31,7 @@ const LandingHeader = () => {
     try {
       await dispatch(logOut(history)).unwrap();
     } catch (err) {
-      dispatch(isError(err.response));
+      throw err;
     }
   };
 
@@ -50,7 +43,7 @@ const LandingHeader = () => {
         history.push('/mypage');
       }
     } catch (err) {
-      dispatch(isError(err.response));
+      throw err;
     }
   };
 

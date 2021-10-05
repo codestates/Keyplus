@@ -1,12 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getLikes, addLikes, deleteLikes } from './api/likesAPI';
-
 const initialState = [];
-
-// const isPendingAction = (prefix) => (action) =>
-//   action.type.startsWith(prefix) && action.type.endsWith('/pending');
-// const isRejectedAction = (prefix) => (action) =>
-//   action.type.startsWith(prefix) && action.type.endsWith('/rejected');
 
 const likesSlice = createSlice({
   name: 'likes',

@@ -24,13 +24,11 @@
     height: 100%;
     max-width: inherit;
     max-height: 300px;
-
     object-fit: cover;
   }
 
   .keyboard-name-like {
     @include flexbox(space-between);
-
     margin-top: 10px;
     margin-bottom: 50px;
 
@@ -46,9 +44,6 @@
     .keyboard-like {
       font-size: 16px;
       cursor: pointer;
-
-      .like-count {
-      }
 
       .like-heart {
         margin-right: 5px;

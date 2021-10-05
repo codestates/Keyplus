@@ -1,19 +1,15 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Header from '../components/Header';
 import ShopList from '../components/ShopList';
-
 import exceptionAxios from 'axios';
-
 import './styles/TypingShop.scss';
 
 const TypingShop = () => {
   const [allShops, setAllShops] = useState([]);
   const [selectedShopIdx, setSelectedShopIdx] = useState(-1);
-
   const [map, setMap] = useState();
   const containerRef = useRef();
   const { kakao } = window;
-
   const [markers, setMarkers] = useState([]);
   const [customOverlays, setCustomOverlays] = useState([]);
 
@@ -44,15 +40,14 @@ const TypingShop = () => {
       const zoomControl = new kakao.maps.ZoomControl();
       map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
-      // const imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png';
-      // 마커 이미지의 주소
+      //! 마커 이미지의 주소
       const imageSrc =
         'https://media.discordapp.net/attachments/880163201872961636/894293586533818428/3440906-direction-location-map-marker-navigation-pin_107531.png';
-      const imageSize = new kakao.maps.Size(64, 69); // 마커 이미지의 크기
-      const imageOption = { offset: new kakao.maps.Point(34, 69) }; // 마커 이미지의 옵션
-      // 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+      const imageSize = new kakao.maps.Size(64, 69); //! 마커 이미지의 크기
+      const imageOption = { offset: new kakao.maps.Point(34, 69) }; //! 마커 이미지의 옵션
+      //! 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
 
-      // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+      //! 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
       const markerImage = new kakao.maps.MarkerImage(
         imageSrc,
         imageSize,
@@ -65,7 +60,7 @@ const TypingShop = () => {
         const marker = new kakao.maps.Marker({
           position,
           clickable: true,
-          image: markerImage, // 마커이미지 설정
+          image: markerImage, //! 마커이미지 설정
         });
 
         // //! 마커 state에 저장
@@ -94,7 +89,7 @@ const TypingShop = () => {
         ]);
       });
     } catch (err) {
-      console.log(err);
+      throw err;
     }
   }, []);
 
@@ -121,8 +116,6 @@ const TypingShop = () => {
     if (!mounted.current) {
       mounted.current = true;
     } else {
-      console.log(customOverlays);
-      console.log(markers);
       markers.forEach((marker, idx) => {
         kakao.maps.event.addListener(marker, 'click', () => {
           handleClick(idx);
@@ -142,10 +135,7 @@ const TypingShop = () => {
             selectedShopIdx={selectedShopIdx}
             setSelectedShopIdx={setSelectedShopIdx}
             map={map}
-            setMap={setMap}
-            containerRef={containerRef}
             kakao={kakao}
-            markers={markers}
             customOverlays={customOverlays}
           />
         </div>

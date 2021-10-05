@@ -10,14 +10,10 @@ const useWidthSize = (breakpoint) => {
       else if (widthSize > breakpoint && window.innerWidth <= breakpoint)
         setWidthSize(breakpoint);
     };
-
     window.addEventListener('resize', handleResize);
-
     handleResize();
-
     return () => window.removeEventListener('resize', handleResize);
   }, [widthSize]);
-
   return widthSize;
 };
 

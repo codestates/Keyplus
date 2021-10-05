@@ -10,7 +10,7 @@ const Question4 = ({ onClickTenkey }) => {
       <div className="card-container">
         <div className="card" onClick={() => onClickTenkey(1)}>
           <div className="image-wrapper">
-            <img src="/full.png" alt="" />
+            <img src="/survey/full.png" alt="" />
           </div>
           <div className="text-wrapper">
             <div className="description">숫자를 입력하기 편한</div>
@@ -19,7 +19,7 @@ const Question4 = ({ onClickTenkey }) => {
         </div>
         <div className="card" onClick={() => onClickTenkey(0)}>
           <div className="image-wrapper">
-            <img src="/tkl.png" alt="" />
+            <img src="/survey/tkl.png" alt="" />
           </div>
           <div className="text-wrapper">
             <div className="description">키보드의 가로 길이가 짧은</div>
@@ -28,7 +28,7 @@ const Question4 = ({ onClickTenkey }) => {
         </div>
         <div className="card" onClick={() => onClickTenkey(2)}>
           <div className="image-wrapper">
-            <img src="/question.png" alt="" />
+            <img src="/survey/question.png" alt="" />
           </div>
           <div className="text-wrapper">
             <div className="description">둘 다 괜찮다</div>

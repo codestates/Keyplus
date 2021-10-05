@@ -1,14 +1,8 @@
 import React, { memo, useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-
 import { addLikes, deleteLikes } from '../reducers/api/likesAPI';
-import { isError } from '../reducers/errorReducer';
-
-import './styles/KeyboardCard.scss';
-
 import { Card, message } from 'antd';
-const { Meta } = Card;
 import { HeartOutlined, HeartFilled } from '@ant-design/icons';
 import { FaBluetooth } from 'react-icons/fa';
 import {
@@ -19,6 +13,8 @@ import {
 } from 'react-icons/io5';
 import { BiWon } from 'react-icons/bi';
 import { AiFillBulb, AiOutlineBulb } from 'react-icons/ai';
+import './styles/KeyboardCard.scss';
+const { Meta } = Card;
 
 export const keySwitchComponent = {
   저소음적축: (
@@ -106,7 +102,6 @@ export const keySwitchComponent = {
 const KeyboardCard = memo(({ keyboard }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-
   const likes = useSelector((state) => state.likes);
   const checkLiked = (id) => likes.findIndex((like) => like.id == id) !== -1;
   const [liked, setLiked] = useState(checkLiked(keyboard.id));
@@ -118,7 +113,6 @@ const KeyboardCard = memo(({ keyboard }) => {
       if (!user) {
         return message.warning('로그인을 먼저 해주세요.');
       }
-
       try {
         if (liked) {
           await dispatch(deleteLikes(keyboard.id)).unwrap();
@@ -129,7 +123,7 @@ const KeyboardCard = memo(({ keyboard }) => {
         }
         setLiked((prevLiked) => !prevLiked);
       } catch (err) {
-        dispatch(isError(err.response));
+        throw err;
       }
     },
     [user, keyboard, liked]
@@ -161,15 +155,6 @@ const KeyboardCard = memo(({ keyboard }) => {
                     borderLeft: '1px solid rgb(240,240,240) ',
                   }}
                 />
-                {/* <div
-                  className="hover-overlay"
-                  style={{
-                    width: '100%',
-                    height: '200px',
-                  }}
-                >
-                  <p>상세 정보</p>
-                </div> */}
               </div>
             )}
           </>
@@ -185,7 +170,6 @@ const KeyboardCard = memo(({ keyboard }) => {
               }}
             >
               <span>{`${keyboard.brand} ${keyboard.name}`}</span>
-
               <div style={{ cursor: 'pointer' }} onClick={onClickHeart}>
                 {liked ? (
                   <HeartFilled
@@ -234,7 +218,6 @@ const KeyboardCard = memo(({ keyboard }) => {
             <stop stopColor="rgba(255, 0, 0, 1)" offset="100%" />
           </linearGradient>
         </svg>
-
         <svg width="1em" height="1em">
           <linearGradient id="bulb-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
             <stop stopColor="#f7f760" offset="0%" />
@@ -242,7 +225,6 @@ const KeyboardCard = memo(({ keyboard }) => {
             <stop stopColor="rgba(0,0,0, 1)" offset="100%" />
           </linearGradient>
         </svg>
-
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div style={{ display: 'flex', columnGap: '5px' }}>
             {keyboard.color ? (

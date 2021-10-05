@@ -1,7 +1,5 @@
 import { createAction, createReducer } from '@reduxjs/toolkit';
-
 export const setExpireDate = createAction('expireDate/setExpireDate');
-
 const initialState = null;
 
 const expireDateReducer = createReducer(initialState, (builder) => {

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import useWidthSize from '../../hooks/useWidthSize';
 import { FiPlayCircle, FiStopCircle } from 'react-icons/fi';
 
@@ -6,19 +6,17 @@ import '../styles/Question.scss';
 
 const Question1 = ({ onClickSound, audio1, audio2, audio3, audio4 }) => {
   const width = useWidthSize(768);
-
   const [audioPlaying1, setAudioPlaying1] = useState(false);
   const [audioPlaying2, setAudioPlaying2] = useState(false);
   const [audioPlaying3, setAudioPlaying3] = useState(false);
   const [audioPlaying4, setAudioPlaying4] = useState(false);
-
   const mounted1 = useRef(false);
+
   useEffect(() => {
     if (!mounted1.current) {
       mounted1.current = true;
     } else {
       if (audioPlaying1) {
-        console.log('1번 재생');
         audio1.play();
         audio2.pause();
         audio2.currentTime = 0;
@@ -31,7 +29,6 @@ const Question1 = ({ onClickSound, audio1, audio2, audio3, audio4 }) => {
         setAudioPlaying3(false);
         setAudioPlaying4(false);
       } else {
-        console.log('1번 멈춰');
         audio1.pause();
         audio1.currentTime = 0;
         setAudioPlaying1(false);
@@ -45,7 +42,6 @@ const Question1 = ({ onClickSound, audio1, audio2, audio3, audio4 }) => {
       mounted2.current = true;
     } else {
       if (audioPlaying2) {
-        console.log('2번 재생');
         audio1.pause();
         audio1.currentTime = 0;
         audio2.play();
@@ -58,7 +54,6 @@ const Question1 = ({ onClickSound, audio1, audio2, audio3, audio4 }) => {
         setAudioPlaying3(false);
         setAudioPlaying4(false);
       } else {
-        console.log('2번 멈춰');
         audio2.pause();
         audio2.currentTime = 0;
         setAudioPlaying2(false);
@@ -72,7 +67,6 @@ const Question1 = ({ onClickSound, audio1, audio2, audio3, audio4 }) => {
       mounted3.current = true;
     } else {
       if (audioPlaying3) {
-        console.log('3번 재생');
         audio1.pause();
         audio1.currentTime = 0;
         audio2.pause();
@@ -85,7 +79,6 @@ const Question1 = ({ onClickSound, audio1, audio2, audio3, audio4 }) => {
         setAudioPlaying3(true);
         setAudioPlaying4(false);
       } else {
-        console.log('3번 멈춰');
         audio3.pause();
         audio3.currentTime = 0;
         setAudioPlaying3(false);
@@ -99,7 +92,6 @@ const Question1 = ({ onClickSound, audio1, audio2, audio3, audio4 }) => {
       mounted4.current = true;
     } else {
       if (audioPlaying4) {
-        console.log('4번 재생');
         audio1.pause();
         audio1.currentTime = 0;
         audio2.pause();
@@ -112,7 +104,6 @@ const Question1 = ({ onClickSound, audio1, audio2, audio3, audio4 }) => {
         setAudioPlaying3(false);
         setAudioPlaying4(true);
       } else {
-        console.log('4번 멈춰');
         audio4.pause();
         audio4.currentTime = 0;
         setAudioPlaying4(false);
@@ -140,7 +131,7 @@ const Question1 = ({ onClickSound, audio1, audio2, audio3, audio4 }) => {
         <div className="card">
           <div className="image-wrapper">
             <img
-              src="/soup.png"
+              src="/survey/soup.png"
               onClick={() => onClickSound(1)}
               onMouseEnter={() => {
                 setAudioPlaying1(true);
@@ -169,7 +160,7 @@ const Question1 = ({ onClickSound, audio1, audio2, audio3, audio4 }) => {
         <div className="card">
           <div className="image-wrapper">
             <img
-              src="/chocolate.png"
+              src="/survey/chocolate.png"
               onClick={() => onClickSound(2)}
               onMouseEnter={() => {
                 setAudioPlaying2(true);
@@ -198,7 +189,7 @@ const Question1 = ({ onClickSound, audio1, audio2, audio3, audio4 }) => {
         <div className="card">
           <div className="image-wrapper">
             <img
-              src="/pen.png"
+              src="/survey/pen.png"
               onClick={() => onClickSound(3)}
               onMouseEnter={() => {
                 setAudioPlaying3(true);
@@ -227,7 +218,7 @@ const Question1 = ({ onClickSound, audio1, audio2, audio3, audio4 }) => {
         <div className="card">
           <div className="image-wrapper">
             <img
-              src="/gaming.png"
+              src="/survey/gaming.png"
               onClick={() => onClickSound(4)}
               onMouseEnter={() => {
                 setAudioPlaying4(true);

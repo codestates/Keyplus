@@ -9,10 +9,8 @@
   height: 120px;
   padding: 50px 50px 0;
   z-index: 999;
-
   background-color: #000;
   color: #fff;
-
   -webkit-transition: background-color 0.5s ease;
   transition: background-color 0.5s ease;
 
@@ -39,9 +37,6 @@
   }
 }
 
-.navigation {
-}
-
 .nav-menu,
 .button-menu {
   display: flex;
@@ -62,7 +57,6 @@
   height: 100%;
   cursor: pointer;
 
-  // ? desktop 링크 hover color
   &:hover {
     color: #bbbbbb;
   }
@@ -133,7 +127,6 @@
     width: 100%;
     transition: all 0.3s ease;
 
-    // ? mobile 링크 hover color
     &:hover {
       color: #bbbbbb;
       padding-left: 8px;

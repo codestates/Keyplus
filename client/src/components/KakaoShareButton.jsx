@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 
 const KakaoShareButton = ({ url }) => {
   useEffect(() => {
-    console.log(url);
     if (!Kakao.isInitialized()) {
       Kakao.init(process.env.REACT_APP_KAKAO_JAVASCRIPT_KEY);
     }
@@ -11,7 +10,6 @@ const KakaoShareButton = ({ url }) => {
   const shareKakao = () => {
     Kakao.Link.sendDefault({
       objectType: 'feed',
-
       content: {
         title: 'Keyplus',
         description: '기계식 키보드 취향 공유',
@@ -43,7 +41,7 @@ const KakaoShareButton = ({ url }) => {
         className="share-button"
         onClick={shareKakao}
         style={{
-          backgroundImage: `url(${'kakao.png'})`,
+          backgroundImage: `url(${'/others/kakao.png'})`,
         }}
       ></button>
     </>

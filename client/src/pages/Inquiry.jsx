@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './styles/Inquiry.scss';
 import exceptionAxios from 'axios';
 import { message } from 'antd';
+import { EmailValidation } from '../utils/validation';
 
 const Inquiry = () => {
   const initialState = {
@@ -19,21 +20,13 @@ const Inquiry = () => {
     '그 외',
   ];
   const [updateOption, setUpdateOption] = useState(options[0]);
-  console.log('나 출력좀 ', { ...updateState, category: updateOption });
 
-  //! state 업데이트
   const onChangeUpdateState = (e) => {
     const { name, value } = e.target;
     setUpdateState({ ...updateState, [name]: value });
   };
 
   const { email, name, title, contents } = updateState;
-
-  const isEmail = (email) => {
-    const reg =
-      /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
-    return reg.test(email) ? true : false;
-  };
 
   const onClickSendBtn = async (e) => {
     // Prevents page refresh on submit
@@ -43,7 +36,7 @@ const Inquiry = () => {
         return message.warning('양식을 채워주세요');
       }
 
-      if (!isEmail(email)) {
+      if (!EmailValidation(email)) {
         setValidEmail(false);
         return message.warning('올바르지 않은 이메일 형식입니다');
       }
@@ -54,7 +47,6 @@ const Inquiry = () => {
       message.success('이메일 전송이 완료되었습니다');
       setUpdateState(initialState);
     } catch (err) {
-      console.log(err);
       message.warning('이메일 전송에 실패했습니다. 다시 시도해주세요');
       throw err;
     }

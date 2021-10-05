@@ -1,16 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
-
 import { addLikes, deleteLikes } from '../reducers/api/likesAPI';
 import axios from '../utils/customAxios';
 import Review from '../components/Review';
 import Button from '../components/Button';
-
-import './styles/KeyboardDetail.scss';
-
 import { Carousel, message, Tabs, List, Card } from 'antd';
-const { TabPane } = Tabs;
 import {
   HeartOutlined,
   HeartFilled,
@@ -19,11 +14,11 @@ import {
 } from '@ant-design/icons';
 import { yellow } from '@ant-design/colors';
 import Rating from 'react-rating';
-
+import './styles/KeyboardDetail.scss';
+const { TabPane } = Tabs;
 const LeftArrow = ({ currentSlide, slideCount, children, ...props }) => {
   return <div {...props}>{children}</div>;
 };
-
 const RightArrow = ({ currentSlide, slideCount, children, ...props }) => {
   return <div {...props}>{children}</div>;
 };
@@ -113,19 +108,14 @@ const keySwitchComponent = {
 
 const KeyboardDetail = (props) => {
   const history = useHistory();
-
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.user?.id);
-
   const likes = useSelector((state) => state.likes);
-
   const keyboardId = props.match.params?.id;
   const [keyboard, setKeyboard] = useState(null);
-
   const checkLiked = (id) => likes.findIndex((like) => like.id == id) !== -1;
   const [liked, setLiked] = useState(checkLiked(keyboardId));
   const [likeCount, setLikeCount] = useState(0);
-
   const [reviews, setReviews] = useState([]);
   const [averageRating, setAverageRating] = useState(0);
 
@@ -136,7 +126,6 @@ const KeyboardDetail = (props) => {
       setKeyboard(keyboard);
       setLikeCount(keyboard.likeCount);
       setReviews(keyboard.reviews);
-
       setAverageRating(
         keyboard.reviews.reduce((acc, cur) => acc + cur.rating, 0) /
           keyboard.reviews.length
@@ -232,7 +221,6 @@ const KeyboardDetail = (props) => {
               <div className="keyboard-name">
                 {keyboard.brand} {keyboard.name}
               </div>
-
               <div className="keyboard-like" onClick={onClickHeart}>
                 <span className="like-heart">
                   {liked ? (
@@ -244,7 +232,6 @@ const KeyboardDetail = (props) => {
                 <span className="like-count">{likeCount}</span>
               </div>
             </div>
-
             <Tabs defaultActiveKey="1" centered>
               <TabPane tab="상세정보" key="1">
                 <List grid>
@@ -339,7 +326,6 @@ const KeyboardDetail = (props) => {
                         </div>
                       </div>
                     </div>
-
                     {reviews.map((review, idx) => (
                       <div key={`${review}_${idx}`} className="review">
                         <Review review={review} userId={userId} />
@@ -349,7 +335,7 @@ const KeyboardDetail = (props) => {
                 ) : (
                   <div className="no-data-area">
                     <img
-                      src="/no-data.jpg"
+                      src="/others/no-data.jpg"
                       alt="no data"
                       style={{
                         maxWidth: '350px',
