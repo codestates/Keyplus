@@ -8,6 +8,7 @@ import KeyboardCard from './KeyboardCard';
 import { isError } from '../reducers/errorReducer';
 
 import useWidthSize from '../hooks/useWidthSize';
+import useIsMount from '../hooks/useIsMount';
 
 import './styles/Keyboard.scss';
 
@@ -19,6 +20,13 @@ import { FiRotateCw } from 'react-icons/fi';
 import ScrollArrow from '../components/ScrollArrow';
 
 const Keyboard = () => {
+  useEffect(() => {
+    console.log('Keyboard 컴포넌트가 화면에 나타남');
+    return () => {
+      console.log('Keyboard 컴포넌트가 화면에서 사라짐');
+    };
+  }, []);
+
   const dispatch = useDispatch();
   // const loading = useSelector((state) => state.loading);
 
@@ -38,6 +46,11 @@ const Keyboard = () => {
   const [brandAbko, setBrandAbko] = useState(false);
   const [brandLeopold, setBrandLeopold] = useState(false);
   const [brandVarmilo, setBrandVarmilo] = useState(false);
+  const [brandHansung, setBrandHansung] = useState(false);
+  const [brandCox, setBrandCox] = useState(false);
+  const [brandMstone, setBrandMstone] = useState(false);
+  const [brandCherry, setBrandCherry] = useState(false);
+  const [brandCorsair, setBrandCorsair] = useState(false);
 
   // ! 스위치
   const [switchBrown, setSwitchBrown] = useState(false);
@@ -56,18 +69,22 @@ const Keyboard = () => {
 
   // ! 화면 크기
   const width = useWidthSize(768);
+  const isMount = useIsMount();
 
   useEffect(async () => {
     try {
       const response = await axios.get('/keyboards');
-      setKeyboards(
-        response.data.data.sort((a, b) => b.likeCount - a.likeCount)
-      );
-      setAllKeyboards(
-        response.data.data.sort((a, b) => b.likeCount - a.likeCount)
-      );
-      setSortingNumber('1');
-      setFirstLoading(false);
+
+      if (isMount.current) {
+        setKeyboards(
+          response.data.data.sort((a, b) => b.likeCount - a.likeCount)
+        );
+        setAllKeyboards(
+          response.data.data.sort((a, b) => b.likeCount - a.likeCount)
+        );
+        setSortingNumber('1');
+        setFirstLoading(false);
+      }
     } catch (err) {
       console.log(err);
       dispatch(isError(err.response));
@@ -199,6 +216,11 @@ const Keyboard = () => {
         if (brandAbko) brands.push('앱코');
         if (brandLeopold) brands.push('레오폴드');
         if (brandVarmilo) brands.push('바밀로');
+        if (brandHansung) brands.push('한성');
+        if (brandCox) brands.push('콕스');
+        if (brandMstone) brands.push('엠스톤');
+        if (brandCherry) brands.push('체리');
+        if (brandCorsair) brands.push('커세어');
         if (brands.length !== 0) {
           setKeyboards((prev) =>
             prev.filter((keyboard) => brands.indexOf(keyboard.brand) !== -1)
@@ -270,6 +292,9 @@ const Keyboard = () => {
         }
       }
     }
+    return () => {
+      mountedAllCategory.current = false;
+    };
   }, [allKeyboards, allCategory, sortingNumber]);
 
   // ! 브랜드
@@ -318,6 +343,48 @@ const Keyboard = () => {
     } else {
       setAllCategory((prev) =>
         prev.filter((category) => category !== '바밀로')
+      );
+    }
+  };
+  const onChangeBrandHansung = (e) => {
+    setBrandHansung(e.target.checked);
+    if (e.target.checked) {
+      setAllCategory((prev) => [...prev, '한성']);
+    } else {
+      setAllCategory((prev) => prev.filter((category) => category !== '한성'));
+    }
+  };
+  const onChangeBrandCox = (e) => {
+    setBrandCox(e.target.checked);
+    if (e.target.checked) {
+      setAllCategory((prev) => [...prev, '콕스']);
+    } else {
+      setAllCategory((prev) => prev.filter((category) => category !== '콕스'));
+    }
+  };
+  const onChangeBrandMstone = (e) => {
+    setBrandMstone(e.target.checked);
+    if (e.target.checked) {
+      setAllCategory((prev) => [...prev, '엠스톤']);
+    } else {
+      setAllCategory((prev) => prev.filter((category) => category !== '한성'));
+    }
+  };
+  const onChangeBrandCherry = (e) => {
+    setBrandCherry(e.target.checked);
+    if (e.target.checked) {
+      setAllCategory((prev) => [...prev, '체리']);
+    } else {
+      setAllCategory((prev) => prev.filter((category) => category !== '체리'));
+    }
+  };
+  const onChangeBrandCorsair = (e) => {
+    setBrandCorsair(e.target.checked);
+    if (e.target.checked) {
+      setAllCategory((prev) => [...prev, '커세어']);
+    } else {
+      setAllCategory((prev) =>
+        prev.filter((category) => category !== '커세어')
       );
     }
   };
@@ -496,6 +563,27 @@ const Keyboard = () => {
                   onChange={onChangeBrandVarmilo}
                 >
                   바밀로
+                </Checkbox>
+                <Checkbox
+                  checked={brandHansung}
+                  onChange={onChangeBrandHansung}
+                >
+                  한성
+                </Checkbox>
+                <Checkbox checked={brandCox} onChange={onChangeBrandCox}>
+                  콕스
+                </Checkbox>
+                <Checkbox checked={brandMstone} onChange={onChangeBrandMstone}>
+                  엠스톤
+                </Checkbox>
+                <Checkbox checked={brandCherry} onChange={onChangeBrandCherry}>
+                  체리
+                </Checkbox>
+                <Checkbox
+                  checked={brandCorsair}
+                  onChange={onChangeBrandCorsair}
+                >
+                  커세어
                 </Checkbox>
               </div>
               <div>키 스위치</div>

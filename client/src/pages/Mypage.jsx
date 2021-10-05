@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
@@ -10,7 +11,7 @@ import {
 import TextModal from '../components/TextModal';
 
 import './styles/Mypage.scss';
-import { message, Button, Space } from 'antd';
+import { message } from 'antd';
 import { isError } from '../reducers/errorReducer';
 import { Avatar } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
@@ -69,12 +70,22 @@ const Mypage = () => {
     }
   };
 
+  //! 패스워드 일치 함수와 정규표현식
+  const passwordValidate = (password) => {
+    const reg = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
+    return reg.test(password) ? true : false;
+  };
+
   //! 회원정보 수정 함수
   const onClickModify = async (e) => {
     e.preventDefault();
     // if (!validNickname) return message.warning('닉네임 중복검사를 해주세요');
     try {
-      if (prevNickname === nickname || validNickname) {
+      if (password && !passwordValidate(password)) {
+        return message.warning(
+          '최소 6자, 최소 하나의 문자, 하나의 숫자 및 하나의 특수 문자의 비밀번호가 필요합니다'
+        );
+      } else if (prevNickname === nickname || validNickname) {
         setValidNickname(true);
 
         const formData = new FormData();
@@ -122,10 +133,6 @@ const Mypage = () => {
       reader.readAsDataURL(newFile);
     }
   };
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
 
   return (
     <>
@@ -190,7 +197,7 @@ const Mypage = () => {
               {userState.socialType === 'local' && (
                 <>
                   <div className="input-box">
-                    <label htmlFor="password">패스워드</label>
+                    <label htmlFor="password">비밀번호</label>
                     <input
                       type="password"
                       onChange={onChangeUpdateState}
@@ -216,33 +223,31 @@ const Mypage = () => {
                 />
               </div>
             </form>
-            {/* FIXME: 관심키보드 / 내 리뷰 */}
             <div className="mypage-tabs">
               <Tabs defaultActiveKey="1" onChange={callback}>
                 <TabPane tab="관심 키보드" key="관심 키보드">
-                  {/* <div className="mypage-tabs"> */}
                   {likesState.map((keyboard) => (
-                    <div key={keyboard} className="mypage-tab-item">
-                      <KeyboardCard
-                        key={`${keyboard.id}_${keyboard.name}`}
-                        keyboard={keyboard}
-                      />
+                    <div
+                      key={`${keyboard.id}_${keyboard.name}`}
+                      className="mypage-tab-item"
+                    >
+                      <KeyboardCard keyboard={keyboard} />
                     </div>
                   ))}
                   {/* </div> */}
                 </TabPane>
 
                 <TabPane tab="내 리뷰" key="내 리뷰">
-                  {/* <div className="mypage-tabs"> */}
                   {reviewsState.map((review, idx) => (
-                    <div
+                    <Link
                       key={`${review}_${idx}`}
-                      className="mypage-tab-item mypage-review"
+                      to={`/keyboards/${review.keyboardId}`}
                     >
-                      <Review review={review} userId={userId} />
-                    </div>
+                      <div className="mypage-tab-item mypage-review">
+                        <Review review={review} userId={userId} />
+                      </div>
+                    </Link>
                   ))}
-                  {/* </div> */}
                 </TabPane>
               </Tabs>
             </div>

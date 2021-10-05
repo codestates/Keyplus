@@ -12,6 +12,10 @@ a:hover {
   transition: unset;
 }
 
+.ant-card-meta-description {
+  text-align: initial;
+}
+
 .ant-carousel .slick-prev,
 .ant-carousel .slick-next,
 .ant-carousel .slick-prev:hover,
@@ -52,7 +56,43 @@ a:hover {
   transform: rotate(-45deg);
 }
 
-.keyboard {
+.ant-checkbox-wrapper {
+  color: #000;
+}
+.ant-checkbox {
+  color: #000;
+}
+
+.ant-checkbox-checked {
+  border-color: #000;
+}
+.ant-checkbox-inner {
+  border-color: #000;
+}
+.ant-checkbox-checked .ant-checkbox-inner {
+  background-color: #262626;
+}
+
+.ant-radio-wrapper {
+  color: #000;
+}
+.ant-radio {
+  color: #000;
+}
+
+.ant-radio-checked {
+  border-color: #000;
+}
+
+.ant-radio-inner {
+  border-color: #000;
+
+  &::after {
+    background-color: #262626;
+  }
+}
+.keyboard,
+main.survey {
   .ant-card-bordered {
     border-radius: 10px;
     // box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
@@ -63,5 +103,11 @@ a:hover {
       border-top-left-radius: 10px;
       border-top-right-radius: 10px;
     }
+  }
+}
+
+.survey {
+  .ant-spin-dot-item {
+    background-color: #000;
   }
 }

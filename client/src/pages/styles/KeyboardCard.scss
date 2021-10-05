@@ -1,5 +1,17 @@
 @use '../../styles/constants' as *;
 
+.keyboard-card {
+  width: 100%;
+  position: relative;
+  top: 0px;
+  transition: all 0.2s ease-out;
+
+  &:hover {
+    box-shadow: 0px 4px 8px rgba(38, 38, 38, 0.2);
+    top: -4px;
+    // border: 1px solid #cccccc;
+  }
+}
 .keyboard-img {
   .hover-overlay {
     position: absolute;

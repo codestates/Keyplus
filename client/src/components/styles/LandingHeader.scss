@@ -32,7 +32,7 @@
   transform: translate(-50%, 0);
   text-decoration: none;
   cursor: pointer;
-  margin-top: 50px;
+  margin-top: 47px;
 
   & > * {
     vertical-align: middle;
@@ -65,6 +65,11 @@
   text-decoration: none;
   height: 100%;
   cursor: pointer;
+
+  // ? desktop 링크 hover color
+  &:hover {
+    color: #bbbbbb;
+  }
 }
 
 // .buttons {
@@ -81,7 +86,7 @@
   }
 
   .landing-header-logo {
-    margin-top: 12px;
+    margin-top: 13px;
   }
 
   .landing-nav-menu {
@@ -100,7 +105,7 @@
   }
 
   .landing-button-menu {
-    column-gap: 15px;
+    column-gap: 25px;
   }
 
   .landing-nav-menu.active {
@@ -135,6 +140,7 @@
     width: 100%;
     transition: all 0.3s ease;
 
+    // ? mobile 링크 hover color
     &:hover {
       color: #bbbbbb;
       padding-left: 8px;

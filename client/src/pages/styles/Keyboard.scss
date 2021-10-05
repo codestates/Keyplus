@@ -14,13 +14,12 @@
   display: grid;
   grid-template-columns: 160px 1fr;
   grid-template-rows: 1fr;
-  margin-bottom: 30px;
+  margin-bottom: 35px;
   letter-spacing: -0.05em;
-
-  overflow: hidden;
-
   border: 1px solid #eeeeee;
   border-radius: 6px;
+  border-top: 5px solid #262626;
+  overflow: hidden;
 
   // border: 1px solid #262626;
   // background-color: #262626;
@@ -30,7 +29,7 @@
   }
 
   & > * {
-    padding: 10px;
+    padding: 12px;
     align-items: center;
   }
 
@@ -38,9 +37,13 @@
     background-color: #262626;
     color: #fff;
     // color: #000;
-    border-bottom: 1px solid #858585;
     font-weight: 500;
+
+    // &:not(:nth-last-child(2)) {
+    //   border-bottom: 1px solid #858585;
+    // }
   }
+
   & > *:nth-child(even) {
     padding-left: 20px;
 
@@ -57,7 +60,7 @@
 
   .category-list {
     background-color: #fff;
-    overflow: hidden;
+    // overflow: hidden;
 
     &:nth-child(4n-2) {
       background-color: #eeeeee;
@@ -125,7 +128,7 @@
 
 .keyboard-sorting-count-area {
   @include flexbox(space-between);
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 
   .sorting-tab:not(.selected):hover {
     color: rgb(138, 138, 138);

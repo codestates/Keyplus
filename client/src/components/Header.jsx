@@ -59,14 +59,14 @@ const Header = () => {
             {isOpenSidebar ? (
               <CloseOutlined
                 style={{
-                  fontSize: width > 768 ? '24px' : '19px',
+                  fontSize: width > 768 ? '24px' : '22px',
                   color: offset > 0 ? '#fff' : '#000',
                 }}
               />
             ) : (
               <MenuOutlined
                 style={{
-                  fontSize: width > 768 ? '24px' : '19px',
+                  fontSize: width > 768 ? '24px' : '22px',
                   color: offset > 0 ? '#fff' : '#000',
                 }}
               />
@@ -107,11 +107,20 @@ const Header = () => {
               </li>
               <li className="nav-item">
                 <Link
-                  to="/map"
+                  to="/typing-shop"
                   className="nav-links"
                   onClick={isOpenSidebar ? onClickToggleBtn : null}
                 >
                   타건샵
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link
+                  to="/introduction"
+                  className="nav-links"
+                  onClick={isOpenSidebar ? onClickToggleBtn : null}
+                >
+                  입문
                 </Link>
               </li>
             </div>
@@ -136,7 +145,7 @@ const Header = () => {
               <button onClick={onClickMypage} className="button-links">
                 <UserOutlined
                   style={{
-                    fontSize: width > 768 ? '24px' : '19px',
+                    fontSize: width > 768 ? '24px' : '22px',
                     color: offset > 0 ? '#fff' : '#000',
                   }}
                 />
@@ -150,7 +159,7 @@ const Header = () => {
                 >
                   <ExportOutlined
                     style={{
-                      fontSize: width > 768 ? '24px' : '19px',
+                      fontSize: width > 768 ? '24px' : '22px',
                       color: offset > 0 ? '#fff' : '#000',
                     }}
                   />

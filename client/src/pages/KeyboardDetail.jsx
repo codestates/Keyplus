@@ -34,11 +34,12 @@ const keySwitchComponent = {
       <span
         style={{
           display: 'inline-block',
-          width: '14px',
-          height: '14px',
+          width: '15px',
+          height: '15px',
           borderRadius: '50%',
           verticalAlign: 'middle',
           backgroundColor: '#ff656c',
+          marginRight: '2px',
         }}
       ></span>
       <span style={{ verticalAlign: 'middle', fontSize: '14px' }}>저적</span>
@@ -49,11 +50,12 @@ const keySwitchComponent = {
       <span
         style={{
           display: 'inline-block',
-          width: '14px',
-          height: '14px',
+          width: '15px',
+          height: '15px',
           borderRadius: '50%',
           verticalAlign: 'middle',
           backgroundColor: '#ff1A48',
+          marginRight: '2px',
         }}
       ></span>
       <span style={{ verticalAlign: 'middle', fontSize: '14px' }}>적축</span>
@@ -64,11 +66,12 @@ const keySwitchComponent = {
       <span
         style={{
           display: 'inline-block',
-          width: '14px',
-          height: '14px',
+          width: '15px',
+          height: '15px',
           borderRadius: '50%',
           verticalAlign: 'middle',
           backgroundColor: '#00b4f9',
+          marginRight: '2px',
         }}
       ></span>
       <span style={{ verticalAlign: 'middle', fontSize: '14px' }}>청축</span>
@@ -79,11 +82,12 @@ const keySwitchComponent = {
       <span
         style={{
           display: 'inline-block',
-          width: '14px',
-          height: '14px',
+          width: '15px',
+          height: '15px',
           borderRadius: '50%',
           verticalAlign: 'middle',
           backgroundColor: '#B8792A',
+          marginRight: '2px',
         }}
       ></span>
       <span style={{ verticalAlign: 'middle', fontSize: '14px' }}>갈축</span>
@@ -94,11 +98,12 @@ const keySwitchComponent = {
       <span
         style={{
           display: 'inline-block',
-          width: '14px',
-          height: '14px',
+          width: '15px',
+          height: '15px',
           borderRadius: '50%',
           verticalAlign: 'middle',
           backgroundColor: '#0d0d0d',
+          marginRight: '2px',
         }}
       ></span>
       <span style={{ verticalAlign: 'middle', fontSize: '14px' }}>흑축</span>
@@ -245,13 +250,17 @@ const KeyboardDetail = (props) => {
                 <List grid>
                   <List.Item>
                     <Card title="Switch">
-                      {Object.keys(keyboard.switch).map((keySwitch, idx) => (
-                        <span key={`${keySwitch}_${idx}`}>
-                          {keyboard.switch[keySwitch] && (
-                            <>{keySwitchComponent[keySwitch]}</>
-                          )}
-                        </span>
-                      ))}
+                      {Object.keys(keyboard.switch).map(
+                        (keySwitch, idx) =>
+                          keyboard.switch[keySwitch] && (
+                            <span
+                              key={`${keySwitch}_${idx}`}
+                              className="keyboard-detail-switch"
+                            >
+                              <>{keySwitchComponent[keySwitch]}</>
+                            </span>
+                          )
+                      )}
                     </Card>
                   </List.Item>
                   <List.Item>

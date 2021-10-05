@@ -1,11 +1,17 @@
-import axios from '../../utils/customAxios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { getLikes } from './likesAPI';
-import { getReviews } from './reviewsAPI';
+
+import { logOutForce } from '../userSlice';
 import { logOutMyLikes } from '../likesSlice';
 import { logOutMyReviews } from '../reviewsSlice';
-import exceptionAxios from 'axios';
 import { setExpireDate } from '../expireDateReducer';
+
+import { getLikes } from './likesAPI';
+import { getReviews } from './reviewsAPI';
+
+import axios from '../../utils/customAxios';
+import exceptionAxios from 'axios';
+
+import { message } from 'antd';
 
 // 회원가입, 로그인, 로그아웃, 유저정보조회, 회원정보변경, 회원탈퇴, 소셜로그인(구글,카카오,네이버)
 
@@ -21,6 +27,27 @@ export const logIn = createAsyncThunk(
       dispatch(setExpireDate(Date.now()));
       return user.data.data;
     } catch (err) {
+      return rejectWithValue(err);
+    }
+  }
+);
+
+export const fakeLogIn = createAsyncThunk(
+  'user/fakeLogIn',
+  async (_, { dispatch, rejectWithValue }) => {
+    try {
+      const user = await axios.get('/users');
+      await Promise.all([
+        dispatch(getLikes()).unwrap(),
+        dispatch(getReviews()).unwrap(),
+      ]);
+      return user.data.data;
+    } catch (err) {
+      // dispatch(logOutForce());
+      // dispatch(logOutMyLikes());
+      // dispatch(logOutMyReviews());
+      // dispatch(setExpireDate(null));
+      // message.warning('오류가 발생하여 로그아웃됩니다.');
       return rejectWithValue(err);
     }
   }
@@ -51,6 +78,11 @@ export const logOut = createAsyncThunk(
       dispatch(setExpireDate(null));
       history.replace('/');
     } catch (err) {
+      // dispatch(logOutForce());
+      // dispatch(logOutMyLikes());
+      // dispatch(logOutMyReviews());
+      // dispatch(setExpireDate(null));
+      // message.warning('오류가 발생하여 로그아웃됩니다.');
       return rejectWithValue(err);
     }
   }
@@ -65,6 +97,11 @@ export const updateUserInfo = createAsyncThunk(
       console.log('여기는 응답 받아온거', user);
       return user.data.data;
     } catch (err) {
+      // dispatch(logOutForce());
+      // dispatch(logOutMyLikes());
+      // dispatch(logOutMyReviews());
+      // dispatch(setExpireDate(null));
+      // message.warning('오류가 발생하여 로그아웃됩니다.');
       return rejectWithValue(err);
     }
   }
@@ -81,6 +118,11 @@ export const deleteUser = createAsyncThunk(
       dispatch(setExpireDate(null));
       history.replace('/');
     } catch (err) {
+      // dispatch(logOutForce());
+      // dispatch(logOutMyLikes());
+      // dispatch(logOutMyReviews());
+      // dispatch(setExpireDate(null));
+      // message.warning('오류가 발생하여 로그아웃됩니다.');
       return rejectWithValue(err);
     }
   }
@@ -103,21 +145,6 @@ export const socialLogIn = createAsyncThunk(
   }
 );
 
-// export const validateNickname = createAsyncThunk(
-//   '/user/validateNickname',
-//   async (data, { rejectWithValue }) => {
-//     console.log('변경할 닉네임 받아온 거', data);
-//     try {
-//       await exceptionAxios.post('/auth/nickname', data);
-//       // console.log('새로운 닉네임 응답 받아온 거', nickname);
-//       // return nickname;
-//       // return nickname.data.data;
-//     } catch (err) {
-//       return rejectWithValue(err);
-//     }
-//   }
-// );
-
 export const validateNickname = async (data) => {
   console.log('변경할 닉네임 받아온 거', data);
   const response = await exceptionAxios.post('/auth/nickname', data);
@@ -130,17 +157,3 @@ export const validateEmail = async (data) => {
   console.log('새로운 이메일 응답 받아온 거', response);
   return response;
 };
-
-// export const validateEmail = createAsyncThunk(
-//   '/user/validateEmail',
-//   async (data, { rejectWithValue }) => {
-//     console.log('변경할 이메일 받아온 거', data);
-//     try {
-//       const response = await exceptionAxios.post('/auth/email', data);
-//       console.log('새로운 이메일 응답 받아온 거', response);
-//       return response;
-//     } catch (err) {
-//       return rejectWithValue(err);
-//     }
-//   }
-// );

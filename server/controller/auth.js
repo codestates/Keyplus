@@ -314,12 +314,14 @@ module.exports = {
           pass: process.env.MAILPW,
         },
       });
+      const logo =
+        'https://cdn.discordapp.com/attachments/885407447479631876/894181145791586344/KEYPLUS_black_36.png';
       const verificationCode = generateRandomCode(6);
       const mailOptions = {
         from: `noreply from @keyplus.kr ${process.env.MAILID}`,
         to: req.body.email,
         subject: '[Keyplus] 이메일 인증번호를 입력해주세요.',
-        html: `<h2>이메일 인증을 완료하실려면 <b>인증번호</b>를 입력해주세요.</h2><p>인증번호를 입력하셔야만 이메일 인증이 완료됩니다.</p> <div>Keyplus 인증번호 : ${verificationCode}</div>`,
+        html: `<div style="padding:10px 10px 0;"><h2 style="color:black;">이메일 인증을 완료하시려면 <b>인증번호</b>를 입력해주세요.</h2><h3 style="color:black;">인증번호를 입력하셔야만 이메일 인증이 완료됩니다.</h3> <h3 style="margin-bottom:130px">Keyplus 인증번호 : ${verificationCode}</h3><img src=${logo} width="auto" height="auto" alt="Keyplus Logo"></div>`,
       };
       transporter.sendMail(mailOptions, function (err, info) {
         if (err) {
