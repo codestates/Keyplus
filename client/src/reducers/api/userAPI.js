@@ -1,4 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { logOutForce } from '../userSlice';
 import { logOutMyLikes } from '../likesSlice';
 import { logOutMyReviews } from '../reviewsSlice';
 import { setExpireDate } from '../expireDateReducer';
@@ -79,7 +80,7 @@ export const logOut = createAsyncThunk(
 
 export const updateUserInfo = createAsyncThunk(
   'user/updateUserInfo',
-  async ({ formData }, { rejectWithValue }) => {
+  async ({ formData }, { dispatch, rejectWithValue }) => {
     try {
       const user = await exceptionAxios.patch('/users', formData);
       return user.data.data;

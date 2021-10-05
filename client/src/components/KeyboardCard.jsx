@@ -14,6 +14,10 @@ import {
 import { BiWon } from 'react-icons/bi';
 import { AiFillBulb, AiOutlineBulb } from 'react-icons/ai';
 import './styles/KeyboardCard.scss';
+import { logOutForce } from '../reducers/userSlice';
+import { logOutMyLikes } from '../reducers/likesSlice';
+import { logOutMyReviews } from '../reducers/reviewsSlice';
+import { setExpireDate } from '../reducers/expireDateReducer';
 const { Meta } = Card;
 
 export const keySwitchComponent = {
@@ -115,23 +119,14 @@ const KeyboardCard = memo(({ keyboard }) => {
       }
       try {
         if (liked) {
-          await dispatch(deleteLikes(keyboard.id));
+          await dispatch(deleteLikes(keyboard.id)).unwrap();
           setLikeCount((prevLikeCount) => prevLikeCount - 1);
         } else {
-          await dispatch(addLikes(keyboard.id));
+          await dispatch(addLikes(keyboard.id)).unwrap();
           setLikeCount((prevLikeCount) => prevLikeCount + 1);
         }
         setLiked((prevLiked) => !prevLiked);
       } catch (err) {
-        if (err.response) {
-          console.log(err.response);
-        } else {
-          console.log(err);
-        }
-        dispatch(logOutForce());
-        dispatch(logOutMyLikes());
-        dispatch(logOutMyReviews());
-        dispatch(setExpireDate(null));
         return message.warning('오류가 발생하여 로그아웃됩니다.');
       }
     },

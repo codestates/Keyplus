@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { HiOutlineChevronDoubleUp } from 'react-icons/hi';
 import smoothscroll from 'smoothscroll-polyfill';
 import './styles/ScrollArrow.scss';
@@ -18,7 +18,14 @@ const ScrollArrow = ({ landing }) => {
     smoothscroll.polyfill();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
-  window.addEventListener('scroll', checkScrollTop);
+
+  useEffect(() => {
+    window.addEventListener('scroll', checkScrollTop);
+
+    return () => {
+      window.removeEventListener('scroll', checkScrollTop);
+    };
+  });
 
   return (
     <HiOutlineChevronDoubleUp

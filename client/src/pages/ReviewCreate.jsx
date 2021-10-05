@@ -169,9 +169,6 @@ const ReviewCreate = ({ location, ...props }) => {
       message.success('리뷰 작성이 완료되었습니다.');
       history.push(`/keyboards/${keyboardId}`);
     } catch (err) {
-      if (err.response?.status === 409) {
-        return message.warning('이미 리뷰를 남기셨습니다.');
-      }
       return message.warning('오류가 발생하여 로그아웃됩니다.');
     }
   };
