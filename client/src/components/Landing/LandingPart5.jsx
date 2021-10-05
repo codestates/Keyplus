@@ -1,6 +1,5 @@
 import React from 'react';
 import { useHistory } from 'react-router';
-
 import '../styles/LandingPart5.scss';
 
 const LandingPart5 = () => {
