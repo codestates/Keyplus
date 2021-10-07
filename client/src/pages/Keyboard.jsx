@@ -464,6 +464,11 @@ const Keyboard = () => {
     setBrandAbko(false);
     setBrandLeopold(false);
     setBrandVarmilo(false);
+    setBrandHansung(false);
+    setBrandCox(false);
+    setBrandMstone(false);
+    setBrandCherry(false);
+    setBrandCorsair(false);
 
     setSwitchBrown(false);
     setSwitchRed(false);
