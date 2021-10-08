@@ -15,6 +15,8 @@ module.exports = {
         sameSite: 'None',
         secure: true,
         httpOnly: true,
+        expires: new Date(Date.now() + 1000 * 60 * 60 * 48),
+        domain: '.keyplus.kr',
       })
       .json({ data: { accessToken }, message: 'OK' });
   },
