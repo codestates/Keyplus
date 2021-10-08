@@ -156,8 +156,10 @@ module.exports = {
 
       res.cookie('jwt', token, {
         sameSite: 'None',
-        httpOnly: true,
         secure: true,
+        httpOnly: true,
+        expires: new Date(Date.now() + 1000 * 60 * 60 * 48),
+        domain: '.keyplus.kr',
       });
 
       res.redirect(`${process.env.CLIENT_URI}/temp`);
@@ -214,8 +216,10 @@ module.exports = {
 
       res.cookie('jwt', token, {
         sameSite: 'None',
-        httpOnly: true,
         secure: true,
+        httpOnly: true,
+        expires: new Date(Date.now() + 1000 * 60 * 60 * 48),
+        domain: '.keyplus.kr',
       });
 
       res.redirect(`${process.env.CLIENT_URI}/temp`);
@@ -271,8 +275,10 @@ module.exports = {
 
       res.cookie('jwt', token, {
         sameSite: 'None',
-        httpOnly: true,
         secure: true,
+        httpOnly: true,
+        expires: new Date(Date.now() + 1000 * 60 * 60 * 48),
+        domain: '.keyplus.kr',
       });
 
       res.redirect(`${process.env.CLIENT_URI}/temp`);
