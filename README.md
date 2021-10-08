@@ -1,8 +1,7 @@
 <br />
 
-<img src="https://media.discordapp.net/attachments/880163201872961636/893412350156234782/KEYPLUS_big.png" />
+<img src="https://media.discordapp.net/attachments/880163201872961636/895863859305398282/keyplus_logo.png" />
 
-<br />
 
 ```
 기계식 키보드 입문하고 싶은데, 고르기 어려우신가요?
