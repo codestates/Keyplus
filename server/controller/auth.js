@@ -57,7 +57,16 @@ module.exports = {
         isAdmin,
         image,
       });
-      return res.status(200).cookie('jwt', token).json({ data: loginUserInfo });
+      return res
+        .status(200)
+        .cookie('jwt', token, {
+          sameSite: 'None',
+          secure: true,
+          httpOnly: true,
+          expires: new Date(Date.now() + 1000 * 60 * 60 * 48),
+          domain: '.keyplus.kr',
+        })
+        .json({ data: loginUserInfo });
     } catch (err) {
       console.log(err);
       return res.status(500).json({ message: 'Server Error' });
