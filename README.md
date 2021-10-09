@@ -11,7 +11,7 @@ Keyplus가 도와드릴게요!
 **사용자에게 딱 맞는 기계식 키보드를 추천**해주는 서비스입니다.
 
 <br />
-<h2><a href="https://keyplus.kr"><strong>🏠 &nbsp;Homepage</strong></a></h2>
+<h2><a href="https://keyplus.kr"><strong>Homepage</strong></a></h2>
 
 
 <img src="https://media.discordapp.net/attachments/871554528389005335/892987580147175484/landing.png" />
