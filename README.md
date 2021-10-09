@@ -18,22 +18,38 @@ Keyplus가 도와드릴게요!
 
 <br />
 
-## 👣 &nbsp;Flowchart
-### Client
-![Client Flowchart](https://media.discordapp.net/attachments/871554528389005335/884722844230103040/Keyplus_-_Client.jpg)
 
+## STACK
+### FRONT-END
+<p>
+  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square"/>
+  <img src="https://img.shields.io/badge/React-61DAFB?style=flat-square"/>
+  <img src="https://img.shields.io/badge/Redux Toolkit-764ABC?style=flat-square"/>
+  <img src="https://img.shields.io/badge/redux persist-FF9E0F?style=flat-square"/>
+  <img src="https://img.shields.io/badge/SCSS-CC6699?style=flat-square"/>
+  <img src="https://img.shields.io/badge/axios-41454A?style=flat-square"/>
+</p>
 
-### Server
-![Server Flowchart](https://media.discordapp.net/attachments/831481282185527349/884725584457003028/Keyplus_-_Server_2.jpg)
+### BACK-END
+
+`Node.js` `Express.js` `MySQL` `Sequelize` `multer` `Bcrypt` `JWT` `Nodemailer`
+
 
 <br />
 
-## 🔨 &nbsp;System Architecture
-![System Architecture](https://media.discordapp.net/attachments/871554528389005335/892989436348993587/Web_App_Reference_Architecture_V2_7.png?width=1790&height=1062)
+## SYSTEM ARCHITECTURE
+![System Architecture](https://media.discordapp.net/attachments/871554528389005335/896256117016002640/Web_App_Reference_Architecture_V2_10.png?width=1732&height=1027)
+
 
 <br />
 
-## 😊 &nbsp;Team Member
+
+## TEAM MEMBER
 | <a href="https://github.com/chloemk">김민성</a>  | <a href="https://github.com/seona-jung">정선아</a>   | <a href="https://github.com/do8972">박준호</a>  | <a href="https://github.com/goodbsm2421">백승문</a>  |
 | :----: |:----:| :----:| :---:|
 | Front-end | Front-end | Back-end |Back-end |
+
+<br />
+
+
+#### :arrow_right: &nbsp; <a href="https://www.notion.so/10-29plus-Keyplus-2944b227228343aaa5671faab5763cd8">MORE INFORMATION</a>
