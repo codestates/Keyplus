@@ -72,7 +72,7 @@ const TypingShop = () => {
         //! 커스텀 오버레이를 생성
         const content =
           '<div class="custom-overlay">' +
-          `  <a href=https://map.kakao.com/link/map/${shop.name},${shop.latitude},${shop.longitude} target="_blank">` +
+          `  <a href=https://place.map.kakao.com/${shop.content} target="_blank">` +
           `    <span class="title">${shop.name}</span>` +
           '  </a>' +
           '</div>';
