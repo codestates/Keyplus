@@ -24,10 +24,8 @@ Keyplus가 도와드릴게요!
 <p>
   <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square"/>
   <img src="https://img.shields.io/badge/React-61DAFB?style=flat-square"/>
-  <img src="https://img.shields.io/badge/Redux Toolkit-764ABC?style=flat-square"/>
-  <img src="https://img.shields.io/badge/redux persist-FF6550?style=flat-square"/>
+  <img src="https://img.shields.io/badge/Redux-764ABC?style=flat-square"/>
   <img src="https://img.shields.io/badge/SCSS-CC6699?style=flat-square"/>
-  <img src="https://img.shields.io/badge/axios-41454A?style=flat-square"/>
 </p>
 
 ### BACK-END
