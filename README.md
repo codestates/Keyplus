@@ -59,4 +59,6 @@ Keyplus가 도와드릴게요!
 <br />
 
 
-#### :arrow_right: &nbsp; <a href="https://www.notion.so/10-29plus-Keyplus-2944b227228343aaa5671faab5763cd8">MORE INFORMATION</a>
+## MORE INFORMATION
+#### :arrow_right: &nbsp; [Notion](https://www.notion.so/10-29plus-Keyplus-2944b227228343aaa5671faab5763cd8)
+#### :arrow_right: &nbsp; [Wiki](https://github.com/codestates/Keyplus/wiki)
