@@ -5,7 +5,7 @@ import Header from '../components/Header';
 import useWidthSize from '../hooks/useWidthSize';
 import { AiOutlineArrowRight } from 'react-icons/ai';
 import { FaExclamation } from 'react-icons/fa';
-import useIsMount from '../hooks/useIsMount';
+import useIsMounted from '../hooks/useIsMounted';
 import './styles/Introduction.scss';
 
 const delay = () => {
@@ -18,7 +18,7 @@ const delay = () => {
 
 const Introduction = () => {
   const width = useWidthSize(768);
-  const isMount = useIsMount();
+  const isMount = useIsMounted();
   const [underlineYellow, setUnderlineYellow] = useState('');
   const [isLoading, setIsLoading] = useState(true);
 
@@ -162,7 +162,7 @@ const Introduction = () => {
                   </div>
                 </div>
               </article>
-              <p className="intro-p strong finish">
+              <div className="intro-p strong finish">
                 <p>
                   어떠신가요?
                   <br />
@@ -184,7 +184,7 @@ const Introduction = () => {
                     기계식 키보드의 맛을 직접 느껴보세요!
                   </span>
                 </p>
-              </p>
+              </div>
 
               <strong>
                 <div className="intro-link">

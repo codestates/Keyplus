@@ -5,7 +5,7 @@ import ProgressBar from '@ramonak/react-progress-bar';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import exceptionAxios from 'axios';
 import useWidthSize from '../hooks/useWidthSize';
-import useIsMount from '../hooks/useIsMount';
+import useIsMounted from '../hooks/useIsMounted';
 import Header from '../components/Header';
 import Question1 from '../components/Survey/Question1';
 import Question2 from '../components/Survey/Question2';
@@ -36,7 +36,7 @@ const audio4 = new Audio('/click.mp3');
 const Survey = () => {
   const history = useHistory();
   const width = useWidthSize(768);
-  const isMount = useIsMount();
+  const isMount = useIsMounted();
   const urlSearchParams = useRef(new URLSearchParams(window.location.search));
   const userNickname =
     urlSearchParams.current.get('nickname') ??
