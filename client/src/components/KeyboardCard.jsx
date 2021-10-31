@@ -13,91 +13,11 @@ import {
 } from 'react-icons/io5';
 import { BiWon } from 'react-icons/bi';
 import { AiFillBulb, AiOutlineBulb } from 'react-icons/ai';
+
 import './styles/KeyboardCard.scss';
 const { Meta } = Card;
 
-export const keySwitchComponent = {
-  저소음적축: (
-    <span style={{ display: 'inline-block', marginRight: '5px' }}>
-      <span
-        style={{
-          display: 'inline-block',
-          width: '12px',
-          height: '12px',
-          borderRadius: '50%',
-          verticalAlign: 'middle',
-          backgroundColor: '#ff656c',
-          marginRight: '1px',
-        }}
-      ></span>
-      <span style={{ verticalAlign: 'middle', fontSize: '12px' }}>저적</span>
-    </span>
-  ),
-  적축: (
-    <span style={{ display: 'inline-block', marginRight: '5px' }}>
-      <span
-        style={{
-          display: 'inline-block',
-          width: '12px',
-          height: '12px',
-          borderRadius: '50%',
-          verticalAlign: 'middle',
-          backgroundColor: '#ff1A48',
-          marginRight: '1px',
-        }}
-      ></span>
-      <span style={{ verticalAlign: 'middle', fontSize: '12px' }}>적축</span>
-    </span>
-  ),
-  청축: (
-    <span style={{ display: 'inline-block', marginRight: '5px' }}>
-      <span
-        style={{
-          display: 'inline-block',
-          width: '12px',
-          height: '12px',
-          borderRadius: '50%',
-          verticalAlign: 'middle',
-          backgroundColor: '#00b4f9',
-          marginRight: '1px',
-        }}
-      ></span>
-      <span style={{ verticalAlign: 'middle', fontSize: '12px' }}>청축</span>
-    </span>
-  ),
-  갈축: (
-    <span style={{ display: 'inline-block', marginRight: '5px' }}>
-      <span
-        style={{
-          display: 'inline-block',
-          width: '12px',
-          height: '12px',
-          borderRadius: '50%',
-          verticalAlign: 'middle',
-          backgroundColor: '#B8792A',
-          marginRight: '1px',
-        }}
-      ></span>
-      <span style={{ verticalAlign: 'middle', fontSize: '12px' }}>갈축</span>
-    </span>
-  ),
-  흑축: (
-    <span style={{ display: 'inline-block', marginRight: '5px' }}>
-      <span
-        style={{
-          display: 'inline-block',
-          width: '12px',
-          height: '12px',
-          borderRadius: '50%',
-          verticalAlign: 'middle',
-          backgroundColor: '#0d0d0d',
-          marginRight: '1px',
-        }}
-      ></span>
-      <span style={{ verticalAlign: 'middle', fontSize: '12px' }}>흑축</span>
-    </span>
-  ),
-};
+import SwitchColor from './SwitchColor';
 
 const KeyboardCard = memo(({ keyboard }) => {
   const dispatch = useDispatch();
@@ -199,7 +119,7 @@ const KeyboardCard = memo(({ keyboard }) => {
             (keySwitch, idx) =>
               keyboard.switch[keySwitch] && (
                 <span key={`${keySwitch}_${idx}`}>
-                  <>{keySwitchComponent[keySwitch]}</>
+                  <SwitchColor keySwitch={keySwitch} />
                 </span>
               )
           )}
@@ -216,18 +136,24 @@ const KeyboardCard = memo(({ keyboard }) => {
             <stop stopColor="rgba(47, 201, 226, 1)" offset="65%" />
             <stop stopColor="rgba(28, 127, 238, 1)" offset="70%" />
             <stop stopColor="rgba(95, 21, 242, 1)" offset="75%" />
-            {/* <stop stopColor="rgba(186, 12, 248, 1)" offset="85%" /> */}
             <stop stopColor="rgba(251, 7, 217, 1)" offset="85%" />
             <stop stopColor="rgba(255, 0, 0, 1)" offset="100%" />
           </linearGradient>
         </svg>
         <svg width="1em" height="1em">
-          <linearGradient id="bulb-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+          <linearGradient
+            id="yellow-gradient"
+            x1="0%"
+            y1="0%"
+            x2="0%"
+            y2="100%"
+          >
             <stop stopColor="#f7f760" offset="0%" />
             <stop stopColor="#ffff80" offset="90%" />
             <stop stopColor="rgba(0,0,0, 1)" offset="100%" />
           </linearGradient>
         </svg>
+
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div style={{ display: 'flex', columnGap: '5px' }}>
             {keyboard.color ? (
@@ -237,7 +163,7 @@ const KeyboardCard = memo(({ keyboard }) => {
             )}
 
             {keyboard.backlight ? (
-              <AiFillBulb style={{ fill: 'url(#bulb-gradient)' }} />
+              <AiFillBulb style={{ fill: 'url(#yellow-gradient)' }} />
             ) : (
               <AiOutlineBulb />
             )}

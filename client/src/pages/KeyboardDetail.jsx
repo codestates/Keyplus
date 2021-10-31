@@ -15,95 +15,16 @@ import {
 import { yellow } from '@ant-design/colors';
 import Rating from 'react-rating';
 import './styles/KeyboardDetail.scss';
+
+// ? jsx 그대로 썼던 객체 따로 뺌
+import SwitchColor from '../components/SwitchColor';
+
 const { TabPane } = Tabs;
 const LeftArrow = ({ currentSlide, slideCount, children, ...props }) => {
   return <div {...props}>{children}</div>;
 };
 const RightArrow = ({ currentSlide, slideCount, children, ...props }) => {
   return <div {...props}>{children}</div>;
-};
-
-const keySwitchComponent = {
-  저소음적축: (
-    <div style={{ display: 'inline-block', marginRight: '5px' }}>
-      <span
-        style={{
-          display: 'inline-block',
-          width: '15px',
-          height: '15px',
-          borderRadius: '50%',
-          verticalAlign: 'middle',
-          backgroundColor: '#ff656c',
-          marginRight: '2px',
-        }}
-      ></span>
-      <span style={{ verticalAlign: 'middle', fontSize: '14px' }}>저적</span>
-    </div>
-  ),
-  적축: (
-    <div style={{ display: 'inline-block', marginRight: '5px' }}>
-      <span
-        style={{
-          display: 'inline-block',
-          width: '15px',
-          height: '15px',
-          borderRadius: '50%',
-          verticalAlign: 'middle',
-          backgroundColor: '#ff1A48',
-          marginRight: '2px',
-        }}
-      ></span>
-      <span style={{ verticalAlign: 'middle', fontSize: '14px' }}>적축</span>
-    </div>
-  ),
-  청축: (
-    <div style={{ display: 'inline-block', marginRight: '5px' }}>
-      <span
-        style={{
-          display: 'inline-block',
-          width: '15px',
-          height: '15px',
-          borderRadius: '50%',
-          verticalAlign: 'middle',
-          backgroundColor: '#00b4f9',
-          marginRight: '2px',
-        }}
-      ></span>
-      <span style={{ verticalAlign: 'middle', fontSize: '14px' }}>청축</span>
-    </div>
-  ),
-  갈축: (
-    <div style={{ display: 'inline-block', marginRight: '5px' }}>
-      <span
-        style={{
-          display: 'inline-block',
-          width: '15px',
-          height: '15px',
-          borderRadius: '50%',
-          verticalAlign: 'middle',
-          backgroundColor: '#B8792A',
-          marginRight: '2px',
-        }}
-      ></span>
-      <span style={{ verticalAlign: 'middle', fontSize: '14px' }}>갈축</span>
-    </div>
-  ),
-  흑축: (
-    <div style={{ display: 'inline-block', marginRight: '5px' }}>
-      <span
-        style={{
-          display: 'inline-block',
-          width: '15px',
-          height: '15px',
-          borderRadius: '50%',
-          verticalAlign: 'middle',
-          backgroundColor: '#0d0d0d',
-          marginRight: '2px',
-        }}
-      ></span>
-      <span style={{ verticalAlign: 'middle', fontSize: '14px' }}>흑축</span>
-    </div>
-  ),
 };
 
 const KeyboardDetail = (props) => {
@@ -247,7 +168,7 @@ const KeyboardDetail = (props) => {
                               key={`${keySwitch}_${idx}`}
                               className="keyboard-detail-switch"
                             >
-                              <>{keySwitchComponent[keySwitch]}</>
+                              <SwitchColor keySwitch={keySwitch} detail />
                             </span>
                           )
                       )}
