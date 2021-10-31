@@ -21,6 +21,8 @@ const Keyboard = () => {
   const [sortingNumber, setSortingNumber] = useState('1');
   const [allCategory, setAllCategory] = useState([]);
 
+  const [brands, setBrands] = useState();
+
   const [brandLogitech, setBrandLogitech] = useState(false);
   const [brandKeychron, setBrandKeychron] = useState(false);
   const [brandAbko, setBrandAbko] = useState(false);
@@ -47,23 +49,29 @@ const Keyboard = () => {
   const width = useWidthSize(768);
   const isMount = useIsMount();
 
-  useEffect(async () => {
-    try {
-      const response = await axios.get('/keyboards');
-      if (isMount.current) {
-        setKeyboards(
-          response.data.data.sort((a, b) => b.likeCount - a.likeCount)
-        );
-        setAllKeyboards(
-          response.data.data.sort((a, b) => b.likeCount - a.likeCount)
-        );
-        setSortingNumber('1');
-        setFirstLoading(false);
+  // * keyboard_useEffect 수정
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('/keyboards');
+
+        if (isMount.current) {
+          setKeyboards(
+            response.data.data.sort((a, b) => b.likeCount - a.likeCount)
+          );
+          setAllKeyboards(
+            response.data.data.sort((a, b) => b.likeCount - a.likeCount)
+          );
+          setSortingNumber('1');
+          setFirstLoading(false);
+        }
+      } catch (err) {
+        throw err;
       }
-    } catch (err) {
-      throw err;
-    }
+    };
+    fetchData();
   }, []);
+  // *
 
   // ! 정렬
   const onClickHeartDescendingBtn = async () => {
