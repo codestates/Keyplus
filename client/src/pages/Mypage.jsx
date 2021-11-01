@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect, useLayoutEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -15,29 +15,75 @@ import KeyboardCard from '../components/KeyboardCard';
 import Review from '../components/Review';
 import { PasswordValidation } from '../utils/validation';
 import './styles/Mypage.scss';
+
+//! 추가하는 부분
+import axios from '../utils/customAxios';
+
 const { TabPane } = Tabs;
 
 const Mypage = () => {
   const dispatch = useDispatch();
-  const userState = useSelector((state) => state.user);
   const likesState = useSelector((state) => state.likes);
   const reviewsState = useSelector((state) => state.reviews);
   const userId = useSelector((state) => state.user?.id);
   const [file, setFile] = useState(null);
-  const [newImg, setNewImg] = useState(userState.image);
   const [validNickname, setValidNickname] = useState(false);
-  const [updateState, setUpdateState] = useState({
-    email: userState.email,
-    nickname: userState.nickname,
-    password: '',
-  });
+  console.log('이건 likeState', reviewsState);
 
+  const [userInfo, setUserInfo] = useState({});
+  // ! 서버에서 유저정보를 가져와야한다.
+  useEffect(() => {
+    let isComponentMounted = true;
+    const getUserInfo = async () => {
+      let newData = await axios.get(`${process.env.REACT_APP_API_URL}/users`);
+      //! unmount될 시 요청이 늦게와도 setState를 방지함으로써 마지막 요청의 결과를 UI에 표시하게 한다.
+      if (isComponentMounted) {
+        setUserInfo(newData.data.data);
+      }
+    };
+    getUserInfo();
+
+    return () => {
+      isComponentMounted = false;
+    };
+  }, []);
+
+  const [reviewInfo, setReviewInfo] = useState([]);
+  const [likesInfo, setLikesInfo] = useState([]);
+  useLayoutEffect(() => {
+    let isComponentMounted = true;
+    const fetchData = async () => {
+      const likesData = await axios.get(
+        `${process.env.REACT_APP_API_URL}/likes`
+      );
+      const reviewData = await axios.get(
+        `${process.env.REACT_APP_API_URL}/reviews`
+      );
+      //! unmount될 시 요청이 늦게와도 setState를 방지함으로써 마지막 요청의 결과를 UI에 표시하게 한다.
+      if (isComponentMounted) {
+        setLikesInfo(likesData.data.data);
+        console.log('서버에서 가져온 좋아요', likesData);
+        setReviewInfo(reviewData.data.data);
+        console.log('서버에서 가져온 리뷰', reviewData);
+      }
+    };
+    fetchData();
+
+    return () => {
+      isComponentMounted = false;
+    };
+  }, []);
+  console.log('서버에서 가져온 리뷰2', reviewInfo);
+  console.log('서버에서 가져온 좋아요2', likesInfo);
+
+  // * 업데이트 함수
   const onChangeUpdateState = (e) => {
     const { name, value } = e.target;
-    setUpdateState({ ...updateState, [name]: value });
+    setUserInfo({ ...userInfo, [name]: value });
   };
-  const { email, nickname, password } = updateState;
-  const prevNickname = userState.nickname;
+
+  const { email, nickname, password } = userInfo;
+  const prevNickname = userInfo.nickname;
 
   const onClickValidate = async (e) => {
     e.preventDefault();
@@ -54,35 +100,8 @@ const Mypage = () => {
     }
   };
 
-  const onClickModify = async (e) => {
-    e.preventDefault();
-    try {
-      if (password && !PasswordValidation(password)) {
-        return message.warning(
-          '최소 6자, 최소 하나의 문자, 하나의 숫자 및 하나의 특수 문자의 비밀번호가 필요합니다'
-        );
-      } else if (prevNickname === nickname || validNickname) {
-        setValidNickname(true);
-        const formData = new FormData();
-        formData.append('img', file); //e.target.img.files[0]
-        formData.append('email', email);
-        formData.append('nickname', nickname);
-        formData.append('password', password);
-        await dispatch(updateUserInfo({ formData })).unwrap();
-        message.success('회원정보 수정이 완료되었습니다');
-        setValidNickname(false);
-      } else {
-        return message.warning('닉네임 중복검사를 해주세요');
-      }
-    } catch (err) {
-      message.warning('오류가 발생하여 로그아웃됩니다.');
-      setTimeout(() => {
-        window.location.reload();
-      }, 500);
-    }
-  };
-
-  const prevImg = userState.image;
+  const prevImg = userInfo.image;
+  const [newImg, setNewImg] = useState(prevImg);
 
   //! 프로필 이미지 미리보기
   const imgref = useRef(null);
@@ -101,6 +120,27 @@ const Mypage = () => {
         setNewImg(imgUrl);
       };
       reader.readAsDataURL(newFile);
+    }
+  };
+
+  const onClickModify = async (e) => {
+    e.preventDefault();
+    if (password && !PasswordValidation(password)) {
+      return message.warning(
+        '최소 6자, 최소 하나의 문자, 하나의 숫자 및 하나의 특수 문자의 비밀번호가 필요합니다'
+      );
+    } else if (prevNickname === nickname || validNickname) {
+      setValidNickname(true);
+      const formData = new FormData();
+      formData.append('img', file); //e.target.img.files[0]
+      formData.append('email', email);
+      formData.append('nickname', nickname);
+      formData.append('password', password);
+      await dispatch(updateUserInfo({ formData })).unwrap();
+      message.success('회원정보 수정이 완료되었습니다');
+      setValidNickname(false);
+    } else {
+      return message.warning('닉네임 중복검사를 해주세요');
     }
   };
 
@@ -140,7 +180,7 @@ const Mypage = () => {
               </div>
               <div className="input-box">
                 <label htmlFor="email">이메일</label>
-                <input type="email" name="email" value={email} disabled />
+                <input type="email" name="email" value={email || ''} disabled />
               </div>
               <div className="input-box">
                 <label htmlFor="nickname">닉네임</label>
@@ -158,7 +198,7 @@ const Mypage = () => {
                   </button>
                 </div>
               </div>
-              {userState.socialType === 'local' && (
+              {userInfo.socialType === 'local' && (
                 <>
                   <div className="input-box">
                     <label htmlFor="password">비밀번호</label>
@@ -189,28 +229,33 @@ const Mypage = () => {
             </form>
             <div className="mypage-tabs">
               <Tabs defaultActiveKey="1">
-                <TabPane tab="관심 키보드" key="관심 키보드">
-                  {likesState.map((keyboard) => (
-                    <div
-                      key={`${keyboard.id}_${keyboard.name}`}
-                      className="mypage-tab-item"
-                    >
-                      <KeyboardCard keyboard={keyboard} />
-                    </div>
-                  ))}
-                </TabPane>
-                <TabPane tab="내 리뷰" key="내 리뷰">
-                  {reviewsState.map((review, idx) => (
-                    <Link
-                      key={`${review}_${idx}`}
-                      to={`/keyboards/${review.keyboardId}`}
-                    >
-                      <div className="mypage-tab-item mypage-review">
-                        <Review review={review} userId={userId} />
+                {likesInfo.length !== 0 && (
+                  <TabPane tab="관심 키보드" key="관심 키보드">
+                    {likesInfo.map((keyboard) => (
+                      <div
+                        key={`${keyboard.id}_${keyboard.name}`}
+                        className="mypage-tab-item"
+                      >
+                        <KeyboardCard keyboard={keyboard} />
                       </div>
-                    </Link>
-                  ))}
-                </TabPane>
+                    ))}
+                  </TabPane>
+                )}
+
+                {reviewInfo.length !== 0 && (
+                  <TabPane tab="내 리뷰" key="내 리뷰">
+                    {reviewInfo.map((review, idx) => (
+                      <Link
+                        key={`${review}_${idx}`}
+                        to={`/keyboards/${review.keyboardId}`}
+                      >
+                        <div className="mypage-tab-item mypage-review">
+                          <Review review={review} userId={userId} />
+                        </div>
+                      </Link>
+                    ))}
+                  </TabPane>
+                )}
               </Tabs>
             </div>
           </div>
