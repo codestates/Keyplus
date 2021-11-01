@@ -23,12 +23,9 @@ const { TabPane } = Tabs;
 
 const Mypage = () => {
   const dispatch = useDispatch();
-  const likesState = useSelector((state) => state.likes);
-  const reviewsState = useSelector((state) => state.reviews);
   const userId = useSelector((state) => state.user?.id);
   const [file, setFile] = useState(null);
   const [validNickname, setValidNickname] = useState(false);
-  console.log('이건 likeState', reviewsState);
 
   const [userInfo, setUserInfo] = useState({});
   // ! 서버에서 유저정보를 가져와야한다.
