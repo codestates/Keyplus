@@ -5,11 +5,20 @@ import KeyboardCard from '../components/KeyboardCard';
 import useWidthSize from '../hooks/useWidthSize';
 import useIsMounted from '../hooks/useIsMounted';
 import 'antd/dist/antd.css';
-import { Select, Space, Typography, Divider, Checkbox, Radio } from 'antd';
+import {
+  Select,
+  Space,
+  Typography,
+  Divider,
+  Checkbox,
+  Radio,
+  Card,
+} from 'antd';
 import { FaCheck } from 'react-icons/fa';
 import { FiRotateCw } from 'react-icons/fi';
 import ScrollArrow from '../components/ScrollArrow';
 import './styles/Keyboard.scss';
+import KeyboardCardSkeleton from '../components/KeyboardCardSkeleton';
 const { Option } = Select;
 
 const brandList = [
@@ -41,7 +50,7 @@ const sortingList = [
 const Keyboard = () => {
   console.log('render');
 
-  const [firstLoading, setFirstLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   const [keyboards, setKeyboards] = useState([]);
   const [allKeyboards, setAllKeyboards] = useState([]);
@@ -74,7 +83,7 @@ const Keyboard = () => {
           setAllKeyboards(
             response.data.data.sort((a, b) => b.likeCount - a.likeCount)
           );
-          setFirstLoading(false);
+          setLoading(false);
           isMounted.current = true;
         } catch (err) {
           isMounted.current = true;
@@ -145,12 +154,15 @@ const Keyboard = () => {
       switch (sortingNumber) {
         case 1:
           const fetchData1 = async () => {
+            setLoading(true);
             try {
               const response = await exceptionAxios.get('/keyboards');
               setAllKeyboards(
                 response.data.data.sort((a, b) => b.likeCount - a.likeCount)
               );
+              setLoading(false);
             } catch (err) {
+              setLoading(false);
               throw err;
             }
           };
@@ -158,12 +170,15 @@ const Keyboard = () => {
           break;
         case 2:
           const fetchData2 = async () => {
+            setLoading(true);
             try {
               const response = await exceptionAxios.get('/keyboards');
               setAllKeyboards(
                 response.data.data.sort((a, b) => a.likeCount - b.likeCount)
               );
+              setLoading(false);
             } catch (err) {
+              setLoading(false);
               throw err;
             }
           };
@@ -310,126 +325,128 @@ const Keyboard = () => {
   }, []);
 
   return (
-    !firstLoading && (
-      <>
-        <ScrollArrow />
-        <div className="keyboard">
-          <div className="keyboard-category">
-            <div>브랜드</div>
-            <div className="category-list horizontal-scroll">
-              {brandList.map((brand, idx) => (
-                <Checkbox
-                  key={idx}
-                  name={brand}
-                  checked={checkBrand(brand)}
-                  onChange={onChangeBrand}
-                >
-                  {brand}
-                </Checkbox>
-              ))}
-            </div>
-            <div>키 스위치</div>
-            <div className="category-list horizontal-scroll">
-              {switchList.map((keySwitch, idx) => (
-                <Checkbox
-                  key={idx}
-                  name={keySwitch}
-                  checked={checkSwitch(keySwitch)}
-                  onChange={onChangeSwitch}
-                >
-                  {keySwitch}
-                </Checkbox>
-              ))}
-            </div>
-            <div>가격</div>
-            <Radio.Group
-              onChange={onChangePriceRadio}
-              value={priceRadio}
-              className="category-list horizontal-scroll radio-group"
-            >
-              {priceList.map((price, idx) => (
-                <Radio key={idx} value={price} onClick={onClickPriceRadio}>
-                  {price.replace(/0{4}$/, '')}만원 이하
-                </Radio>
-              ))}
-            </Radio.Group>
-            <div>기타</div>
-            <div className="category-list horizontal-scroll">
-              <Checkbox checked={tenkeyLess} onChange={onChangeTenkeyLess}>
-                텐키리스
-              </Checkbox>
-              <Checkbox checked={bluetooth} onChange={onChangeBluetooth}>
-                블루투스
-              </Checkbox>
-              <Checkbox checked={backlight} onChange={onChangeBacklight}>
-                LED백라이트
-              </Checkbox>
-            </div>
-            {allCategory.length !== 0 && (
-              <>
-                <div className="clear-button-wrapper">
-                  <button onClick={onClickResetBtn}>
-                    <FiRotateCw />
-                    <span>전체 해제</span>
-                  </button>
-                </div>
-                <div className="selected-category-wrapper">
-                  {allCategory.map((category) => (
-                    <div key={category} className="selected-category">
-                      <span>{category}</span>
-                    </div>
-                  ))}
-                </div>
-              </>
-            )}
-          </div>
-          <div className="keyboard-sorting-count-area">
-            {width > 768 ? (
-              <Space
-                split={<Divider type="vertical" />}
-                style={{ columnGap: '6px !important' }}
-                className="horizontal-scroll"
+    <>
+      <ScrollArrow />
+      <div className="keyboard">
+        <div className="keyboard-category">
+          <div>브랜드</div>
+          <div className="category-list horizontal-scroll">
+            {brandList.map((brand, idx) => (
+              <Checkbox
+                key={idx}
+                name={brand}
+                checked={checkBrand(brand)}
+                onChange={onChangeBrand}
               >
-                {sortingList.map((sorting, idx) => (
-                  <Typography.Link
-                    key={idx}
-                    className={`sorting-tab ${
-                      sortingNumber === idx + 1 && 'selected'
-                    }`}
-                    onClick={() => onChangeSortingNumber(idx + 1)}
-                  >
-                    <span style={{ marginRight: '5px' }}>
-                      {sortingNumber === idx + 1 && <FaCheck />}
-                    </span>
-                    {sorting}
-                  </Typography.Link>
-                ))}
-              </Space>
-            ) : (
-              <Select
-                defaultValue={sortingNumber}
-                onChange={onChangeSortingNumber}
-              >
-                {sortingList.map((sorting, idx) => (
-                  <Option key={idx} value={idx + 1}>
-                    {sorting}
-                  </Option>
-                ))}
-              </Select>
-            )}
-            <div className="keyboard-count">총 {keyboards.length}개</div>
-          </div>
-          <section className="card-section">
-            {keyboards.map((keyboard) => (
-              <KeyboardCard
-                key={`${keyboard.id}_${keyboard.name}`}
-                keyboard={keyboard}
-              />
+                {brand}
+              </Checkbox>
             ))}
-          </section>
+          </div>
+          <div>키 스위치</div>
+          <div className="category-list horizontal-scroll">
+            {switchList.map((keySwitch, idx) => (
+              <Checkbox
+                key={idx}
+                name={keySwitch}
+                checked={checkSwitch(keySwitch)}
+                onChange={onChangeSwitch}
+              >
+                {keySwitch}
+              </Checkbox>
+            ))}
+          </div>
+          <div>가격</div>
+          <Radio.Group
+            onChange={onChangePriceRadio}
+            value={priceRadio}
+            className="category-list horizontal-scroll radio-group"
+          >
+            {priceList.map((price, idx) => (
+              <Radio key={idx} value={price} onClick={onClickPriceRadio}>
+                {price.replace(/0{4}$/, '')}만원 이하
+              </Radio>
+            ))}
+          </Radio.Group>
+          <div>기타</div>
+          <div className="category-list horizontal-scroll">
+            <Checkbox checked={tenkeyLess} onChange={onChangeTenkeyLess}>
+              텐키리스
+            </Checkbox>
+            <Checkbox checked={bluetooth} onChange={onChangeBluetooth}>
+              블루투스
+            </Checkbox>
+            <Checkbox checked={backlight} onChange={onChangeBacklight}>
+              LED백라이트
+            </Checkbox>
+          </div>
+          {allCategory.length !== 0 && (
+            <>
+              <div className="clear-button-wrapper">
+                <button onClick={onClickResetBtn}>
+                  <FiRotateCw />
+                  <span>전체 해제</span>
+                </button>
+              </div>
+              <div className="selected-category-wrapper">
+                {allCategory.map((category) => (
+                  <div key={category} className="selected-category">
+                    <span>{category}</span>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
         </div>
-      </>
-    )
+        <div className="keyboard-sorting-count-area">
+          {width > 768 ? (
+            <Space
+              split={<Divider type="vertical" />}
+              style={{ columnGap: '6px !important' }}
+              className="horizontal-scroll"
+            >
+              {sortingList.map((sorting, idx) => (
+                <Typography.Link
+                  key={idx}
+                  className={`sorting-tab ${
+                    sortingNumber === idx + 1 && 'selected'
+                  }`}
+                  onClick={() => onChangeSortingNumber(idx + 1)}
+                >
+                  <span style={{ marginRight: '5px' }}>
+                    {sortingNumber === idx + 1 && <FaCheck />}
+                  </span>
+                  {sorting}
+                </Typography.Link>
+              ))}
+            </Space>
+          ) : (
+            <Select
+              defaultValue={sortingNumber}
+              onChange={onChangeSortingNumber}
+            >
+              {sortingList.map((sorting, idx) => (
+                <Option key={idx} value={idx + 1}>
+                  {sorting}
+                </Option>
+              ))}
+            </Select>
+          )}
+          <div className="keyboard-count">총 {keyboards.length}개</div>
+        </div>
+        <section className="card-section">
+          {loading
+            ? Array(20)
+                .fill(1)
+                .map((_, i) => <KeyboardCardSkeleton key={i} />)
+            : keyboards.map((keyboard) => (
+                <KeyboardCard
+                  key={`${keyboard.id}_${keyboard.name}`}
+                  keyboard={keyboard}
+                />
+              ))}
+        </section>
+      </div>
+    </>
   );
 };
 
