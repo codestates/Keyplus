@@ -9,7 +9,7 @@ const AppLayout = ({ children }) => {
   const loading = useSelector((state) => state.loading);
   return (
     <>
-      {loading && <Spinner />}
+      {/* {loading && <Spinner />} */}
       <Header />
       <main id="main">{children}</main>
       <Footer />
