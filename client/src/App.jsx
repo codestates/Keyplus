@@ -66,7 +66,7 @@ function App() {
           exact
         />
         <AppLayout>
-          {loading && <Spinner />}
+          {/* {loading && <Spinner />} */}
           <Route path="/temp" component={Temp} />
           <PublicRoute
             restricted={false}
