@@ -30,6 +30,8 @@ const { Option } = Select;
 import consoleHelper from '../utils/consoleHelper';
 import { useSelector } from 'react-redux';
 
+import produce from 'immer';
+
 const brandList = [
   '로지텍',
   '키크론',
@@ -77,6 +79,24 @@ const Keyboard = () => {
 
   const width = useSelector((state) => state.window.width);
   const isMounted = useRef(false);
+
+  const addLike = useCallback((id) => {
+    setKeyboards(
+      produce((draft) => {
+        const index = draft.findIndex((keyboard) => keyboard.id === id);
+        if (index !== -1) draft[index].likeCount += 1;
+      })
+    );
+  });
+
+  const deleteLike = useCallback((id) => {
+    setKeyboards(
+      produce((draft) => {
+        const index = draft.findIndex((keyboard) => keyboard.id === id);
+        if (index !== -1) draft[index].likeCount -= 1;
+      })
+    );
+  });
 
   // * ------------------ useEffect
   // ! 맨 처음 데이터 fetch용 useEffect
@@ -148,15 +168,7 @@ const Keyboard = () => {
         setKeyboards((prev) => prev.filter((keyboard) => keyboard.backlight));
       }
     }
-  }, [
-    allKeyboards,
-    brands,
-    switches,
-    priceRadio,
-    tenkeyLess,
-    bluetooth,
-    backlight,
-  ]);
+  }, [brands, switches, priceRadio, tenkeyLess, bluetooth, backlight]);
 
   // ! 정렬용 useEffect
   useEffect(() => {
@@ -164,54 +176,32 @@ const Keyboard = () => {
       consoleHelper('정렬용 useEffect');
       switch (sortingNumber) {
         case 1:
-          const fetchData1 = async () => {
-            setLoading(true);
-            try {
-              const response = await exceptionAxios.get('/keyboards');
-              setAllKeyboards(
-                response.data.data.sort((a, b) => b.likeCount - a.likeCount)
-              );
-              setLoading(false);
-            } catch (err) {
-              setLoading(false);
-              throw err;
-            }
-          };
-          fetchData1();
+          setKeyboards((keyboards) =>
+            [...keyboards].sort((a, b) => b.likeCount - a.likeCount)
+          );
           break;
         case 2:
-          const fetchData2 = async () => {
-            setLoading(true);
-            try {
-              const response = await exceptionAxios.get('/keyboards');
-              setAllKeyboards(
-                response.data.data.sort((a, b) => a.likeCount - b.likeCount)
-              );
-              setLoading(false);
-            } catch (err) {
-              setLoading(false);
-              throw err;
-            }
-          };
-          fetchData2();
+          setKeyboards((keyboards) =>
+            [...keyboards].sort((a, b) => a.likeCount - b.likeCount)
+          );
           break;
         case 3:
-          setAllKeyboards((keyboards) =>
+          setKeyboards((keyboards) =>
             [...keyboards].sort((a, b) => b.reviewCount - a.reviewCount)
           );
           break;
         case 4:
-          setAllKeyboards((keyboards) =>
+          setKeyboards((keyboards) =>
             [...keyboards].sort((a, b) => a.reviewCount - b.reviewCount)
           );
           break;
         case 5:
-          setAllKeyboards((keyboards) =>
+          setKeyboards((keyboards) =>
             [...keyboards].sort((a, b) => a.price - b.price)
           );
           break;
         case 6:
-          setAllKeyboards((keyboards) =>
+          setKeyboards((keyboards) =>
             [...keyboards].sort((a, b) => b.price - a.price)
           );
           break;
@@ -454,6 +444,8 @@ const Keyboard = () => {
                 <KeyboardCard
                   key={`${keyboard.id}_${keyboard.name}`}
                   keyboard={keyboard}
+                  addLike={addLike}
+                  deleteLike={deleteLike}
                 />
               ))}
         </section>
