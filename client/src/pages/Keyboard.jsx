@@ -1,9 +1,15 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
-import axios from '../utils/customAxios';
+import React, {
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+  useCallback,
+} from 'react';
+import { unstable_batchedUpdates } from 'react-dom';
+// import axios from '../utils/customAxios';
+import axios from 'axios';
 import exceptionAxios from 'axios';
 import KeyboardCard from '../components/KeyboardCard';
-import useWidthSize from '../hooks/useWidthSize';
-import useIsMounted from '../hooks/useIsMounted';
 import 'antd/dist/antd.css';
 import {
   Select,
@@ -20,6 +26,9 @@ import ScrollArrow from '../components/ScrollArrow';
 import './styles/Keyboard.scss';
 import KeyboardCardSkeleton from '../components/KeyboardCardSkeleton';
 const { Option } = Select;
+
+import consoleHelper from '../utils/consoleHelper';
+import { useSelector } from 'react-redux';
 
 const brandList = [
   '로지텍',
@@ -48,7 +57,7 @@ const sortingList = [
 ];
 
 const Keyboard = () => {
-  console.log('render');
+  consoleHelper('render');
 
   const [loading, setLoading] = useState(true);
 
@@ -66,38 +75,40 @@ const Keyboard = () => {
   const [bluetooth, setBluetooth] = useState(false);
   const [backlight, setBacklight] = useState(false);
 
-  const width = useWidthSize(768);
+  const width = useSelector((state) => state.window.width);
   const isMounted = useRef(false);
 
   // * ------------------ useEffect
   // ! 맨 처음 데이터 fetch용 useEffect
   useEffect(() => {
-    console.log('맨 처음 데이터 fetch용 useEffect');
-    if (!isMounted.current) {
-      const fetchData = async () => {
-        try {
-          const response = await axios.get('/keyboards');
-          setKeyboards(
-            response.data.data.sort((a, b) => b.likeCount - a.likeCount)
-          );
-          setAllKeyboards(
-            response.data.data.sort((a, b) => b.likeCount - a.likeCount)
-          );
+    consoleHelper('맨 처음 데이터 fetch용 useEffect');
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('/keyboards');
+        const sortedData = response.data.data.sort(
+          (a, b) => b.likeCount - a.likeCount
+        );
+        unstable_batchedUpdates(() => {
+          setKeyboards(sortedData);
+          consoleHelper('setKeyboards 후');
+          setAllKeyboards(sortedData);
+          consoleHelper('setAllKeyboards 후');
           setLoading(false);
-          isMounted.current = true;
-        } catch (err) {
-          isMounted.current = true;
-          throw err;
-        }
-      };
-      fetchData();
-    }
+          consoleHelper('setLoading=false 후');
+        });
+        isMounted.current = true;
+      } catch (err) {
+        isMounted.current = true;
+        throw err;
+      }
+    };
+    fetchData();
   }, []);
 
   // ! 필터링용 useEffect
   useEffect(() => {
     if (isMounted.current) {
-      console.log('필터링용 useEffect');
+      consoleHelper('필터링용 useEffect');
 
       // * 초기화
       setKeyboards([...allKeyboards]);
@@ -150,7 +161,7 @@ const Keyboard = () => {
   // ! 정렬용 useEffect
   useEffect(() => {
     if (isMounted.current) {
-      console.log('정렬용 useEffect');
+      consoleHelper('정렬용 useEffect');
       switch (sortingNumber) {
         case 1:
           const fetchData1 = async () => {
@@ -258,7 +269,8 @@ const Keyboard = () => {
     ]);
   }, []);
 
-  const onClickPriceRadio = useCallback((e) => {
+  const onClickPriceRadio = (e) => {
+    consoleHelper('온클릭프라이스라디오');
     if (e.target.checked) {
       e.target.checked = false;
       setPriceRadio(null);
@@ -268,7 +280,7 @@ const Keyboard = () => {
     } else {
       setPriceRadio(e.target.value);
     }
-  }, []);
+  };
 
   // ! 텐키
   const onChangeTenkeyLess = useCallback((e) => {
@@ -398,7 +410,7 @@ const Keyboard = () => {
           )}
         </div>
         <div className="keyboard-sorting-count-area">
-          {width > 768 ? (
+          {width >= 768 ? (
             <Space
               split={<Divider type="vertical" />}
               style={{ columnGap: '6px !important' }}
