@@ -3,7 +3,6 @@ import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut } from '../reducers/api/userAPI';
-import useWidthSize from '../hooks/useWidthSize';
 import usePageYOffset from '../hooks/usePageYOffset';
 import './styles/Header.scss';
 import { ReactComponent as KEYPLUS_WHITE_36 } from '../assets/images/KEYPLUS_white_36.svg';
@@ -19,8 +18,8 @@ import {
 } from '@ant-design/icons';
 
 const Header = () => {
+  const width = useSelector((state) => state.window.width);
   const offset = usePageYOffset();
-  const width = useWidthSize(768);
   const [isOpenSidebar, setIsOpenSidebar] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -57,14 +56,14 @@ const Header = () => {
             {isOpenSidebar ? (
               <CloseOutlined
                 style={{
-                  fontSize: width > 768 ? '24px' : '22px',
+                  fontSize: width >= 768 ? '24px' : '22px',
                   color: offset > 0 ? '#fff' : '#000',
                 }}
               />
             ) : (
               <MenuOutlined
                 style={{
-                  fontSize: width > 768 ? '24px' : '22px',
+                  fontSize: width >= 768 ? '24px' : '22px',
                   color: offset > 0 ? '#fff' : '#000',
                 }}
               />
@@ -125,7 +124,7 @@ const Header = () => {
           </ul>
         </nav>
         <Link to="/" className="header-logo">
-          {width > 768 ? (
+          {width >= 768 ? (
             offset > 0 ? (
               <KEYPLUS_WHITE_36 />
             ) : (
@@ -143,7 +142,7 @@ const Header = () => {
               <button onClick={onClickMypage} className="button-links">
                 <UserOutlined
                   style={{
-                    fontSize: width > 768 ? '24px' : '22px',
+                    fontSize: width >= 768 ? '24px' : '22px',
                     color: offset > 0 ? '#fff' : '#000',
                   }}
                 />
@@ -157,7 +156,7 @@ const Header = () => {
                 >
                   <ExportOutlined
                     style={{
-                      fontSize: width > 768 ? '24px' : '22px',
+                      fontSize: width >= 768 ? '24px' : '22px',
                       color: offset > 0 ? '#fff' : '#000',
                     }}
                   />

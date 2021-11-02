@@ -23,13 +23,17 @@ import { logOutForce } from './reducers/userSlice';
 import { logOutMyLikes } from './reducers/likesSlice';
 import { logOutMyReviews } from './reducers/reviewsSlice';
 import { setExpireDate } from './reducers/expireDateReducer';
+import useScreenResize from './hooks/useScreenResize';
 
 import './App.less';
+import consoleHelper from './utils/consoleHelper';
 
 function App() {
+  consoleHelper('😊😊😊😊😊😊😊😊😊😊😊😊');
   const dispatch = useDispatch();
-  const loading = useSelector((state) => state.loading);
   const expireDate = useSelector((state) => state.expireDate);
+
+  useScreenResize();
 
   useEffect(async () => {
     AOS.init();

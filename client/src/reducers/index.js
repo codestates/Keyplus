@@ -7,6 +7,7 @@ import reviewsReducer from './reviewsSlice';
 import loadingReducer from './loadingSlice';
 import errorReducer from './errorSlice';
 import expireDateReducer from './expireDateReducer';
+import windowReducer from './windowSlice';
 
 const persistConfig = {
   key: 'root',
@@ -18,6 +19,7 @@ export const persistedReducer = persistReducer(
   combineReducers({
     loading: loadingReducer,
     error: errorReducer,
+    window: windowReducer,
     user: userReducer,
     likes: likesReducer,
     reviews: reviewsReducer,
