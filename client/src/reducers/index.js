@@ -4,8 +4,8 @@ import storage from 'redux-persist/lib/storage'; // local storage에 저장
 import userReducer from './userSlice';
 import likesReducer from './likesSlice';
 import reviewsReducer from './reviewsSlice';
-import loadingReducer from './loadingReducer';
-import errorReducer from './errorReducer';
+import loadingReducer from './loadingSlice';
+import errorReducer from './errorSlice';
 import expireDateReducer from './expireDateReducer';
 
 const persistConfig = {
