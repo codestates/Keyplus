@@ -17,6 +17,7 @@
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
+    "immer": "^9.0.6",
     "install": "^0.13.0",
     "lodash": "^4.17.21",
     "node-sass": "^6.0.1",
