@@ -26,10 +26,9 @@ import { setExpireDate } from './reducers/expireDateReducer';
 import useScreenResize from './hooks/useScreenResize';
 
 import './App.less';
-import consoleHelper from './utils/consoleHelper';
 
 function App() {
-  consoleHelper('😊😊😊😊😊😊😊😊😊😊😊😊');
+  console.log('😊😊😊😊😊😊😊😊😊😊😊😊');
   const dispatch = useDispatch();
   const expireDate = useSelector((state) => state.expireDate);
 
