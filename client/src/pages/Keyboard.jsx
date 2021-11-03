@@ -11,15 +11,7 @@ import axios from 'axios';
 import exceptionAxios from 'axios';
 import KeyboardCard from '../components/KeyboardCard';
 import 'antd/dist/antd.css';
-import {
-  Select,
-  Space,
-  Typography,
-  Divider,
-  Checkbox,
-  Radio,
-  Card,
-} from 'antd';
+import { Select, Space, Typography, Divider, Checkbox, Radio } from 'antd';
 import { FaCheck } from 'react-icons/fa';
 import { FiRotateCw } from 'react-icons/fi';
 import ScrollArrow from '../components/ScrollArrow';
@@ -27,7 +19,6 @@ import './styles/Keyboard.scss';
 import KeyboardCardSkeleton from '../components/KeyboardCardSkeleton';
 const { Option } = Select;
 
-import consoleHelper from '../utils/consoleHelper';
 import { useSelector } from 'react-redux';
 
 import produce from 'immer';
@@ -59,7 +50,7 @@ const sortingList = [
 ];
 
 const Keyboard = () => {
-  consoleHelper('render');
+  console.log('render');
 
   const [loading, setLoading] = useState(true);
 
@@ -78,7 +69,7 @@ const Keyboard = () => {
   const [backlight, setBacklight] = useState(false);
 
   const width = useSelector((state) => state.window.width);
-  const isMounted = useRef(false);
+  const isFetched = useRef(false);
 
   const addLike = useCallback((id) => {
     setKeyboards(
@@ -101,34 +92,41 @@ const Keyboard = () => {
   // * ------------------ useEffect
   // ! 맨 처음 데이터 fetch용 useEffect
   useEffect(() => {
-    consoleHelper('맨 처음 데이터 fetch용 useEffect');
+    console.log('맨 처음 데이터 fetch용 useEffect');
+    let isMounted = true;
     const fetchData = async () => {
       try {
         const response = await axios.get('/keyboards');
         const sortedData = response.data.data.sort(
           (a, b) => b.likeCount - a.likeCount
         );
-        unstable_batchedUpdates(() => {
-          setKeyboards(sortedData);
-          consoleHelper('setKeyboards 후');
-          setAllKeyboards(sortedData);
-          consoleHelper('setAllKeyboards 후');
-          setLoading(false);
-          consoleHelper('setLoading=false 후');
-        });
-        isMounted.current = true;
+
+        if (isMounted) {
+          unstable_batchedUpdates(() => {
+            setKeyboards(sortedData);
+            console.log('setKeyboards 후');
+            setAllKeyboards(sortedData);
+            console.log('setAllKeyboards 후');
+            setLoading(false);
+            console.log('setLoading=false 후');
+          });
+          isFetched.current = true;
+        }
       } catch (err) {
-        isMounted.current = true;
         throw err;
       }
     };
     fetchData();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   // ! 필터링용 useEffect
   useEffect(() => {
-    if (isMounted.current) {
-      consoleHelper('필터링용 useEffect');
+    if (isFetched.current) {
+      console.log('필터링용 useEffect');
 
       // * 초기화
       setKeyboards([...allKeyboards]);
@@ -172,8 +170,8 @@ const Keyboard = () => {
 
   // ! 정렬용 useEffect
   useEffect(() => {
-    if (isMounted.current) {
-      consoleHelper('정렬용 useEffect');
+    if (isFetched.current) {
+      console.log('정렬용 useEffect');
       switch (sortingNumber) {
         case 1:
           setKeyboards((keyboards) =>
@@ -260,7 +258,7 @@ const Keyboard = () => {
   }, []);
 
   const onClickPriceRadio = (e) => {
-    consoleHelper('온클릭프라이스라디오');
+    console.log('온클릭프라이스라디오');
     if (e.target.checked) {
       e.target.checked = false;
       setPriceRadio(null);
