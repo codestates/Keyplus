@@ -25,13 +25,12 @@ const fillYellowGradient = { fill: 'url(#yellow-gradient)' };
 const fillRed = { fill: 'red' };
 const fillBlue = { fill: '#2084ce' };
 
-const KeyboardCard = memo(({ keyboard }) => {
+const KeyboardCard = memo(({ keyboard, addLike, deleteLike }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const likes = useSelector((state) => state.likes);
   const checkLiked = (id) => likes.findIndex((like) => like.id == id) !== -1;
   const [liked, setLiked] = useState(checkLiked(keyboard.id));
-  const [likeCount, setLikeCount] = useState(keyboard.likeCount);
 
   const onClickHeart = useCallback(
     async (e) => {
@@ -42,10 +41,10 @@ const KeyboardCard = memo(({ keyboard }) => {
       try {
         if (liked) {
           await dispatch(deleteLikes(keyboard.id)).unwrap();
-          setLikeCount((prevLikeCount) => prevLikeCount - 1);
+          deleteLike(keyboard.id);
         } else {
           await dispatch(addLikes(keyboard.id)).unwrap();
-          setLikeCount((prevLikeCount) => prevLikeCount + 1);
+          addLike(keyboard.id);
         }
         setLiked((prevLiked) => !prevLiked);
       } catch (err) {
@@ -81,7 +80,7 @@ const KeyboardCard = memo(({ keyboard }) => {
               <span>{`${keyboard.brand} ${keyboard.name}`}</span>
               <div className="keyboard-card-heart" onClick={onClickHeart}>
                 {liked ? <HeartFilled /> : <HeartOutlined />}
-                {likeCount}
+                {keyboard.likeCount}
               </div>
             </div>
           }

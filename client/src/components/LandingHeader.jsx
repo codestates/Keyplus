@@ -3,7 +3,6 @@ import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut } from '../reducers/api/userAPI';
-import useWidthSize from '../hooks/useWidthSize';
 import usePageYOffset from '../hooks/usePageYOffset';
 import './styles/LandingHeader.scss';
 import { ReactComponent as KEYPLUS_WHITE_36 } from '../assets/images/KEYPLUS_white_36.svg';
@@ -18,7 +17,7 @@ import {
 
 const LandingHeader = () => {
   const offset = usePageYOffset();
-  const width = useWidthSize(768);
+  const width = useSelector((state) => state.window.width);
   const [isOpenSidebar, setIsOpenSidebar] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -61,14 +60,14 @@ const LandingHeader = () => {
             {isOpenSidebar ? (
               <CloseOutlined
                 style={{
-                  fontSize: width > 768 ? '24px' : '22px',
+                  fontSize: width >= 768 ? '24px' : '22px',
                   color: '#fff',
                 }}
               />
             ) : (
               <MenuOutlined
                 style={{
-                  fontSize: width > 768 ? '24px' : '22px',
+                  fontSize: width >= 768 ? '24px' : '22px',
                   color: '#fff',
                 }}
               />
@@ -125,7 +124,7 @@ const LandingHeader = () => {
           </ul>
         </nav>
         <Link to="/" className="landing-header-logo">
-          {width > 768 ? <KEYPLUS_WHITE_36 /> : <KEYPLUS_WHITE_24 />}
+          {width >= 768 ? <KEYPLUS_WHITE_36 /> : <KEYPLUS_WHITE_24 />}
         </Link>
         <nav className="landing-buttons">
           <ul className="landing-button-menu">
@@ -133,7 +132,7 @@ const LandingHeader = () => {
               <button onClick={onClickMypage} className="landing-button-links">
                 <UserOutlined
                   style={{
-                    fontSize: width > 768 ? '24px' : '22px',
+                    fontSize: width >= 768 ? '24px' : '22px',
                     color: '#fff',
                   }}
                 />
@@ -147,7 +146,7 @@ const LandingHeader = () => {
                 >
                   <ExportOutlined
                     style={{
-                      fontSize: width > 768 ? '24px' : '22px',
+                      fontSize: width >= 768 ? '24px' : '22px',
                       color: '#fff',
                     }}
                   />
