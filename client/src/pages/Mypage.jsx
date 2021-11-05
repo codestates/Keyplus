@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect, useLayoutEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useRef, useEffect } from 'react';
+import { unstable_batchedUpdates } from 'react-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   deleteUser,
@@ -10,16 +10,12 @@ import TextModal from '../components/TextModal';
 import { message } from 'antd';
 import { Avatar } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import { Tabs } from 'antd';
-import KeyboardCard from '../components/KeyboardCard';
-import Review from '../components/Review';
 import { PasswordValidation } from '../utils/validation';
+import Tab from '../components/Tab';
 import './styles/Mypage.scss';
 
 //! 추가하는 부분
 import axios from '../utils/customAxios';
-
-const { TabPane } = Tabs;
 
 const Mypage = () => {
   const dispatch = useDispatch();
@@ -27,51 +23,49 @@ const Mypage = () => {
   const [file, setFile] = useState(null);
   const [validNickname, setValidNickname] = useState(false);
 
-  const [userInfo, setUserInfo] = useState({});
-  // ! 서버에서 유저정보를 가져와야한다.
-  useEffect(() => {
-    let isComponentMounted = true;
-    const getUserInfo = async () => {
-      let newData = await axios.get(`${process.env.REACT_APP_API_URL}/users`);
-      //! unmount될 시 요청이 늦게와도 setState를 방지함으로써 마지막 요청의 결과를 UI에 표시하게 한다.
-      if (isComponentMounted) {
-        setUserInfo(newData.data.data);
-      }
-    };
-    getUserInfo();
-
-    return () => {
-      isComponentMounted = false;
-    };
-  }, []);
-
+  const [userInfo, setUserInfo] = useState([]);
   const [reviewInfo, setReviewInfo] = useState([]);
   const [likesInfo, setLikesInfo] = useState([]);
-  useLayoutEffect(() => {
+
+  useEffect(() => {
+    console.log('첫 렌더');
     let isComponentMounted = true;
     const fetchData = async () => {
-      const likesData = await axios.get(
-        `${process.env.REACT_APP_API_URL}/likes`
-      );
-      const reviewData = await axios.get(
-        `${process.env.REACT_APP_API_URL}/reviews`
-      );
-      //! unmount될 시 요청이 늦게와도 setState를 방지함으로써 마지막 요청의 결과를 UI에 표시하게 한다.
+      const urls = [
+        `${process.env.REACT_APP_API_URL}/users`,
+        `${process.env.REACT_APP_API_URL}/likes`,
+        `${process.env.REACT_APP_API_URL}/reviews`,
+      ];
+      const promises = urls.map((cur) => {
+        return axios.get(cur);
+      });
+      const resolvedRes = await Promise.all(promises);
+      console.log('000', resolvedRes[0].data.data.id);
+
       if (isComponentMounted) {
-        setLikesInfo(likesData.data.data);
-        console.log('서버에서 가져온 좋아요', likesData);
-        setReviewInfo(reviewData.data.data);
-        console.log('서버에서 가져온 리뷰', reviewData);
+        unstable_batchedUpdates(() => {
+          resolvedRes.map((cur) => {
+            const url = cur.config.url;
+            if (url === `${process.env.REACT_APP_API_URL}/users`) {
+              setUserInfo(cur.data.data);
+              console.log('setUserInfo');
+            } else if (url === `${process.env.REACT_APP_API_URL}/likes`) {
+              setLikesInfo(cur.data.data);
+              console.log('setLikesInfo');
+            } else if (url === `${process.env.REACT_APP_API_URL}/reviews`) {
+              setReviewInfo(cur.data.data);
+              console.log('setReviewInfo');
+            }
+          });
+        });
       }
     };
     fetchData();
-
     return () => {
       isComponentMounted = false;
     };
   }, []);
-  console.log('서버에서 가져온 리뷰2', reviewInfo);
-  console.log('서버에서 가져온 좋아요2', likesInfo);
+  console.log('렌더?');
 
   // * 업데이트 함수
   const onChangeUpdateState = (e) => {
@@ -224,37 +218,11 @@ const Mypage = () => {
                 />
               </div>
             </form>
-            <div className="mypage-tabs">
-              <Tabs defaultActiveKey="1">
-                {likesInfo.length !== 0 && (
-                  <TabPane tab="관심 키보드" key="관심 키보드">
-                    {likesInfo.map((keyboard) => (
-                      <div
-                        key={`${keyboard.id}_${keyboard.name}`}
-                        className="mypage-tab-item"
-                      >
-                        <KeyboardCard keyboard={keyboard} />
-                      </div>
-                    ))}
-                  </TabPane>
-                )}
-
-                {reviewInfo.length !== 0 && (
-                  <TabPane tab="내 리뷰" key="내 리뷰">
-                    {reviewInfo.map((review, idx) => (
-                      <Link
-                        key={`${review}_${idx}`}
-                        to={`/keyboards/${review.keyboardId}`}
-                      >
-                        <div className="mypage-tab-item mypage-review">
-                          <Review review={review} userId={userId} />
-                        </div>
-                      </Link>
-                    ))}
-                  </TabPane>
-                )}
-              </Tabs>
-            </div>
+            <Tab
+              reviewInfo={reviewInfo}
+              likesInfo={likesInfo}
+              userId={userId}
+            />
           </div>
         </section>
       </div>
