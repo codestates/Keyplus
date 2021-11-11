@@ -17,7 +17,9 @@ import {
   ExportOutlined,
 } from '@ant-design/icons';
 
-const Header = () => {
+import classNames from 'classnames';
+
+const Header = ({ landing }) => {
   const width = useSelector((state) => state.window.width);
   const offset = usePageYOffset();
   const [isOpenSidebar, setIsOpenSidebar] = useState(false);
@@ -41,43 +43,51 @@ const Header = () => {
     }
   };
 
-  const onClickMypage = () => {
+  const onClickMyPage = () => {
     if (userState) {
-      return history.push('/mypage');
+      history.push('/mypage');
+      setIsOpenSidebar(false);
+    } else {
+      history.push('/login');
+      setIsOpenSidebar(false);
     }
-    window.location.replace('/login');
   };
 
   return (
     <>
-      <header className={offset > 0 ? 'header' : 'header bgc-white'}>
+      <header
+        className={classNames('header', { 'bgc-white': !offset }, { landing })}
+      >
         <nav className="navigation">
-          <div className="menu-icon" onClick={onClickToggleBtn}>
+          <div className="menu-icons" onClick={onClickToggleBtn}>
             {isOpenSidebar ? (
               <CloseOutlined
-                style={{
-                  fontSize: width >= 768 ? '24px' : '22px',
-                  color: offset > 0 ? '#fff' : '#000',
-                }}
+                style={{ fontSize: width >= 768 ? '24px' : '22px' }}
+                className={classNames(
+                  'menu-icon',
+                  { black: !offset },
+                  { landing }
+                )}
               />
             ) : (
               <MenuOutlined
-                style={{
-                  fontSize: width >= 768 ? '24px' : '22px',
-                  color: offset > 0 ? '#fff' : '#000',
-                }}
+                style={{ fontSize: width >= 768 ? '24px' : '22px' }}
+                className={classNames(
+                  'menu-icon',
+                  { black: !offset },
+                  { landing }
+                )}
               />
             )}
           </div>
 
           <ul
-            className={
-              isOpenSidebar
-                ? offset > 0
-                  ? 'nav-menu active'
-                  : 'nav-menu active bgc-white'
-                : 'nav-menu'
-            }
+            className={classNames(
+              'nav-menu',
+              { active: isOpenSidebar },
+              { 'bgc-white': offset <= 0 },
+              { landing }
+            )}
           >
             <div
               className={
@@ -125,11 +135,15 @@ const Header = () => {
         </nav>
         <Link to="/" className="header-logo">
           {width >= 768 ? (
-            offset > 0 ? (
+            landing ? (
+              <KEYPLUS_WHITE_36 />
+            ) : offset > 0 ? (
               <KEYPLUS_WHITE_36 />
             ) : (
               <KEYPLUS_BLACK_36 />
             )
+          ) : landing ? (
+            <KEYPLUS_WHITE_24 />
           ) : offset > 0 ? (
             <KEYPLUS_WHITE_24 />
           ) : (
@@ -139,12 +153,14 @@ const Header = () => {
         <nav className="buttons">
           <ul className="button-menu">
             <li className="button-item">
-              <button onClick={onClickMypage} className="button-links">
+              <button onClick={onClickMyPage} className="button-links">
                 <UserOutlined
-                  style={{
-                    fontSize: width >= 768 ? '24px' : '22px',
-                    color: offset > 0 ? '#fff' : '#000',
-                  }}
+                  style={{ fontSize: width >= 768 ? '24px' : '22px' }}
+                  className={classNames(
+                    'menu-icon',
+                    { black: !offset },
+                    { landing }
+                  )}
                 />
               </button>
             </li>
@@ -155,10 +171,12 @@ const Header = () => {
                   className="landing-button-links"
                 >
                   <ExportOutlined
-                    style={{
-                      fontSize: width >= 768 ? '24px' : '22px',
-                      color: offset > 0 ? '#fff' : '#000',
-                    }}
+                    style={{ fontSize: width >= 768 ? '24px' : '22px' }}
+                    className={classNames(
+                      'menu-icon',
+                      { black: !offset },
+                      { landing }
+                    )}
                   />
                 </button>
               </li>
