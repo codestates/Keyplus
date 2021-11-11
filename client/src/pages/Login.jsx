@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logIn } from '../reducers/api/userAPI';
@@ -13,6 +13,9 @@ const Login = (props) => {
     email: '',
     password: '',
   });
+
+  const emailRef = useRef();
+  const passwordRef = useRef();
 
   const onChangeLoginState = (e) => {
     const { name, value } = e.target;
@@ -33,6 +36,9 @@ const Login = (props) => {
         props.history.push('/keyboards');
       }
     } catch (err) {
+      emailRef.current.style = 'border: 1px solid rgb(250, 94, 94) !important';
+      passwordRef.current.style =
+        'border: 1px solid rgb(250, 94, 94) !important';
       message.warning('올바르지 않은 이메일이나 비밀번호입니다');
     }
   };
@@ -51,9 +57,9 @@ const Login = (props) => {
     <>
       <section className="login-container">
         <div className="login-flexbox">
-          <aside className="login-aside">
+          <figure className="login-aside">
             <img src="/others/login.jpg" />
-          </aside>
+          </figure>
           <div className="login-main">
             <h2 className="title">Login</h2>
             <form className="login-form" onSubmit={onClickLogin}>
@@ -66,6 +72,7 @@ const Login = (props) => {
                   name="email"
                   required
                   value={loginState.email}
+                  ref={emailRef}
                 />
               </div>
               <div className="inputbox">
@@ -77,6 +84,7 @@ const Login = (props) => {
                   name="password"
                   required
                   value={loginState.password}
+                  ref={passwordRef}
                 />
               </div>
               <button type="submit" className="loginbtn">
