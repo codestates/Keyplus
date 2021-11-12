@@ -14,7 +14,6 @@ import { PasswordValidation } from '../utils/validation';
 import Tab from '../components/Tab';
 import './styles/Mypage.scss';
 
-//! 추가하는 부분
 import axios from '../utils/customAxios';
 
 const Mypage = () => {
@@ -28,7 +27,6 @@ const Mypage = () => {
   const [likesInfo, setLikesInfo] = useState([]);
 
   useEffect(() => {
-    console.log('첫 렌더');
     let isComponentMounted = true;
     const fetchData = async () => {
       const urls = [
@@ -40,7 +38,6 @@ const Mypage = () => {
         return axios.get(cur);
       });
       const resolvedRes = await Promise.all(promises);
-      console.log('000', resolvedRes[0].data.data.id);
 
       if (isComponentMounted) {
         unstable_batchedUpdates(() => {
@@ -48,13 +45,10 @@ const Mypage = () => {
             const url = cur.config.url;
             if (url === `${process.env.REACT_APP_API_URL}/users`) {
               setUserInfo(cur.data.data);
-              console.log('setUserInfo');
             } else if (url === `${process.env.REACT_APP_API_URL}/likes`) {
               setLikesInfo(cur.data.data);
-              console.log('setLikesInfo');
             } else if (url === `${process.env.REACT_APP_API_URL}/reviews`) {
               setReviewInfo(cur.data.data);
-              console.log('setReviewInfo');
             }
           });
         });
@@ -65,7 +59,6 @@ const Mypage = () => {
       isComponentMounted = false;
     };
   }, []);
-  console.log('렌더?');
 
   // * 업데이트 함수
   const onChangeUpdateState = (e) => {
