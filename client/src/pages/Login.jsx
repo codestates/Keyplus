@@ -1,46 +1,35 @@
-import React, { useState, useRef } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logIn } from '../reducers/api/userAPI';
-import { EmailValidation } from '../utils/validation';
+import { useForm } from 'react-hook-form';
 import { message } from 'antd';
 import './styles/Login.scss';
 
 const Login = (props) => {
   const dispatch = useDispatch();
 
-  const [loginState, setLoginState] = useState({
-    email: '',
-    password: '',
-  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch,
+    reset,
+  } = useForm();
 
-  const emailRef = useRef();
-  const passwordRef = useRef();
+  console.log(watch('email'));
+  console.log(watch('password'));
 
-  const onChangeLoginState = (e) => {
-    const { name, value } = e.target;
-    setLoginState({ ...loginState, [name]: value });
-  };
-  const { email, password } = loginState;
-
-  const onClickLogin = async (e) => {
-    e.preventDefault();
+  const onSubmit = async (data) => {
+    console.log('데이터', data);
     try {
-      if (!(email !== '' && password !== '')) {
-        message.warning('모든 칸을 입력해주세요');
-      } else if (!EmailValidation(email)) {
-        message.warning('이메일 형식이 잘못되었습니다');
-      } else {
-        await dispatch(logIn(loginState)).unwrap();
-        message.success('로그인을 완료했습니다');
-        props.history.push('/keyboards');
-      }
+      await dispatch(logIn(data)).unwrap();
+      message.success('로그인을 완료했습니다');
+      props.history.push('/keyboards');
     } catch (err) {
-      emailRef.current.style = 'border: 1px solid rgb(250, 94, 94) !important';
-      passwordRef.current.style =
-        'border: 1px solid rgb(250, 94, 94) !important';
-      message.warning('올바르지 않은 이메일이나 비밀번호입니다');
+      message.warning('올바르지 않은 이메일 또는 비밀번호 입니다.');
     }
+    reset();
   };
 
   const onClickGoogle = async () => {
@@ -62,35 +51,48 @@ const Login = (props) => {
           </figure>
           <div className="login-main">
             <h2 className="title">Login</h2>
-            <form className="login-form" onSubmit={onClickLogin}>
+            <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
               <div className="inputbox">
                 <label htmlFor="email">이메일</label>
                 <input
-                  type="text"
+                  type="email"
                   placeholder="example@example.com"
-                  onChange={onChangeLoginState}
                   name="email"
-                  required
-                  value={loginState.email}
-                  ref={emailRef}
+                  {...register('email', {
+                    required: '이메일을 입력해주세요.',
+                    pattern: {
+                      value: /^\S+@\S+\.\S+$/,
+                      message: '올바르지 않은 이메일 형식입니다.',
+                    },
+                  })}
                 />
+                {errors.email && (
+                  <p className="error-message">{errors.email.message}</p>
+                )}
               </div>
               <div className="inputbox">
                 <label htmlFor="password">비밀번호</label>
                 <input
                   type="password"
                   placeholder="password"
-                  onChange={onChangeLoginState}
                   name="password"
-                  required
-                  value={loginState.password}
-                  ref={passwordRef}
+                  {...register('password', {
+                    required: '비밀번호를 입력해주세요.',
+                    minLength: {
+                      value: 6,
+                      message: '비밀번호는 최소 6자 이상입니다.',
+                    },
+                  })}
                 />
+                {errors.password && (
+                  <p className="error-message">{errors.password.message}</p>
+                )}
               </div>
               <button type="submit" className="loginbtn">
                 로그인
               </button>
             </form>
+
             <div className="login-oauth">
               <button
                 className="oauthbtn"
