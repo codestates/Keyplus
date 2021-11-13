@@ -1,14 +1,6 @@
-import React, {
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-  useCallback,
-} from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { unstable_batchedUpdates } from 'react-dom';
-// import axios from '../utils/customAxios';
 import axios from 'axios';
-import exceptionAxios from 'axios';
 import KeyboardCard from '../components/KeyboardCard';
 import 'antd/dist/antd.css';
 import { Select, Space, Typography, Divider, Checkbox, Radio } from 'antd';
@@ -174,31 +166,49 @@ const Keyboard = () => {
       console.log('정렬용 useEffect');
       switch (sortingNumber) {
         case 1:
+          setAllKeyboards((keyboards) =>
+            [...keyboards].sort((a, b) => b.likeCount - a.likeCount)
+          );
           setKeyboards((keyboards) =>
             [...keyboards].sort((a, b) => b.likeCount - a.likeCount)
           );
           break;
         case 2:
+          setAllKeyboards((keyboards) =>
+            [...keyboards].sort((a, b) => a.likeCount - b.likeCount)
+          );
           setKeyboards((keyboards) =>
             [...keyboards].sort((a, b) => a.likeCount - b.likeCount)
           );
           break;
         case 3:
+          setAllKeyboards((keyboards) =>
+            [...keyboards].sort((a, b) => b.reviewCount - a.reviewCount)
+          );
           setKeyboards((keyboards) =>
             [...keyboards].sort((a, b) => b.reviewCount - a.reviewCount)
           );
           break;
         case 4:
+          setAllKeyboards((keyboards) =>
+            [...keyboards].sort((a, b) => a.reviewCount - b.reviewCount)
+          );
           setKeyboards((keyboards) =>
             [...keyboards].sort((a, b) => a.reviewCount - b.reviewCount)
           );
           break;
         case 5:
+          setAllKeyboards((keyboards) =>
+            [...keyboards].sort((a, b) => a.price - b.price)
+          );
           setKeyboards((keyboards) =>
             [...keyboards].sort((a, b) => a.price - b.price)
           );
           break;
         case 6:
+          setAllKeyboards((keyboards) =>
+            [...keyboards].sort((a, b) => b.price - a.price)
+          );
           setKeyboards((keyboards) =>
             [...keyboards].sort((a, b) => b.price - a.price)
           );
@@ -337,6 +347,7 @@ const Keyboard = () => {
                 name={brand}
                 checked={checkBrand(brand)}
                 onChange={onChangeBrand}
+                disabled={loading}
               >
                 {brand}
               </Checkbox>
@@ -350,6 +361,7 @@ const Keyboard = () => {
                 name={keySwitch}
                 checked={checkSwitch(keySwitch)}
                 onChange={onChangeSwitch}
+                disabled={loading}
               >
                 {keySwitch}
               </Checkbox>
@@ -360,6 +372,7 @@ const Keyboard = () => {
             onChange={onChangePriceRadio}
             value={priceRadio}
             className="category-list horizontal-scroll radio-group"
+            disabled={loading}
           >
             {priceList.map((price, idx) => (
               <Radio key={idx} value={price} onClick={onClickPriceRadio}>
@@ -369,13 +382,25 @@ const Keyboard = () => {
           </Radio.Group>
           <div>기타</div>
           <div className="category-list horizontal-scroll">
-            <Checkbox checked={tenkeyLess} onChange={onChangeTenkeyLess}>
+            <Checkbox
+              checked={tenkeyLess}
+              onChange={onChangeTenkeyLess}
+              disabled={loading}
+            >
               텐키리스
             </Checkbox>
-            <Checkbox checked={bluetooth} onChange={onChangeBluetooth}>
+            <Checkbox
+              checked={bluetooth}
+              onChange={onChangeBluetooth}
+              disabled={loading}
+            >
               블루투스
             </Checkbox>
-            <Checkbox checked={backlight} onChange={onChangeBacklight}>
+            <Checkbox
+              checked={backlight}
+              onChange={onChangeBacklight}
+              disabled={loading}
+            >
               LED백라이트
             </Checkbox>
           </div>
@@ -401,7 +426,10 @@ const Keyboard = () => {
           {width >= 768 ? (
             <Space
               split={<Divider type="vertical" />}
-              style={{ columnGap: '6px !important' }}
+              style={{
+                columnGap: '6px !important',
+                visibility: loading ? 'hidden' : 'visible',
+              }}
               className="horizontal-scroll"
             >
               {sortingList.map((sorting, idx) => (
@@ -423,6 +451,9 @@ const Keyboard = () => {
             <Select
               defaultValue={sortingNumber}
               onChange={onChangeSortingNumber}
+              style={{
+                visibility: loading ? 'hidden' : 'visible',
+              }}
             >
               {sortingList.map((sorting, idx) => (
                 <Option key={idx} value={idx + 1}>
