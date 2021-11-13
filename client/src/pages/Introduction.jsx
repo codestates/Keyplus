@@ -181,7 +181,7 @@ const Introduction = () => {
                 </p>
                 <p>
                   <span className="bgc-gray">
-                    기계식 키보드의 맛을 직접 느껴보세요!
+                    <b>기계식 키보드의 맛을 직접 느껴보세요!</b>
                   </span>
                 </p>
               </div>
