@@ -135,3 +135,14 @@
     color: #000;
   }
 }
+
+.error-message {
+  color: #e15353;
+  padding: 7px 0;
+  text-align: center;
+
+  &:before {
+    display: inline;
+    content: '⚠ ';
+  }
+}
