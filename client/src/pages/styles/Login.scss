@@ -28,6 +28,9 @@
   flex: 1;
   height: 100%;
   position: relative;
+  figure {
+    margin: 0;
+  }
 
   @media screen and (max-width: $md-breakpoint) {
     display: none;
@@ -35,7 +38,7 @@
 
   img {
     width: 100%;
-    height: 100.9%;
+    height: 100%;
     object-fit: cover;
   }
 }
