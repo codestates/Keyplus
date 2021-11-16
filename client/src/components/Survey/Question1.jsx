@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
-import useWidthSize from '../../hooks/useWidthSize';
 import { FiPlayCircle, FiStopCircle } from 'react-icons/fi';
+import { useSelector } from 'react-redux';
 
 import '../styles/Question.scss';
 
 const Question1 = ({ onClickSound, audio1, audio2, audio3, audio4 }) => {
-  const width = useWidthSize(768);
+  const width = useSelector((state) => state.window.width);
   const [audioPlaying1, setAudioPlaying1] = useState(false);
   const [audioPlaying2, setAudioPlaying2] = useState(false);
   const [audioPlaying3, setAudioPlaying3] = useState(false);
@@ -117,7 +117,7 @@ const Question1 = ({ onClickSound, audio1, audio2, audio3, audio4 }) => {
         <h2 className="question-title">
           <div>가장 마음에 드는 소리를 알려주세요.</div>
         </h2>
-        {width > 768 ? (
+        {width >= 768 ? (
           <div className="question-description">
             이미지에 마우스를 올리면 소리가 재생됩니다.
           </div>

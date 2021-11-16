@@ -1,25 +1,19 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import axios from '../utils/customAxios';
-import exceptionAxios from 'axios';
+import { unstable_batchedUpdates } from 'react-dom';
+import axios from 'axios';
 import KeyboardCard from '../components/KeyboardCard';
-import useWidthSize from '../hooks/useWidthSize';
-import useIsMounted from '../hooks/useIsMounted';
 import 'antd/dist/antd.css';
-import {
-  Select,
-  Space,
-  Typography,
-  Divider,
-  Checkbox,
-  Radio,
-  Card,
-} from 'antd';
+import { Select, Space, Typography, Divider, Checkbox, Radio } from 'antd';
 import { FaCheck } from 'react-icons/fa';
 import { FiRotateCw } from 'react-icons/fi';
 import ScrollArrow from '../components/ScrollArrow';
 import './styles/Keyboard.scss';
 import KeyboardCardSkeleton from '../components/KeyboardCardSkeleton';
 const { Option } = Select;
+
+import { useSelector } from 'react-redux';
+
+import produce from 'immer';
 
 const brandList = [
   '로지텍',
@@ -66,37 +60,64 @@ const Keyboard = () => {
   const [bluetooth, setBluetooth] = useState(false);
   const [backlight, setBacklight] = useState(false);
 
-  const width = useWidthSize(768);
-  const isMounted = useRef(false);
+  const width = useSelector((state) => state.window.width);
+  const isFetched = useRef(false);
+
+  const addLike = useCallback((id) => {
+    setKeyboards(
+      produce((draft) => {
+        const index = draft.findIndex((keyboard) => keyboard.id === id);
+        if (index !== -1) draft[index].likeCount += 1;
+      })
+    );
+  });
+
+  const deleteLike = useCallback((id) => {
+    setKeyboards(
+      produce((draft) => {
+        const index = draft.findIndex((keyboard) => keyboard.id === id);
+        if (index !== -1) draft[index].likeCount -= 1;
+      })
+    );
+  });
 
   // * ------------------ useEffect
   // ! 맨 처음 데이터 fetch용 useEffect
   useEffect(() => {
     console.log('맨 처음 데이터 fetch용 useEffect');
-    if (!isMounted.current) {
-      const fetchData = async () => {
-        try {
-          const response = await axios.get('/keyboards');
-          setKeyboards(
-            response.data.data.sort((a, b) => b.likeCount - a.likeCount)
-          );
-          setAllKeyboards(
-            response.data.data.sort((a, b) => b.likeCount - a.likeCount)
-          );
-          setLoading(false);
-          isMounted.current = true;
-        } catch (err) {
-          isMounted.current = true;
-          throw err;
+    let isMounted = true;
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('/keyboards');
+        const sortedData = response.data.data.sort(
+          (a, b) => b.likeCount - a.likeCount
+        );
+
+        if (isMounted) {
+          unstable_batchedUpdates(() => {
+            setKeyboards(sortedData);
+            console.log('setKeyboards 후');
+            setAllKeyboards(sortedData);
+            console.log('setAllKeyboards 후');
+            setLoading(false);
+            console.log('setLoading=false 후');
+          });
+          isFetched.current = true;
         }
-      };
-      fetchData();
-    }
+      } catch (err) {
+        throw err;
+      }
+    };
+    fetchData();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   // ! 필터링용 useEffect
   useEffect(() => {
-    if (isMounted.current) {
+    if (isFetched.current) {
       console.log('필터링용 useEffect');
 
       // * 초기화
@@ -137,55 +158,34 @@ const Keyboard = () => {
         setKeyboards((prev) => prev.filter((keyboard) => keyboard.backlight));
       }
     }
-  }, [
-    allKeyboards,
-    brands,
-    switches,
-    priceRadio,
-    tenkeyLess,
-    bluetooth,
-    backlight,
-  ]);
+  }, [brands, switches, priceRadio, tenkeyLess, bluetooth, backlight]);
 
   // ! 정렬용 useEffect
   useEffect(() => {
-    if (isMounted.current) {
+    if (isFetched.current) {
       console.log('정렬용 useEffect');
       switch (sortingNumber) {
         case 1:
-          const fetchData1 = async () => {
-            setLoading(true);
-            try {
-              const response = await exceptionAxios.get('/keyboards');
-              setAllKeyboards(
-                response.data.data.sort((a, b) => b.likeCount - a.likeCount)
-              );
-              setLoading(false);
-            } catch (err) {
-              setLoading(false);
-              throw err;
-            }
-          };
-          fetchData1();
+          setAllKeyboards((keyboards) =>
+            [...keyboards].sort((a, b) => b.likeCount - a.likeCount)
+          );
+          setKeyboards((keyboards) =>
+            [...keyboards].sort((a, b) => b.likeCount - a.likeCount)
+          );
           break;
         case 2:
-          const fetchData2 = async () => {
-            setLoading(true);
-            try {
-              const response = await exceptionAxios.get('/keyboards');
-              setAllKeyboards(
-                response.data.data.sort((a, b) => a.likeCount - b.likeCount)
-              );
-              setLoading(false);
-            } catch (err) {
-              setLoading(false);
-              throw err;
-            }
-          };
-          fetchData2();
+          setAllKeyboards((keyboards) =>
+            [...keyboards].sort((a, b) => a.likeCount - b.likeCount)
+          );
+          setKeyboards((keyboards) =>
+            [...keyboards].sort((a, b) => a.likeCount - b.likeCount)
+          );
           break;
         case 3:
           setAllKeyboards((keyboards) =>
+            [...keyboards].sort((a, b) => b.reviewCount - a.reviewCount)
+          );
+          setKeyboards((keyboards) =>
             [...keyboards].sort((a, b) => b.reviewCount - a.reviewCount)
           );
           break;
@@ -193,14 +193,23 @@ const Keyboard = () => {
           setAllKeyboards((keyboards) =>
             [...keyboards].sort((a, b) => a.reviewCount - b.reviewCount)
           );
+          setKeyboards((keyboards) =>
+            [...keyboards].sort((a, b) => a.reviewCount - b.reviewCount)
+          );
           break;
         case 5:
           setAllKeyboards((keyboards) =>
             [...keyboards].sort((a, b) => a.price - b.price)
           );
+          setKeyboards((keyboards) =>
+            [...keyboards].sort((a, b) => a.price - b.price)
+          );
           break;
         case 6:
           setAllKeyboards((keyboards) =>
+            [...keyboards].sort((a, b) => b.price - a.price)
+          );
+          setKeyboards((keyboards) =>
             [...keyboards].sort((a, b) => b.price - a.price)
           );
           break;
@@ -258,7 +267,8 @@ const Keyboard = () => {
     ]);
   }, []);
 
-  const onClickPriceRadio = useCallback((e) => {
+  const onClickPriceRadio = (e) => {
+    console.log('온클릭프라이스라디오');
     if (e.target.checked) {
       e.target.checked = false;
       setPriceRadio(null);
@@ -268,7 +278,7 @@ const Keyboard = () => {
     } else {
       setPriceRadio(e.target.value);
     }
-  }, []);
+  };
 
   // ! 텐키
   const onChangeTenkeyLess = useCallback((e) => {
@@ -337,6 +347,7 @@ const Keyboard = () => {
                 name={brand}
                 checked={checkBrand(brand)}
                 onChange={onChangeBrand}
+                disabled={loading}
               >
                 {brand}
               </Checkbox>
@@ -350,6 +361,7 @@ const Keyboard = () => {
                 name={keySwitch}
                 checked={checkSwitch(keySwitch)}
                 onChange={onChangeSwitch}
+                disabled={loading}
               >
                 {keySwitch}
               </Checkbox>
@@ -360,6 +372,7 @@ const Keyboard = () => {
             onChange={onChangePriceRadio}
             value={priceRadio}
             className="category-list horizontal-scroll radio-group"
+            disabled={loading}
           >
             {priceList.map((price, idx) => (
               <Radio key={idx} value={price} onClick={onClickPriceRadio}>
@@ -369,13 +382,25 @@ const Keyboard = () => {
           </Radio.Group>
           <div>기타</div>
           <div className="category-list horizontal-scroll">
-            <Checkbox checked={tenkeyLess} onChange={onChangeTenkeyLess}>
+            <Checkbox
+              checked={tenkeyLess}
+              onChange={onChangeTenkeyLess}
+              disabled={loading}
+            >
               텐키리스
             </Checkbox>
-            <Checkbox checked={bluetooth} onChange={onChangeBluetooth}>
+            <Checkbox
+              checked={bluetooth}
+              onChange={onChangeBluetooth}
+              disabled={loading}
+            >
               블루투스
             </Checkbox>
-            <Checkbox checked={backlight} onChange={onChangeBacklight}>
+            <Checkbox
+              checked={backlight}
+              onChange={onChangeBacklight}
+              disabled={loading}
+            >
               LED백라이트
             </Checkbox>
           </div>
@@ -398,10 +423,13 @@ const Keyboard = () => {
           )}
         </div>
         <div className="keyboard-sorting-count-area">
-          {width > 768 ? (
+          {width >= 768 ? (
             <Space
               split={<Divider type="vertical" />}
-              style={{ columnGap: '6px !important' }}
+              style={{
+                columnGap: '6px !important',
+                visibility: loading ? 'hidden' : 'visible',
+              }}
               className="horizontal-scroll"
             >
               {sortingList.map((sorting, idx) => (
@@ -423,6 +451,9 @@ const Keyboard = () => {
             <Select
               defaultValue={sortingNumber}
               onChange={onChangeSortingNumber}
+              style={{
+                visibility: loading ? 'hidden' : 'visible',
+              }}
             >
               {sortingList.map((sorting, idx) => (
                 <Option key={idx} value={idx + 1}>
@@ -442,6 +473,8 @@ const Keyboard = () => {
                 <KeyboardCard
                   key={`${keyboard.id}_${keyboard.name}`}
                   keyboard={keyboard}
+                  addLike={addLike}
+                  deleteLike={deleteLike}
                 />
               ))}
         </section>

@@ -17,6 +17,11 @@
   &.bgc-white {
     background-color: #fff;
     color: #000;
+
+    &.landing {
+      background-color: transparent;
+      color: #fff;
+    }
   }
 }
 
@@ -62,7 +67,7 @@
   }
 }
 
-.menu-icon {
+.menu-icons {
   display: none;
 }
 
@@ -99,10 +104,13 @@
     background-color: #000;
     left: 0;
     opacity: 1;
-    // transition: all 0.5s ease;
 
     &.bgc-white {
       background-color: #fff;
+
+      &.landing {
+        background-color: #000;
+      }
     }
   }
 
@@ -140,9 +148,21 @@
     transform: translate(25%, 50%);
   }
 
-  .menu-icon {
+  .menu-icons {
     display: flex;
     font-size: 1.8rem;
     cursor: pointer;
+  }
+
+  .menu-icon {
+    color: #fff;
+
+    &.black {
+      color: #000;
+    }
+
+    &.landing {
+      color: #fff;
+    }
   }
 }

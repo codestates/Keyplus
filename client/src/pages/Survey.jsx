@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 import ProgressBar from '@ramonak/react-progress-bar';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import exceptionAxios from 'axios';
-import useWidthSize from '../hooks/useWidthSize';
 import useIsMounted from '../hooks/useIsMounted';
 import Header from '../components/Header';
 import Question1 from '../components/Survey/Question1';
@@ -35,7 +34,7 @@ const audio4 = new Audio('/click.mp3');
 
 const Survey = () => {
   const history = useHistory();
-  const width = useWidthSize(768);
+  const width = useSelector((state) => state.window.width);
   const isMount = useIsMounted();
   const urlSearchParams = useRef(new URLSearchParams(window.location.search));
   const userNickname =
@@ -277,12 +276,12 @@ const Survey = () => {
           <div className="survey-start-main">
             <h2>
               맘에 쏙 드는 기계식 키보드
-              {width > 768 ? `, ` : <br />}
+              {width >= 768 ? `, ` : <br />}
               찾기 어려우셨나요?
               <br />
-              {width > 768 ? null : <br />}
+              {width >= 768 ? null : <br />}
               쉽고 간단한 테스트로
-              {width > 768 ? ` ` : <br />}
+              {width >= 768 ? ` ` : <br />}
               나에게 맞는 키보드를 알아보세요.
             </h2>
             <button className="survey-start-button" onClick={onClickStartBtn}>
@@ -429,7 +428,7 @@ const Survey = () => {
                     <span className="survey-result-strong">{`${convertBacklightToText(
                       backlight
                     )}`}</span>
-                    {width > 768 ? ` ` : <br />}
+                    {width >= 768 ? ` ` : <br />}
                     <span className="survey-result-strong">
                       {`${convertTenkeyToText(tenkey)} ${convertBluetoothToText(
                         bluetooth
@@ -445,7 +444,7 @@ const Survey = () => {
                     <>
                       <p>
                         {userNickname ? userNickname : '비회원'}님에게 딱 맞는
-                        {width > 768 ? ` ` : <br />}
+                        {width >= 768 ? ` ` : <br />}
                         <span className="survey-result-strong">
                           {keyboards.length}개
                         </span>
@@ -482,7 +481,7 @@ const Survey = () => {
                       <p className="survey-result-italic">
                         아쉽게도 {userNickname ? userNickname : '비회원'}
                         님에게 어울리는
-                        {width > 768 ? ` ` : <br />}
+                        {width >= 768 ? ` ` : <br />}
                         키보드를 찾지 못했습니다.{' '}
                         <RiEmotionSadLine style={{ fontSize: '20px' }} />
                       </p>
@@ -491,7 +490,7 @@ const Survey = () => {
                       </p>
                       <p className="survey-result-inspire">
                         <span className="survey-result-strong">Keyplus</span>
-                        에서 많은 키보드를{width > 768 ? ` ` : <br />}
+                        에서 많은 키보드를{width >= 768 ? ` ` : <br />}
                         직접 둘러 보실 수 있습니다.
                       </p>
                       <button
