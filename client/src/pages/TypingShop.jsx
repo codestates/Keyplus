@@ -38,6 +38,8 @@ const TypingShop = () => {
 
       //! 줌 컨트롤러 추가
       const zoomControl = new kakao.maps.ZoomControl();
+
+      // ! 지도 우측에 확대 축소 컨트롤 추가
       map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
       //! 마커 이미지의 주소
