@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useCallback } from 'react';
+import React, { useEffect, useState, useRef, useCallback, memo } from 'react';
 import './styles/ShopList.scss';
 
 const ShopList = ({
@@ -11,8 +11,9 @@ const ShopList = ({
 }) => {
   const [clickedShopInList, setClickedShopInList] = useState(-1);
   const mounted = useRef(false);
-
+  console.log('렌더');
   useEffect(() => {
+    console.log('유즈이펙트');
     const fetchData = async () => {
       if (!mounted.current) {
         mounted.current = true;
@@ -75,4 +76,4 @@ const ShopList = ({
   );
 };
 
-export default ShopList;
+export default memo(ShopList);
