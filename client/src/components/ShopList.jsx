@@ -12,23 +12,26 @@ const ShopList = ({
   const [clickedShopInList, setClickedShopInList] = useState(-1);
   const mounted = useRef(false);
 
-  useEffect(async () => {
-    if (!mounted.current) {
-      mounted.current = true;
-    } else {
-      try {
-        //! 센터 설정
-        const latLng = new kakao.maps.LatLng(
-          allShops[selectedShopIdx].latitude,
-          allShops[selectedShopIdx].longitude
-        );
-        //! 지도 중심을 부드럽게 이동시킵니다
-        //! 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
-        map.panTo(latLng);
-      } catch (err) {
-        throw err;
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!mounted.current) {
+        mounted.current = true;
+      } else {
+        try {
+          //! 센터 설정
+          const latLng = new kakao.maps.LatLng(
+            allShops[selectedShopIdx].latitude,
+            allShops[selectedShopIdx].longitude
+          );
+          //! 지도 중심을 부드럽게 이동시킵니다
+          //! 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
+          map.panTo(latLng);
+        } catch (err) {
+          throw err;
+        }
       }
-    }
+    };
+    fetchData();
   }, [clickedShopInList]);
 
   const onClickShop = useCallback(
