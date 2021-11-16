@@ -13,86 +13,92 @@ const TypingShop = () => {
   const [markers, setMarkers] = useState([]);
   const [customOverlays, setCustomOverlays] = useState([]);
 
-  useEffect(async () => {
-    try {
-      //! API Call
-      const response = await exceptionAxios.get('/shops');
-      setAllShops(response.data.data);
+  console.log('렌더타이핑샵');
+  //! API Call
+  useEffect(() => {
+    console.log('유즈이펙트타이핑샵');
+    let isComponentMounted = true;
+    const fetchShopData = async () => {
+      const res = await exceptionAxios.get('/shops');
+      if (isComponentMounted) {
+        setAllShops(res.data.data);
+        //! state 말고 그냥 변수 shops에도 저장 (마커 찍기 위함)
+        const allShopsV = res.data.data;
 
-      //! state 말고 그냥 변수 shops에도 저장 (마커 찍기 위함)
-      const allShopsV = response.data.data;
+        //! 센터 설정
+        const latLng = new kakao.maps.LatLng(
+          37.53247258965998,
+          126.96486479774572
+        );
+        const options = {
+          center: latLng,
+          level: 4,
+        };
 
-      //! 센터 설정
-      const latLng = new kakao.maps.LatLng(
-        37.53247258965998,
-        126.96486479774572
-      );
-      const options = {
-        center: latLng,
-        level: 4,
-      };
+        //! 지도 생성
+        const map = new kakao.maps.Map(containerRef.current, options);
+        setMap(map);
 
-      //! 지도 생성
-      const map = new kakao.maps.Map(containerRef.current, options);
-      setMap(map);
+        //! 줌 컨트롤러 추가
+        const zoomControl = new kakao.maps.ZoomControl();
 
-      //! 줌 컨트롤러 추가
-      const zoomControl = new kakao.maps.ZoomControl();
+        // ! 지도 우측에 확대 축소 컨트롤 추가
+        map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
-      // ! 지도 우측에 확대 축소 컨트롤 추가
-      map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+        //! 마커 이미지의 주소
+        const imageSrc =
+          'https://media.discordapp.net/attachments/880163201872961636/894293586533818428/3440906-direction-location-map-marker-navigation-pin_107531.png';
+        const imageSize = new kakao.maps.Size(64, 69); //! 마커 이미지의 크기
+        const imageOption = { offset: new kakao.maps.Point(34, 69) }; //! 마커 이미지의 옵션
+        //! 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
 
-      //! 마커 이미지의 주소
-      const imageSrc =
-        'https://media.discordapp.net/attachments/880163201872961636/894293586533818428/3440906-direction-location-map-marker-navigation-pin_107531.png';
-      const imageSize = new kakao.maps.Size(64, 69); //! 마커 이미지의 크기
-      const imageOption = { offset: new kakao.maps.Point(34, 69) }; //! 마커 이미지의 옵션
-      //! 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+        //! 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+        const markerImage = new kakao.maps.MarkerImage(
+          imageSrc,
+          imageSize,
+          imageOption
+        );
 
-      //! 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
-      const markerImage = new kakao.maps.MarkerImage(
-        imageSrc,
-        imageSize,
-        imageOption
-      );
+        allShopsV.forEach((shop) => {
+          //! 마커 생성
+          const position = new kakao.maps.LatLng(shop.latitude, shop.longitude);
+          const marker = new kakao.maps.Marker({
+            position,
+            clickable: true,
+            image: markerImage, //! 마커이미지 설정
+          });
 
-      allShopsV.forEach((shop) => {
-        //! 마커 생성
-        const position = new kakao.maps.LatLng(shop.latitude, shop.longitude);
-        const marker = new kakao.maps.Marker({
-          position,
-          clickable: true,
-          image: markerImage, //! 마커이미지 설정
+          // //! 마커 state에 저장
+          setMarkers((markers) => [...markers, marker]);
+
+          //! 해당 위치에 마커 설치
+          marker.setMap(map);
+
+          //! 커스텀 오버레이를 생성
+          const content =
+            '<div class="custom-overlay">' +
+            `  <a href=https://place.map.kakao.com/${shop.content} target="_blank">` +
+            `    <span class="title">${shop.name}</span>` +
+            '  </a>' +
+            '</div>';
+
+          const customOverlay = new kakao.maps.CustomOverlay({
+            position,
+            content,
+          });
+
+          //! 커스텀 오버레이 state에 저장
+          setCustomOverlays((customOverlays) => [
+            ...customOverlays,
+            customOverlay,
+          ]);
         });
-
-        // //! 마커 state에 저장
-        setMarkers((markers) => [...markers, marker]);
-
-        //! 해당 위치에 마커 설치
-        marker.setMap(map);
-
-        //! 커스텀 오버레이를 생성
-        const content =
-          '<div class="custom-overlay">' +
-          `  <a href=https://place.map.kakao.com/${shop.content} target="_blank">` +
-          `    <span class="title">${shop.name}</span>` +
-          '  </a>' +
-          '</div>';
-
-        const customOverlay = new kakao.maps.CustomOverlay({
-          position,
-          content,
-        });
-
-        //! 커스텀 오버레이 state에 저장
-        setCustomOverlays((customOverlays) => [
-          ...customOverlays,
-          customOverlay,
-        ]);
-      });
-    } catch (err) {
-      throw err;
-    }
+      }
+    };
+    fetchShopData();
+    return () => {
+      isComponentMounted = false;
+    };
   }, []);
 
   const handleClick = useCallback(
