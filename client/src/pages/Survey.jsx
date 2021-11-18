@@ -442,7 +442,7 @@ const Survey = () => {
                     <br />
                     <span className="survey-result-strong">
                       {`${convertPriceToText(price)}`}
-                    </span>{' '}
+                    </span>
                     <span>키보드 취향을 가지셨네요.</span>
                   </p>
                   {keyboards.length !== 0 ? (
@@ -487,7 +487,7 @@ const Survey = () => {
                         아쉽게도 {userNickname ? userNickname : '비회원'}
                         님에게 어울리는
                         {width >= 768 ? ` ` : <br />}
-                        키보드를 찾지 못했습니다.{' '}
+                        키보드를 찾지 못했습니다.
                         <RiEmotionSadLine style={{ fontSize: '20px' }} />
                       </p>
                       <p className="survey-result-worry">
