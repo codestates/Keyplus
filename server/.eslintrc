@@ -13,6 +13,5 @@
     "node": true,
     "es6": true
   },
-  "ignorePatterns": ["node_modules/"],
-  "parser": "babel-parser, @babel/eslint-parser"
+  "ignorePatterns": ["node_modules/"]
 }
