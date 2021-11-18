@@ -18,6 +18,7 @@ import './styles/KeyboardDetail.scss';
 
 // ? jsx 그대로 썼던 객체 따로 뺌
 import SwitchColor from '../components/SwitchColor';
+import { unstable_batchedUpdates } from 'react-dom';
 
 const { TabPane } = Tabs;
 const LeftArrow = ({ currentSlide, slideCount, children, ...props }) => {
@@ -40,20 +41,33 @@ const KeyboardDetail = (props) => {
   const [reviews, setReviews] = useState([]);
   const [averageRating, setAverageRating] = useState(0);
 
-  useEffect(async () => {
-    try {
-      const response = await axios.get(`/keyboards/${keyboardId}`);
-      const keyboard = response.data.data;
-      setKeyboard(keyboard);
-      setLikeCount(keyboard.likeCount);
-      setReviews(keyboard.reviews);
-      setAverageRating(
-        keyboard.reviews.reduce((acc, cur) => acc + cur.rating, 0) /
-          keyboard.reviews.length
-      );
-    } catch (err) {
-      return message.warning('서버 에러가 발생했습니다.');
-    }
+  useEffect(() => {
+    let isMounted = true;
+
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`/keyboards/${keyboardId}`);
+        const keyboard = response.data.data;
+        if (isMounted) {
+          unstable_batchedUpdates(() => {
+            setKeyboard(keyboard);
+            setLikeCount(keyboard.likeCount);
+            setReviews(keyboard.reviews);
+            setAverageRating(
+              keyboard.reviews.reduce((acc, cur) => acc + cur.rating, 0) /
+                keyboard.reviews.length
+            );
+          });
+        }
+      } catch (err) {
+        return message.warning('서버 에러가 발생했습니다.');
+      }
+    };
+    fetchData();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const onClickHeart = useCallback(async () => {

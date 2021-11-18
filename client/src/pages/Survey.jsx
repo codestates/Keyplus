@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 import ProgressBar from '@ramonak/react-progress-bar';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import exceptionAxios from 'axios';
-import useIsMounted from '../hooks/useIsMounted';
 import Header from '../components/Header';
 import Question1 from '../components/Survey/Question1';
 import Question2 from '../components/Survey/Question2';
@@ -17,6 +16,7 @@ import KeyboardCard from '../components/KeyboardCard';
 import { message, Spin } from 'antd';
 import { RiEmotionSadLine } from 'react-icons/ri';
 import './styles/Survey.scss';
+import { unstable_batchedUpdates } from 'react-dom';
 
 //! 취향분석중 강제 로딩
 const delay = () => {
@@ -27,15 +27,9 @@ const delay = () => {
   });
 };
 
-const audio1 = new Audio('/boggle.mp3');
-const audio2 = new Audio('/nonclick.mp3');
-const audio3 = new Audio('/linear.mp3');
-const audio4 = new Audio('/click.mp3');
-
 const Survey = () => {
   const history = useHistory();
   const width = useSelector((state) => state.window.width);
-  const isMount = useIsMounted();
   const urlSearchParams = useRef(new URLSearchParams(window.location.search));
   const userNickname =
     urlSearchParams.current.get('nickname') ??
@@ -103,10 +97,39 @@ const Survey = () => {
   }, [sound]);
 
   const mountedPrice = useRef(false);
-  useEffect(async () => {
-    if (!mountedPrice.current) {
-      mountedPrice.current = true;
-      if (price) {
+  useEffect(() => {
+    let isFetched = true;
+
+    const fetchData = async () => {
+      if (!mountedPrice.current) {
+        mountedPrice.current = true;
+        if (price) {
+          try {
+            setIsLoading(true);
+            const [response] = await Promise.all([
+              exceptionAxios.post('/keyboards/filter', {
+                sound,
+                color,
+                backlight,
+                tenkey,
+                bluetooth,
+                price,
+              }),
+              delay(),
+            ]);
+            const filteredKeyboards = response.data.data;
+            if (isFetched) {
+              setKeyboards(filteredKeyboards);
+              setIsLoading(false);
+            }
+          } catch (err) {
+            if (isFetched) {
+              setIsLoading(false);
+            }
+          }
+        }
+        return;
+      } else {
         try {
           setIsLoading(true);
           const [response] = await Promise.all([
@@ -121,43 +144,25 @@ const Survey = () => {
             delay(),
           ]);
           const filteredKeyboards = response.data.data;
-          if (isMount.current) {
-            setKeyboards(filteredKeyboards);
-            setIsLoading(false);
+          if (isFetched) {
+            unstable_batchedUpdates(() => {
+              setKeyboards(filteredKeyboards);
+              setIsLoading(false);
+            });
           }
         } catch (err) {
-          if (isMount.current) {
+          if (isFetched) {
             setIsLoading(false);
           }
         }
       }
-      return;
-    } else {
-      try {
-        setIsLoading(true);
-        const [response] = await Promise.all([
-          exceptionAxios.post('/keyboards/filter', {
-            sound,
-            color,
-            backlight,
-            tenkey,
-            bluetooth,
-            price,
-          }),
-          delay(),
-        ]);
-        const filteredKeyboards = response.data.data;
-        if (isMount.current) {
-          setKeyboards(filteredKeyboards);
-          setIsLoading(false);
-        }
-      } catch (err) {
-        if (isMount.current) {
-          setIsLoading(false);
-        }
-      }
-    }
-  }, [price, isMount]);
+    };
+    fetchData();
+
+    return () => {
+      isFetched = false;
+    };
+  }, [price]);
 
   const onClickStartBtn = useCallback(() => {
     setIsStarted(true);
