@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useHistory } from 'react-router';
 import { useSelector } from 'react-redux';
 import ProgressBar from '@ramonak/react-progress-bar';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
@@ -27,16 +26,20 @@ const delay = () => {
   });
 };
 
-const Survey = () => {
-  const history = useHistory();
+const Survey = ({ history, location }) => {
+  console.log('render');
+
   const width = useSelector((state) => state.window.width);
-  const urlSearchParams = useRef(new URLSearchParams(window.location.search));
-  const userNickname =
-    urlSearchParams.current.get('nickname') ??
-    useSelector((state) => state.user?.nickname);
+
   const [isStarted, setIsStarted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [keyboards, setKeyboards] = useState(null);
+
+  const urlSearchParams = useRef(new URLSearchParams(location.search));
+  const userNickname = useRef(
+    urlSearchParams.current.get('nickname') ??
+      useSelector((state) => state.user?.nickname)
+  );
   const [sound, setSound] = useState(
     urlSearchParams.current.get('sound')
       ? Number(urlSearchParams.current.get('sound'))
@@ -421,7 +424,10 @@ const Survey = () => {
               {keyboards && (
                 <div className="survey-result-main">
                   <p className="survey-result-header">
-                    <span>{userNickname ? userNickname : '비회원'}님은</span>
+                    <span>
+                      {userNickname.current ? userNickname.current : '비회원'}
+                      님은
+                    </span>
                     <br />
                     <span className="survey-result-strong">{`${convertSoundToText(
                       sound
@@ -448,7 +454,8 @@ const Survey = () => {
                   {keyboards.length !== 0 ? (
                     <>
                       <p>
-                        {userNickname ? userNickname : '비회원'}님에게 딱 맞는
+                        {userNickname.current ? userNickname.current : '비회원'}
+                        님에게 딱 맞는
                         {width >= 768 ? ` ` : <br />}
                         <span className="survey-result-strong">
                           {keyboards.length}개
@@ -458,7 +465,9 @@ const Survey = () => {
                       <div className="share-area">
                         <KakaoShareButton
                           url={`https://keyplus.kr/survey?nickname=${
-                            userNickname ? userNickname : '비회원'
+                            userNickname.current
+                              ? userNickname.current
+                              : '비회원'
                           }&sound=${sound}&color=${color}&backlight=${backlight}&tenkey=${tenkey}&bluetooth=${bluetooth}&price=${price}`}
                         />
                       </div>
@@ -466,7 +475,9 @@ const Survey = () => {
                         <CopyToClipboard
                           onCopy={onCopy}
                           text={`https://keyplus.kr/survey?nickname=${
-                            userNickname ? userNickname : '비회원'
+                            userNickname.current
+                              ? userNickname.current
+                              : '비회원'
                           }&sound=${sound}&color=${color}&backlight=${backlight}&tenkey=${tenkey}&bluetooth=${bluetooth}&price=${price}`}
                         >
                           <button>링크 복사</button>
@@ -484,7 +495,8 @@ const Survey = () => {
                   ) : (
                     <>
                       <p className="survey-result-italic">
-                        아쉽게도 {userNickname ? userNickname : '비회원'}
+                        아쉽게도
+                        {userNickname.current ? userNickname.current : '비회원'}
                         님에게 어울리는
                         {width >= 768 ? ` ` : <br />}
                         키보드를 찾지 못했습니다.
