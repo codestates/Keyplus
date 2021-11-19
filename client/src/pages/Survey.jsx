@@ -17,7 +17,7 @@ import { RiEmotionSadLine } from 'react-icons/ri';
 import './styles/Survey.scss';
 import { unstable_batchedUpdates } from 'react-dom';
 
-//! 취향분석중 강제 로딩
+//! 취향분석 중 강제 로딩
 const delay = () => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -71,21 +71,19 @@ const Survey = ({ history, location }) => {
       : null
   );
 
-  const [audio1] = useState(new Audio('/audio/boggle.mp3'));
-  const [audio2] = useState(new Audio('/audio/nonclick.mp3'));
-  const [audio3] = useState(new Audio('/audio/linear.mp3'));
-  const [audio4] = useState(new Audio('/audio/click.mp3'));
+  const [audios] = useState([
+    new Audio('/audio/boggle.mp3'),
+    new Audio('/audio/nonclick.mp3'),
+    new Audio('/audio/linear.mp3'),
+    new Audio('/audio/click.mp3'),
+  ]);
 
   useEffect(() => {
     return () => {
-      audio1.pause();
-      audio1.currentTime = 0;
-      audio2.pause();
-      audio2.currentTime = 0;
-      audio3.pause();
-      audio3.currentTime = 0;
-      audio4.pause();
-      audio4.currentTime = 0;
+      audios.forEach((audio) => {
+        audio.pause();
+        audio.currentTime = 0;
+      });
     };
   }, []);
 
@@ -173,14 +171,10 @@ const Survey = ({ history, location }) => {
 
   const onClickSound = useCallback((res) => {
     setSound(res);
-    audio1.pause();
-    audio1.currentTime = 0;
-    audio2.pause();
-    audio2.currentTime = 0;
-    audio3.pause();
-    audio3.currentTime = 0;
-    audio4.pause();
-    audio4.currentTime = 0;
+    audios.forEach((audio) => {
+      audio.pause();
+      audio.currentTime = 0;
+    });
   }, []);
 
   const convertSoundToText = useCallback((sound) => {
@@ -313,13 +307,7 @@ const Survey = ({ history, location }) => {
                 baseBgColor="#dfdfdf"
               />
             </div>
-            <Question1
-              onClickSound={onClickSound}
-              audio1={audio1}
-              audio2={audio2}
-              audio3={audio3}
-              audio4={audio4}
-            />
+            <Question1 onClickSound={onClickSound} audios={audios} />
           </main>
         </>
       );
