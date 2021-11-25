@@ -41,6 +41,15 @@ const sortingList = [
   '가격 높은순',
 ];
 
+const compareFunction = [
+  (a, b) => b.likeCount - a.likeCount,
+  (a, b) => a.likeCount - b.likeCount,
+  (a, b) => b.reviewCount - a.reviewCount,
+  (a, b) => a.reviewCount - b.reviewCount,
+  (a, b) => a.price - b.price,
+  (a, b) => b.price - a.price,
+];
+
 const Keyboard = () => {
   console.log('render');
 
@@ -164,58 +173,14 @@ const Keyboard = () => {
   useEffect(() => {
     if (isFetched.current) {
       console.log('정렬용 useEffect');
-      switch (sortingNumber) {
-        case 1:
-          setAllKeyboards((keyboards) =>
-            [...keyboards].sort((a, b) => b.likeCount - a.likeCount)
-          );
-          setKeyboards((keyboards) =>
-            [...keyboards].sort((a, b) => b.likeCount - a.likeCount)
-          );
-          break;
-        case 2:
-          setAllKeyboards((keyboards) =>
-            [...keyboards].sort((a, b) => a.likeCount - b.likeCount)
-          );
-          setKeyboards((keyboards) =>
-            [...keyboards].sort((a, b) => a.likeCount - b.likeCount)
-          );
-          break;
-        case 3:
-          setAllKeyboards((keyboards) =>
-            [...keyboards].sort((a, b) => b.reviewCount - a.reviewCount)
-          );
-          setKeyboards((keyboards) =>
-            [...keyboards].sort((a, b) => b.reviewCount - a.reviewCount)
-          );
-          break;
-        case 4:
-          setAllKeyboards((keyboards) =>
-            [...keyboards].sort((a, b) => a.reviewCount - b.reviewCount)
-          );
-          setKeyboards((keyboards) =>
-            [...keyboards].sort((a, b) => a.reviewCount - b.reviewCount)
-          );
-          break;
-        case 5:
-          setAllKeyboards((keyboards) =>
-            [...keyboards].sort((a, b) => a.price - b.price)
-          );
-          setKeyboards((keyboards) =>
-            [...keyboards].sort((a, b) => a.price - b.price)
-          );
-          break;
-        case 6:
-          setAllKeyboards((keyboards) =>
-            [...keyboards].sort((a, b) => b.price - a.price)
-          );
-          setKeyboards((keyboards) =>
-            [...keyboards].sort((a, b) => b.price - a.price)
-          );
-          break;
-        default:
-          break;
-      }
+
+      setAllKeyboards((keyboards) =>
+        [...keyboards].sort(compareFunction[sortingNumber - 1])
+      );
+
+      setKeyboards((keyboards) =>
+        [...keyboards].sort(compareFunction[sortingNumber - 1])
+      );
     }
   }, [sortingNumber]);
 

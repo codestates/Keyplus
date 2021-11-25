@@ -80,7 +80,7 @@ const Introduction = () => {
                       걸리는 느낌을 줍니다.
                     </p>
                     <p>
-                      클릭키를 사용하는 대표적인 축으로는 <strong>청축</strong>,{' '}
+                      클릭키를 사용하는 대표적인 축으로는 <strong>청축</strong>,
                       <strong>녹축</strong> 그리고
                       <strong>백축</strong>이 있습니다. 확실한 키감과 경쾌한
                       소리의 기계식 키보드를 원하거나, 게임용으로 사용을 원하는
