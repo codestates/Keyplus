@@ -7,7 +7,6 @@ module.exports = {
       const shops = await Shop.findAll({});
       return res.status(200).json({ data: shops, message: 'ok' });
     } catch (error) {
-      console.log(error);
       return res.sendStatus(500);
     }
   },

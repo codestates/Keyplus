@@ -16,7 +16,6 @@ import TypingShop from './pages/TypingShop';
 import Introduction from './pages/Introduction';
 import Temp from './pages/Temp';
 import ReviewCreate from './pages/ReviewCreate';
-import Spinner from './components/Spinner';
 import PrivateRoute from './utils/PrivateRoute';
 import PublicRoute from './utils/PublicRoute';
 import { logOutForce } from './reducers/userSlice';
@@ -28,13 +27,12 @@ import useScreenResize from './hooks/useScreenResize';
 import './App.less';
 
 function App() {
-  console.log('😊😊😊😊😊😊😊😊😊😊😊😊');
   const dispatch = useDispatch();
   const expireDate = useSelector((state) => state.expireDate);
 
   useScreenResize();
 
-  useEffect(async () => {
+  useEffect(() => {
     AOS.init();
     if (expireDate) {
       const currentDate = Date.now();

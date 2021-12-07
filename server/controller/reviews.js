@@ -52,7 +52,6 @@ module.exports = {
         return res.status(200).json({ data: review });
       }
     } catch (error) {
-      console.log(error);
       return res.sendStatus(500);
     }
   },
@@ -134,7 +133,6 @@ module.exports = {
       Object.assign(updatedReview, userInfo);
       return res.status(200).json({ data: updatedReview });
     } catch (error) {
-      console.log(error);
       return res.sendStatus(500);
     }
   },
@@ -163,7 +161,6 @@ module.exports = {
       });
       return res.sendStatus(200);
     } catch (error) {
-      console.log(error);
       return res.sendStatus(500);
     }
   },
@@ -195,7 +192,6 @@ module.exports = {
 
       return res.status(200).json({ data: reviewInfo });
     } catch (error) {
-      console.log(error);
       return res.sendStatus(500);
     }
   },

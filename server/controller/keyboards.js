@@ -54,7 +54,6 @@ module.exports = {
       });
       return res.status(200).json({ data: filteredKeyboardsInfo });
     } catch (error) {
-      console.log(error);
       return res.sendStatus(500);
     }
   },
@@ -94,7 +93,6 @@ module.exports = {
       const getKeyboardReview = Object.assign(getKeyboard, reviews); // 키보드에 리뷰를 붙인다.
       return res.status(200).json({ data: getKeyboardReview });
     } catch (error) {
-      console.log(error);
       return res.status(500).json({ message: 'Server Error' });
     }
   },

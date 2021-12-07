@@ -68,7 +68,6 @@ module.exports = {
         })
         .json({ data: loginUserInfo });
     } catch (err) {
-      console.log(err);
       return res.status(500).json({ message: 'Server Error' });
     }
   },
@@ -83,7 +82,6 @@ module.exports = {
       });
       return res.sendStatus(200);
     } catch (err) {
-      console.log(err);
       return res.status(500).json({ message: 'Server Error' });
     }
   },
@@ -117,7 +115,6 @@ module.exports = {
       });
       return res.sendStatus(200);
     } catch (err) {
-      console.log(err);
       return res.sendStatus(500);
     }
   },
@@ -339,7 +336,6 @@ module.exports = {
         .status(200)
         .json({ data: { verificationCode: verificationCode } });
     } catch (err) {
-      console.log(err);
       return res.status(500).json({ message: 'Server Error' });
     }
   },
@@ -355,7 +351,6 @@ module.exports = {
       // 3. 저장되어있지않으면 OK 메시지
       return res.sendStatus(200);
     } catch (err) {
-      console.log(err);
       return res.status(500).json({ message: 'Server Error' });
     }
   },
