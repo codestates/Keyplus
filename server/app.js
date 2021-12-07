@@ -20,7 +20,7 @@ app.use(cookieParser());
 app.use(helmet());
 app.use(
   cors({
-    origin: true,
+    origin: 'https://keyplus.kr',
     credentials: true,
     methods: ['GET', 'POST', 'DELETE', 'PATCH', 'OPTIONS'],
     Headers: { 'content-type': 'application/json' },
