@@ -11,9 +11,7 @@ const ShopList = ({
 }) => {
   const [clickedShopInList, setClickedShopInList] = useState(-1);
   const mounted = useRef(false);
-  console.log('렌더');
   useEffect(() => {
-    console.log('유즈이펙트');
     const fetchData = async () => {
       if (!mounted.current) {
         mounted.current = true;
