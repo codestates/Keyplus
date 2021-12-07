@@ -166,7 +166,7 @@ module.exports = {
       });
 
       res.cookie('jwt', token, {
-        sameSite: 'Strict',
+        sameSite: 'None',
         secure: true,
         httpOnly: true,
         expires: new Date(Date.now() + 1000 * 60 * 60 * 48),
@@ -226,7 +226,7 @@ module.exports = {
       });
 
       res.cookie('jwt', token, {
-        sameSite: 'Strict',
+        sameSite: 'None',
         secure: true,
         httpOnly: true,
         expires: new Date(Date.now() + 1000 * 60 * 60 * 48),
@@ -285,7 +285,7 @@ module.exports = {
       });
 
       res.cookie('jwt', token, {
-        sameSite: 'Strict',
+        sameSite: 'None',
         secure: true,
         httpOnly: true,
         expires: new Date(Date.now() + 1000 * 60 * 60 * 48),
