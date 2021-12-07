@@ -12,11 +12,11 @@ module.exports = {
     return res
       .status(200)
       .cookie('jwt', accessToken, {
-        sameSite: 'None',
+        sameSite: 'Strict',
         secure: true,
         httpOnly: true,
         expires: new Date(Date.now() + 1000 * 60 * 60 * 48),
-        domain: process.env.NODE_ENV === 'production' && 'keyplus.kr',
+        domain: '.keyplus.kr',
       })
       .json({ data: { accessToken }, message: 'OK' });
   },

@@ -64,7 +64,7 @@ module.exports = {
           secure: true,
           httpOnly: true,
           expires: new Date(Date.now() + 1000 * 60 * 60 * 48),
-          domain: process.env.NODE_ENV === 'production' && 'keyplus.kr',
+          domain: 'keyplus.kr',
         })
         .json({ data: loginUserInfo });
     } catch (err) {
@@ -78,7 +78,7 @@ module.exports = {
         sameSite: 'None',
         secure: true,
         httpOnly: true,
-        domain: process.env.NODE_ENV === 'production' && 'keyplus.kr',
+        domain: 'keyplus.kr',
       });
       return res.sendStatus(200);
     } catch (err) {
@@ -166,11 +166,11 @@ module.exports = {
       });
 
       res.cookie('jwt', token, {
-        sameSite: 'None',
+        sameSite: 'Strict',
         secure: true,
         httpOnly: true,
         expires: new Date(Date.now() + 1000 * 60 * 60 * 48),
-        domain: process.env.NODE_ENV === 'production' && 'keyplus.kr',
+        domain: '.keyplus.kr',
       });
 
       res.redirect(`${process.env.CLIENT_URI}/temp`);
@@ -226,11 +226,11 @@ module.exports = {
       });
 
       res.cookie('jwt', token, {
-        sameSite: 'None',
+        sameSite: 'Strict',
         secure: true,
         httpOnly: true,
         expires: new Date(Date.now() + 1000 * 60 * 60 * 48),
-        domain: process.env.NODE_ENV === 'production' && 'keyplus.kr',
+        domain: '.keyplus.kr',
       });
 
       res.redirect(`${process.env.CLIENT_URI}/temp`);
@@ -285,11 +285,11 @@ module.exports = {
       });
 
       res.cookie('jwt', token, {
-        sameSite: 'None',
+        sameSite: 'Strict',
         secure: true,
         httpOnly: true,
         expires: new Date(Date.now() + 1000 * 60 * 60 * 48),
-        domain: process.env.NODE_ENV === 'production' && 'keyplus.kr',
+        domain: '.keyplus.kr',
       });
 
       res.redirect(`${process.env.CLIENT_URI}/temp`);
