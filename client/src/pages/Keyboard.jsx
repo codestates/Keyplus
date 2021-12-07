@@ -51,8 +51,6 @@ const compareFunction = [
 ];
 
 const Keyboard = () => {
-  console.log('render');
-
   const [loading, setLoading] = useState(true);
 
   const [keyboards, setKeyboards] = useState([]);
@@ -93,7 +91,6 @@ const Keyboard = () => {
   // * ------------------ useEffect
   // ! 맨 처음 데이터 fetch용 useEffect
   useEffect(() => {
-    console.log('맨 처음 데이터 fetch용 useEffect');
     let isMounted = true;
     const fetchData = async () => {
       try {
@@ -105,11 +102,10 @@ const Keyboard = () => {
         if (isMounted) {
           unstable_batchedUpdates(() => {
             setKeyboards(sortedData);
-            console.log('setKeyboards 후');
+
             setAllKeyboards(sortedData);
-            console.log('setAllKeyboards 후');
+
             setLoading(false);
-            console.log('setLoading=false 후');
           });
           isFetched.current = true;
         }
@@ -127,8 +123,6 @@ const Keyboard = () => {
   // ! 필터링용 useEffect
   useEffect(() => {
     if (isFetched.current) {
-      console.log('필터링용 useEffect');
-
       // * 초기화
       setKeyboards([...allKeyboards]);
 
@@ -172,8 +166,6 @@ const Keyboard = () => {
   // ! 정렬용 useEffect
   useEffect(() => {
     if (isFetched.current) {
-      console.log('정렬용 useEffect');
-
       setAllKeyboards((keyboards) =>
         [...keyboards].sort(compareFunction[sortingNumber - 1])
       );
@@ -233,7 +225,6 @@ const Keyboard = () => {
   }, []);
 
   const onClickPriceRadio = (e) => {
-    console.log('온클릭프라이스라디오');
     if (e.target.checked) {
       e.target.checked = false;
       setPriceRadio(null);

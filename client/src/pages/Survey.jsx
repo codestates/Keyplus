@@ -27,8 +27,6 @@ const delay = () => {
 };
 
 const Survey = ({ history, location }) => {
-  console.log('render');
-
   const width = useSelector((state) => state.window.width);
 
   const [isStarted, setIsStarted] = useState(false);

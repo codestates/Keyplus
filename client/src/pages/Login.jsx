@@ -17,11 +17,7 @@ const Login = (props) => {
     reset,
   } = useForm();
 
-  console.log(watch('email'));
-  console.log(watch('password'));
-
   const onSubmit = async (data) => {
-    console.log('데이터', data);
     try {
       await dispatch(logIn(data)).unwrap();
       message.success('로그인을 완료했습니다');

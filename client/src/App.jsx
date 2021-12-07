@@ -28,7 +28,6 @@ import useScreenResize from './hooks/useScreenResize';
 import './App.less';
 
 function App() {
-  console.log('😊😊😊😊😊😊😊😊😊😊😊😊');
   const dispatch = useDispatch();
   const expireDate = useSelector((state) => state.expireDate);
 

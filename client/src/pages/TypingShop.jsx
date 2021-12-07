@@ -13,10 +13,8 @@ const TypingShop = () => {
   const [markers, setMarkers] = useState([]);
   const [customOverlays, setCustomOverlays] = useState([]);
 
-  console.log('렌더타이핑샵');
   //! API Call
   useEffect(() => {
-    console.log('유즈이펙트타이핑샵');
     let isComponentMounted = true;
     const fetchShopData = async () => {
       const res = await exceptionAxios.get('/shops');

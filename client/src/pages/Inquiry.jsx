@@ -13,13 +13,7 @@ const Inquiry = () => {
     reset,
   } = useForm();
 
-  console.log(watch('email'));
-  console.log(watch('name'));
-  console.log(watch('title'));
-  console.log(watch('contents'));
-
   const onSubmit = async (data) => {
-    console.log('데이터', data);
     try {
       await exceptionAxios.post('/inquiries', {
         data,
