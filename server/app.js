@@ -20,7 +20,7 @@ app.use(cookieParser());
 app.use(helmet());
 app.use(
   cors({
-    origin: 'https://keyplus.kr',
+    origin: true,
     credentials: true,
     methods: ['GET', 'POST', 'DELETE', 'PATCH', 'OPTIONS'],
     Headers: { 'content-type': 'application/json' },
@@ -45,4 +45,4 @@ models.sequelize.sync({ force: false }).then(() => {
   console.log('success');
 });
 
-app.listen(5000);
+app.listen(80);
