@@ -78,7 +78,7 @@ module.exports = {
         sameSite: 'Strict',
         secure: true,
         httpOnly: true,
-        // domain: process.env.NODE_ENV === 'production' && 'keyplus.kr',
+        domain: process.env.NODE_ENV === 'production' && 'keyplus.kr',
       });
       return res.sendStatus(200);
     } catch (err) {
@@ -170,7 +170,7 @@ module.exports = {
         secure: true,
         httpOnly: true,
         expires: new Date(Date.now() + 1000 * 60 * 60 * 48),
-        // domain: process.env.NODE_ENV === 'production' && 'keyplus.kr',
+        domain: process.env.NODE_ENV === 'production' && 'keyplus.kr',
       });
 
       res.redirect(`${process.env.CLIENT_URI}/temp`);
@@ -230,7 +230,7 @@ module.exports = {
         secure: true,
         httpOnly: true,
         expires: new Date(Date.now() + 1000 * 60 * 60 * 48),
-        // domain: process.env.NODE_ENV === 'production' && 'keyplus.kr',
+        domain: process.env.NODE_ENV === 'production' && 'keyplus.kr',
       });
 
       res.redirect(`${process.env.CLIENT_URI}/temp`);
@@ -289,7 +289,7 @@ module.exports = {
         secure: true,
         httpOnly: true,
         expires: new Date(Date.now() + 1000 * 60 * 60 * 48),
-        // domain: process.env.NODE_ENV === 'production' && 'keyplus.kr',
+        domain: process.env.NODE_ENV === 'production' && 'keyplus.kr',
       });
 
       res.redirect(`${process.env.CLIENT_URI}/temp`);
