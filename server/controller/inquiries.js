@@ -40,7 +40,6 @@ module.exports = {
         res.send({ data: info });
       });
     } catch (error) {
-      console.log(error);
       res.sendStatus(500);
     }
   },
