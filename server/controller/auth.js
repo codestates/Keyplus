@@ -60,7 +60,7 @@ module.exports = {
       return res
         .status(200)
         .cookie('jwt', token, {
-          sameSite: 'None',
+          sameSite: 'Strict',
           secure: true,
           httpOnly: true,
           expires: new Date(Date.now() + 1000 * 60 * 60 * 48),
@@ -75,7 +75,7 @@ module.exports = {
     // 1. clearCookie
     try {
       res.clearCookie('jwt', {
-        sameSite: 'None',
+        sameSite: 'Strict',
         secure: true,
         httpOnly: true,
         // domain: '.keyplus.kr',
@@ -166,7 +166,7 @@ module.exports = {
       });
 
       res.cookie('jwt', token, {
-        sameSite: 'None',
+        sameSite: 'Strict',
         secure: true,
         httpOnly: true,
         expires: new Date(Date.now() + 1000 * 60 * 60 * 48),
@@ -226,7 +226,7 @@ module.exports = {
       });
 
       res.cookie('jwt', token, {
-        sameSite: 'None',
+        sameSite: 'Strict',
         secure: true,
         httpOnly: true,
         expires: new Date(Date.now() + 1000 * 60 * 60 * 48),
@@ -285,7 +285,7 @@ module.exports = {
       });
 
       res.cookie('jwt', token, {
-        sameSite: 'None',
+        sameSite: 'Strict',
         secure: true,
         httpOnly: true,
         expires: new Date(Date.now() + 1000 * 60 * 60 * 48),
