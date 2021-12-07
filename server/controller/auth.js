@@ -60,11 +60,11 @@ module.exports = {
       return res
         .status(200)
         .cookie('jwt', token, {
-          sameSite: 'Strict',
+          sameSite: 'None',
           secure: true,
           httpOnly: true,
           expires: new Date(Date.now() + 1000 * 60 * 60 * 48),
-          // domain: process.env.NODE_ENV === 'production' && 'keyplus.kr',
+          domain: process.env.NODE_ENV === 'production' && 'keyplus.kr',
         })
         .json({ data: loginUserInfo });
     } catch (err) {
@@ -75,7 +75,7 @@ module.exports = {
     // 1. clearCookie
     try {
       res.clearCookie('jwt', {
-        sameSite: 'Strict',
+        sameSite: 'None',
         secure: true,
         httpOnly: true,
         domain: process.env.NODE_ENV === 'production' && 'keyplus.kr',
@@ -166,7 +166,7 @@ module.exports = {
       });
 
       res.cookie('jwt', token, {
-        sameSite: 'Strict',
+        sameSite: 'None',
         secure: true,
         httpOnly: true,
         expires: new Date(Date.now() + 1000 * 60 * 60 * 48),
@@ -226,7 +226,7 @@ module.exports = {
       });
 
       res.cookie('jwt', token, {
-        sameSite: 'Strict',
+        sameSite: 'None',
         secure: true,
         httpOnly: true,
         expires: new Date(Date.now() + 1000 * 60 * 60 * 48),
@@ -285,7 +285,7 @@ module.exports = {
       });
 
       res.cookie('jwt', token, {
-        sameSite: 'Strict',
+        sameSite: 'None',
         secure: true,
         httpOnly: true,
         expires: new Date(Date.now() + 1000 * 60 * 60 * 48),
