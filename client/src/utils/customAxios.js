@@ -12,7 +12,6 @@ instance.interceptors.request.use(
   (configure) => {
     // ! 로딩 호출
     store.dispatch(isLoading());
-    console.log('디스패치 1');
     return configure;
   },
   (error) => {
@@ -25,7 +24,6 @@ instance.interceptors.response.use(
   (configure) => {
     // ! 완료 시 로딩창 종료
     store.dispatch(isNotLoading());
-    console.log('디스패치 2');
     return configure;
   },
   (error) => {

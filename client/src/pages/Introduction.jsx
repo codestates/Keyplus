@@ -22,10 +22,19 @@ const Introduction = () => {
   const [underlineYellow, setUnderlineYellow] = useState('');
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(async () => {
+  useEffect(() => {
+    let isMounted = true;
     setUnderlineYellow('underline-yellow');
-    await delay();
-    setIsLoading(false);
+    const delayFunc = async () => {
+      await delay();
+      if (isMounted) {
+        setIsLoading(false);
+      }
+    };
+    delayFunc();
+    return () => {
+      isMounted = false;
+    };
   }, [isMount]);
 
   return (
