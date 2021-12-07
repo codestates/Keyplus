@@ -42,9 +42,9 @@ const Login = (props) => {
     <>
       <section className="login-container">
         <div className="login-flexbox">
-          <figure className="login-aside">
+          <aside className="login-aside">
             <img src="/others/login.jpg" />
-          </figure>
+          </aside>
           <div className="login-main">
             <h2 className="title">Login</h2>
             <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
