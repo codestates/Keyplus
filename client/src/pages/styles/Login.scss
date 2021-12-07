@@ -28,6 +28,9 @@
   flex: 1;
   height: 100%;
   position: relative;
+  figure {
+    margin: 0;
+  }
 
   @media screen and (max-width: $md-breakpoint) {
     display: none;
@@ -133,5 +136,16 @@
 
   &:hover {
     color: #000;
+  }
+}
+
+.error-message {
+  color: #e15353;
+  padding: 7px 0;
+  text-align: center;
+
+  &:before {
+    display: inline;
+    content: '⚠ ';
   }
 }

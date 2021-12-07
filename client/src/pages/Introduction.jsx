@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import ReactPlayer from 'react-player/lazy';
 import Header from '../components/Header';
-import useWidthSize from '../hooks/useWidthSize';
 import { AiOutlineArrowRight } from 'react-icons/ai';
 import { FaExclamation } from 'react-icons/fa';
-import useIsMount from '../hooks/useIsMount';
+import useIsMounted from '../hooks/useIsMounted';
 import './styles/Introduction.scss';
+import { useSelector } from 'react-redux';
 
 const delay = () => {
   return new Promise((resolve, reject) => {
@@ -17,8 +17,8 @@ const delay = () => {
 };
 
 const Introduction = () => {
-  const width = useWidthSize(768);
-  const isMount = useIsMount();
+  const width = useSelector((state) => state.window.width);
+  const isMount = useIsMounted();
   const [underlineYellow, setUnderlineYellow] = useState('');
   const [isLoading, setIsLoading] = useState(true);
 
@@ -46,7 +46,7 @@ const Introduction = () => {
               <p className="intro-p strong">
                 <span className="bgc-gray">
                   기계식 키보드가 처음이신가요? <br /> 본 페이지는 기계식
-                  키보드의 가장 기본인{width > 768 ? ` ` : <br />}
+                  키보드의 가장 기본인{width >= 768 ? ` ` : <br />}
                   <strong> 스위치</strong>를 소개하고 있습니다.
                 </span>
               </p>
@@ -65,7 +65,7 @@ const Introduction = () => {
               <div className="intro-p">
                 <div>어떤 스위치의 소리가 가장 마음에 드시나요?</div>
                 <div>
-                  아직 정하지 못했어도 괜찮습니다.{width > 768 ? ` ` : <br />}
+                  아직 정하지 못했어도 괜찮습니다.{width >= 768 ? ` ` : <br />}
                   아래 설명을 보면서 마음에 드는 스위치를 찾아보세요!
                 </div>
               </div>
@@ -80,7 +80,7 @@ const Introduction = () => {
                       걸리는 느낌을 줍니다.
                     </p>
                     <p>
-                      클릭키를 사용하는 대표적인 축으로는 <strong>청축</strong>,{' '}
+                      클릭키를 사용하는 대표적인 축으로는 <strong>청축</strong>,
                       <strong>녹축</strong> 그리고
                       <strong>백축</strong>이 있습니다. 확실한 키감과 경쾌한
                       소리의 기계식 키보드를 원하거나, 게임용으로 사용을 원하는
@@ -162,7 +162,7 @@ const Introduction = () => {
                   </div>
                 </div>
               </article>
-              <p className="intro-p strong finish">
+              <div className="intro-p strong finish">
                 <p>
                   어떠신가요?
                   <br />
@@ -172,19 +172,19 @@ const Introduction = () => {
                 </p>
                 <strong>백문이 불여일타!</strong>
                 <p>
-                  직접 타건해보며 자신에게 맞는{width > 768 ? ` ` : <br />}
+                  직접 타건해보며 자신에게 맞는{width >= 768 ? ` ` : <br />}
                   기계식 키보드를 찾는 것이 가장 빠르고 좋은 방법입니다.
                   <br />
                   Keyplus에서는 여러 가지 키보드를 경험해볼 수 있는
-                  {width > 768 ? ` ` : <br />}타건샵들을 한눈에 볼 수 있는
+                  {width >= 768 ? ` ` : <br />}타건샵들을 한눈에 볼 수 있는
                   페이지를 만들었습니다.
                 </p>
                 <p>
                   <span className="bgc-gray">
-                    기계식 키보드의 맛을 직접 느껴보세요!
+                    <b>기계식 키보드의 맛을 직접 느껴보세요!</b>
                   </span>
                 </p>
-              </p>
+              </div>
 
               <strong>
                 <div className="intro-link">

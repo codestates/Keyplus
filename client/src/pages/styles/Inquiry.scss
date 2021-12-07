@@ -17,6 +17,18 @@
   }
 }
 
+.error-message {
+  color: #e15353;
+  padding: 7px 0 0 0;
+  margin: 0;
+  text-align: center;
+
+  &:before {
+    display: inline;
+    content: '⚠ ';
+  }
+}
+
 .inquiry-main {
   @include flexbox();
   flex-direction: column;

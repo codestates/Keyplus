@@ -60,11 +60,11 @@ module.exports = {
       return res
         .status(200)
         .cookie('jwt', token, {
-          sameSite: 'None',
+          sameSite: 'Strict',
           secure: true,
           httpOnly: true,
           expires: new Date(Date.now() + 1000 * 60 * 60 * 48),
-          domain: '.keyplus.kr',
+          // domain: process.env.NODE_ENV === 'production' && 'keyplus.kr',
         })
         .json({ data: loginUserInfo });
     } catch (err) {
@@ -75,7 +75,12 @@ module.exports = {
   logout: async (req, res) => {
     // 1. clearCookie
     try {
-      res.clearCookie('jwt');
+      res.clearCookie('jwt', {
+        sameSite: 'Strict',
+        secure: true,
+        httpOnly: true,
+        // domain: process.env.NODE_ENV === 'production' && 'keyplus.kr',
+      });
       return res.sendStatus(200);
     } catch (err) {
       console.log(err);
@@ -164,11 +169,11 @@ module.exports = {
       });
 
       res.cookie('jwt', token, {
-        sameSite: 'None',
+        sameSite: 'Strict',
         secure: true,
         httpOnly: true,
         expires: new Date(Date.now() + 1000 * 60 * 60 * 48),
-        domain: '.keyplus.kr',
+        // domain: process.env.NODE_ENV === 'production' && 'keyplus.kr',
       });
 
       res.redirect(`${process.env.CLIENT_URI}/temp`);
@@ -224,11 +229,11 @@ module.exports = {
       });
 
       res.cookie('jwt', token, {
-        sameSite: 'None',
+        sameSite: 'Strict',
         secure: true,
         httpOnly: true,
         expires: new Date(Date.now() + 1000 * 60 * 60 * 48),
-        domain: '.keyplus.kr',
+        // domain: process.env.NODE_ENV === 'production' && 'keyplus.kr',
       });
 
       res.redirect(`${process.env.CLIENT_URI}/temp`);
@@ -283,11 +288,11 @@ module.exports = {
       });
 
       res.cookie('jwt', token, {
-        sameSite: 'None',
+        sameSite: 'Strict',
         secure: true,
         httpOnly: true,
         expires: new Date(Date.now() + 1000 * 60 * 60 * 48),
-        domain: '.keyplus.kr',
+        // domain: process.env.NODE_ENV === 'production' && 'keyplus.kr',
       });
 
       res.redirect(`${process.env.CLIENT_URI}/temp`);

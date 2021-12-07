@@ -1,0 +1,50 @@
+.switch-color-container {
+  display: inline-block;
+  margin-right: 5px;
+
+  .switch-color-main {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    vertical-align: middle;
+    margin-right: 1px;
+
+    &.silent-red {
+      background-color: #ff656c;
+    }
+
+    &.red {
+      background-color: #ff1a48;
+    }
+
+    &.blue {
+      background-color: #00b4f9;
+    }
+
+    &.brown {
+      background-color: #b8792a;
+    }
+
+    &.black {
+      background-color: #0d0d0d;
+    }
+  }
+
+  .switch-color-name {
+    vertical-align: middle;
+    font-size: 12px;
+  }
+
+  &.detail {
+    .switch-color-main {
+      width: 15px;
+      height: 15px;
+      margin-right: 2px;
+    }
+
+    .switch-color-name {
+      font-size: 14px;
+    }
+  }
+}

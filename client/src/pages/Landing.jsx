@@ -1,5 +1,5 @@
 import React from 'react';
-import LandingHeader from '../components/LandingHeader';
+import Header from '../components/Header';
 import LandingPart1 from '../components/Landing/LandingPart1';
 import LandingPart2 from '../components/Landing/LandingPart2';
 import LandingPart3 from '../components/Landing/LandingPart3';
@@ -14,7 +14,7 @@ const Landing = () => {
     <>
       <ScrollArrow landing={true} />
       <div className="landing-main">
-        <LandingHeader />
+        <Header landing />
         <LandingPart1 />
         <LandingPart2 />
         <LandingPart3 />
