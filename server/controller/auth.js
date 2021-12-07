@@ -64,7 +64,7 @@ module.exports = {
           secure: true,
           httpOnly: true,
           expires: new Date(Date.now() + 1000 * 60 * 60 * 48),
-          domain: 'keyplus.kr',
+          // domain: '.keyplus.kr',
         })
         .json({ data: loginUserInfo });
     } catch (err) {
@@ -78,7 +78,7 @@ module.exports = {
         sameSite: 'None',
         secure: true,
         httpOnly: true,
-        domain: 'keyplus.kr',
+        // domain: '.keyplus.kr',
       });
       return res.sendStatus(200);
     } catch (err) {
@@ -170,7 +170,7 @@ module.exports = {
         secure: true,
         httpOnly: true,
         expires: new Date(Date.now() + 1000 * 60 * 60 * 48),
-        domain: '.keyplus.kr',
+        // domain: '.keyplus.kr',
       });
 
       res.redirect(`${process.env.CLIENT_URI}/temp`);
@@ -230,7 +230,7 @@ module.exports = {
         secure: true,
         httpOnly: true,
         expires: new Date(Date.now() + 1000 * 60 * 60 * 48),
-        domain: '.keyplus.kr',
+        // domain: '.keyplus.kr',
       });
 
       res.redirect(`${process.env.CLIENT_URI}/temp`);
@@ -289,7 +289,7 @@ module.exports = {
         secure: true,
         httpOnly: true,
         expires: new Date(Date.now() + 1000 * 60 * 60 * 48),
-        domain: '.keyplus.kr',
+        // domain: '.keyplus.kr',
       });
 
       res.redirect(`${process.env.CLIENT_URI}/temp`);
