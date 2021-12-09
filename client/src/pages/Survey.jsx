@@ -1,11 +1,8 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useHistory } from 'react-router';
 import { useSelector } from 'react-redux';
 import ProgressBar from '@ramonak/react-progress-bar';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import exceptionAxios from 'axios';
-import useWidthSize from '../hooks/useWidthSize';
-import useIsMount from '../hooks/useIsMount';
 import Header from '../components/Header';
 import Question1 from '../components/Survey/Question1';
 import Question2 from '../components/Survey/Question2';
@@ -18,8 +15,9 @@ import KeyboardCard from '../components/KeyboardCard';
 import { message, Spin } from 'antd';
 import { RiEmotionSadLine } from 'react-icons/ri';
 import './styles/Survey.scss';
+import { unstable_batchedUpdates } from 'react-dom';
 
-//! 취향분석중 강제 로딩
+//! 취향분석 중 강제 로딩
 const delay = () => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -28,22 +26,18 @@ const delay = () => {
   });
 };
 
-const audio1 = new Audio('/boggle.mp3');
-const audio2 = new Audio('/nonclick.mp3');
-const audio3 = new Audio('/linear.mp3');
-const audio4 = new Audio('/click.mp3');
+const Survey = ({ history, location }) => {
+  const width = useSelector((state) => state.window.width);
 
-const Survey = () => {
-  const history = useHistory();
-  const width = useWidthSize(768);
-  const isMount = useIsMount();
-  const urlSearchParams = useRef(new URLSearchParams(window.location.search));
-  const userNickname =
-    urlSearchParams.current.get('nickname') ??
-    useSelector((state) => state.user?.nickname);
   const [isStarted, setIsStarted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [keyboards, setKeyboards] = useState(null);
+
+  const urlSearchParams = useRef(new URLSearchParams(location.search));
+  const userNickname = useRef(
+    urlSearchParams.current.get('nickname') ??
+      useSelector((state) => state.user?.nickname)
+  );
   const [sound, setSound] = useState(
     urlSearchParams.current.get('sound')
       ? Number(urlSearchParams.current.get('sound'))
@@ -75,21 +69,19 @@ const Survey = () => {
       : null
   );
 
-  const [audio1] = useState(new Audio('/audio/boggle.mp3'));
-  const [audio2] = useState(new Audio('/audio/nonclick.mp3'));
-  const [audio3] = useState(new Audio('/audio/linear.mp3'));
-  const [audio4] = useState(new Audio('/audio/click.mp3'));
+  const [audios] = useState([
+    new Audio('/audio/boggle.mp3'),
+    new Audio('/audio/nonclick.mp3'),
+    new Audio('/audio/linear.mp3'),
+    new Audio('/audio/click.mp3'),
+  ]);
 
   useEffect(() => {
     return () => {
-      audio1.pause();
-      audio1.currentTime = 0;
-      audio2.pause();
-      audio2.currentTime = 0;
-      audio3.pause();
-      audio3.currentTime = 0;
-      audio4.pause();
-      audio4.currentTime = 0;
+      audios.forEach((audio) => {
+        audio.pause();
+        audio.currentTime = 0;
+      });
     };
   }, []);
 
@@ -104,10 +96,39 @@ const Survey = () => {
   }, [sound]);
 
   const mountedPrice = useRef(false);
-  useEffect(async () => {
-    if (!mountedPrice.current) {
-      mountedPrice.current = true;
-      if (price) {
+  useEffect(() => {
+    let isFetched = true;
+
+    const fetchData = async () => {
+      if (!mountedPrice.current) {
+        mountedPrice.current = true;
+        if (price) {
+          try {
+            setIsLoading(true);
+            const [response] = await Promise.all([
+              exceptionAxios.post('/keyboards/filter', {
+                sound,
+                color,
+                backlight,
+                tenkey,
+                bluetooth,
+                price,
+              }),
+              delay(),
+            ]);
+            const filteredKeyboards = response.data.data;
+            if (isFetched) {
+              setKeyboards(filteredKeyboards);
+              setIsLoading(false);
+            }
+          } catch (err) {
+            if (isFetched) {
+              setIsLoading(false);
+            }
+          }
+        }
+        return;
+      } else {
         try {
           setIsLoading(true);
           const [response] = await Promise.all([
@@ -122,43 +143,25 @@ const Survey = () => {
             delay(),
           ]);
           const filteredKeyboards = response.data.data;
-          if (isMount.current) {
-            setKeyboards(filteredKeyboards);
-            setIsLoading(false);
+          if (isFetched) {
+            unstable_batchedUpdates(() => {
+              setKeyboards(filteredKeyboards);
+              setIsLoading(false);
+            });
           }
         } catch (err) {
-          if (isMount.current) {
+          if (isFetched) {
             setIsLoading(false);
           }
         }
       }
-      return;
-    } else {
-      try {
-        setIsLoading(true);
-        const [response] = await Promise.all([
-          exceptionAxios.post('/keyboards/filter', {
-            sound,
-            color,
-            backlight,
-            tenkey,
-            bluetooth,
-            price,
-          }),
-          delay(),
-        ]);
-        const filteredKeyboards = response.data.data;
-        if (isMount.current) {
-          setKeyboards(filteredKeyboards);
-          setIsLoading(false);
-        }
-      } catch (err) {
-        if (isMount.current) {
-          setIsLoading(false);
-        }
-      }
-    }
-  }, [price, isMount]);
+    };
+    fetchData();
+
+    return () => {
+      isFetched = false;
+    };
+  }, [price]);
 
   const onClickStartBtn = useCallback(() => {
     setIsStarted(true);
@@ -166,14 +169,10 @@ const Survey = () => {
 
   const onClickSound = useCallback((res) => {
     setSound(res);
-    audio1.pause();
-    audio1.currentTime = 0;
-    audio2.pause();
-    audio2.currentTime = 0;
-    audio3.pause();
-    audio3.currentTime = 0;
-    audio4.pause();
-    audio4.currentTime = 0;
+    audios.forEach((audio) => {
+      audio.pause();
+      audio.currentTime = 0;
+    });
   }, []);
 
   const convertSoundToText = useCallback((sound) => {
@@ -277,12 +276,12 @@ const Survey = () => {
           <div className="survey-start-main">
             <h2>
               맘에 쏙 드는 기계식 키보드
-              {width > 768 ? `, ` : <br />}
+              {width >= 768 ? `, ` : <br />}
               찾기 어려우셨나요?
               <br />
-              {width > 768 ? null : <br />}
+              {width >= 768 ? null : <br />}
               쉽고 간단한 테스트로
-              {width > 768 ? ` ` : <br />}
+              {width >= 768 ? ` ` : <br />}
               나에게 맞는 키보드를 알아보세요.
             </h2>
             <button className="survey-start-button" onClick={onClickStartBtn}>
@@ -306,13 +305,7 @@ const Survey = () => {
                 baseBgColor="#dfdfdf"
               />
             </div>
-            <Question1
-              onClickSound={onClickSound}
-              audio1={audio1}
-              audio2={audio2}
-              audio3={audio3}
-              audio4={audio4}
-            />
+            <Question1 onClickSound={onClickSound} audios={audios} />
           </main>
         </>
       );
@@ -417,7 +410,10 @@ const Survey = () => {
               {keyboards && (
                 <div className="survey-result-main">
                   <p className="survey-result-header">
-                    <span>{userNickname ? userNickname : '비회원'}님은</span>
+                    <span>
+                      {userNickname.current ? userNickname.current : '비회원'}
+                      님은
+                    </span>
                     <br />
                     <span className="survey-result-strong">{`${convertSoundToText(
                       sound
@@ -429,7 +425,7 @@ const Survey = () => {
                     <span className="survey-result-strong">{`${convertBacklightToText(
                       backlight
                     )}`}</span>
-                    {width > 768 ? ` ` : <br />}
+                    {width >= 768 ? ` ` : <br />}
                     <span className="survey-result-strong">
                       {`${convertTenkeyToText(tenkey)} ${convertBluetoothToText(
                         bluetooth
@@ -438,14 +434,15 @@ const Survey = () => {
                     <br />
                     <span className="survey-result-strong">
                       {`${convertPriceToText(price)}`}
-                    </span>{' '}
+                    </span>
                     <span>키보드 취향을 가지셨네요.</span>
                   </p>
                   {keyboards.length !== 0 ? (
                     <>
                       <p>
-                        {userNickname ? userNickname : '비회원'}님에게 딱 맞는
-                        {width > 768 ? ` ` : <br />}
+                        {userNickname.current ? userNickname.current : '비회원'}
+                        님에게 딱 맞는
+                        {width >= 768 ? ` ` : <br />}
                         <span className="survey-result-strong">
                           {keyboards.length}개
                         </span>
@@ -454,7 +451,9 @@ const Survey = () => {
                       <div className="share-area">
                         <KakaoShareButton
                           url={`https://keyplus.kr/survey?nickname=${
-                            userNickname ? userNickname : '비회원'
+                            userNickname.current
+                              ? userNickname.current
+                              : '비회원'
                           }&sound=${sound}&color=${color}&backlight=${backlight}&tenkey=${tenkey}&bluetooth=${bluetooth}&price=${price}`}
                         />
                       </div>
@@ -462,7 +461,9 @@ const Survey = () => {
                         <CopyToClipboard
                           onCopy={onCopy}
                           text={`https://keyplus.kr/survey?nickname=${
-                            userNickname ? userNickname : '비회원'
+                            userNickname.current
+                              ? userNickname.current
+                              : '비회원'
                           }&sound=${sound}&color=${color}&backlight=${backlight}&tenkey=${tenkey}&bluetooth=${bluetooth}&price=${price}`}
                         >
                           <button>링크 복사</button>
@@ -480,10 +481,11 @@ const Survey = () => {
                   ) : (
                     <>
                       <p className="survey-result-italic">
-                        아쉽게도 {userNickname ? userNickname : '비회원'}
+                        아쉽게도
+                        {userNickname.current ? userNickname.current : '비회원'}
                         님에게 어울리는
-                        {width > 768 ? ` ` : <br />}
-                        키보드를 찾지 못했습니다.{' '}
+                        {width >= 768 ? ` ` : <br />}
+                        키보드를 찾지 못했습니다.
                         <RiEmotionSadLine style={{ fontSize: '20px' }} />
                       </p>
                       <p className="survey-result-worry">
@@ -491,7 +493,7 @@ const Survey = () => {
                       </p>
                       <p className="survey-result-inspire">
                         <span className="survey-result-strong">Keyplus</span>
-                        에서 많은 키보드를{width > 768 ? ` ` : <br />}
+                        에서 많은 키보드를{width >= 768 ? ` ` : <br />}
                         직접 둘러 보실 수 있습니다.
                       </p>
                       <button

@@ -118,6 +118,12 @@
       font-size: 15px;
       text-align: right;
       margin: 70px 0;
+      transition: all 0.3s ease;
+
+      &:hover {
+        color: rgb(138, 138, 138);
+        padding-top: 8px;
+      }
 
       @media screen and (max-width: $md-breakpoint) {
         margin: 50px 0 40px;

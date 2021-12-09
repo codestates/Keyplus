@@ -14,5 +14,7 @@
     "es6": true
   },
   "ignorePatterns": ["node_modules/"],
-  "parser": "babel-parser, @babel/eslint-parser"
+  "rules": {
+    "no-unused-vars": "off"
+  }
 }

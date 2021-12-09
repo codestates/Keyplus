@@ -30,7 +30,6 @@ module.exports = {
       // 2. 조회한 키보드 아이디로 키보드 정보를 찾은 후 그 정보를 클라이언트에 보내준다.
       return res.status(200).json({ data: likeKeyboardInfo });
     } catch (error) {
-      console.log(error);
       return res.status(500).json({ message: 'Server Error' });
     }
   },
@@ -78,7 +77,6 @@ module.exports = {
 
       return res.status(200).json({ data: keyboardInfo });
     } catch (error) {
-      console.log(error);
       return res.status(500).json({ message: 'Server Error' });
     }
   },
@@ -119,7 +117,6 @@ module.exports = {
       );
       return res.status(200).json({ message: 'ok' });
     } catch (error) {
-      console.log(error);
       return res.status(500).json({ message: 'Server Error' });
     }
   },

@@ -35,7 +35,6 @@ module.exports = {
       });
       return res.sendStatus(200);
     } catch (err) {
-      console.log(err);
       return res.sendStatus(500);
     }
   },
@@ -80,7 +79,6 @@ module.exports = {
       );
       return res.sendStatus(200);
     } catch (err) {
-      console.log(err);
       return res.sendStatus(500);
     }
   },
@@ -96,7 +94,6 @@ module.exports = {
       await Keyboard.destroy({ where: { id: keyboardId } });
       return res.sendStatus(200);
     } catch (err) {
-      console.log(err);
       return res.status(500).json({ message: 'Server Error' });
     }
   },

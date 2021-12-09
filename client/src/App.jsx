@@ -16,22 +16,23 @@ import TypingShop from './pages/TypingShop';
 import Introduction from './pages/Introduction';
 import Temp from './pages/Temp';
 import ReviewCreate from './pages/ReviewCreate';
-import Spinner from './components/Spinner';
 import PrivateRoute from './utils/PrivateRoute';
 import PublicRoute from './utils/PublicRoute';
 import { logOutForce } from './reducers/userSlice';
 import { logOutMyLikes } from './reducers/likesSlice';
 import { logOutMyReviews } from './reducers/reviewsSlice';
 import { setExpireDate } from './reducers/expireDateReducer';
+import useScreenResize from './hooks/useScreenResize';
 
 import './App.less';
 
 function App() {
   const dispatch = useDispatch();
-  const loading = useSelector((state) => state.loading);
   const expireDate = useSelector((state) => state.expireDate);
 
-  useEffect(async () => {
+  useScreenResize();
+
+  useEffect(() => {
     AOS.init();
     if (expireDate) {
       const currentDate = Date.now();
@@ -66,7 +67,7 @@ function App() {
           exact
         />
         <AppLayout>
-          {loading && <Spinner />}
+          {/* {loading && <Spinner />} */}
           <Route path="/temp" component={Temp} />
           <PublicRoute
             restricted={false}

@@ -1,115 +1,33 @@
-import React, { useEffect, useRef, useState } from 'react';
-import useWidthSize from '../../hooks/useWidthSize';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { FiPlayCircle, FiStopCircle } from 'react-icons/fi';
+import { useSelector } from 'react-redux';
 
 import '../styles/Question.scss';
 
-const Question1 = ({ onClickSound, audio1, audio2, audio3, audio4 }) => {
-  const width = useWidthSize(768);
-  const [audioPlaying1, setAudioPlaying1] = useState(false);
-  const [audioPlaying2, setAudioPlaying2] = useState(false);
-  const [audioPlaying3, setAudioPlaying3] = useState(false);
-  const [audioPlaying4, setAudioPlaying4] = useState(false);
-  const mounted1 = useRef(false);
+const Question1 = ({ onClickSound, audios }) => {
+  const width = useSelector((state) => state.window.width);
+  const [playingAudios, setPlayingsAudios] = useState(Array(4).fill(false));
 
-  useEffect(() => {
-    if (!mounted1.current) {
-      mounted1.current = true;
-    } else {
-      if (audioPlaying1) {
-        audio1.play();
-        audio2.pause();
-        audio2.currentTime = 0;
-        audio3.pause();
-        audio3.currentTime = 0;
-        audio4.pause();
-        audio4.currentTime = 0;
-        setAudioPlaying1(true);
-        setAudioPlaying2(false);
-        setAudioPlaying3(false);
-        setAudioPlaying4(false);
-      } else {
-        audio1.pause();
-        audio1.currentTime = 0;
-        setAudioPlaying1(false);
-      }
-    }
-  }, [audioPlaying1]);
+  const playAudios = useCallback((number) => {
+    setPlayingsAudios((playingAudios) => {
+      return playingAudios.map((_, index) => {
+        if (index === number - 1) {
+          audios[index].play();
+          return true;
+        } else {
+          audios[index].pause();
+          audios[index].currentTime = 0;
+          return false;
+        }
+      });
+    });
+  }, []);
 
-  const mounted2 = useRef(false);
-  useEffect(() => {
-    if (!mounted2.current) {
-      mounted2.current = true;
-    } else {
-      if (audioPlaying2) {
-        audio1.pause();
-        audio1.currentTime = 0;
-        audio2.play();
-        audio3.pause();
-        audio3.currentTime = 0;
-        audio4.pause();
-        audio4.currentTime = 0;
-        setAudioPlaying1(false);
-        setAudioPlaying2(true);
-        setAudioPlaying3(false);
-        setAudioPlaying4(false);
-      } else {
-        audio2.pause();
-        audio2.currentTime = 0;
-        setAudioPlaying2(false);
-      }
-    }
-  }, [audioPlaying2]);
-
-  const mounted3 = useRef(false);
-  useEffect(() => {
-    if (!mounted3.current) {
-      mounted3.current = true;
-    } else {
-      if (audioPlaying3) {
-        audio1.pause();
-        audio1.currentTime = 0;
-        audio2.pause();
-        audio2.currentTime = 0;
-        audio3.play();
-        audio4.pause();
-        audio4.currentTime = 0;
-        setAudioPlaying1(false);
-        setAudioPlaying2(false);
-        setAudioPlaying3(true);
-        setAudioPlaying4(false);
-      } else {
-        audio3.pause();
-        audio3.currentTime = 0;
-        setAudioPlaying3(false);
-      }
-    }
-  }, [audioPlaying3]);
-
-  const mounted4 = useRef(false);
-  useEffect(() => {
-    if (!mounted4.current) {
-      mounted4.current = true;
-    } else {
-      if (audioPlaying4) {
-        audio1.pause();
-        audio1.currentTime = 0;
-        audio2.pause();
-        audio2.currentTime = 0;
-        audio3.pause();
-        audio3.currentTime = 0;
-        audio4.play();
-        setAudioPlaying1(false);
-        setAudioPlaying2(false);
-        setAudioPlaying3(false);
-        setAudioPlaying4(true);
-      } else {
-        audio4.pause();
-        audio4.currentTime = 0;
-        setAudioPlaying4(false);
-      }
-    }
-  }, [audioPlaying4]);
+  const pauseAudios = useCallback((number) => {
+    audios[number - 1].pause();
+    audios[number - 1].currentTime = 0;
+    setPlayingsAudios(Array(4).fill(false));
+  }, []);
 
   return (
     <>
@@ -117,7 +35,7 @@ const Question1 = ({ onClickSound, audio1, audio2, audio3, audio4 }) => {
         <h2 className="question-title">
           <div>가장 마음에 드는 소리를 알려주세요.</div>
         </h2>
-        {width > 768 ? (
+        {width >= 768 ? (
           <div className="question-description">
             이미지에 마우스를 올리면 소리가 재생됩니다.
           </div>
@@ -133,12 +51,8 @@ const Question1 = ({ onClickSound, audio1, audio2, audio3, audio4 }) => {
             <img
               src="/survey/soup.png"
               onClick={() => onClickSound(1)}
-              onMouseEnter={() => {
-                setAudioPlaying1(true);
-              }}
-              onMouseLeave={() => {
-                setAudioPlaying1(false);
-              }}
+              onMouseEnter={() => playAudios(1)}
+              onMouseLeave={() => pauseAudios(1)}
             />
           </div>
           <div className="text-wrapper">
@@ -147,10 +61,10 @@ const Question1 = ({ onClickSound, audio1, audio2, audio3, audio4 }) => {
               보글보글
               {width <= 768 && (
                 <div className="mp3-icon">
-                  {audioPlaying1 ? (
-                    <FiStopCircle onClick={() => setAudioPlaying1(false)} />
+                  {playingAudios[0] ? (
+                    <FiStopCircle onClick={() => pauseAudios(1)} />
                   ) : (
-                    <FiPlayCircle onClick={() => setAudioPlaying1(true)} />
+                    <FiPlayCircle onClick={() => playAudios(1)} />
                   )}
                 </div>
               )}
@@ -162,12 +76,8 @@ const Question1 = ({ onClickSound, audio1, audio2, audio3, audio4 }) => {
             <img
               src="/survey/chocolate.png"
               onClick={() => onClickSound(2)}
-              onMouseEnter={() => {
-                setAudioPlaying2(true);
-              }}
-              onMouseLeave={() => {
-                setAudioPlaying2(false);
-              }}
+              onMouseEnter={() => playAudios(2)}
+              onMouseLeave={() => pauseAudios(2)}
             />
           </div>
           <div className="text-wrapper">
@@ -176,10 +86,10 @@ const Question1 = ({ onClickSound, audio1, audio2, audio3, audio4 }) => {
               도각도각
               {width <= 768 && (
                 <div className="mp3-icon">
-                  {audioPlaying2 ? (
-                    <FiStopCircle onClick={() => setAudioPlaying2(false)} />
+                  {playingAudios[1] ? (
+                    <FiStopCircle onClick={() => pauseAudios(2)} />
                   ) : (
-                    <FiPlayCircle onClick={() => setAudioPlaying2(true)} />
+                    <FiPlayCircle onClick={() => playAudios(2)} />
                   )}
                 </div>
               )}
@@ -191,12 +101,8 @@ const Question1 = ({ onClickSound, audio1, audio2, audio3, audio4 }) => {
             <img
               src="/survey/pen.png"
               onClick={() => onClickSound(3)}
-              onMouseEnter={() => {
-                setAudioPlaying3(true);
-              }}
-              onMouseLeave={() => {
-                setAudioPlaying3(false);
-              }}
+              onMouseEnter={() => playAudios(3)}
+              onMouseLeave={() => pauseAudios(3)}
             />
           </div>
           <div className="text-wrapper">
@@ -205,10 +111,10 @@ const Question1 = ({ onClickSound, audio1, audio2, audio3, audio4 }) => {
               서걱서걱
               {width <= 768 && (
                 <div className="mp3-icon">
-                  {audioPlaying3 ? (
-                    <FiStopCircle onClick={() => setAudioPlaying3(false)} />
+                  {playingAudios[2] ? (
+                    <FiStopCircle onClick={() => pauseAudios(3)} />
                   ) : (
-                    <FiPlayCircle onClick={() => setAudioPlaying3(true)} />
+                    <FiPlayCircle onClick={() => playAudios(3)} />
                   )}
                 </div>
               )}
@@ -220,12 +126,8 @@ const Question1 = ({ onClickSound, audio1, audio2, audio3, audio4 }) => {
             <img
               src="/survey/gaming.png"
               onClick={() => onClickSound(4)}
-              onMouseEnter={() => {
-                setAudioPlaying4(true);
-              }}
-              onMouseLeave={() => {
-                setAudioPlaying4(false);
-              }}
+              onMouseEnter={() => playAudios(4)}
+              onMouseLeave={() => pauseAudios(4)}
             />
           </div>
           <div className="text-wrapper">
@@ -234,10 +136,10 @@ const Question1 = ({ onClickSound, audio1, audio2, audio3, audio4 }) => {
               찰칵찰칵
               {width <= 768 && (
                 <div className="mp3-icon">
-                  {audioPlaying4 ? (
-                    <FiStopCircle onClick={() => setAudioPlaying4(false)} />
+                  {playingAudios[3] ? (
+                    <FiStopCircle onClick={() => pauseAudios(4)} />
                   ) : (
-                    <FiPlayCircle onClick={() => setAudioPlaying4(true)} />
+                    <FiPlayCircle onClick={() => playAudios(4)} />
                   )}
                 </div>
               )}

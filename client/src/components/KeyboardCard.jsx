@@ -13,99 +13,24 @@ import {
 } from 'react-icons/io5';
 import { BiWon } from 'react-icons/bi';
 import { AiFillBulb, AiOutlineBulb } from 'react-icons/ai';
+
 import './styles/KeyboardCard.scss';
 const { Meta } = Card;
 
-export const keySwitchComponent = {
-  저소음적축: (
-    <span style={{ display: 'inline-block', marginRight: '5px' }}>
-      <span
-        style={{
-          display: 'inline-block',
-          width: '12px',
-          height: '12px',
-          borderRadius: '50%',
-          verticalAlign: 'middle',
-          backgroundColor: '#ff656c',
-          marginRight: '1px',
-        }}
-      ></span>
-      <span style={{ verticalAlign: 'middle', fontSize: '12px' }}>저적</span>
-    </span>
-  ),
-  적축: (
-    <span style={{ display: 'inline-block', marginRight: '5px' }}>
-      <span
-        style={{
-          display: 'inline-block',
-          width: '12px',
-          height: '12px',
-          borderRadius: '50%',
-          verticalAlign: 'middle',
-          backgroundColor: '#ff1A48',
-          marginRight: '1px',
-        }}
-      ></span>
-      <span style={{ verticalAlign: 'middle', fontSize: '12px' }}>적축</span>
-    </span>
-  ),
-  청축: (
-    <span style={{ display: 'inline-block', marginRight: '5px' }}>
-      <span
-        style={{
-          display: 'inline-block',
-          width: '12px',
-          height: '12px',
-          borderRadius: '50%',
-          verticalAlign: 'middle',
-          backgroundColor: '#00b4f9',
-          marginRight: '1px',
-        }}
-      ></span>
-      <span style={{ verticalAlign: 'middle', fontSize: '12px' }}>청축</span>
-    </span>
-  ),
-  갈축: (
-    <span style={{ display: 'inline-block', marginRight: '5px' }}>
-      <span
-        style={{
-          display: 'inline-block',
-          width: '12px',
-          height: '12px',
-          borderRadius: '50%',
-          verticalAlign: 'middle',
-          backgroundColor: '#B8792A',
-          marginRight: '1px',
-        }}
-      ></span>
-      <span style={{ verticalAlign: 'middle', fontSize: '12px' }}>갈축</span>
-    </span>
-  ),
-  흑축: (
-    <span style={{ display: 'inline-block', marginRight: '5px' }}>
-      <span
-        style={{
-          display: 'inline-block',
-          width: '12px',
-          height: '12px',
-          borderRadius: '50%',
-          verticalAlign: 'middle',
-          backgroundColor: '#0d0d0d',
-          marginRight: '1px',
-        }}
-      ></span>
-      <span style={{ verticalAlign: 'middle', fontSize: '12px' }}>흑축</span>
-    </span>
-  ),
-};
+// ? jsx 그대로 썼던 객체 따로 뺌
+import SwitchColor from './SwitchColor';
 
-const KeyboardCard = memo(({ keyboard }) => {
+const fillRainbowGradient = { fill: 'url(#rainbow-gradient)' };
+const fillYellowGradient = { fill: 'url(#yellow-gradient)' };
+const fillRed = { fill: 'red' };
+const fillBlue = { fill: '#2084ce' };
+
+const KeyboardCard = memo(({ keyboard, addLike, deleteLike }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const likes = useSelector((state) => state.likes);
   const checkLiked = (id) => likes.findIndex((like) => like.id == id) !== -1;
   const [liked, setLiked] = useState(checkLiked(keyboard.id));
-  const [likeCount, setLikeCount] = useState(keyboard.likeCount);
 
   const onClickHeart = useCallback(
     async (e) => {
@@ -116,10 +41,10 @@ const KeyboardCard = memo(({ keyboard }) => {
       try {
         if (liked) {
           await dispatch(deleteLikes(keyboard.id)).unwrap();
-          setLikeCount((prevLikeCount) => prevLikeCount - 1);
+          deleteLike(keyboard.id);
         } else {
           await dispatch(addLikes(keyboard.id)).unwrap();
-          setLikeCount((prevLikeCount) => prevLikeCount + 1);
+          addLike(keyboard.id);
         }
         setLiked((prevLiked) => !prevLiked);
       } catch (err) {
@@ -133,13 +58,7 @@ const KeyboardCard = memo(({ keyboard }) => {
   );
 
   return (
-    <Link
-      to={`/keyboards/${keyboard.id}`}
-      style={{
-        width: '100%',
-        height: '100%',
-      }}
-    >
+    <Link to={`/keyboards/${keyboard.id}`} className="keyboard-card-container">
       <Card
         className="keyboard-card"
         cover={
@@ -149,14 +68,6 @@ const KeyboardCard = memo(({ keyboard }) => {
                 <img
                   src={`${process.env.REACT_APP_IMAGE_URL}/keyboard/${keyboard.image1}`}
                   alt={keyboard.name}
-                  style={{
-                    width: '100%',
-                    height: '200px',
-                    objectFit: 'cover',
-                    borderTop: '1px solid rgb(240,240,240) ',
-                    borderRight: '1px solid rgb(240,240,240) ',
-                    borderLeft: '1px solid rgb(240,240,240) ',
-                  }}
                 />
               </div>
             )}
@@ -165,33 +76,11 @@ const KeyboardCard = memo(({ keyboard }) => {
       >
         <Meta
           title={
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                fontSize: '14px',
-              }}
-            >
+            <div className="keyboard-card-title">
               <span>{`${keyboard.brand} ${keyboard.name}`}</span>
-              <div style={{ cursor: 'pointer' }} onClick={onClickHeart}>
-                {liked ? (
-                  <HeartFilled
-                    style={{
-                      display: 'inline',
-                      color: '#ff0000',
-                      marginRight: '3px',
-                    }}
-                  />
-                ) : (
-                  <HeartOutlined
-                    style={{
-                      display: 'inline',
-                      color: '#ff0000',
-                      marginRight: '3px',
-                    }}
-                  />
-                )}
-                {likeCount}
+              <div className="keyboard-card-heart" onClick={onClickHeart}>
+                {liked ? <HeartFilled /> : <HeartOutlined />}
+                {keyboard.likeCount}
               </div>
             </div>
           }
@@ -199,12 +88,11 @@ const KeyboardCard = memo(({ keyboard }) => {
             (keySwitch, idx) =>
               keyboard.switch[keySwitch] && (
                 <span key={`${keySwitch}_${idx}`}>
-                  <>{keySwitchComponent[keySwitch]}</>
+                  <SwitchColor keySwitch={keySwitch} />
                 </span>
               )
           )}
         />
-        <div style={{ height: '10px' }}></div>
 
         <svg width="1em" height="1em">
           <linearGradient id="rainbow-gradient" gradientTransform="rotate(90)">
@@ -216,44 +104,50 @@ const KeyboardCard = memo(({ keyboard }) => {
             <stop stopColor="rgba(47, 201, 226, 1)" offset="65%" />
             <stop stopColor="rgba(28, 127, 238, 1)" offset="70%" />
             <stop stopColor="rgba(95, 21, 242, 1)" offset="75%" />
-            {/* <stop stopColor="rgba(186, 12, 248, 1)" offset="85%" /> */}
             <stop stopColor="rgba(251, 7, 217, 1)" offset="85%" />
             <stop stopColor="rgba(255, 0, 0, 1)" offset="100%" />
           </linearGradient>
         </svg>
         <svg width="1em" height="1em">
-          <linearGradient id="bulb-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+          <linearGradient
+            id="yellow-gradient"
+            x1="0%"
+            y1="0%"
+            x2="0%"
+            y2="100%"
+          >
             <stop stopColor="#f7f760" offset="0%" />
             <stop stopColor="#ffff80" offset="90%" />
             <stop stopColor="rgba(0,0,0, 1)" offset="100%" />
           </linearGradient>
         </svg>
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <div style={{ display: 'flex', columnGap: '5px' }}>
+
+        <div className="keyboard-card-information">
+          <div>
             {keyboard.color ? (
-              <IoColorFill style={{ fill: 'url(#rainbow-gradient)' }} />
+              <IoColorFill style={fillRainbowGradient} />
             ) : (
               <IoColorFillOutline />
             )}
 
             {keyboard.backlight ? (
-              <AiFillBulb style={{ fill: 'url(#bulb-gradient)' }} />
+              <AiFillBulb style={fillYellowGradient} />
             ) : (
               <AiOutlineBulb />
             )}
             {keyboard.tenkey ? (
-              <IoKeypad style={{ fill: 'red' }} />
+              <IoKeypad style={fillRed} />
             ) : (
               <IoKeypadOutline />
             )}
 
             {keyboard.bluetooth ? (
-              <FaBluetooth style={{ fill: '#2084ce' }} />
+              <FaBluetooth style={fillBlue} />
             ) : (
               <FaBluetooth />
             )}
           </div>
-          <div style={{ fontSize: '12px' }}>
+          <div>
             <BiWon />
             <span>{`${keyboard.price.toLocaleString()}`}</span>
           </div>
